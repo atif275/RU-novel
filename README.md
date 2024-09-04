@@ -11,7 +11,7 @@ RU-novel is a web application that allows users to post, write, and read books b
 
 ## Technologies Used
 - CI/CD
-- Frontend: React, Tailwind CSS
+- Forontend: React, Tailwind CSS
 - Backend: Node.js, Express, MongoDB
 - Libraries: Axios, Mongoose, Dotenv
 - VPS
