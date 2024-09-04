@@ -1,0 +1,14 @@
+.notes-textarea {
+    flex: 1;
+    padding: 16px;
+    margin-bottom: 16px;
+    resize: none;
+    border-radius: 4px;
+    border: 1px solid #cbd5e0;
+    min-height: 550px;
+}
+
+.notes-textarea:focus {
+    border-color: #3182ce;  /* Blue color when focused */
+    outline: none;          /* Optional: removes the default focus outline */
+}
