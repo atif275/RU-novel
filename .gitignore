@@ -1,6 +1,6 @@
 # Dependency directories
 node_modules/
-/dist/
+
 
 # Environment variables
 
@@ -28,5 +28,3 @@ Thumbs.db
 # Optional eslint cache
 .eslintcache
 
-# Optional build artifacts
-build

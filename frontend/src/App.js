@@ -36,7 +36,7 @@ import Notificationlist from "./pages/Notificationlist";
 import Usercp from "./pages/Usercp";
 import Editsignature from "./pages/Editsignature";
 // ---------------------------------------------------------------------------SABHEEE import ends-----------------------------------------------------
-import Borderwardrobe from "./pages/Borderwardrobe";
+// import Borderwardrobe from "./pages/Borderwardrobe";
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile'; 
 import MemberListPage from "./pages/MemberListPage";
@@ -593,7 +593,7 @@ function App() {
           <Route path="/user/borders" element={
             <>
               <HomePage />
-              <Borderwardrobe />
+              {/* <Borderwardrobe /> */}
               <Footer />
               <PostFooter />
             </>
