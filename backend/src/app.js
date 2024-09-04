@@ -87,9 +87,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Welcome to RU-novel API');
-});
+
 
 
 app.get('/api/hello', (req, res) => {
