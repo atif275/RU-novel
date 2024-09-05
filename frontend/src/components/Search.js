@@ -24,7 +24,7 @@ function Search() {
   const fetchSearchResults = async () => {
     if (searchQuery) {
       try {
-        const response = await fetch('http://localhost:5001/api/books', {
+        const response = await fetch('http://api.ru-novel.ru/api/books', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function Search() {
         }
 
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         dispatch(userActions.setSearchResults(data)); // Store results in Redux
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -47,7 +47,7 @@ function Search() {
   const fetchSearchResults2 = async () => {
     if (searchQuery) {
       try {
-        const response = await fetch('http://localhost:5001/api/books', {
+        const response = await fetch('http://api.ru-novel.ru/api/books', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ function Search() {
         }
 
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         dispatch(userActions.setSearchResults(data)); // Store results in Redux
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -70,13 +70,13 @@ function Search() {
 
   useEffect(() => {
  
-    console.log(searchQuery);
-    console.log(fiction)
+    // console.log(searchQuery);
+    // console.log(fiction)
     fetchSearchResults();
   }, [searchQuery, dispatch,fiction]);
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'http://localhost:5001/auth/google';
+    window.location.href = 'http://api.ru-novel.ru/auth/google';
   };
 
   // Pagination calculations

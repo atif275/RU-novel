@@ -14,10 +14,10 @@ export const AuthorFictions = () => {
     useEffect(() => {
         const fetchFictions = async () => {
             try {
-                const response = await axios.get(`http://localhost:5001/api/fictions/${user.username}`);
+                const response = await axios.get(`http://api.ru-novel.ru/api/fictions/${user.username}`);
                 setFictions(response.data);
             } catch (error) {
-                console.error('Error fetching fictions:', error);
+                // console.error('Error fetching fictions:', error);
             }
         };
 

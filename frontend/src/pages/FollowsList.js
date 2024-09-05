@@ -17,12 +17,12 @@ function Followlist() {
     useEffect(() => {
         const fetchFollowedAuthors = async () => {
             try {
-                const userResponse = await axios.get(`http://localhost:5001/api/userssss/${email}`);
+                const userResponse = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
                 const followedAuthors = userResponse.data.follows;
                 setFollowedAuthors(followedAuthors);
 
                 const authorProfilesPromises = followedAuthors.map(authorName => 
-                    axios.get(`http://localhost:5001/api/userssssss/${authorName}`)
+                    axios.get(`http://api.ru-novel.ru/api/userssssss/${authorName}`)
                 );
                 const profiles = await Promise.all(authorProfilesPromises);
                 setAuthorProfiles(profiles.map(profile => profile.data));
@@ -40,7 +40,7 @@ function Followlist() {
 
     const handleUnfollow = async (authorName) => {
         try {
-            await axios.post(`http://localhost:5001/api/users/${email}/unfollow`, { authorName });
+            await axios.post(`http://api.ru-novel.ru/api/users/${email}/unfollow`, { authorName });
             toast.success('Author unfollowed successfully!');
             const updatedAuthors = authorProfiles.filter(author => author.username !== authorName);
             setAuthorProfiles(updatedAuthors);

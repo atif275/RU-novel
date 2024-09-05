@@ -64,11 +64,11 @@ function ForumsPage() {
 
   useEffect(() => {
     // Fetch Popular Threads
-    fetch("http://localhost:5001/api/popularthreads")
+    fetch("http://api.ru-novel.ru/api/popularthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Popular Threads table is empty");
+          // console.log("Popular Threads table is empty");
         } else {
           setPopularThreads(data);
         }
@@ -78,11 +78,11 @@ function ForumsPage() {
       );
 
     // Fetch Community Threads
-    fetch("http://localhost:5001/api/communitythreads")
+    fetch("http://api.ru-novel.ru/api/communitythreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Community Threads table is empty");
+          // console.log("Community Threads table is empty");
         } else {
           setCommunityThreads(data);
         }
@@ -91,11 +91,11 @@ function ForumsPage() {
         console.error("Failed to fetch community threads", error)
       );
     //fiction Thread
-    fetch("http://localhost:5001/api/fictionthreads")
+    fetch("http://api.ru-novel.ru/api/fictionthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Popular Threads table is empty");
+          // console.log("Popular Threads table is empty");
         } else {
           setFictionThreads(data);
         }
@@ -104,11 +104,11 @@ function ForumsPage() {
         console.error("Failed to fetch popular threads", error)
       );
     //Discussion Thread
-    fetch("http://localhost:5001/api/discussionthreads")
+    fetch("http://api.ru-novel.ru/api/discussionthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Popular Threads table is empty");
+          // console.log("Popular Threads table is empty");
         } else {
           setDiscussionThreads(data);
         }
@@ -117,11 +117,11 @@ function ForumsPage() {
         console.error("Failed to fetch popular threads", error)
       );
     //Forum Thread
-    fetch("http://localhost:5001/api/forumthreads")
+    fetch("http://api.ru-novel.ru/api/forumthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Popular Threads table is empty");
+          // console.log("Popular Threads table is empty");
         } else {
           setForumThreads(data);
         }
@@ -131,11 +131,11 @@ function ForumsPage() {
       );
     //recent threads
 
-    fetch("http://localhost:5001/api/recent-threads")
+    fetch("http://api.ru-novel.ru/api/recent-threads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          console.log("Recent Threads table is empty");
+          // console.log("Recent Threads table is empty");
         } else {
           setRecentThreads(data);
         }

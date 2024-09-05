@@ -23,7 +23,7 @@ const OnGoingFictionsPage = () => {
   
     useEffect(() => {
       const fetchData = async () => {
-        const response = await fetch('http://localhost:5001/api/bookthreads');
+        const response = await fetch('http://api.ru-novel.ru/api/bookthreads');
         const result = await response.json();
         if (response.ok) {
           setBookThreads(result.data);

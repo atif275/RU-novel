@@ -9,7 +9,7 @@ import { userActions } from "../store";
 const SugContent = (props) => {
   const img = props.profilePicture; // This will now correctly reference the passed prop
   const profilePictureUrl = img
-    // ? `http://localhost:5001/uploads/${img}`
+    // ? `http://api.ru-novel.ru/uploads/${img}`
     // : '/default-avatar.png'; 
 const formattedTime = formatDistanceToNow(new Date(props.time), { addSuffix: true });
 const  isAuth= useSelector((state)=>state.userData. isAuthenticated)
@@ -20,8 +20,8 @@ const navigate=useNavigate()
   const handleClick=()=>{
        if(isAuth){
           dispatch(userActions.setCommentsData(props.arr))
-           console.log(props.arr)
-           console.log(isAuth)
+           // console.log(props.arr)
+           // console.log(isAuth)
            
            navigate('/comments')
        }

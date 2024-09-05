@@ -15,7 +15,7 @@ const Chapters = ({ bookId, bookTitle }) => {
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/books/${bookId}`);
+        const response = await axios.get(`http://api.ru-novel.ru/api/books/${bookId}`);
         const bookData = response.data;
 
         const chaptersWithFormattedDates = bookData.chapters.map((chapter) => ({

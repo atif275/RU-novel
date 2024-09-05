@@ -15,7 +15,7 @@ function AdminChapter() {
   useEffect(() => {
     const fetchChapterData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/booksss/${fictionId}/chapters/${chapterId}`);
+        const response = await axios.get(`http://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`);
         setChapterData(response.data);
       } catch (error) {
         console.error('Error fetching chapter data:', error);

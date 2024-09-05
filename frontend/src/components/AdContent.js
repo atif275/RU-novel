@@ -32,7 +32,7 @@ function AdContent(props) {
     // Validate inputs
 
     try {
-      const response = await fetch("http://localhost:5001/api/update/ads", {
+      const response = await fetch("http://api.ru-novel.ru/api/update/ads", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -47,14 +47,14 @@ function AdContent(props) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         closeForm(); // Optionally close the form on success
       } else {
         const errorData = await response.json();
-        console.error("Error submitting form:", errorData.message);
+        // console.error("Error submitting form:", errorData.message);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
     }
   };
 
@@ -65,7 +65,7 @@ function AdContent(props) {
     // Validate inputs
 
     try {
-      const response = await fetch("http://localhost:5001/api/delete/ads", {
+      const response = await fetch("http://api.ru-novel.ru/api/delete/ads", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -79,14 +79,14 @@ function AdContent(props) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         closeForm(); // Optionally close the form on success
       } else {
         const errorData = await response.json();
-        console.error("Error submitting form:", errorData.message);
+        // console.error("Error submitting form:", errorData.message);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
     }
   };
 
@@ -101,7 +101,7 @@ function AdContent(props) {
         const downloadURL = await getDownloadURL(storageRef);
         setImageURL(downloadURL);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setUploading(false);
       }

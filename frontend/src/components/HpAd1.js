@@ -7,7 +7,7 @@ const HpAd1 = () => {
 
   const fetchAdData = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/ado', {
+      const response = await fetch('http://api.ru-novel.ru/api/ado', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const SupportTicketForm = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/idea", {
+      const response = await fetch("http://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const SupportTicketForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         if (data) {
           dispatch(userActions.setTickets(data));
         }
@@ -42,7 +42,7 @@ const SupportTicketForm = () => {
   };
 
   useEffect(() => {
-    console.log(email);
+    // console.log(email);
     if (email) {
       fetchUserData();
     }
@@ -53,7 +53,7 @@ const SupportTicketForm = () => {
 
 
     try {
-      const response = await fetch("http://localhost:5001/api/ticket", {
+      const response = await fetch("http://api.ru-novel.ru/api/ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,9 +74,9 @@ const SupportTicketForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         if (data) {
-          console.log(data.comment);
+          // console.log(data.comment);
         
            navigate('/support/ticket');
         }

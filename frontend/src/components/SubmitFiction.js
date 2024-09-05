@@ -44,7 +44,7 @@ export const SubmitFiction = () => {
     };
 
     async function handleImageChange(e) {
-        console.log("xxxxxx"+e.target.files[0]);
+        // console.log("xxxxxx"+e.target.files[0]);
         const image = e.target.files[0];
         if(image){
           try {
@@ -53,12 +53,12 @@ export const SubmitFiction = () => {
             const storageRef = ref(storage, "uploads/" +image.name);
             await uploadBytes(storageRef,image);
             const downloadURL = await getDownloadURL(storageRef);
-            console.log(downloadURL);
+            // console.log(downloadURL);
             setImageURL(downloadURL);
             
             
           } catch (error) {
-            console.log(error);
+            // console.log(error);
             
           }finally{
             setUploading(false);
@@ -135,7 +135,7 @@ export const SubmitFiction = () => {
         
     
         try {
-            const response = await fetch('http://localhost:5001/api/submissions/add', {
+            const response = await fetch('http://api.ru-novel.ru/api/submissions/add', {
                 method: 'POST',
                 body: submissionData
             });

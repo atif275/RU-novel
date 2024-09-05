@@ -24,13 +24,13 @@ function Fiction() {
   useEffect(() => {
     const fetchBookData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/books/${id}`);
+        const response = await axios.get(`http://api.ru-novel.ru/api/books/${id}`);
         setBookData(response.data);
 
         // Fetch author data based on authorName
-        console.log(`Fetching author data for authorName: ${response.data.author}`);
-        const authorResponse = await axios.get(`http://localhost:5001/api/userssssss/${response.data.author}`);
-        console.log('Author Data:', authorResponse.data);
+        // console.log(`Fetching author data for authorName: ${response.data.author}`);
+        const authorResponse = await axios.get(`http://api.ru-novel.ru/api/userssssss/${response.data.author}`);
+        // console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
       } catch (error) {
         console.error('Error fetching book data:', error);

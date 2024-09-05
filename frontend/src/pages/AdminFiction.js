@@ -22,7 +22,7 @@ function AdminFiction() {
   useEffect(() => {
     const fetchBookData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/booksss/${id}`);
+        const response = await axios.get(`http://api.ru-novel.ru/api/booksss/${id}`);
         setBookData(response.data);
       } catch (error) {
         console.error('Error fetching book data:', error);

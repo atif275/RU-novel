@@ -56,7 +56,7 @@ function Borderwardrobe() {
 
     const changeBorder = async (newBorder) => {
         try {
-            const response = await axios.put(`http://localhost:5001/update-border/${currentUser.username}`, {
+            const response = await axios.put(`http://api.ru-novel.ru/update-border/${currentUser.username}`, {
                 newBorder: newBorder
             });
 

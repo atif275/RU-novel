@@ -32,7 +32,7 @@ const SignUPCon = () => {
     formData.append('avatar', imageURL);
 
     try {
-      const response = await fetch('http://localhost:5001/account/externalloginconfirmation', {
+      const response = await fetch('http://api.ru-novel.ru/account/externalloginconfirmation', {
         method: 'POST',
         body: formData,
       });
@@ -41,7 +41,7 @@ const SignUPCon = () => {
         const data = await response.json();
         dispatch(userActions.setUser(data.user));
         dispatch(userActions.setEmail(data.user.email))
-        console.log(data.user)
+        // console.log(data.user)
         localStorage.setItem('authtoken',data.user.authToken)
         localStorage.setItem('userEmail',data.user.email)
        
@@ -63,7 +63,7 @@ const SignUPCon = () => {
   };
 
   async function handleImageChange(e) {
-    console.log("xxxxxx"+e.target.files[0]);
+    // console.log("xxxxxx"+e.target.files[0]);
     const image = e.target.files[0];
     if(image){
       try {
@@ -72,12 +72,12 @@ const SignUPCon = () => {
         const storageRef = ref(storage, "user-profile-images/" +image.name);
         await uploadBytes(storageRef,image);
         const downloadURL = await getDownloadURL(storageRef);
-        console.log(downloadURL);
+        // console.log(downloadURL);
         setImageURL(downloadURL);
         
         
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         
       }finally{
         setUploading(false);

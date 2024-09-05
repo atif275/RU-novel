@@ -12,12 +12,12 @@ const BestOngoing = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/bookthreads');
+        const response = await axios.get('http://api.ru-novel.ru/api/bookthreads');
         const data = response.data;
         if (data.success && Array.isArray(data.data)) {
           setBooks(data.data); // Access the array inside the data object
         } else {
-          console.error('Data is not an array or success flag is false:', data);
+          console.error('Data is not an array or success flag is false:');
         }
       } catch (err) {
         console.error('Error fetching books:', err);

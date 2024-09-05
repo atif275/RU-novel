@@ -11,7 +11,7 @@ function Tickets() {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/find/ticket", {
+      const response = await fetch("http://api.ru-novel.ru/api/find/ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,10 +21,10 @@ function Tickets() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         if (data) {
           dispatch(userActions.setTicketsArr(data));
-          console.log(data); // Save the fetched tickets in Redux state
+          // console.log(data); // Save the fetched tickets in Redux state
         }
       } else {
         console.error("Error fetching user data:", response.statusText);

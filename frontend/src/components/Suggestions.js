@@ -21,7 +21,7 @@ const Suggestions = () => {
   // Fetch comments and handle pagination
   const fetchComments = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/load/comments");
+      const response = await fetch("http://api.ru-novel.ru/api/load/comments");
       if (response.ok) {
         const data = await response.json();
         dispatch(userActions.setCommentsArray(data));
@@ -40,7 +40,7 @@ const Suggestions = () => {
   const fetchComments2 = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5001/api/load/search", {
+      const response = await fetch("http://api.ru-novel.ru/api/load/search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
