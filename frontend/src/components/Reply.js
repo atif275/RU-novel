@@ -26,7 +26,7 @@ const Reply = () => {
 
 
  const profilePictureUrl = comObj.profilePicture
- ? `http://localhost:5001/uploads/${comObj.profilePicture}`
+ ? `http://api.ru-novel.ru/uploads/${comObj.profilePicture}`
  : '/default-avatar.png';
 
  const updatedAtDate = new Date(comObj.updatedAt);
@@ -36,7 +36,7 @@ const Reply = () => {
 
 //  const fetchUserData = async () => {
 //     try {
-//       const response = await fetch("http://localhost:5001/api/comment/box", {
+//       const response = await fetch("http://api.ru-novel.ru/api/comment/box", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -46,9 +46,9 @@ const Reply = () => {
 
 //       if (response.ok) {
 //         const data = await response.json();
-//         console.log("Fetched data:", data);
+//         // console.log("Fetched data:", data);
 //         if (data) {
-//             console.log(data)
+//             // console.log(data)
 //              dispatch(userActions.setComData(data));
 //              dispatch(userActions.setLength(data.length))
 //         }
@@ -61,7 +61,7 @@ const Reply = () => {
 //   };
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/idea", {
+      const response = await fetch("http://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,11 +71,11 @@ const Reply = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetcho data:", data);
+        // console.log("Fetcho data:", data);
         if (data) {
          
           dispatch(userActions.setReply(data));
-          console.log("reply",reply)
+          // console.log("reply",reply)
         }
       } else {
         console.error("Error fetching user data:", response.statusText);
@@ -103,7 +103,7 @@ const Reply = () => {
     
       e.preventDefault()
    try {
-      const response = await fetch("http://localhost:5001/api/reply", {
+      const response = await fetch("http://api.ru-novel.ru/api/reply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ const Reply = () => {
       if (response.ok) {
         const data = await response.json();
          if (data) {
-         console.log('data',data)
+         // console.log('data',data)
          navigate('/comments')
          }
        } else {
@@ -134,7 +134,7 @@ const Reply = () => {
 
 
   const handleClick = (e) => {
-      console.log(comObj)
+      // console.log(comObj)
   };
 
   return (

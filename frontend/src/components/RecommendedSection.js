@@ -10,7 +10,7 @@ const RecommendedSection = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/books');
+        const response = await axios.get('http://api.ru-novel.ru/api/books');
         setBooks(response.data);
       } catch (err) {
         console.error('Error fetching books:', err);

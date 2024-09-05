@@ -33,15 +33,15 @@ const FacebookAccountForm = () => {
     
 
     try {
-      const response = await fetch('http://localhost:5001/account/externalloginconfirmation', {
+      const response = await fetch('http://api.ru-novel.ru/account/externalloginconfirmation', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.user);
-        console.log('g')
+        // console.log(data.user);
+        // console.log('g')
         dispatch(userActions.setUser(data.user));
         navigate('/'); // Redirect upon success
       } else {

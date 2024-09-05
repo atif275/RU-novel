@@ -22,11 +22,11 @@ const TrendingPage = () => {
   
     useEffect(() => {
       const fetchData = async () => {
-        const response = await fetch('http://localhost:5001/api/bookthreads');
+        const response = await fetch('http://api.ru-novel.ru/api/bookthreads');
         const result = await response.json();
         if (response.ok) {
           setBookThreads(result.data);
-          // console.log("here"result.data);
+          // // console.log("here"result.data);
         } else {
           console.error('Failed to fetch data:', result.error);
         }

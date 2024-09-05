@@ -23,10 +23,10 @@ export const AdminManageBorders = () => {
 
     const fetchBorders = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/borders?tag=${activeTab.toLowerCase()}`);
+            const response = await axios.get(`http://api.ru-novel.ru/api/borders?tag=${activeTab.toLowerCase()}`);
             setBorders(response.data);
         } catch (error) {
-            console.error('Error fetching borders:', error);
+            // console.error('Error fetching borders:', error);
         }
     };
 
@@ -47,7 +47,7 @@ export const AdminManageBorders = () => {
                 const downloadURL = await getDownloadURL(storageRef);
                 setNewBorder({ ...newBorder, imageUrl: downloadURL, link: downloadURL });
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error('Failed to upload image');
             } finally {
                 setImageUploading(false);
@@ -57,7 +57,7 @@ export const AdminManageBorders = () => {
 
     const handleAddBorder = async () => {
         try {
-            const response = await axios.post('http://localhost:5001/api/add-border', {
+            const response = await axios.post('http://api.ru-novel.ru/api/add-border', {
                 ...newBorder,
                 tag: activeTab.toLowerCase(),
             });
@@ -68,7 +68,7 @@ export const AdminManageBorders = () => {
                 setNewBorder({ name: '', imageUrl: '', link: '' });
             }
         } catch (error) {
-            console.error('Error adding border:', error);
+            // console.error('Error adding border:', error);
             toast.error('Failed to add border');
         }
     };
@@ -79,14 +79,14 @@ export const AdminManageBorders = () => {
         if (idsToDelete.length > 0 && window.confirm("Are you sure you want to delete selected borders?")) {
             try {
                 await Promise.all(idsToDelete.map(async (id) => {
-                    await axios.delete(`http://localhost:5001/api/delete-border/${id}`);
+                    await axios.delete(`http://api.ru-novel.ru/api/delete-border/${id}`);
                 }));
     
                 toast.success('Selected borders deleted successfully');
                 setSelectedIds({});
                 fetchBorders(); // Refresh the borders list after deletion
             } catch (error) {
-                console.error('Error deleting borders:', error);
+                // console.error('Error deleting borders:', error);
                 toast.error('Failed to delete borders');
             }
         }

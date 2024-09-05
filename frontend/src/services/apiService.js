@@ -1,7 +1,7 @@
 // src/services/apiService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5001/api'; // Ensure this matches your backend server URL
+const API_BASE_URL = 'http://api.ru-novel.ru/api'; // Ensure this matches your backend server URL
 
 // Fetch hello message from backend
 export const fetchHelloWorld = async () => {

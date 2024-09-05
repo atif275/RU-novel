@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const threadRoutes = require('./routes/ForumThreadRoutes');  // Adjust the path as necessary
 const bookThreadRoutes = require('./routes/BookThreadRoutes');
-const path = require('path')
+
 const session = require('express-session');
 const path = require('path');
 const passport = require('../Controller/Oauth'); // Import the passport configuration
@@ -30,7 +30,7 @@ const Submission = require('./models/Submission'); // Import the Submission mode
 dotenv.config();
 
 const app = express();
-const __dirname = path.resolve();
+
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 const PORT = process.env.PORT || 5001;

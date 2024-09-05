@@ -35,7 +35,7 @@ const LoginForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://localhost:5001/api/login', {
+        const response = await fetch('http://api.ru-novel.ru/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -48,7 +48,7 @@ const LoginForm = () => {
 
         if (response.ok) {
           const data = await response.json();
-          //console.log(data)
+          //// console.log(data)
           localStorage.setItem('authtoken',data.authToken);
           localStorage.setItem("userEmail",data.email);
        
@@ -85,10 +85,10 @@ const LoginForm = () => {
   });
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'http://localhost:5001/auth/google';
+    window.location.href = 'http://api.ru-novel.ru/auth/google';
   };
   const handleFaceBookSignIn = () => {
-    window.location.href = 'http://localhost:5001/auth/facebook';
+    window.location.href = 'http://api.ru-novel.ru/auth/facebook';
   };
 
   const isFormInvalid = !formik.isValid || !formik.dirty;

@@ -80,9 +80,9 @@ const SignupPage = () => {
       } else {
       
         dispatch(userActions.setEmail(values.email))
-        console.log(values.email)
+        // console.log(values.email)
         navigate('/signup/configuration')
-        console.log('success')
+        // console.log('success')
       }
      
     },

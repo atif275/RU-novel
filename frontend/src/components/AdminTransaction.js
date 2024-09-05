@@ -30,7 +30,7 @@ export const  AdminTransaction = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5001/api/advertisment', {
+      const response = await fetch('http://api.ru-novel.ru/api/advertisment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,14 +43,14 @@ export const  AdminTransaction = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         fetchAds(); // Refresh the advertisements list
       } else {
         const errorData = await response.json();
-        console.error('Error submitting form:', errorData.message);
+        // console.error('Error submitting form:', errorData.message);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      // console.error('Error submitting form:', error);
     }
   };
 
@@ -65,7 +65,7 @@ export const  AdminTransaction = () => {
         const downloadURL = await getDownloadURL(storageRef);
         setImageURL(downloadURL);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setUploading(false);
       }
@@ -75,15 +75,15 @@ export const  AdminTransaction = () => {
   // Fetch advertisements from the server
   const fetchAds = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/ads');
+      const response = await fetch('http://api.ru-novel.ru/api/ads');
       if (response.ok) {
         const data = await response.json();
         setAds(data.ads); // Assuming the response has an 'ads' key
       } else {
-        console.error('Error fetching ads');
+        // console.error('Error fetching ads');
       }
     } catch (error) {
-      console.error('Error fetching ads', error);
+      // console.error('Error fetching ads', error);
     }
   };
 

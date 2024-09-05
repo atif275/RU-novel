@@ -38,14 +38,14 @@ export const AdminUTMTags = () => {
             return;
         }
         try {
-            await axios.put(`http://localhost:5001/api/utm-tags/${newTag._id}`, newTag);
+            await axios.put(`http://api.ru-novel.ru/api/utm-tags/${newTag._id}`, newTag);
             fetchUtmTags(); // Refresh the list of UTM tags
             setShowForm(false);
             setIsEditing(false);
             resetForm();
             toast.success('UTM tag updated successfully');
         } catch (error) {
-            console.error('Error updating UTM tag:', error);
+            // console.error('Error updating UTM tag:', error);
             toast.error('Failed to update UTM tag');
         }
     };
@@ -81,10 +81,10 @@ export const AdminUTMTags = () => {
 
     const fetchUtmTags = async () => {
         try {
-            const response = await axios.get('http://localhost:5001/api/utm-tags');
+            const response = await axios.get('http://api.ru-novel.ru/api/utm-tags');
             setUtmTags(response.data);
         } catch (error) {
-            console.error('Error fetching UTM tags:', error);
+            // console.error('Error fetching UTM tags:', error);
             toast.error('Failed to fetch UTM tags');
         }
     };
@@ -96,7 +96,7 @@ export const AdminUTMTags = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:5001/api/utm-tags', newTag);
+            const response = await axios.post('http://api.ru-novel.ru/api/utm-tags', newTag);
             setUtmTags([...utmTags, response.data]);
             setNewTag({
                 utm_source: '',
@@ -108,7 +108,7 @@ export const AdminUTMTags = () => {
             setShowForm(false);
             toast.success('UTM tag added successfully');
         } catch (error) {
-            console.error('Error adding UTM tag:', error);
+            // console.error('Error adding UTM tag:', error);
             toast.error('Failed to add UTM tag');
         }
     };
@@ -117,11 +117,11 @@ export const AdminUTMTags = () => {
     const handleDeleteTag = async (id) => {
         if (window.confirm('Are you sure you want to delete this UTM tag?')) {
             try {
-                await axios.delete(`http://localhost:5001/api/utm-tags/${id}`); // Corrected URL
+                await axios.delete(`http://api.ru-novel.ru/api/utm-tags/${id}`); // Corrected URL
                 setUtmTags(utmTags.filter(tag => tag._id !== id));
                 toast.success('UTM tag deleted successfully');
             } catch (error) {
-                console.error('Error deleting UTM tag:', error);
+                // console.error('Error deleting UTM tag:', error);
                 toast.error('Failed to delete UTM tag');
             }
         }

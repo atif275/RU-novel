@@ -33,7 +33,7 @@ function ProfileInfoPage() {
     window.scrollTo(0, 0);
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/userss/${email}`);
+        const response = await fetch(`http://api.ru-novel.ru/api/userss/${email}`);
         const userData = await response.json();
         setFormData({
           username: userData.username || "",
@@ -60,7 +60,7 @@ function ProfileInfoPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5001/api/users/${email}`, {
+      const response = await fetch(`http://api.ru-novel.ru/api/users/${email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function ProfileInfoPage() {
       });
 
       if (response.ok) {
-        console.log("Profile updated successfully");
+        // console.log("Profile updated successfully");
         toast.success("Profile updated successfully");
       } else {
         console.error("Failed to update profile");
@@ -81,7 +81,7 @@ function ProfileInfoPage() {
     }
   };
   const profilePictureUrl = user.profilePicture;
-  // ? `http://localhost:5001/uploads/${user.profilePicture}`
+  // ? `http://api.ru-novel.ru/uploads/${user.profilePicture}`
   // : '/default-avatar.png';
 
 

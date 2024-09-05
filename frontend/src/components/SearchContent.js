@@ -12,7 +12,7 @@ const FictionListItem = (props) => {
   const fetchSearchResults3 = async () => {
   
       try {
-        const response = await fetch('http://localhost:5001/api/bookOne', {
+        const response = await fetch('http://api.ru-novel.ru/api/bookOne', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const FictionListItem = (props) => {
 
        if(response.ok){
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
           dispatch(userActions.setBooksTouched())
           dispatch(userActions.setBooksDes(data.description))
       }
@@ -35,7 +35,7 @@ const FictionListItem = (props) => {
  
   const hadle=(e)=>{
     e.preventDefault();
-       console.log(props.title)
+       // console.log(props.title)
   }
   return (
     <div className='flex flex-col md:flex-row bg-white p-4 rounded-md shadow-md mb-6'>

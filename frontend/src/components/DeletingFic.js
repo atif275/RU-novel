@@ -24,7 +24,7 @@ const  DeleteFic = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     const slug = generateSlug(searchTerm); // Generate slug when search is submitted
-    console.log("Search Term:", searchTerm);
+    // console.log("Search Term:", searchTerm);
     navigate(`/support/knowledgebase/${slug}`);
   };
 

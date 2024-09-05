@@ -300,7 +300,7 @@ function Drafts() {
         if (!currentUser) return;
 
         try {
-            const response = await axios.get(`http://localhost:5001/api/messages/drafts/${currentUser.username}`, {
+            const response = await axios.get(`http://api.ru-novel.ru/api/messages/drafts/${currentUser.username}`, {
                 params: {
                     status: 'sent',
                     sender: currentUser.username  // Assuming you have the username in the currentUser object
@@ -329,7 +329,7 @@ function Drafts() {
 
     const handleMoveTo = async (subject, newStatus) => {
         try {
-            const response = await axios.put(`http://localhost:5001/api/messages/status`, { subject, status: newStatus });
+            const response = await axios.put(`http://api.ru-novel.ru/api/messages/status`, { subject, status: newStatus });
             alert(response.data.message); // Alerting the user about the operation status
             fetchMessages(); // Refresh the list of messages
         } catch (error) {
@@ -340,7 +340,7 @@ function Drafts() {
 
     const handleDelete = async (subject) => {
         try {
-            await axios.delete(`http://localhost:5001/api/messages/${subject}`);
+            await axios.delete(`http://api.ru-novel.ru/api/messages/${subject}`);
             fetchMessages(); // Refresh the list of messages
             alert('Message deleted successfully!');
         } catch (error) {

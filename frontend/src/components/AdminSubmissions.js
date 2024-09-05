@@ -23,18 +23,18 @@ const handleViewDetails = (id,title) => {
 
     const fetchSubmissions = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/submissions');
+            const response = await fetch('http://api.ru-novel.ru/api/submissions');
             const data = await response.json();
             setSubmissions(data);
         } catch (error) {
-            console.error('Error fetching submissions:', error);
+            // console.error('Error fetching submissions:', error);
         }
     };
 
     const handleApprove = async (id) => {
         try {
             // First, approve the submission
-            const approveResponse = await fetch(`http://localhost:5001/api/submissions/approve/${id}`, {
+            const approveResponse = await fetch(`http://api.ru-novel.ru/api/submissions/approve/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ const handleViewDetails = (id,title) => {
                         };
     
                         // Post the data to the BookThread collection
-                        const bookThreadResponse = await fetch('http://localhost:5001/api/submit-fiction', {
+                        const bookThreadResponse = await fetch('http://api.ru-novel.ru/api/submit-fiction', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ const handleViewDetails = (id,title) => {
     
                         if (bookThreadResponse.ok) {
                             toast.success('Book Thread Created Successfully');
-                            const updateUserResponse = await fetch(`http://localhost:5001/api/usersssss/update-fictions`, {
+                            const updateUserResponse = await fetch(`http://api.ru-novel.ru/api/usersssss/update-fictions`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ const handleViewDetails = (id,title) => {
                         }
                     } else if (submission.requestType === 'New Chapter') {
                         // Find the existing book in the BookThread collection
-                        const updateResponse = await fetch('http://localhost:5001/api/bookthreads/update-chapter', {
+                        const updateResponse = await fetch('http://api.ru-novel.ru/api/bookthreads/update-chapter', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ const handleViewDetails = (id,title) => {
                 throw new Error('Failed to approve submission');
             }
         } catch (error) {
-            console.error('Error approving submission:', error);
+            // console.error('Error approving submission:', error);
             toast.error('Error approving submission');
         }
     };
@@ -127,7 +127,7 @@ const handleViewDetails = (id,title) => {
     const handleNoteSaveAndReject = async () => {
         if (selectedSubmission && note.trim()) {
             try {
-                const response = await fetch(`http://localhost:5001/api/submissions/reject/${selectedSubmission._id}`, {
+                const response = await fetch(`http://api.ru-novel.ru/api/submissions/reject/${selectedSubmission._id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ const handleViewDetails = (id,title) => {
                     throw new Error('Failed to reject submission');
                 }
             } catch (error) {
-                console.error('Error rejecting submission:', error);
+                // console.error('Error rejecting submission:', error);
                 toast.error('Error rejecting submission');
             }
         }

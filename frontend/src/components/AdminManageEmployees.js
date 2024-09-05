@@ -36,10 +36,10 @@ const [newUser, setNewUser] = useState({
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/users?role=${activeTab.toLowerCase()}`);
+            const response = await axios.get(`http://api.ru-novel.ru/api/users?role=${activeTab.toLowerCase()}`);
             setUsers(response.data);
         } catch (error) {
-            console.error('Error fetching users:', error);
+            // console.error('Error fetching users:', error);
         }
     };
     
@@ -50,24 +50,24 @@ const [newUser, setNewUser] = useState({
     };
     const handleBlock = async (user) => {
         try {
-            await axios.post(`http://localhost:5001/api/block-users`, { email: user.email });
+            await axios.post(`http://api.ru-novel.ru/api/block-users`, { email: user.email });
             toast.success('User blocked successfully');
             setEditUser((prevUser) => ({ ...prevUser, status: 'blocked' }));
             fetchUsers(); // Refresh the users list after blocking
         } catch (error) {
-            console.error('Error blocking user:', error);
+            // console.error('Error blocking user:', error);
             toast.error('Failed to block user');
         }
     };
     
     const handleUnblock = async (user) => {
         try {
-            await axios.post(`http://localhost:5001/api/unblock-users`, { email: user.email });
+            await axios.post(`http://api.ru-novel.ru/api/unblock-users`, { email: user.email });
             toast.success('User unblocked successfully');
             setEditUser((prevUser) => ({ ...prevUser, status: 'active' }));
             fetchUsers(); // Refresh the users list after unblocking
         } catch (error) {
-            console.error('Error unblocking user:', error);
+            // console.error('Error unblocking user:', error);
             toast.error('Failed to unblock user');
         }
     };
@@ -108,7 +108,7 @@ const [newUser, setNewUser] = useState({
         };
     
         try {
-            const response = await axios.post('http://localhost:5001/api/add-users', userData);
+            const response = await axios.post('http://api.ru-novel.ru/api/add-users', userData);
             if (response.status === 201) {
                 toast.success(`${newUser.role.charAt(0).toUpperCase() + newUser.role.slice(1)} added successfully`);
                 fetchUsers(); // Refresh the user list
@@ -132,7 +132,7 @@ const [newUser, setNewUser] = useState({
                 toast.error('Failed to add user');
             }
         } catch (error) {
-            console.error('Error adding user:', error.response?.data || error.message);
+            // console.error('Error adding user:', error.response?.data || error.message);
             toast.error(`Failed to add user: ${error.response?.data?.message || error.message}`);
         }
     };
@@ -144,7 +144,7 @@ const [newUser, setNewUser] = useState({
     const allChecked = Object.values(selectedIds).filter(Boolean).length > 0;
 
     const deleteItems = async (ids, type) => {
-        const url = 'http://localhost:5001/api/delete-users';
+        const url = 'http://api.ru-novel.ru/api/delete-users';
         const payloadKey = 'userIds'; // Define the key for user IDs
         if (!ids.length) return; 
         await fetch(url, {
@@ -165,7 +165,7 @@ const [newUser, setNewUser] = useState({
                     setUsers(filteredData);
                     setSelectedIds({});
                 } catch (error) {
-                    console.error('Error deleting users:', error);
+                    // console.error('Error deleting users:', error);
                     toast.error('Failed to delete users');  // Error toast
                 }
             }
@@ -191,7 +191,7 @@ const [newUser, setNewUser] = useState({
                 setUsers(users.filter(user => user._id !== userId)); // Remove the deleted user from the list
                 setShowEditForm(false); // Close the popup form
             } catch (error) {
-                console.error('Error deleting user:', error);
+                // console.error('Error deleting user:', error);
                 toast.error('Failed to delete user');  // Error toast
             }
         }
@@ -217,7 +217,7 @@ const [newUser, setNewUser] = useState({
     
         if (window.confirm("Are you sure you want to update this user's details?")) {
             try {
-                const response = await axios.put(`http://localhost:5001/api/update-userinfo/${editUser._id}`, editUser);
+                const response = await axios.put(`http://api.ru-novel.ru/api/update-userinfo/${editUser._id}`, editUser);
                 if (response.status === 200) {
                     toast.success('User updated successfully');
                     fetchUsers();
@@ -226,7 +226,7 @@ const [newUser, setNewUser] = useState({
                     toast.error('Failed to update user');
                 }
             } catch (error) {
-                console.error('Error updating user:', error);
+                // console.error('Error updating user:', error);
                 toast.error(`Failed to update user: ${error.response?.data?.message || error.message}`);
             }
         }

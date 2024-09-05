@@ -38,7 +38,7 @@ export const AuthorDashboard= ({ onNewFiction }) =>  {
 
     const fetchDashboardData = async (username) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/author-dashboard/${username}`);
+            const response = await fetch(`http://api.ru-novel.ru/api/author-dashboard/${username}`);
             const data = await response.json();
             if (response.ok) {
                 setDashboardData({
@@ -54,7 +54,7 @@ export const AuthorDashboard= ({ onNewFiction }) =>  {
                 // throw new Error(data.message || 'Failed to fetch dashboard data');
             }
         } catch (error) {
-            console.error('Error fetching author dashboard data:', error);
+            // console.error('Error fetching author dashboard data:', error);
             toast.error('Failed to fetch dashboard data');
         }
     };

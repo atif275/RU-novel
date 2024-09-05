@@ -15,14 +15,14 @@ function Compose() {
 
     const currentuser = useSelector((state) => state.userData.user);
 
-    console.log(currentuser.username)
+    // console.log(currentuser.username)
 
     useEffect(() => {
         
         if (input.trim()) {
             const fetchUsernames = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5001/api/search-users?q=${input}`);
+                    const response = await axios.get(`http://api.ru-novel.ru/api/search-users?q=${input}`);
                     setUsernames(response.data);
                 } catch (error) {
                     console.error('Error fetching usernames', error);
@@ -47,7 +47,7 @@ function Compose() {
     const handleFormSubmit = async (event, status) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:5001/api/messages', {
+            await axios.post('http://api.ru-novel.ru/api/messages', {
                 recipient: input,
                 subject: subject,
                 message: message,

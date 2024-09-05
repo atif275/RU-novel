@@ -22,18 +22,18 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
   useEffect(() => {
     const fetchChapterData = async () => {
       try {
-        console.log("Fetching chapter data for chapter ID:", chapterId);
+        // console.log("Fetching chapter data for chapter ID:", chapterId);
         const response = await axios.get(
-          `http://localhost:5001/api/booksss/${fictionId}/chapters/${chapterId}`
+          `http://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`
         );
         const fetchedChapterData = response.data;
 
-        console.log("Fetched Chapter Data:", fetchedChapterData);
+        // console.log("Fetched Chapter Data:", fetchedChapterData);
 
         setChapterData(fetchedChapterData);
 
         if (!chapters || chapters.length === 0) {
-          console.error("Chapters array is empty or not loaded yet");
+          // console.error("Chapters array is empty or not loaded yet");
           return;
         }
 
@@ -41,9 +41,9 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
           (chapter) => chapter._id === chapterId
         );
 
-        console.log("Current Chapter Index:", currentChapterIndex);
-        console.log("Chapters Array:", chapters);
-        console.log("Chapter ID from URL:", chapterId);
+        // console.log("Current Chapter Index:", currentChapterIndex);
+        // console.log("Chapters Array:", chapters);
+        // console.log("Chapter ID from URL:", chapterId);
 
         if (currentChapterIndex !== -1) {
           setPrevChapter(
@@ -55,10 +55,10 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
               : null
           );
         } else {
-          console.error("Current chapter ID not found in chapters array");
+          // console.error("Current chapter ID not found in chapters array");
         }
       } catch (error) {
-        console.error("Error fetching chapter data:", error);
+        // console.error("Error fetching chapter data:", error);
       }
     };
 
@@ -71,7 +71,7 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
 
   const handleNextChapter = () => {
     if (nextChapter) {
-      console.log("Navigating to the next chapter:", nextChapter);
+      // console.log("Navigating to the next chapter:", nextChapter);
       navigate(
         `/fiction/${fictionId}/${bookTitle}/chapter/${nextChapter._id}/${nextChapter.title}`
       );
@@ -80,7 +80,7 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
 
   const handlePreviousChapter = () => {
     if (prevChapter) {
-      console.log("Navigating to the previous chapter:", prevChapter);
+      // console.log("Navigating to the previous chapter:", prevChapter);
       navigate(
         `/fiction/${fictionId}/${bookTitle}/chapter/${prevChapter._id}/${prevChapter.title}`
       );

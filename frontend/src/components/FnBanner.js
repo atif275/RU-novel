@@ -13,15 +13,15 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
     const checkIfReading = async () => {
       if (email) {
         try {
-          const response = await axios.get(`http://localhost:5001/api/userssss/${email}`);
+          const response = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
           const userData = response.data;
-          console.log('User Data:', userData); // Debugging: Log user data
+          // console.log('User Data:', userData); // Debugging: Log user data
 
           if (userData.reading && userData.reading.includes(title)) {
-            console.log('Book is already in reading list.'); // Debugging: Confirm book is in reading list
+            // console.log('Book is already in reading list.'); // Debugging: Confirm book is in reading list
             setButtonText('Continue Reading');
           } else {
-            console.log('Book is not in reading list.'); // Debugging: Confirm book is not in reading list
+            // console.log('Book is not in reading list.'); // Debugging: Confirm book is not in reading list
             setButtonText('Start Reading');
           }
         } catch (error) {
@@ -36,11 +36,11 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
   const handleStartReading = async () => {
     if (email) {
       try {
-        const response = await axios.post(`http://localhost:5001/api/user/reading`, {
+        const response = await axios.post(`http://api.ru-novel.ru/api/user/reading`, {
           email,
           bookName: title,
         });
-        console.log('Book added to reading list:', response.data); // Debugging: Log response data
+        // console.log('Book added to reading list:', response.data); // Debugging: Log response data
         setButtonText('Continue Reading');
       } catch (error) {
         console.error('Error adding book to reading list:', error);

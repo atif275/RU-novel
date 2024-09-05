@@ -9,7 +9,7 @@ function Changeemail() {
     const currentUser = useSelector((state) => state.userData.user);  // Assuming you have a Redux store setup
 
 
-   console.log(currentUser.email)
+   // console.log(currentUser.email)
 
    const messageOptions = [
     { key: 'compose', icon: 'fa-envelope', label: 'Compose', link: '/private/send', isActive: true },
@@ -77,12 +77,12 @@ const myOptions = [
         e.preventDefault();
         if (newEmail === confirmEmail) {
             try {
-                const response = await axios.put('http://localhost:5001/api/update-email', {
+                const response = await axios.put('http://api.ru-novel.ru/api/update-email', {
                     currentEmail: currentUser.email,
                     newEmail: newEmail
                 });
                 alert('Email updated successfully!');
-                console.log(response.data);
+                // console.log(response.data);
             } catch (error) {
                 console.error('Error updating email:', error.response.data.message);
                 alert(error.response.data.message);

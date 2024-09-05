@@ -136,7 +136,7 @@ import WritathonPage from "./pages/WritathonPage";
 import { Navigate } from 'react-router-dom';
 import SearchPage from "./pages/SearchPage"
 function App() {
-  console.log("App component rendered");
+  // console.log("App component rendered");
   const theme = useSelector(state => state.userData.theme);
   const isAdmin=localStorage.getItem('adminLogin');
   const user = localStorage.getItem('userEmail');
@@ -148,10 +148,10 @@ function App() {
 
     const fetchData = async () => {
       const email = localStorage.getItem('userEmail');
-      console.log('Fetching with email:', email);
+      // console.log('Fetching with email:', email);
     
       try {
-        const response = await fetch('http://localhost:5001/api/token', {
+        const response = await fetch('http://api.ru-novel.ru/api/token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -159,15 +159,15 @@ function App() {
           }),
         });
     
-        console.log('Response:', response);
+        // console.log('Response:', response);
     
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
     
         const data = await response.json();
-        console.log('Data:', data);
-        console.log(data.user)
+        // console.log('Data:', data);
+        // console.log(data.user)
         dispatch(userActions.setEmail(data.user.email));
         dispatch(userActions.setUser(data.user));
        

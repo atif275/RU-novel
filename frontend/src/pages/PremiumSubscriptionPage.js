@@ -17,7 +17,7 @@ const email = user.email;
   const handleSubscription = async (plan) => {
     try {
       // Replace with your backend API endpoint to create a payment request
-      const response = await axios.post("http://localhost:5001/api/qiwi/payment", {
+      const response = await axios.post("http://api.ru-novel.ru/api/qiwi/payment", {
         username,
         email,
         plan,

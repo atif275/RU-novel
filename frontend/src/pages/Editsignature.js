@@ -59,7 +59,7 @@ function Editsignature() {
         // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
     ];
     const handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
+        // console.log('Content was updated:', content);
         // You can set this content to state if needed
     };
 

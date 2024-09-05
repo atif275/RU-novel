@@ -9,7 +9,7 @@ function MemberListPage() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/members-list")
+    fetch("http://api.ru-novel.ru/api/members-list")
       .then((response) => response.json())
       .then((data) => {
         // Set data directly from the backend without further sorting

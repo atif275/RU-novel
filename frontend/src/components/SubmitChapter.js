@@ -50,7 +50,7 @@ export const SubmitChapter = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/api/chapters/add', {
+      const response = await fetch('http://api.ru-novel.ru/api/chapters/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

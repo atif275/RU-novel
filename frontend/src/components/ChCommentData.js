@@ -15,22 +15,22 @@ const ChCommentData = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/load/comments");
+      const response = await fetch("http://api.ru-novel.ru/api/load/comments");
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         dispatch(userActions.setCommentsArray(data));
       } else {
-        console.error("Error fetching comments");
+         console.error("Error fetching comments");
       }
     } catch (error) {
-      console.error("Error:", error);
+       console.error("Error:", error);
     }
   };
 
   useEffect(() => {
     fetchComments();
-    console.log(commentsArr); // Call the fetch function on component load
+    // console.log(commentsArr); // Call the fetch function on component load
   }, []);
 
   const handleEditorChange = (content) => {

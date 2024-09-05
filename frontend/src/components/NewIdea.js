@@ -17,7 +17,7 @@ const NewIdea = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/idea", {
+      const response = await fetch("http://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ const NewIdea = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         if (data) {
           dispatch(userActions.setComments(data));
         }
@@ -47,16 +47,16 @@ const NewIdea = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log( titleRef.current.value,
-       descriptionRef.current.value,
-       categoryRef.current.value,
-       suggestions.username,
-      suggestions.email,
-      suggestions.profilePicture,)
+    // console.log( titleRef.current.value,
+    //    descriptionRef.current.value,
+    //    categoryRef.current.value,
+    //    suggestions.username,
+    //   suggestions.email,
+    //   suggestions.profilePicture,)
   
     if (isAuthenticated) {
       try {
-        const response = await fetch("http://localhost:5001/api/newIdea", {
+        const response = await fetch("http://api.ru-novel.ru/api/newIdea", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -73,9 +73,9 @@ const NewIdea = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched data:", data);
+          // console.log("Fetched data:", data);
           if (data) {
-            console.log(data.comment);
+            // console.log(data.comment);
             navigate('/support/suggestions')
           }
         } else {

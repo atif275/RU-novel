@@ -24,7 +24,7 @@ const Commenting = () => {
 
 
  const profilePictureUrl = commentsData.profilePicture
-//  ? `http://localhost:5001/uploads/${commentsData.profilePicture}`
+//  ? `http://api.ru-novel.ru/uploads/${commentsData.profilePicture}`
 //  : '/default-avatar.png';
 
  const updatedAtDate = new Date(commentsData.updatedAt);
@@ -34,7 +34,7 @@ const Commenting = () => {
 
  const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/comment/box", {
+      const response = await fetch("http://api.ru-novel.ru/api/comment/box", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,22 +44,22 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         if (data) {
-            console.log('c',data)
+            // console.log('c',data)
              dispatch(userActions.setComData(data));
              dispatch(userActions.setLength(data.length))
         }
       } else {
-        console.error("Error fetching user data:", response.statusText);
+         console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+       console.error("Error fetching user data:", error);
     }
   };
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/idea", {
+      const response = await fetch("http://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,16 +69,16 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetcho data:", data);
+        // console.log("Fetcho data:", data);
         if (data) {
           
           dispatch(userActions.setCommentBox(data));
         }
       } else {
-        console.error("Error fetching user data:", response.statusText);
+         console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+       console.error("Error fetching user data:", error);
     }
   };
     
@@ -89,7 +89,7 @@ const Commenting = () => {
   useEffect(() => {
     
       fetchUserData();
-      console.log(comData)
+      // console.log(comData)
 
       if(email){
         fetchData()
@@ -101,7 +101,7 @@ const Commenting = () => {
     
       e.preventDefault()
     try {
-      const response = await fetch("http://localhost:5001/api/comment/save", {
+      const response = await fetch("http://api.ru-novel.ru/api/comment/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,13 +119,13 @@ const Commenting = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          console.log('data',data)
+          // console.log('data',data)
         }
       } else {
-        console.error("Error fetching user data:", response.statusText);
+         console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+       console.error("Error fetching user data:", error);
     }
   };
 

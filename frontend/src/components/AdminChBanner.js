@@ -11,7 +11,7 @@ const ChBanner = () => {
     const fetchChapterData = async () => {
       try {
         // Fetch the book thread document by fictionId
-        const response = await axios.get(`http://localhost:5001/api/booksss/${fictionId}`);
+        const response = await axios.get(`http://api.ru-novel.ru/api/booksss/${fictionId}`);
         const bookData = response.data;
 
         // Find the specific chapter within the book thread's chapters array
@@ -28,10 +28,10 @@ const ChBanner = () => {
             characterImage: bookData.image, // You can change this if there's a specific character image
           });
         } else {
-          console.error('Chapter not found');
+          // console.error('Chapter not found');
         }
       } catch (error) {
-        console.error('Error fetching chapter data:', error);
+        // console.error('Error fetching chapter data:', error);
       }
     };
 

@@ -16,12 +16,12 @@ function Favorites() {
         const fetchFavoriteBooks = async () => {
             try {
                 // Fetch the user's data to get their favorites
-                const userResponse = await axios.get(`http://localhost:5001/api/userssss/${email}`);
+                const userResponse = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
                 const favoriteTitles = userResponse.data.reading;
 
                 // Fetch the book data for each favorite
                 const bookRequests = favoriteTitles.map((title) =>
-                    axios.get(`http://localhost:5001/api/bookthreads/${encodeURIComponent(title)}`)
+                    axios.get(`http://api.ru-novel.ru/api/bookthreads/${encodeURIComponent(title)}`)
                 );
                 const bookResponses = await Promise.all(bookRequests);
                 const books = bookResponses.map(response => response.data);
@@ -43,7 +43,7 @@ function Favorites() {
 
     const handleUnfavorite = async (bookTitle) => {
         try {
-            await axios.post(`http://localhost:5001/api/users/${email}/stopReading`, { bookTitle });
+            await axios.post(`http://api.ru-novel.ru/api/users/${email}/stopReading`, { bookTitle });
             toast.success('Book removed from favorites successfully!');
             // Re-fetch favorite books after removal
             const updatedFavorites = favoriteBooks.filter(book => book.title !== bookTitle);

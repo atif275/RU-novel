@@ -33,15 +33,15 @@ const HomePage = () => {
     // useEffect(() => {
 
     //   const { userEmail } = getQueryParams();
-    //   console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
+    //   // console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
     
     //   if (userEmail) {
     //     const fetchUserData = async () => {
     //       try {
-    //         const response = await fetch(`http://localhost:5001/api/users/${encodeURIComponent(userEmail)}`);
+    //         const response = await fetch(`http://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
     //         if (response.ok) {
     //           const data = await response.json();
-    //           console.log('Fetched data:', data); // Check the fetched data
+    //           // console.log('Fetched data:', data); // Check the fetched data
     //           if (data) {
     //             dispatch(userActions.setEmail(data.email))
     //             dispatch(userActions.setUser(data));
@@ -60,16 +60,16 @@ const HomePage = () => {
     useEffect(() => {
 
       const { userEmail } = getQueryParams();
-      console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
+      // console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
     
       if (userEmail) {
         localStorage.setItem('userEmail',userEmail)
         const fetchUserData = async () => {
           try {
-            const response = await fetch(`http://localhost:5001/api/users/${encodeURIComponent(userEmail)}`);
+            const response = await fetch(`http://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
             if (response.ok) {
               const data = await response.json();
-              console.log('Fetched data:', data); // Check the fetched data
+              // console.log('Fetched data:', data); // Check the fetched data
               if (data) {
                 dispatch(userActions.setEmail(data.email))
                 dispatch(userActions.setUser(data));

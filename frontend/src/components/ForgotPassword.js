@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://localhost:5001/api/forgot-password', {
+        const response = await fetch('http://api.ru-novel.ru/api/forgot-password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
 
         if (response.ok) {
           dispatch(userActions.setEmail(values.email));
-          console.log(mail); // Save email to Redux
+          // console.log(mail); // Save email to Redux
           navigate("/reset-password");
         } else {
           formik.setErrors({ email: 'No user found with this email address.' });
