@@ -37,8 +37,14 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(express.json());
-// app.use(cors());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+const corsOptions = {
+  origin: 'https://www.ru-novel.ru',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,  // If you want to allow cookies, otherwise you can remove this
+};
+
+app.use(cors(corsOptions));
 
 app.use(session({
   secret: '1234asas',
