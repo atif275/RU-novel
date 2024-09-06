@@ -17,12 +17,12 @@ function ReadLater() {
         const fetchReadLaterBooks = async () => {
             try {
                 // Fetch the user's data to get their read later books
-                const userResponse = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
+                const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
                 const readLaterTitles = userResponse.data.readLater;
 
                 // Fetch the book data for each read later book
                 const bookRequests = readLaterTitles.map((title) =>
-                    axios.get(`http://api.ru-novel.ru/api/bookthreads/${encodeURIComponent(title)}`)
+                    axios.get(`https://api.ru-novel.ru/api/bookthreads/${encodeURIComponent(title)}`)
                 );
                 const bookResponses = await Promise.all(bookRequests);
                 const books = bookResponses.map(response => response.data);
@@ -44,7 +44,7 @@ function ReadLater() {
 
     const handleUnfavorite = async (bookTitle) => {
         try {
-            await axios.post(`http://api.ru-novel.ru/api/users/${email}/remove`, { bookTitle });
+            await axios.post(`https://api.ru-novel.ru/api/users/${email}/remove`, { bookTitle });
             toast.success('Book removed from favorites successfully!');
             // Re-fetch favorite books after removal
             const updatedreadLaterBooks = readLaterBooks.filter(book => book.title !== bookTitle);

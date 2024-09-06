@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/forgot-password', {
+        const response = await fetch('https://api.ru-novel.ru/api/forgot-password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

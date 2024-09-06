@@ -33,7 +33,7 @@ function ProfileInfoPage() {
     window.scrollTo(0, 0);
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://api.ru-novel.ru/api/userss/${email}`);
+        const response = await fetch(`https://api.ru-novel.ru/api/userss/${email}`);
         const userData = await response.json();
         setFormData({
           username: userData.username || "",
@@ -60,7 +60,7 @@ function ProfileInfoPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://api.ru-novel.ru/api/users/${email}`, {
+      const response = await fetch(`https://api.ru-novel.ru/api/users/${email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ function ProfileInfoPage() {
     }
   };
   const profilePictureUrl = user.profilePicture;
-  // ? `http://api.ru-novel.ru/uploads/${user.profilePicture}`
+  // ? `https://api.ru-novel.ru/uploads/${user.profilePicture}`
   // : '/default-avatar.png';
 
 

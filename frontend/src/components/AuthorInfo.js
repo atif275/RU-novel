@@ -17,7 +17,7 @@ const AuthorInfo = ({ authorData, authorName }) => {
     const fetchFollowStatus = async () => {
       if (email && authorName) {
         try {
-          const response = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
+          const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
           setIsFollowing(response.data.follows.includes(authorName));
         } catch (error) {
           // console.error('Error fetching follow status:', error);
@@ -36,7 +36,7 @@ const AuthorInfo = ({ authorData, authorName }) => {
     try {
       const apiEndpoint = isFollowing ? 'unfollow' : 'follow';
       const response = await axios.post(
-        `http://api.ru-novel.ru/api/user/${apiEndpoint}`,
+        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
         { authorName, email },
         { withCredentials: true }
       );

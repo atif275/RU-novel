@@ -23,7 +23,7 @@ const SidePanel = ({ authorName, bookName }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
+        const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
         const { favorites, follows, readLater, notInterested } = response.data;
 
         setIsFavorite(favorites.includes(bookName));
@@ -46,7 +46,7 @@ const SidePanel = ({ authorName, bookName }) => {
       return;
     }
     try {
-      const response = await axios.post(`http://api.ru-novel.ru/api/book/${bookName}/rate`, {
+      const response = await axios.post(`https://api.ru-novel.ru/api/book/${bookName}/rate`, {
         rating: newRating,
       });
       setRating(newRating);
@@ -64,7 +64,7 @@ const SidePanel = ({ authorName, bookName }) => {
     }
     try {
       const response = await axios.post(
-        `http://api.ru-novel.ru/api/user/favorite`,
+        `https://api.ru-novel.ru/api/user/favorite`,
         { bookName, email },
         { withCredentials: true }
       );
@@ -90,7 +90,7 @@ const SidePanel = ({ authorName, bookName }) => {
     try {
       const apiEndpoint = isFollowing ? 'unfollow' : 'follow';
       const response = await axios.post(
-        `http://api.ru-novel.ru/api/user/${apiEndpoint}`,
+        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
         { authorName, email },
         { withCredentials: true }
       );
@@ -115,7 +115,7 @@ const SidePanel = ({ authorName, bookName }) => {
     try {
       const apiEndpoint = isReadLater ? 'removereader' : 'readlater';
       const response = await axios.post(
-        `http://api.ru-novel.ru/api/user/${apiEndpoint}`,
+        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
         { bookName, email },
         { withCredentials: true }
       );
@@ -140,7 +140,7 @@ const SidePanel = ({ authorName, bookName }) => {
     try {
       const apiEndpoint = isNotInterested ? 'removeNotInterested' : 'notinterested';
       const response = await axios.post(
-        `http://api.ru-novel.ru/api/user/${apiEndpoint}`,
+        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
         { bookName, email },
         { withCredentials: true }
       );

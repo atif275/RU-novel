@@ -36,7 +36,7 @@ const [newUser, setNewUser] = useState({
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get(`http://api.ru-novel.ru/api/users?role=${activeTab.toLowerCase()}`);
+            const response = await axios.get(`https://api.ru-novel.ru/api/users?role=${activeTab.toLowerCase()}`);
             setUsers(response.data);
         } catch (error) {
             // console.error('Error fetching users:', error);
@@ -50,7 +50,7 @@ const [newUser, setNewUser] = useState({
     };
     const handleBlock = async (user) => {
         try {
-            await axios.post(`http://api.ru-novel.ru/api/block-users`, { email: user.email });
+            await axios.post(`https://api.ru-novel.ru/api/block-users`, { email: user.email });
             toast.success('User blocked successfully');
             setEditUser((prevUser) => ({ ...prevUser, status: 'blocked' }));
             fetchUsers(); // Refresh the users list after blocking
@@ -62,7 +62,7 @@ const [newUser, setNewUser] = useState({
     
     const handleUnblock = async (user) => {
         try {
-            await axios.post(`http://api.ru-novel.ru/api/unblock-users`, { email: user.email });
+            await axios.post(`https://api.ru-novel.ru/api/unblock-users`, { email: user.email });
             toast.success('User unblocked successfully');
             setEditUser((prevUser) => ({ ...prevUser, status: 'active' }));
             fetchUsers(); // Refresh the users list after unblocking
@@ -108,7 +108,7 @@ const [newUser, setNewUser] = useState({
         };
     
         try {
-            const response = await axios.post('http://api.ru-novel.ru/api/add-users', userData);
+            const response = await axios.post('https://api.ru-novel.ru/api/add-users', userData);
             if (response.status === 201) {
                 toast.success(`${newUser.role.charAt(0).toUpperCase() + newUser.role.slice(1)} added successfully`);
                 fetchUsers(); // Refresh the user list
@@ -144,7 +144,7 @@ const [newUser, setNewUser] = useState({
     const allChecked = Object.values(selectedIds).filter(Boolean).length > 0;
 
     const deleteItems = async (ids, type) => {
-        const url = 'http://api.ru-novel.ru/api/delete-users';
+        const url = 'https://api.ru-novel.ru/api/delete-users';
         const payloadKey = 'userIds'; // Define the key for user IDs
         if (!ids.length) return; 
         await fetch(url, {
@@ -217,7 +217,7 @@ const [newUser, setNewUser] = useState({
     
         if (window.confirm("Are you sure you want to update this user's details?")) {
             try {
-                const response = await axios.put(`http://api.ru-novel.ru/api/update-userinfo/${editUser._id}`, editUser);
+                const response = await axios.put(`https://api.ru-novel.ru/api/update-userinfo/${editUser._id}`, editUser);
                 if (response.status === 200) {
                     toast.success('User updated successfully');
                     fetchUsers();

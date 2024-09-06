@@ -38,7 +38,7 @@ const HomePage = () => {
     //   if (userEmail) {
     //     const fetchUserData = async () => {
     //       try {
-    //         const response = await fetch(`http://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
+    //         const response = await fetch(`https://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
     //         if (response.ok) {
     //           const data = await response.json();
     //           // console.log('Fetched data:', data); // Check the fetched data
@@ -66,7 +66,7 @@ const HomePage = () => {
         localStorage.setItem('userEmail',userEmail)
         const fetchUserData = async () => {
           try {
-            const response = await fetch(`http://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
+            const response = await fetch(`https://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
             if (response.ok) {
               const data = await response.json();
               // console.log('Fetched data:', data); // Check the fetched data

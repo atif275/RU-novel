@@ -151,7 +151,7 @@ function App() {
       // console.log('Fetching with email:', email);
     
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/token', {
+        const response = await fetch('https://api.ru-novel.ru/api/token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -36,7 +36,7 @@ export const AdminDashboard = () => {
     const allTicketsChecked = Object.values(selectedTicketIds).filter(Boolean).length > 0;
 
     const deleteItems = async (ids, type) => {
-        const url = type === 'suggestions' ? 'http://api.ru-novel.ru/api/delete/suggestions' : 'http://api.ru-novel.ru/api/delete/tickets';
+        const url = type === 'suggestions' ? 'https://api.ru-novel.ru/api/delete/suggestions' : 'https://api.ru-novel.ru/api/delete/tickets';
         const payloadKey = type === 'suggestions' ? 'suggestionIds' : 'ticketIds'; // Determine the correct key
         if (!ids.length) return; // Prevent empty array sending
         await fetch(url, {
@@ -94,10 +94,10 @@ export const AdminDashboard = () => {
 
     const fetchCounts = async () => {
         try {
-            const suggestions = await fetch('http://api.ru-novel.ru/api/count/suggestions').then(res => res.json());
-            const tickets = await fetch('http://api.ru-novel.ru/api/count/tickets').then(res => res.json());
-            const fictions = await fetch('http://api.ru-novel.ru/api/count/fictions').then(res => res.json());
-            const users = await fetch('http://api.ru-novel.ru/api/count/users').then(res => res.json());
+            const suggestions = await fetch('https://api.ru-novel.ru/api/count/suggestions').then(res => res.json());
+            const tickets = await fetch('https://api.ru-novel.ru/api/count/tickets').then(res => res.json());
+            const fictions = await fetch('https://api.ru-novel.ru/api/count/fictions').then(res => res.json());
+            const users = await fetch('https://api.ru-novel.ru/api/count/users').then(res => res.json());
             
             setCounts({
                 suggestions: suggestions.count,
@@ -112,8 +112,8 @@ export const AdminDashboard = () => {
     };
     const fetchRecentData = async () => {
         try {
-            const suggestionsData = await fetch('http://api.ru-novel.ru/api/load/recent/suggestions').then(res => res.json());
-            const ticketsData = await fetch('http://api.ru-novel.ru/api/load/recent/tickets').then(res => res.json());
+            const suggestionsData = await fetch('https://api.ru-novel.ru/api/load/recent/suggestions').then(res => res.json());
+            const ticketsData = await fetch('https://api.ru-novel.ru/api/load/recent/tickets').then(res => res.json());
             setRecentSuggestions(suggestionsData);
             setRecentTickets(ticketsData);
         } catch (error) {

@@ -15,7 +15,7 @@ const ReviewSection = ({ bookName }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://api.ru-novel.ru/api/reviews?bookName=${encodeURIComponent(bookName)}`);
+        const response = await axios.get(`https://api.ru-novel.ru/api/reviews?bookName=${encodeURIComponent(bookName)}`);
         const sortedReviews = sortReviews(response.data, sortBy);
         setReviews(sortedReviews);
         setPageCount(Math.ceil(sortedReviews.length / itemsPerPage));
@@ -54,7 +54,7 @@ const ReviewSection = ({ bookName }) => {
     if (voteStatus[reviewId]) return;
 
     try {
-      await axios.post(`http://api.ru-novel.ru/api/reviews/${reviewId}/${type}`);
+      await axios.post(`https://api.ru-novel.ru/api/reviews/${reviewId}/${type}`);
       setVoteStatus((prev) => ({
         ...prev,
         [reviewId]: type,
