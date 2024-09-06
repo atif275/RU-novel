@@ -32,7 +32,7 @@ function AdContent(props) {
     // Validate inputs
 
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/update/ads", {
+      const response = await fetch("https://api.ru-novel.ru/api/update/ads", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function AdContent(props) {
     // Validate inputs
 
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/delete/ads", {
+      const response = await fetch("https://api.ru-novel.ru/api/delete/ads", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

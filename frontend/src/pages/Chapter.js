@@ -18,7 +18,7 @@ function Chapter() {
     const fetchChapterData = async () => {
       try {
         // console.log(`Fetching chapter data for fictionId: ${fictionId}, chapterId: ${chapterId}`);
-        const response = await axios.get(`http://api.ru-novel.ru/api/books/${fictionId}`);
+        const response = await axios.get(`https://api.ru-novel.ru/api/books/${fictionId}`);
         // console.log('Book Data:', response.data);
         setBookData(response.data);
 
@@ -32,7 +32,7 @@ function Chapter() {
 
         // Fetch author data based on authorName
         // console.log(`Fetching author data for authorName: ${response.data.author}`);
-        const authorResponse = await axios.get(`http://api.ru-novel.ru/api/userssssss/${response.data.author}`);
+        const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
         // console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
       } catch (error) {

@@ -38,7 +38,7 @@ export const AdminUTMTags = () => {
             return;
         }
         try {
-            await axios.put(`http://api.ru-novel.ru/api/utm-tags/${newTag._id}`, newTag);
+            await axios.put(`https://api.ru-novel.ru/api/utm-tags/${newTag._id}`, newTag);
             fetchUtmTags(); // Refresh the list of UTM tags
             setShowForm(false);
             setIsEditing(false);
@@ -81,7 +81,7 @@ export const AdminUTMTags = () => {
 
     const fetchUtmTags = async () => {
         try {
-            const response = await axios.get('http://api.ru-novel.ru/api/utm-tags');
+            const response = await axios.get('https://api.ru-novel.ru/api/utm-tags');
             setUtmTags(response.data);
         } catch (error) {
             // console.error('Error fetching UTM tags:', error);
@@ -96,7 +96,7 @@ export const AdminUTMTags = () => {
         }
     
         try {
-            const response = await axios.post('http://api.ru-novel.ru/api/utm-tags', newTag);
+            const response = await axios.post('https://api.ru-novel.ru/api/utm-tags', newTag);
             setUtmTags([...utmTags, response.data]);
             setNewTag({
                 utm_source: '',
@@ -117,7 +117,7 @@ export const AdminUTMTags = () => {
     const handleDeleteTag = async (id) => {
         if (window.confirm('Are you sure you want to delete this UTM tag?')) {
             try {
-                await axios.delete(`http://api.ru-novel.ru/api/utm-tags/${id}`); // Corrected URL
+                await axios.delete(`https://api.ru-novel.ru/api/utm-tags/${id}`); // Corrected URL
                 setUtmTags(utmTags.filter(tag => tag._id !== id));
                 toast.success('UTM tag deleted successfully');
             } catch (error) {

@@ -25,7 +25,7 @@ const handleViewDetails = (id,title) => {
 
     const fetchSubmissions = async () => {
         try {
-            const response = await fetch(`http://api.ru-novel.ru/api/submissions/author/${username}`, {
+            const response = await fetch(`https://api.ru-novel.ru/api/submissions/author/${username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

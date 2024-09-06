@@ -19,7 +19,7 @@ const SupportTicketForm = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/idea", {
+      const response = await fetch("https://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const SupportTicketForm = () => {
 
 
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/ticket", {
+      const response = await fetch("https://api.ru-novel.ru/api/ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

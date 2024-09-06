@@ -13,7 +13,7 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
     const checkIfReading = async () => {
       if (email) {
         try {
-          const response = await axios.get(`http://api.ru-novel.ru/api/userssss/${email}`);
+          const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
           const userData = response.data;
           // console.log('User Data:', userData); // Debugging: Log user data
 
@@ -36,7 +36,7 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
   const handleStartReading = async () => {
     if (email) {
       try {
-        const response = await axios.post(`http://api.ru-novel.ru/api/user/reading`, {
+        const response = await axios.post(`https://api.ru-novel.ru/api/user/reading`, {
           email,
           bookName: title,
         });

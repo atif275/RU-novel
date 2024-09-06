@@ -17,7 +17,7 @@ const NewIdea = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/idea", {
+      const response = await fetch("https://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const NewIdea = () => {
   
     if (isAuthenticated) {
       try {
-        const response = await fetch("http://api.ru-novel.ru/api/newIdea", {
+        const response = await fetch("https://api.ru-novel.ru/api/newIdea", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

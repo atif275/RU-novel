@@ -23,7 +23,7 @@ const handleViewDetails = (id,title) => {
 
     const fetchSubmissions = async () => {
         try {
-            const response = await fetch('http://api.ru-novel.ru/api/submissions');
+            const response = await fetch('https://api.ru-novel.ru/api/submissions');
             const data = await response.json();
             setSubmissions(data);
         } catch (error) {
@@ -34,7 +34,7 @@ const handleViewDetails = (id,title) => {
     const handleApprove = async (id) => {
         try {
             // First, approve the submission
-            const approveResponse = await fetch(`http://api.ru-novel.ru/api/submissions/approve/${id}`, {
+            const approveResponse = await fetch(`https://api.ru-novel.ru/api/submissions/approve/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ const handleViewDetails = (id,title) => {
                         };
     
                         // Post the data to the BookThread collection
-                        const bookThreadResponse = await fetch('http://api.ru-novel.ru/api/submit-fiction', {
+                        const bookThreadResponse = await fetch('https://api.ru-novel.ru/api/submit-fiction', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ const handleViewDetails = (id,title) => {
     
                         if (bookThreadResponse.ok) {
                             toast.success('Book Thread Created Successfully');
-                            const updateUserResponse = await fetch(`http://api.ru-novel.ru/api/usersssss/update-fictions`, {
+                            const updateUserResponse = await fetch(`https://api.ru-novel.ru/api/usersssss/update-fictions`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ const handleViewDetails = (id,title) => {
                         }
                     } else if (submission.requestType === 'New Chapter') {
                         // Find the existing book in the BookThread collection
-                        const updateResponse = await fetch('http://api.ru-novel.ru/api/bookthreads/update-chapter', {
+                        const updateResponse = await fetch('https://api.ru-novel.ru/api/bookthreads/update-chapter', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ const handleViewDetails = (id,title) => {
     const handleNoteSaveAndReject = async () => {
         if (selectedSubmission && note.trim()) {
             try {
-                const response = await fetch(`http://api.ru-novel.ru/api/submissions/reject/${selectedSubmission._id}`, {
+                const response = await fetch(`https://api.ru-novel.ru/api/submissions/reject/${selectedSubmission._id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

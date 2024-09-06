@@ -29,7 +29,7 @@ export const Header = ({ selectedComponent, breadcrumb }) => {
     window.location.reload(); 
   };
   const profilePictureUrl = user.profilePicture
-  // ? `http://api.ru-novel.ru/uploads/${user.profilePicture}`
+  // ? `https://api.ru-novel.ru/uploads/${user.profilePicture}`
   // : '/default-avatar.png';
 
 

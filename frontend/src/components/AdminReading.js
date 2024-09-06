@@ -24,7 +24,7 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
       try {
         // console.log("Fetching chapter data for chapter ID:", chapterId);
         const response = await axios.get(
-          `http://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`
+          `https://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`
         );
         const fetchedChapterData = response.data;
 

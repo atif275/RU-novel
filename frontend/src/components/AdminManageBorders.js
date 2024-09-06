@@ -23,7 +23,7 @@ export const AdminManageBorders = () => {
 
     const fetchBorders = async () => {
         try {
-            const response = await axios.get(`http://api.ru-novel.ru/api/borders?tag=${activeTab.toLowerCase()}`);
+            const response = await axios.get(`https://api.ru-novel.ru/api/borders?tag=${activeTab.toLowerCase()}`);
             setBorders(response.data);
         } catch (error) {
             // console.error('Error fetching borders:', error);
@@ -57,7 +57,7 @@ export const AdminManageBorders = () => {
 
     const handleAddBorder = async () => {
         try {
-            const response = await axios.post('http://api.ru-novel.ru/api/add-border', {
+            const response = await axios.post('https://api.ru-novel.ru/api/add-border', {
                 ...newBorder,
                 tag: activeTab.toLowerCase(),
             });
@@ -79,7 +79,7 @@ export const AdminManageBorders = () => {
         if (idsToDelete.length > 0 && window.confirm("Are you sure you want to delete selected borders?")) {
             try {
                 await Promise.all(idsToDelete.map(async (id) => {
-                    await axios.delete(`http://api.ru-novel.ru/api/delete-border/${id}`);
+                    await axios.delete(`https://api.ru-novel.ru/api/delete-border/${id}`);
                 }));
     
                 toast.success('Selected borders deleted successfully');

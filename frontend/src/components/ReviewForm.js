@@ -19,7 +19,7 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://api.ru-novel.ru/api/current-user', { withCredentials: true });
+        const response = await axios.get('https://api.ru-novel.ru/api/current-user', { withCredentials: true });
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -67,11 +67,11 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
 
     try {
       // First, save the review
-      const response = await axios.post('http://api.ru-novel.ru/api/reviews', reviewData);
+      const response = await axios.post('https://api.ru-novel.ru/api/reviews', reviewData);
       setSuccessMessage('Review successfully saved!');
 
       // Now, update the book's ratings
-      const ratingUpdateUrl = `http://api.ru-novel.ru/api/book/${encodeURIComponent(bookName)}/update-ratings`;
+      const ratingUpdateUrl = `https://api.ru-novel.ru/api/book/${encodeURIComponent(bookName)}/update-ratings`;
       const ratingParams = {
         overall: overallScore,
         style: advancedReview ? styleScore : overallScore,
