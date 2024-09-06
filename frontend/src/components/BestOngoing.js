@@ -12,8 +12,13 @@ const BestOngoing = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://api.ru-novel.ru/api/bookthreads');
-        const data = response.data;
+       // const response = await axios.get('http://api.ru-novel.ru/api/bookthreads');
+       const response = await axios.get('http://api.ru-novel.ru/api/bookthreads', {
+          headers: {
+            'Access-Control-Allow-Origin': '*', 
+          }
+        });
+	      const data = response.data;
         if (data.success && Array.isArray(data.data)) {
           setBooks(data.data); // Access the array inside the data object
         } else {
