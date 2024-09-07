@@ -15,7 +15,7 @@ const ChCommentData = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/load/comments");
+      const response = await fetch("https://api.ru-novel.ru/api/load/comments");
       if (response.ok) {
         const data = await response.json();
         // console.log(data);

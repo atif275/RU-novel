@@ -64,7 +64,7 @@ function ForumsPage() {
 
   useEffect(() => {
     // Fetch Popular Threads
-    fetch("http://api.ru-novel.ru/api/popularthreads")
+    fetch("https://api.ru-novel.ru/api/popularthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
@@ -78,7 +78,7 @@ function ForumsPage() {
       );
 
     // Fetch Community Threads
-    fetch("http://api.ru-novel.ru/api/communitythreads")
+    fetch("https://api.ru-novel.ru/api/communitythreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
@@ -91,7 +91,7 @@ function ForumsPage() {
         console.error("Failed to fetch community threads", error)
       );
     //fiction Thread
-    fetch("http://api.ru-novel.ru/api/fictionthreads")
+    fetch("https://api.ru-novel.ru/api/fictionthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
@@ -104,7 +104,7 @@ function ForumsPage() {
         console.error("Failed to fetch popular threads", error)
       );
     //Discussion Thread
-    fetch("http://api.ru-novel.ru/api/discussionthreads")
+    fetch("https://api.ru-novel.ru/api/discussionthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
@@ -117,7 +117,7 @@ function ForumsPage() {
         console.error("Failed to fetch popular threads", error)
       );
     //Forum Thread
-    fetch("http://api.ru-novel.ru/api/forumthreads")
+    fetch("https://api.ru-novel.ru/api/forumthreads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
@@ -131,7 +131,7 @@ function ForumsPage() {
       );
     //recent threads
 
-    fetch("http://api.ru-novel.ru/api/recent-threads")
+    fetch("https://api.ru-novel.ru/api/recent-threads")
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {

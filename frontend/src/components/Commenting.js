@@ -24,7 +24,7 @@ const Commenting = () => {
 
 
  const profilePictureUrl = commentsData.profilePicture
-//  ? `http://api.ru-novel.ru/uploads/${commentsData.profilePicture}`
+//  ? `https://api.ru-novel.ru/uploads/${commentsData.profilePicture}`
 //  : '/default-avatar.png';
 
  const updatedAtDate = new Date(commentsData.updatedAt);
@@ -34,7 +34,7 @@ const Commenting = () => {
 
  const fetchUserData = async () => {
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/comment/box", {
+      const response = await fetch("https://api.ru-novel.ru/api/comment/box", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const Commenting = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/idea", {
+      const response = await fetch("https://api.ru-novel.ru/api/idea", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +101,7 @@ const Commenting = () => {
     
       e.preventDefault()
     try {
-      const response = await fetch("http://api.ru-novel.ru/api/comment/save", {
+      const response = await fetch("https://api.ru-novel.ru/api/comment/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

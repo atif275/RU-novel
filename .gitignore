@@ -3,7 +3,7 @@ node_modules/
 build/
 
 # Environment variables
-
+.env/
 .env
 # Logs
 logs
@@ -28,3 +28,4 @@ Thumbs.db
 # Optional eslint cache
 .eslintcache
 
+.env

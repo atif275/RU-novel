@@ -9,7 +9,7 @@ function MemberListPage() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch("http://api.ru-novel.ru/api/members")
+    fetch("https://api.ru-novel.ru/api/members")
       .then((response) => response.json())
       .then((data) => {
         setData(data);

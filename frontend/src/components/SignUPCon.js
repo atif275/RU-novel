@@ -32,7 +32,7 @@ const SignUPCon = () => {
     formData.append('avatar', imageURL);
 
     try {
-      const response = await fetch('http://api.ru-novel.ru/account/externalloginconfirmation', {
+      const response = await fetch('https://api.ru-novel.ru/account/externalloginconfirmation', {
         method: 'POST',
         body: formData,
       });

@@ -77,7 +77,7 @@ const myOptions = [
         e.preventDefault();
         if (newEmail === confirmEmail) {
             try {
-                const response = await axios.put('http://api.ru-novel.ru/api/update-email', {
+                const response = await axios.put('https://api.ru-novel.ru/api/update-email', {
                     currentEmail: currentUser.email,
                     newEmail: newEmail
                 });

@@ -21,7 +21,7 @@ function Inbox() {
         if (!currentUser) return;
 
         try {
-            const response = await axios.get(`http://api.ru-novel.ru/api/messages/${currentUser.username}`, {
+            const response = await axios.get(`https://api.ru-novel.ru/api/messages/${currentUser.username}`, {
                 params: {
                     status: 'sent',
                     sender: currentUser.username  // Assuming you have the username in the currentUser object
@@ -51,7 +51,7 @@ function Inbox() {
 
     const handleMoveTo = async (subject, newStatus) => {
         try {
-            const response = await axios.put(`http://api.ru-novel.ru/api/messages/status`, { subject, status: newStatus });
+            const response = await axios.put(`https://api.ru-novel.ru/api/messages/status`, { subject, status: newStatus });
             alert(response.data.message); // Alerting the user about the operation status
             fetchMessages(); // Refresh the list of messages
         } catch (error) {
@@ -62,7 +62,7 @@ function Inbox() {
 
     const handleDelete = async (subject) => {
         try {
-            await axios.delete(`http://api.ru-novel.ru/api/messages/${subject}`);
+            await axios.delete(`https://api.ru-novel.ru/api/messages/${subject}`);
             fetchMessages(); // Refresh the list of messages
             alert('Message deleted successfully!');
         } catch (error) {

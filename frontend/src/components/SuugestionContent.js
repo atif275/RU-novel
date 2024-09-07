@@ -9,7 +9,7 @@ import { userActions } from "../store";
 const SugContent = (props) => {
   const img = props.profilePicture; // This will now correctly reference the passed prop
   const profilePictureUrl = img
-    // ? `http://api.ru-novel.ru/uploads/${img}`
+    // ? `https://api.ru-novel.ru/uploads/${img}`
     // : '/default-avatar.png'; 
 const formattedTime = formatDistanceToNow(new Date(props.time), { addSuffix: true });
 const  isAuth= useSelector((state)=>state.userData. isAuthenticated)

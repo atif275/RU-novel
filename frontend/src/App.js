@@ -143,15 +143,15 @@ function App() {
   const dispatch=useDispatch()
   
   const backgroundStyle = theme === 'dark'
-    ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://www.royalroadcdn.com/public/blog/a-price-update-AACA_vNKbxU.jpg?time=1719852695')`
-    : `url('https://www.royalroadcdn.com/public/blog/a-price-update-AACA_vNKbxU.jpg?time=1719852695')`;
+    ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.vox-cdn.com/thumbor/kjcG6uGRVOuM9gwUdERF5vGvZdc=/0x0:1920x1080/1820x1213/filters:focal(804x128:1110x434):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/70383739/S8_KeyArt.0.jpg')`
+    : `url('https://cdn.vox-cdn.com/thumbor/kjcG6uGRVOuM9gwUdERF5vGvZdc=/0x0:1920x1080/1820x1213/filters:focal(804x128:1110x434):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/70383739/S8_KeyArt.0.jpg')`;
 
     const fetchData = async () => {
       const email = localStorage.getItem('userEmail');
       // console.log('Fetching with email:', email);
     
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/token', {
+        const response = await fetch('https://api.ru-novel.ru/api/token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

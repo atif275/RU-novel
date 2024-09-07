@@ -30,7 +30,7 @@ export const Advertising = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://api.ru-novel.ru/api/advertisment', {
+      const response = await fetch('https://api.ru-novel.ru/api/advertisment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const Advertising = () => {
   // Fetch advertisements from the server
   const fetchAds = async () => {
     try {
-      const response = await fetch('http://api.ru-novel.ru/api/ads');
+      const response = await fetch('https://api.ru-novel.ru/api/ads');
       if (response.ok) {
         const data = await response.json();
         setAds(data.ads); // Assuming the response has an 'ads' key

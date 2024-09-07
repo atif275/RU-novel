@@ -11,7 +11,7 @@ const ChBanner = () => {
     const fetchChapterData = async () => {
       try {
         // Fetch the book thread document by fictionId
-        const response = await axios.get(`http://api.ru-novel.ru/api/booksss/${fictionId}`);
+        const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${fictionId}`);
         const bookData = response.data;
 
         // Find the specific chapter within the book thread's chapters array

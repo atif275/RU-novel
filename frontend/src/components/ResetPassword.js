@@ -25,7 +25,7 @@ const ResetPassword = () => {
     onSubmit: async (values) => {
 
         try {
-            const response = await fetch(`http://api.ru-novel.ru/api/reset-password`, {
+            const response = await fetch(`https://api.ru-novel.ru/api/reset-password`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

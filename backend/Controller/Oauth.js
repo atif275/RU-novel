@@ -2,9 +2,10 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const Userdb = require('../model/user');
+require('dotenv').config();
 
-const clientID = "76494981715-l3if10h2dmh5r3lg75rqlbdmi0ngoorv.apps.googleusercontent.com";
-const clientSecret = "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";
+const clientID = process.env.clientID;
+const clientSecret =  process.env.clientSecret;
 const facebookID = "1252397179082903";
 const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 

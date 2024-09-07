@@ -24,7 +24,7 @@ function Search() {
   const fetchSearchResults = async () => {
     if (searchQuery) {
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/books', {
+        const response = await fetch('https://api.ru-novel.ru/api/books', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ function Search() {
   const fetchSearchResults2 = async () => {
     if (searchQuery) {
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/books', {
+        const response = await fetch('https://api.ru-novel.ru/api/books', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function Search() {
   }, [searchQuery, dispatch,fiction]);
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'http://api.ru-novel.ru/auth/google';
+    window.location.href = 'https://api.ru-novel.ru/auth/google';
   };
 
   // Pagination calculations

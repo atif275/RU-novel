@@ -135,7 +135,7 @@ export const SubmitFiction = () => {
         
     
         try {
-            const response = await fetch('http://api.ru-novel.ru/api/submissions/add', {
+            const response = await fetch('https://api.ru-novel.ru/api/submissions/add', {
                 method: 'POST',
                 body: submissionData
             });

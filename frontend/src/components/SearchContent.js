@@ -12,7 +12,7 @@ const FictionListItem = (props) => {
   const fetchSearchResults3 = async () => {
   
       try {
-        const response = await fetch('http://api.ru-novel.ru/api/bookOne', {
+        const response = await fetch('https://api.ru-novel.ru/api/bookOne', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
