@@ -45,8 +45,10 @@ app.use(express.json());
 //};
 const corsOptions = {
   origin: function (origin, callback) {
+
     const allowedOrigins = ['https://ru-novel.ru', 'https://www.ru-novel.ru', 'http://localhost:5001'];
     if (allowedOrigins.includes(origin) || !origin) {  // Allow requests with no origin (like Postman or server-to-server requests)
+
       callback(null, true);  // Allow the request if the origin is in the allowedOrigins array
     } else {
       callback(new Error('Not allowed by CORS'));  // Reject the request if the origin is not allowed
