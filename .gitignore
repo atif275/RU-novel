@@ -3,6 +3,8 @@ node_modules/
 build/
 
 # Environment variables
+backend/.env
+
 .env/
 .env
 # Logs
