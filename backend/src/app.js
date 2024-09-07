@@ -37,11 +37,24 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(express.json());
+//const corsOptions = {
+//  origin: 'https://ru-novel.ru',
+//  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+ // allowedHeaders: ['Content-Type', 'Authorization'],
+ // credentials: true,  // If you want to allow cookies, otherwise you can remove this
+//};
 const corsOptions = {
-  origin: 'https://www.ru-novel.ru',
+  origin: function (origin, callback) {
+    const allowedOrigins = ['https://ru-novel.ru', 'https://www.ru-novel.ru'];
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);  // Allow the request if the origin is in the allowedOrigins array
+    } else {
+      callback(new Error('Not allowed by CORS'));  // Reject the request if the origin is not allowed
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // If you want to allow cookies, otherwise you can remove this
+  credentials: true,  // Enable this if your front-end needs to send credentials (cookies, HTTP authentication)
 };
 
 app.use(cors(corsOptions));
