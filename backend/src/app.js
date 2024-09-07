@@ -45,8 +45,10 @@ app.use(express.json());
 //};
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = ['https://ru-novel.ru', 'https://www.ru-novel.ru'];
-    if (allowedOrigins.includes(origin)) {
+
+    const allowedOrigins = ['https://ru-novel.ru', 'https://www.ru-novel.ru', 'http://localhost:5001'];
+    if (allowedOrigins.includes(origin) || !origin) {  // Allow requests with no origin (like Postman or server-to-server requests)
+
       callback(null, true);  // Allow the request if the origin is in the allowedOrigins array
     } else {
       callback(new Error('Not allowed by CORS'));  // Reject the request if the origin is not allowed
@@ -59,6 +61,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> af6450902960c9eef933791ef7940a88dc6727fa
 app.use(session({
   secret: '1234asas',
   resave: false,
