@@ -68,8 +68,9 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Hash the new password before saving it
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // user.password = await bcrypt.hash(password, salt);
+    user.password = password;
 
     // Save the updated user document
     await user.save();
@@ -93,8 +94,10 @@ exports.create = async (req, res) => {
     }
 
     // Generate salt and hash the password
-    const salt = await bcrypt.genSalt(10);
-    const secPassword = await bcrypt.hash(req.body.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const secPassword = await bcrypt.hash(req.body.password, salt);
+    const secPassword = req.body.password;
+
 
     // Create a new User instance with the role set to "author" by default
     const user = new Userdb({
