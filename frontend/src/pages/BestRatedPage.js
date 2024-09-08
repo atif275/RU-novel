@@ -21,6 +21,7 @@ const BestRatedPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+          window.scrollTo(0,0);
             const response = await fetch('https://api.ru-novel.ru/api/bookthreads');
             const result = await response.json();
             if (response.ok) {

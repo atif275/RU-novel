@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "../store";
 import { formatDistanceToNow, isValid } from "date-fns";
 import { useRef } from "react";
-
+import {notification} from "antd";
 import CommentBox from "./CommentBox";
 
 const Commenting = () => {
@@ -120,6 +120,12 @@ const Commenting = () => {
         const data = await response.json();
         if (data) {
           console.log('data',data)
+          inputRef.current.value = '';
+          notification.success({
+            message: "Comment Submitted",
+            description: "Your comment has been submitted successfully.",
+            placement: "topRight",
+          });
         }
       } else {
         console.error("Error fetching user data:", response.statusText);

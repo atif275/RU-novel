@@ -22,6 +22,7 @@ const OnGoingFictionsPage = () => {
 
   
     useEffect(() => {
+      window.scrollTo(0,0);
       const fetchData = async () => {
         const response = await fetch('https://api.ru-novel.ru/api/bookthreads');
         const result = await response.json();

@@ -9,61 +9,77 @@ import {
     faChartBar, faChartLine, faClock, faSync, faStar, faRandom, faPencil, faComments, faUsers, 
     faLifeRing, faQuestionCircle, faLightbulb, faCheckCircle, faHeadset,
     faList
-  } from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
+
 const SearchPage = () => {
     const [bookThreads, setBookThreads] = useState([]);
+    const [filteredBooks, setFilteredBooks] = useState([]);
     const [expandedId, setExpandedId] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 3;
-    const pageCount = Math.ceil(bookThreads.length / itemsPerPage);
+    const pageCount = Math.ceil(filteredBooks.length / itemsPerPage);
     const offset = currentPage * itemsPerPage;
-    const currentPageData = bookThreads.slice(offset, offset + itemsPerPage);
+    const currentPageData = filteredBooks.slice(offset, offset + itemsPerPage);
 
-  
     useEffect(() => {
-      const fetchData = async () => {
-        const response = await fetch('https://api.ru-novel.ru/api/bookthreads');
-        const result = await response.json();
-        if (response.ok) {
-          setBookThreads(result.data);
-        } else {
-          console.error('Failed to fetch data:', result.error);
-        }
-      };
-      fetchData();
+        const fetchData = async () => {
+            const response = await fetch('https://api.ru-novel.ru/api/bookthreads');
+            const result = await response.json();
+            if (response.ok) {
+                setBookThreads(result.data);
+                setFilteredBooks(result.data); // Initialize filteredBooks with all books
+            } else {
+                console.error('Failed to fetch data:', result.error);
+            }
+        };
+        fetchData();
     }, []);
 
-  const toggleDescription = (id) => {
-    if (expandedId === id) {
-      setExpandedId(null); // Close if the same button is clicked again
-    } else {
-      setExpandedId(id); // Open this and close others
-    }
-  };
+    const handleSearchChange = (event) => {
+        const searchValue = event.target.value;
+        setSearchTerm(searchValue);
 
-  return (
-    <div className="page-content bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="page-content-inner flex">
-          <div className="w-full lg:w-3/4">
-          {bookThreads.length > 0 ? (
-            <div className="portlet light bg-white p-6 shadow-md rounded-lg">
-              <div className="portlet-title mb-4">
-                {/* Search box */}
-                <div className="flex justify-between items-center  h-16">
-                    
-                  
-                </div>
-                
-                {/* Horizontal Line */}
-                <div
-                  className="w-full border-t border-gray-200 mt-6"
-                  style={{ borderWidth: "0.5px" }}
-                ></div>
-              </div>
+        // Filter books based on search term
+        const filtered = bookThreads.filter(book => 
+            book.title.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        setFilteredBooks(filtered);
+        setCurrentPage(0); // Reset to the first page
+    };
 
-              <div className="portlet-body pt-8">
-              <div className="fiction-list" id="result">
+    const toggleDescription = (id) => {
+        if (expandedId === id) {
+            setExpandedId(null); // Close if the same button is clicked again
+        } else {
+            setExpandedId(id); // Open this and close others
+        }
+    };
+
+    return (
+        <div className="page-content bg-gray-100">
+            <div className="container mx-auto px-4 py-8">
+                <div className="page-content-inner flex">
+                    <div className="w-full lg:w-3/4">
+                        {bookThreads.length > 0 ? (
+                            <div className="portlet light bg-white p-6 shadow-md rounded-lg">
+                                <div className="portlet-title mb-4">
+                                    {/* Search box */}
+                                    <div className="flex justify-between items-center h-16">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search by title..." 
+                                            value={searchTerm} 
+                                            onChange={handleSearchChange} 
+                                            className="p-2 border rounded w-full"
+                                        />
+                                    </div>
+                                    {/* Horizontal Line */}
+                                    <div className="w-full border-t border-gray-200 mt-6" style={{ borderWidth: "0.5px" }}></div>
+                                </div>
+
+                                <div className="portlet-body pt-8">
+                                    <div className="fiction-list" id="result">
                                         {currentPageData.map((book) => (
                                             <div key={book._id} className="fiction-list-item flex flex-col mb-8">
                                                 <div className="flex">
@@ -154,41 +170,39 @@ const SearchPage = () => {
                                     </div>
                                 </div>
                                 <div className="flex justify-center mt-4">
-              
-              <ReactPaginate
-              previousLabel={"← Previous"}
-              nextLabel={"Next →"}
-              breakLabel={"..."}
-              breakClassName={"page-item"}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={(event) => setCurrentPage(event.selected)}
-              containerClassName={"inline-flex list-none pagination"}
-              pageClassName={"inline mx-1"}
-              pageLinkClassName={
-                "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
-              }
-              previousClassName={"inline mx-1"}
-              previousLinkClassName={
-                "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
-              }
-              nextClassName={"inline mx-1"}
-              nextLinkClassName={
-                "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
-              }
-              activeClassName={"bg-custom-blue text-white"}
-              forcePage={currentPage}
-            />
-  
-</div>
-            </div>
-            ) : (
-                <div className="text-center py-10">
-                  <p className="text-lg text-gray-600">No books found.</p>
-                </div>
-              )}
-          </div>
+                                    <ReactPaginate
+                                        previousLabel={"← Previous"}
+                                        nextLabel={"Next →"}
+                                        breakLabel={"..."}
+                                        breakClassName={"page-item"}
+                                        pageCount={pageCount}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={(event) => setCurrentPage(event.selected)}
+                                        containerClassName={"inline-flex list-none pagination"}
+                                        pageClassName={"inline mx-1"}
+                                        pageLinkClassName={
+                                            "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
+                                        }
+                                        previousClassName={"inline mx-1"}
+                                        previousLinkClassName={
+                                            "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
+                                        }
+                                        nextClassName={"inline mx-1"}
+                                        nextLinkClassName={
+                                            "px-3 py-1 rounded hover:bg-custom-hover-blue hover:text-white"
+                                        }
+                                        activeClassName={"bg-custom-blue text-white"}
+                                        forcePage={currentPage}
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center py-10">
+                                <p className="text-lg text-gray-600">No books found.</p>
+                            </div>
+                        )}
+                    </div>
           {/* Side bar */}
           <div className="profile-sidebar w-full lg:w-1/4 lg:block hidden pl-6">
             <div className="mb-6 ">

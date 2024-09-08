@@ -5,9 +5,13 @@ import axios from 'axios';
 import { MdOutlineAccessTime } from "react-icons/md";
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa'; // Import star icons
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const LatestUpdates = () => {
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate('/fictions/latest-updates');
+  };
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -139,6 +143,7 @@ const LatestUpdates = () => {
                   height: '36px',
                   fontFamily: 'Open Sans, sans-serif'
                 }}
+                onClick={handleNavigate}
               >
                 More Updates
               </button>

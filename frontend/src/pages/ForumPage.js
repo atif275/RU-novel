@@ -672,7 +672,7 @@ function ForumsPage() {
               </form>
             </div>
             {/* Advertisement box */}
-            <div className="  mt-6 p-3 shadow border h-1/3 w-full ">
+            <div className="  mt-6 p-3 shadow border h-auto w-full ">
               <div className="text-xs px-6 flex justify-end items-center text-bold uppercase">
                 Advertisement
                 <div className="flex justify-end items-center ml-4">

@@ -83,7 +83,7 @@ const LoginForm = () => {
         <div className="logo-container text-center w-full max-w-[100%] mx-auto h-auto">
           <Link to="/">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo3.png?alt=media&token=5992bcd8-4adb-4c8c-89db-9e40ac5b2cef"
+              src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo1.png?alt=media&token=fa805337-746c-4820-8c12-18dbbd99d05a"
               className="mx-auto h-auto max-h-[100px] w-[90%] object-cover"
               alt="royal-road-logo"
             />
