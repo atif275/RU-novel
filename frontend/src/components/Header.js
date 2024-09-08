@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignIn, faChevronDown, faUser, faPencil, faEnvelopeOpen, faBook, faClock, faStar, faHistory, faCogs, faSignOut } from '@fortawesome/free-solid-svg-icons';
@@ -185,7 +186,7 @@ const PageHeader = () => {
               className="flex text-gray-400 hover:text-[#23527C]"
               aria-label="Notifications - 0 new"
             >
-              <FontAwesomeIcon icon={faBell} className="text-[18px] lg:text-[20px]" />
+              {/* <FontAwesomeIcon icon={faBell} className="text-[18px] lg:text-[20px]" /> */}
             </Link>
             {isAuthenticated ? (
               <div className="relative">
@@ -198,8 +199,8 @@ const PageHeader = () => {
                     alt={user.username}
                     className="w-7 h-7 lg:w-8 lg:h-8 rounded-full mr-2"
                   />
-                  <span className="text-gray-500 font-bold hover:text-gray-400">{user.username}</span>
-                  <FontAwesomeIcon icon={faChevronDown} className="ml-2 text-gray-500" />
+                  <span className="text-gray-500 font-bold hover:text-gray-400 mr-2">{user.username}</span>
+                  <FontAwesomeIcon icon={faChevronDown} className="mr-4 text-gray-500" />
                 </button>
                 {dropdownVisible && (
                   <ul

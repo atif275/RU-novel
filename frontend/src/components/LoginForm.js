@@ -135,13 +135,13 @@ const LoginForm = () => {
           </div>
 
           <div className="form-group mb-4 relative">
-            <label htmlFor="email" className="block mb-2 text-[#888888]">
+            <label htmlFor="email" className="block mb-2 text-white">
               Email Address:
             </label>
             <input
               name="email"
               id="email"
-              className="w-full px-3 py-2 bg-[#41444f] text-[#888888] outline-none border-none rounded"
+              className="w-full px-3 py-2 bg-[#41444f] text-white outline-none border-none rounded"
               autoComplete="email"
               type="email"
               onChange={formik.handleChange}
@@ -154,14 +154,14 @@ const LoginForm = () => {
           </div>
 
           <div className="form-group mb-4 mt-8 relative">
-            <label htmlFor="password" className="block mb-2 text-[#888888] ">
+            <label htmlFor="password" className="block mb-2 text-white ">
               Password:
             </label>
             <input
               type="password"
               name="password"
               id="password"
-              className="w-full px-3 py-2 bg-[#41444f] text-[#888888] m border-none outline-none rounded"
+              className="w-full px-3 py-2 bg-[#41444f] text-white m border-none outline-none rounded"
               autoComplete="current-password"
               maxLength="100"
               onChange={formik.handleChange}
@@ -362,7 +362,7 @@ export default LoginForm;
 
 //         <form onSubmit={formik.handleSubmit} className="form-login-details">
 //           <div className="login-divider text-center my-4">
-//             <span className="inline-block px-2 text-[#41444f]">--- or ---</span>
+//             <span className="inline-block px-2 text-white">--- or ---</span>
 //           </div>
 
 //           <div className="text-danger validation-summary-valid" data-valmsg-summary="true">
@@ -415,7 +415,7 @@ export default LoginForm;
 //               type="checkbox"
 //               name="agree"
 //               id="agree"
-//               className="mr-2 bg-[#41444f] text-[#41444f] form-checkbox"
+//               className="mr-2 bg-[#41444f] text-white form-checkbox"
 //               onChange={formik.handleChange}
 //               onBlur={formik.handleBlur}
 //               checked={formik.values.agree}

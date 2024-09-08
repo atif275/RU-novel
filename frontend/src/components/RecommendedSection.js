@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Slider from 'react-slick';
 import { TbHexagonPlus } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Add icons for arrows
 
 const RecommendedSection = () => {
   const [books, setBooks] = useState([]);
+  const sliderRef = useRef(null); // Create a ref for the slider
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -40,7 +42,7 @@ const RecommendedSection = () => {
   };
 
   return (
-    <div className="mt-6 mb-6 bg-white p-[12px] pl-[20px] pb-[25px]">
+    <div className="mt-6 mb-6 bg-white p-[12px] pl-[20px] pb-[25px] relative"> {/* Add relative to position the buttons */}
       <div className="flex items-center mb-4 h-12 border-b border-gray-300">
         <TbHexagonPlus className="text-[#e26a6a] mr-2" size={20} />
         <h2
@@ -58,7 +60,23 @@ const RecommendedSection = () => {
         </h2>
       </div>
 
-      <Slider {...settings} className="ml-3 mr-4">
+      {/* Left Arrow */}
+      <button
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
+        onClick={() => sliderRef.current.slickPrev()}
+      >
+        <FaArrowLeft size={20} />
+      </button>
+
+      {/* Right Arrow */}
+      <button
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
+        onClick={() => sliderRef.current.slickNext()}
+      >
+        <FaArrowRight size={20} />
+      </button>
+
+      <Slider {...settings} className="ml-3 mr-4" ref={sliderRef}>
         {books.map((book) => (
           <div key={book._id} className="">
             <div className="bg-white rounded-lg overflow-hidden h-[220px]">

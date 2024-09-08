@@ -270,14 +270,13 @@ const Navbar = () => {
   </button>
 </div>
 <div className="xs:block">
-  <a 
+<Link 
     className="btn btn-icon-only p-2 mr-2 btn-primary popovers adv-search rounded-lg shadow hover:bg-[#28587a] transition-all duration-200" 
-    data-trigger="hover" data-container="body" data-placement="bottom" data-content="Advanced Search" 
-    aria-label="Advanced Search" 
-    href="/fictions/search?advanced=true"
+   
+    to="/fictions/advanced/search"
   >
     <FontAwesomeIcon icon={faList} className='text-white text-lg p-2 bg-[#337ab7]' />
-  </a>
+  </Link>
 </div>
 
 

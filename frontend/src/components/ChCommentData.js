@@ -54,7 +54,7 @@ const ChCommentData = () => {
       {/* TinyMCE Editor with 12px margin */}
       <div className="mx-6 mt-4">
         <Editor
-          apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h" // Replace with your TinyMCE API key
+          apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3" // Replace with your TinyMCE API key
           value={editorContent}
           init={{
             height: 150,  // Set the editor height to 150 pixels

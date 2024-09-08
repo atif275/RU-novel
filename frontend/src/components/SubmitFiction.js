@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import app from "../firebase";
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip'; // Import the correct named export
 
 export const SubmitFiction = () => {
   const [uploading, setUploading] = useState(false);
@@ -42,6 +43,77 @@ export const SubmitFiction = () => {
             }));
         }
     };
+// Tooltips for Genres
+const genreTooltips = {
+  Action: "Stories with intense action scenes and challenges.",
+  Adventure: "Journey-based stories with exploration and quests.",
+  Comedy: "Humorous stories designed to entertain.",
+  Contemporary: "Modern-day, real-world setting.",
+  Drama: "Emotionally charged narratives focusing on relationships.",
+  Fantasy: "Stories with magical or supernatural elements.",
+  Historical: "Stories set in historical periods.",
+  Horror: "Stories designed to scare or unsettle.",
+  Mystery: "Stories focused on solving a mystery or crime.",
+  Psychological: "Stories focusing on mental or emotional states.",
+  Romance: "Love-centered stories with emotional focus.",
+  Satire: "Stories using humor to criticize social or political issues.",
+  "Sci-fi": "Stories involving futuristic or advanced science.",
+  "Short Story": "Concise narratives with focused plots.",
+  Tragedy: "Stories with sorrowful or disastrous endings."
+};
+
+// Tooltips for Tags
+const tagTooltips = {
+  "Anti-Hero Lead": "A protagonist lacking traditional heroic qualities.",
+  "Artificial Intelligence": "Stories featuring AI as central elements.",
+  "Attractive Lead": "A protagonist who is notably good-looking.",
+  Cyberpunk: "Futuristic stories involving advanced tech and dystopia.",
+  Dungeon: "Stories set in or focused on dungeons.",
+  Dystopia: "Stories set in a bleak or oppressive future.",
+  "Female Lead": "A story featuring a female protagonist.",
+  "First Contact": "First interaction between humans and aliens.",
+  GameLit: "Stories set in game-like worlds or involving game mechanics.",
+  "Gender Bender": "Stories involving gender transformation or confusion.",
+  "Genetically Engineered": "Stories focusing on genetic modification.",
+  Grimdark: "Morally grey and often violent stories.",
+  "Hard Sci-fi": "Science fiction with strict adherence to scientific principles.",
+  Harem: "Stories featuring a protagonist with multiple romantic interests.",
+  "High Fantasy": "Fantasy stories with epic world-building and magic.",
+  LitRPG: "Stories combining literary elements with RPG-like systems.",
+  "Low Fantasy": "Fantasy stories with minimal magic or supernatural elements.",
+  Magic: "Stories where magic plays a central role.",
+  "Male Lead": "A story featuring a male protagonist.",
+  "Martial Arts": "Stories focused on combat and martial arts techniques.",
+  "Multiple Lead Characters": "Stories with more than one protagonist.",
+  Mythos: "Stories drawing from mythology or legendary tales.",
+  "Non-Human Lead": "A protagonist who isn't human.",
+  "Portal Fantasy / Isekai": "Characters transported to another world.",
+  "Post Apocalyptic": "Stories set after a world-ending event.",
+  Progression: "Stories featuring characters becoming stronger over time.",
+  "Reader Interactive": "Stories where the reader can influence the plot.",
+  Reincarnation: "Protagonists reincarnating into new lives.",
+  "Ruling Class": "Stories focused on nobles, monarchs, or ruling powers.",
+  "School Life": "Stories set in a school or involving student life.",
+  "Secret Identity": "Protagonists hiding their true identity.",
+  "Slice of Life": "Stories focusing on everyday, realistic experiences.",
+  "Soft Sci-fi": "Science fiction with a focus on ideas over realism.",
+  "Space Opera": "Epic stories set in space, often involving space travel.",
+  Sports: "Stories focusing on sports and athletic competitions.",
+  Steampunk: "Futuristic settings with Victorian-era technology.",
+  Strategy: "Stories where planning and tactics are crucial.",
+  "Strong Lead": "Protagonists with significant strength or power.",
+  "Super Heroes": "Stories featuring characters with superhuman abilities.",
+  Supernatural: "Stories involving supernatural forces or beings.",
+  "Technologically Engineered": "Stories featuring advanced technology and enhancements.",
+  "Time Loop": "Stories where characters relive the same period repeatedly.",
+  "Time Travel": "Stories featuring travel between different points in time.",
+  "Urban Fantasy": "Fantasy set in modern, urban environments.",
+  "Villainous Lead": "Stories where the protagonist is an anti-hero or villain.",
+  "Virtual Reality": "Stories set in or involving virtual worlds.",
+  "War and Military": "Stories focusing on war and military conflict.",
+  Wuxia: "Chinese martial arts adventures, often with superhuman abilities.",
+  Xianxia: "Chinese fantasy involving cultivation and immortality."
+};
 
     async function handleImageChange(e) {
         // console.log("xxxxxx"+e.target.files[0]);
@@ -281,7 +353,7 @@ export const SubmitFiction = () => {
           </label>
           <div className="md:ml-16">
             <Editor
-              apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+              apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
               initialValue="<p>This is the initial content of the editor</p>"
               init={{
                 height: 300,
@@ -299,141 +371,80 @@ export const SubmitFiction = () => {
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Genres
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
-            {[
-              "Action",
-              "Adventure",
-              "Comedy",
-              "Contemporary",
-              "Drama",
-              "Fantasy",
-              "Historical",
-              "Horror",
-              "Mystery",
-              "Psychological",
-              "Romance",
-              "Satire",
-              "Sci-fi",
-              "Short Story",
-              "Tragedy",
-            ].map((genre) => (
-              <label key={genre} className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
-                  name="genres"
-                  value={genre} onChange={handleGenreChange}
-                />
-                <span className="ml-2 text-gray-700">
-                  {genre} <i className="fas fa-question-circle"></i>
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
+      {/* Genres Section */}
+<div className="mb-4">
+  <label className="block text-gray-700 text-sm font-bold mb-2">Genres</label>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
+    {Object.keys(genreTooltips).map((genre) => (
+      <label key={genre} className="flex items-center">
+        <input
+          type="checkbox"
+          className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
+          name="genres"
+          value={genre}
+          onChange={handleFormChange}
+        />
+        <span className="ml-2 text-gray-700">
+          {genre}
+          <i
+            className="fas fa-question-circle ml-2 text-black cursor-pointer"
+            data-tooltip-id={`${genre}-tooltip`} // Attach the Tooltip with correct id
+          />
+          {/* Attach Tooltip component to each genre */}
+          <Tooltip 
+            id={`${genre}-tooltip`} 
+            place="top" 
+            effect="solid"
+            style={{
+              maxWidth: "250px",  // Set max-width for the tooltip
+              whiteSpace: "normal",  // Allow content to wrap
+            }}
+          >
+            {genreTooltips[genre]}
+          </Tooltip>
+        </span>
+      </label>
+    ))}
+  </div>
+</div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Tags
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
-            {[
-              "Anti-Hero Lead",
-              "Artificial Intelligence",
-              "Attractive Lead",
-              "Cyberpunk",
-              "Dungeon",
-              "Dystopia",
-              "Female Lead",
-              "First Contact",
-              "GameLit",
-              "Gender Bender",
-              "Genetically Engineered",
-              "Grimdark",
-              "Hard Sci-fi",
-              "Harem",
-              "High Fantasy",
-              "LitRPG",
-              "Low Fantasy",
-              "Magic",
-              "Male Lead",
-              "Martial Arts",
-              "Multiple Lead Characters",
-              "Mythos",
-              "Non-Human Lead",
-              "Portal Fantasy / Isekai",
-              "Post Apocalyptic",
-              "Progression",
-              "Reader Interactive",
-              "Reincarnation",
-              "Ruling Class",
-              "School Life",
-              "Secret Identity",
-              "Slice of Life",
-              "Soft Sci-fi",
-              "Space Opera",
-              "Sports",
-              "Steampunk",
-              "Strategy",
-              "Strong Lead",
-              "Super Heroes",
-              "Supernatural",
-              "Technologically Engineered",
-              "Time Loop",
-              "Time Travel",
-              "Urban Fantasy",
-              "Villainous Lead",
-              "Virtual Reality",
-              "War and Military",
-              "Wuxia",
-              "Xianxia",
-            ].map((tag) => (
-              <label key={tag} className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
-                  name="tags"
-                  value={tag} onChange={handleTagChange}
-                />
-                <span className="ml-2 text-gray-700">
-                  {tag} <i className="fas fa-question-circle"></i>
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
+{/* Tags Section */}
+<div className="mb-4">
+  <label className="block text-gray-700 text-sm font-bold mb-2">Tags</label>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
+    {Object.keys(tagTooltips).map((tag) => (
+      <label key={tag} className="flex items-center">
+        <input
+          type="checkbox"
+          className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
+          name="tags"
+          value={tag}
+          onChange={handleFormChange}
+        />
+        <span className="ml-2 text-gray-700">
+          {tag}
+          <i
+            className="fas fa-question-circle ml-2 text-black cursor-pointer"
+            data-tooltip-id={`${tag}-tooltip`} // Attach the Tooltip with correct id
+          />
+          {/* Attach Tooltip component to each tag */}
+          <Tooltip 
+            id={`${tag}-tooltip`} 
+            place="top" 
+            effect="solid"
+            style={{
+              maxWidth: "250px",  // Set max-width for the tooltip
+              whiteSpace: "normal",  // Allow content to wrap
+            }}
+          >
+            {tagTooltips[tag]}
+          </Tooltip>
+        </span>
+      </label>
+    ))}
+  </div>
+</div>
 
-        {/* Content Warning Section */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Content Warning
-          </label>
-          <div className="grid gap-4 md:ml-16">
-            {contentWarnings.map((warning) => (
-              <label
-                key={warning.label}
-                className="flex items-center bg-gray-100 p-3 rounded"
-              >
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1 flex-shrink-0"
-                  name="contentWarnings"
-                  value={warning.label} onChange={handleWarningChange} 
-                />
-                <div className="ml-2">
-                  <span className="font-bold text-gray-700">
-                    {warning.label}
-                  </span>{" "}
-                  - <span className="text-gray-700">{warning.description}</span>
-                </div>
-              </label>
-            ))}
-          </div>
-        </div>
 
         {/* Content Ownership Section */}
         <div className="mb-4">
@@ -507,7 +518,7 @@ export const SubmitFiction = () => {
           </label>
           <div className="md:ml-16">
             <Editor
-              apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+              apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
               initialValue="<p>Chapter content here...</p>"
               init={{
                 height: 300,
