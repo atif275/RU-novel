@@ -31,7 +31,7 @@ exports.forgotPassword = async (req, res) => {
     // user.resetPasswordExpires = resetTokenExpiry;
     // await user.save();
 
-    // const resetURL = http://localhost:3000/reset-password/${token};
+    // const resetURL = https://ru-novel.ru/reset-password/${token};
     // await sendResetEmail(email, resetURL);
    if(!user.password){
     return res.status(404).json({ message: 'No user found with this email address.' });

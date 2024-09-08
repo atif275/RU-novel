@@ -21,18 +21,19 @@ import Inbox from "./pages/Inbox";
 import Sentitems from "./pages/Sentitems";
 import Drafts from "./pages/Drafts";
 import Trashcan from "./pages/Trashcan";
-
+import CookiePage from "./pages/CookiePage";
+import DmPage from "./pages/DPage";
 import Changeemail from "./pages/Changeemail";
 import Changepassword from "./pages/Changepassword"
 import Twofactorauth from "./pages/Twofactorauth"
 import Externallogins from "./pages/Externallogins";
 import Downloadaccount from "./pages/Downloadaccount";
 import Deleteaccount from "./pages/Deleteaccount";
-
+import ContactEmailPage from "./pages/ContactEmailPage";
 import Notifications from "./pages/Notifications";
 import Threads from "./pages/Threads";
 import Notificationlist from "./pages/Notificationlist";
-
+import APage from "./pages/AouthPage";
 import Usercp from "./pages/Usercp";
 import Editsignature from "./pages/Editsignature";
 // ---------------------------------------------------------------------------SABHEEE import ends-----------------------------------------------------
@@ -90,7 +91,7 @@ import ModerationPage from "./pages/ModerationPage";
 import RepPage from "./pages/ReputationPage";
 import ExpPage from "./pages/ExpPage";
 import AchPage from "./pages/AchPage";
-
+import PP from "./pages/pp";
 import ActPage from "./pages/ActivationPage";
 import SecPage from "./pages/SecurityPage";
 import NotifyPage from "./pages/NotifyPage";
@@ -104,14 +105,14 @@ import SuggestionsPage from "./pages/SuggestionPage";
 import NewIdeaPage from "./pages/NewIdeaPage";
 import CommentingPage from "./pages/CommentingPage";
 import ReplyPage from "./pages/ReplyPage";
-
+import RPage from "./pages/RPage";
 import TrendingPage from "./pages/TrendingPage";
 import OnGoingFictionsPage from "./pages/OnGoingFictionsPage";
 import CompletePage from "./pages/CompletePage";
 import AccountOptionsPage from "./pages/AccountOptionsPage";
 import ProfileInfoPage from "./pages/ProfileInfoPage";
 
-
+import TermsPage from "./pages/TermsPage";
 import FreqPage from "./pages/FreqAskedPage";
 import CopyPage from "./pages/CopyPage";
 import PremiumPage from "./pages/PremiumPage";
@@ -186,12 +187,13 @@ function App() {
 
   return (
     <div
-      style={{
-        backgroundImage: backgroundStyle,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh', // Ensures the background covers the full viewport height
-      }}
+    style={{
+      backgroundImage: backgroundStyle,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed', // Fixes background
+      minHeight: '100vh', // Ensures background covers full viewport height
+    }}
     >
       <BrowserRouter>
       
@@ -216,9 +218,63 @@ function App() {
           
         </Routes>
         <Routes>
+          
+          <Route path="/report/comment" element={ <RPage/>} />
+        
+  
+            
+          </Routes>
+        <Routes>
+          
+          <Route path="/ads/author" element={ <APage/>} />
+        
+  
+            
+          </Routes>
+        <Routes>
             
             <Route path="/submit-chapter/:fictionId" element={<SubmitChapter />} />
         </Routes>
+        <Routes>
+          
+          <Route path="/tos" element={ <TermsPage/>} />
+        
+          </Routes>
+          <Routes>
+          
+          <Route path="/privacypolicy" element={ <PP/>} />
+        
+  
+            
+          </Routes>
+          <Routes>
+          
+          <Route path="/cookiepolicy" element={ <CookiePage/>} />
+        
+  
+            
+          </Routes>
+          <Routes>
+          
+          <Route path="/dmca" element={ <DmPage/>} />
+        
+  
+            
+          </Routes>
+          <Routes>
+          
+          <Route path="/blog" element={ <SuggestionsPage/>} />
+        
+  
+            
+          </Routes>
+          <Routes>
+          
+          <Route path="/contact/email" element={ <ContactEmailPage/>} />
+        
+  
+            
+          </Routes>
         <Routes>
                 
                 <Route path="/fiction/:id/:title" element={

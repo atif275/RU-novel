@@ -61,13 +61,13 @@ const ComBox = (props) => {
             className="btn btn-sm btn-outline btn-link text-blue-500 hover:underline"
             onClick={handleClick}
           >
-            <i className="fas fa-reply mr-1"></i> Reply
+            {/* <i className="fas fa-reply mr-1"></i> Reply */}
           </a>
           <a
             className="btn btn-sm btn-outline text-red-500 hover:underline"
             href="/report/ideacomment/81424"
           >
-            <i className="fas fa-flag mr-1"></i> Report
+            {/* <i className="fas fa-flag mr-1"></i> Report */}
           </a>
         </div>
       </div>

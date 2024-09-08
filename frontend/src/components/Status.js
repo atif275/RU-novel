@@ -4,8 +4,8 @@ function Status() {
   return (
     <div className="bg-white h-full md:p-8">
       <img
-        className="  md:ml-[15%] mt-[5%]"
-        src="https://www.royalroad.com/dist/img/logo/rr-logo-gold-white-small-min.png"
+        className="  md:ml-[15%] mt-[5%] h-64 lg:h-64"
+        src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo3.png?alt=media&token=5992bcd8-4adb-4c8c-89db-9e40ac5b2cef"
       ></img>
       <div class="text-white bg-green-800 p-4 mt-[3%] md:ml-[15%] md:w-2/3 flex justify-between  rounded-md border border-green-300">
         <h1 class="text-2xl font-bold">All systems operational</h1>
@@ -94,7 +94,7 @@ function Status() {
       <div className="border p-4 border-solid border-gray-500 text-2xl md:w-2/3 md:ml-[15%]">
         <div className="p-4 flex justify-between">
           <h4>
-            Royal Road{" "}
+            RU - Novel{" "}
             <span
               className="bg-gray-200 p-2 ml-3"
               style={{
@@ -395,7 +395,7 @@ function Status() {
             on their end.
           </p>
           <p className="font-bold py-4 text-sm">Affected components</p>
-          <p className="py-2 text-sm">Royal Road: Scheduler, Website</p>
+          <p className="py-2 text-sm">RU - Novel: Scheduler, Website</p>
           <p className="py-2 text-sm">Infrastructure: Server Cluster</p>
         </div>
       </div>

@@ -61,10 +61,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-<<<<<<< HEAD
-=======
 
->>>>>>> af6450902960c9eef933791ef7940a88dc6727fa
 app.use(session({
   secret: '1234asas',
   resave: false,
@@ -299,9 +296,9 @@ app.get('/auth/google/callback',
   (req, res) => {
     const userEmail = req.user.user.email;
     if (req.user.isNewUser) {
-      res.redirect(`http://localhost:3000/google/account?email=${encodeURIComponent(userEmail)}`);
+      res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
     } else  {
-      res.redirect(`http://localhost:3000?email=${encodeURIComponent(userEmail)}`);
+      res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
       
     }
     
@@ -314,21 +311,21 @@ app.get('/auth/facebook',
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
-    failureRedirect: 'http://localhost:3000/error' // Redirects if authentication fails
+    failureRedirect: 'https://ru-novel.ru/error' // Redirects if authentication fails
   }),
   (req, res) => {
     const userEmail = req.user.user.email; // Extract the email from req.user
 
     if (!userEmail) {
       // Redirect to an error page if the email is missing
-      return res.redirect('http://localhost:3000/error');
+      return res.redirect('https://ru-novel.ru/error');
     }
 
     // Handle redirection based on whether the user is new or returning
     if (req.user.isNewUser) {
-      res.redirect(`http://localhost:3000/facebook/account?email=${encodeURIComponent(userEmail)}`);
+      res.redirect(`https://ru-novel.ru/facebook/account?email=${encodeURIComponent(userEmail)}`);
     } else {
-      res.redirect(`http://localhost:3000?name=${encodeURIComponent(userEmail)}`);
+      res.redirect(`https://ru-novel.ru?name=${encodeURIComponent(userEmail)}`);
     }
   }
 );

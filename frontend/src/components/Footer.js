@@ -4,6 +4,7 @@ import { faFacebookF, faTwitter, faPinterest, faInstagram, faTiktok } from '@for
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 const flipCardStyle = {
   perspective: '1000px',
@@ -30,13 +31,17 @@ const flipCardBackStyle = {
   transform: 'rotateX(180deg)',
 };
 
+
+
 const Footer = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.userData.theme);
-
+  const isAuthenticated=useSelector((state)=>state.userData.isAuthenticated)
+   const navigate=useNavigate()
   const handleThemeChange = (e) => {
     dispatch(userActions.setTheme(e.target.value));
   };
+  
 
   return (
     <div className={`py-8 ${theme === 'dark' ? 'bg-[#131313] text-[#A2ABB7]' : 'bg-gray-600 text-gray-400'}`} style={{ width: '100%' }}>
@@ -46,7 +51,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 sm:w-1/2 px-4 mb-8">
             <h2 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>About</h2>
             <p>
-              Royal Road® is the home of web novels and fan fictions! In our amazing community, you can find various talented individuals who write as a hobby or even professionally, artists who create art for them, and many, many readers who provide valuable feedback and encouragement.
+              Royal Road®️ is the home of web novels and fan fictions! In our amazing community, you can find various talented individuals who write as a hobby or even professionally, artists who create art for them, and many, many readers who provide valuable feedback and encouragement.
             </p>
           </div>
 
@@ -54,7 +59,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 sm:w-1/2 px-4 mb-8">
             <h2 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>Amazon Affiliate</h2>
             <div className="text-sm">
-              Royal Road® as an Amazon Associate earns from qualifying purchases.
+              Royal Road®️ as an Amazon Associate earns from qualifying purchases.
             </div>
           </div>
 
@@ -115,15 +120,15 @@ const Footer = () => {
           <div className="w-full md:w-1/4 sm:w-1/2 px-4 mb-8">
             <h2 className={`text-lg font-semibold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>Need some help?</h2>
             <div className="mb-2">
-              <Link to="/support" className="text-[#32C5D2] hover:underline">Create a support ticket</Link>
+              <Link to="/support/ticket" className="text-[#32C5D2] hover:underline">Create a support ticket</Link>
             </div>
             <div className="mb-4">
               <h2 className={`text-lg font-semibold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>Contact</h2>
-              <Link to="/contact" className="text-[#32C5D2] hover:underline">Contact Us by Email</Link>
+              <Link to="/contact/email" className="text-[#32C5D2] hover:underline">Contact Us by Email</Link>
             </div>
             <h2 className={`text-lg font-semibold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>Advertising</h2>
             <div>
-              <Link to="/pages/advertising-faq" className="text-[#32C5D2] hover:underline">Ads for Authors</Link>
+              <Link to="/ads/author" className="text-[#32C5D2] hover:underline">Ads for Authors</Link>
               <br />
               <a href="mailto:sales@ggsoftware.io" className="text-[#32C5D2] hover:underline">Programmatic Advertising</a>
             </div>

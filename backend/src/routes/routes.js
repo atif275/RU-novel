@@ -19,6 +19,10 @@ const storage = multer.diskStorage({
   })
   
   const upload = multer({ storage: storage })
+  router.post('/api/comments/follow',control.follow)
+router.post('/api/comments/followlist',control.followList)
+router.get('/api/top', control.sort); 
+router.post('/api/report',control.report)
 
 router.post('/api/createUser',control.create)
 router.post('/api/login',control.login)

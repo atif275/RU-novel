@@ -43,7 +43,7 @@ exports.forgotPassword = async (req, res) => {
     // user.resetPasswordExpires = resetTokenExpiry;
     // await user.save();
 
-    // const resetURL = http://localhost:3000/reset-password/${token};
+    // const resetURL = https://ru-novel.ru/reset-password/${token};
     // await sendResetEmail(email, resetURL);
    if(!user.password){
     return res.status(404).json({ message: 'No user found with this email address.' });
@@ -794,7 +794,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 const generateUTMLink = (tag) => {
-  const baseUrl = "http://localhost:3000"; // Replace with your actual base URL
+  const baseUrl = "https://ru-novel.ru"; // Replace with your actual base URL
   let link = `${baseUrl}?utm_source=${tag.utm_source}&utm_medium=${tag.utm_medium}`;
 
   if (tag.utm_campaign) link += `&utm_campaign=${tag.utm_campaign}`;
@@ -903,8 +903,8 @@ exports.createPayment = async (req, res) => {
           }
       },
       comment: `${subscriptionType} subscription for ${username}`,
-      successUrl: `http://localhost:3000/payment-success`, // Redirect URL after successful payment
-      failUrl: `http://localhost:3000/payment-failure`, // Redirect URL after failed payment
+      successUrl: `https://ru-novel.ru/payment-success`, // Redirect URL after successful payment
+      failUrl: `https://ru-novel.ru/payment-failure`, // Redirect URL after failed payment
   };
 
   try {
@@ -1312,3 +1312,93 @@ exports.getAllMembers = async (req, res) => {
   }
 };
   
+
+exports.follow=async(req,res)=>{
+  const { email, mail } = req.body;
+  try {
+    const comment = await Commentdb.findOne({ email });
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    const isFollowing = comment.follow.some(follow => follow.mail === mail);
+    if (isFollowing) {
+      comment.follow = comment.follow.filter(follow => follow.mail !== mail);
+    } else {
+      comment.follow.push({ mail });
+    }
+
+    await comment.save();
+    res.status(200).json({ success: true, isFollowing: !isFollowing });
+  } catch (error) {
+    console.error('Error updating follow status:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+
+
+}
+exports.followList=async(req,res)=>{
+ 
+  const { mail , email } = req.body;
+
+  try {
+    // Assuming Commentdb contains follow arrays, where each follow has an email field
+    const comment = await Commentdb.findOne({ email });
+
+
+  if (!comment) {
+    return res.status(404).json({ message: 'Follow list not found' });
+  }
+
+  // Filter the follow list by the provided email
+  const followList = comment.follow.filter(follow => follow.mail === mail);
+
+  if (followList.length === 0) {
+    return res.status(404).json({ message: 'User not following' });
+  }
+
+  res.status(200).json({ success: true, followList, isFollowing: true });
+} catch (error) {
+  console.error('Error checking follow status:', error);
+  res.status(500).json({ message: 'Server error' });
+
+}
+
+}
+exports.sort=async(req,res)=>{
+  try {
+    const comments = await Commentdb.find().sort({ createdAt: -1 }); // Sort by createdAt descending
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching comments', error });
+  }
+}
+
+exports.report=async(req,res)=>{
+  const { mail, reporterEmail, reason, information } = req.body;
+
+  try {
+    // Find the comment by the email (you can modify this to use another unique identifier)
+    const comment = await Commentdb.findOne({ email: mail });
+
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    // Add the report to the report array
+    comment.report.push({
+      mail,
+      reporterEmail,
+      reason,
+      information,
+    });
+
+    // Save the updated comment
+    await comment.save();
+
+    res.status(200).json({ message: 'Report submitted successfully', comment });
+  } catch (error) {
+    console.error('Error submitting report:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}

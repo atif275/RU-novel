@@ -32,13 +32,37 @@ const Suggestions = () => {
       console.error("Error:", error);
     }
   };
+  const fetchComments3 = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } 
+    try {
+      const response = await fetch("https://api.ru-novel.ru/api/top");
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Assuming `data` is an array where each item has a `follow` array.
+        const processedData = data
+          .filter(item => item.follow && item.follow.length > 0) // Filter items with follow array length > 0
+          .sort((a, b) => b.length - a.length); // Sort items by length in descending order
+  
+        // Dispatch the processed data to Redux
+        dispatch(userActions.setCommentsArray(processedData));
+      } else {
+        console.error("Error fetching comments");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
 
   useEffect(() => {
     fetchComments();
   }, [location]); // Re-fetch comments when location changes
 
-  const fetchComments2 = async (e) => {
-    e.preventDefault();
+  const fetchComments2 = async () => {
+
     try {
       const response = await fetch("https://api.ru-novel.ru/api/load/search", {
         method: "POST",
@@ -106,13 +130,19 @@ const Suggestions = () => {
             </div>
           </div>
           <div className="md:flex items-center space-x-2 mr-5">
-            <Link
+            <button
               className="btn bg-gray-200 hidden md:block text-gray-800 flex items-center px-4 py-2 rounded-md hover:bg-gray-300"
-              to="/support/suggestions?sorting=newest"
+              onClick={fetchComments3}
+            >
+              <i className="fas fa-sort-numeric-down-alt mr-2"></i> Top
+            </button>
+            <button
+              className="btn bg-gray-200 hidden md:block text-gray-800 flex items-center px-4 py-2 rounded-md hover:bg-gray-300"
+               onClick={fetchComments}
             >
               <i className="fas fa-sort-numeric-down-alt mr-2"></i> Newest
-            </Link>
-          
+            </button>
+            
             <button
               onClick={handleClick}
               className="btn bg-blue-600 text-white flex items-center px-4 py-2 rounded-md hover:bg-blue-700"

@@ -72,11 +72,11 @@ Start the React development server:
 npm start
 ```
 
-This will serve the frontend on `http://localhost:3000/`.
+This will serve the frontend on `https://ru-novel.ru/`.
 
 ## Usage
 
-After starting both the backend and frontend services, open a web browser and go to `http://localhost:3000/` to start using the RU-novel application.
+After starting both the backend and frontend services, open a web browser and go to `https://ru-novel.ru/` to start using the RU-novel application.
 
 ## Contributing
 
