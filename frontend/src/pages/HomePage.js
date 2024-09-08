@@ -61,7 +61,7 @@ const HomePage = () => {
 
       const { userEmail } = getQueryParams();
       // console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
-      localStorage.setItem('userEmail',userEmail)
+      
       if (userEmail) {
         localStorage.setItem('userEmail',userEmail)
         const fetchUserData = async () => {
