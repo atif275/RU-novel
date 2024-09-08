@@ -14,7 +14,7 @@ function Borderwardrobe() {
 
 
 
-    const premier =1
+    const premier =0
     const currentUser = useSelector((state) => state.userData.user);
     const fictionCounts = currentUser?.fictions?.length || 0;
 
@@ -33,7 +33,7 @@ function Borderwardrobe() {
                 const { data } = await axios.get('https://api.ru-novel.ru/api/level/borders', {
                     params: {
                         tag: 'level',
-                        fictionCount: fictionCounts // Assuming the desired number of borders based on a specific condition
+                        fictionCount: {fictionCounts} // Assuming the desired number of borders based on a specific condition
                     }
                 });
                 setBorders(data);
@@ -78,6 +78,8 @@ function Borderwardrobe() {
 
             setCurrentBorder(newBorder.imageUrl);
             toast.success('Border updated successfully!');
+            window.location.reload();
+
         } catch (error) {
             console.error('Error updating border:', error);
             toast.error('Failed to update border.');
