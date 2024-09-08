@@ -15,7 +15,10 @@ export const Sidebar = ({ setSelectedComponent }) => {
                 {!collapsed && (
                     <div className="logo">
                         <Link to="/" title="Royal Road">
-                        <img src="https://www.royalroad.com/dist/img/logo/rr-logo-smallcaps-flat-white-min.png" alt="Logo" className="h-8" />
+                        <img 
+                            // src="https://www.royalroad.com/dist/img/logo/rr-logo-smallcaps-flat-white-min.png" 
+                            src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo3.png?alt=media&token=5992bcd8-4adb-4c8c-89db-9e40ac5b2cef" 
+                            alt="Logo" className="h-8" />
                         </Link>
                         
                     </div>

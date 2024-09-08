@@ -24,7 +24,21 @@ const sendResetEmail = require('./nodemailer');
 
 
 
-
+  exports.token=async(req,res)=>{
+    const { email } = req.body;
+      
+    try {
+        const user = await Userdb.findOne({ email });
+  
+        if (user) {
+            return res.json({  user });
+        } else {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server error', error });
+    }
+  }
 
 exports.forgotPassword = async (req, res) => {
   const  email  = req.body.email;
