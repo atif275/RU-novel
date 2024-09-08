@@ -7,6 +7,7 @@ const control=require('../Controller/controller')
 const Userdb=require('../model/user')
 const multer = require('multer');
 const Message = require('../model/Message')
+const Border = require('../model/Border')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -380,6 +381,42 @@ router.put('/update-border/:username', async (req, res) => {
   } catch (error) {
       console.error('Database update error:', error);
       res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/api/level/borders', async (req, res) => {
+  const { tag, fictionCount } = req.query;
+  try {
+    const query = tag ? { tag: tag } : {};
+    let borders = await Border.find(query);
+
+    // Dynamically determine how many borders to send based on fictionCount
+    const count = parseInt(fictionCount, 10);
+    let numberOfBorders = 0;
+    if (!isNaN(count) && count > 0) {
+      numberOfBorders = Math.floor(count / 10) + 1; // For every 10 increase in fictionCount, add one more border
+      numberOfBorders = Math.min(numberOfBorders, borders.length); // Ensure we do not exceed the number of available borders
+    }
+
+    borders = borders.slice(0, numberOfBorders); // Slice the array to the calculated number of borders
+
+    res.json(borders);
+  } catch (error) {
+    console.error('Failed to retrieve borders:', error);
+    res.status(500).json({ message: 'Failed to retrieve borders' });
+  }
+});
+
+
+router.get('/api/premium/borders', async (req, res) => {
+  const { tag } = req.query;
+  try {
+      const query = tag ? { tag: tag } : {};
+      let borders = await Border.find(query);
+      res.json(borders); // Sends back the borders filtered by the tag, including 'premium'
+  } catch (error) {
+      console.error('Failed to retrieve borders with tag:', tag, error);
+      res.status(500).json({ message: 'Failed to retrieve borders' });
   }
 });
 

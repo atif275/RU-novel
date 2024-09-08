@@ -24,13 +24,13 @@ const Commenting = () => {
 
 
  const profilePictureUrl = commentsData.profilePicture
-//  ? `https://api.ru-novel.ru/uploads/${commentsData.profilePicture}`
-//  : '/default-avatar.png';
 
  const updatedAtDate = new Date(commentsData.updatedAt);
  const formattedTime = isValid(updatedAtDate) 
    ? formatDistanceToNow(updatedAtDate, { addSuffix: true }) 
    : "Unknown time";
+
+  
 
  const fetchUserData = async () => {
     try {
@@ -44,17 +44,17 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Fetched data:", data);
+        console.log("Fetched data:", data);
         if (data) {
-            // console.log('c',data)
+            console.log('c',data)
              dispatch(userActions.setComData(data));
              dispatch(userActions.setLength(data.length))
         }
       } else {
-         console.error("Error fetching user data:", response.statusText);
+        console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-       console.error("Error fetching user data:", error);
+      console.error("Error fetching user data:", error);
     }
   };
   const fetchData = async () => {
@@ -69,16 +69,16 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Fetcho data:", data);
+        console.log("Fetcho data:", data);
         if (data) {
           
           dispatch(userActions.setCommentBox(data));
         }
       } else {
-         console.error("Error fetching user data:", response.statusText);
+        console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-       console.error("Error fetching user data:", error);
+      console.error("Error fetching user data:", error);
     }
   };
     
@@ -89,7 +89,7 @@ const Commenting = () => {
   useEffect(() => {
     
       fetchUserData();
-      // console.log(comData)
+      console.log(comData)
 
       if(email){
         fetchData()
@@ -119,15 +119,20 @@ const Commenting = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          // console.log('data',data)
+          console.log('data',data)
         }
       } else {
-         console.error("Error fetching user data:", response.statusText);
+        console.error("Error fetching user data:", response.statusText);
       }
     } catch (error) {
-       console.error("Error fetching user data:", error);
+      console.error("Error fetching user data:", error);
     }
   };
+
+  const handleReport=(e)=>{
+    e.preventDefault()
+    navigate('/report/comment')
+  }
 
 
   const handleClick = (e) => {
@@ -245,21 +250,13 @@ const Commenting = () => {
             </a>
 
             {/* Follow Button */}
-            <form method="post">
-              <button type="submit" className="btn btn-sm bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300">
-                <i className="fal fa-star mr-2"></i> Follow
-              </button>
-              <input
-                name="__RequestVerificationToken"
-                type="hidden"
-                value="CfDJ8HorrGbAz6pBn1r2BTZi4Or1e5m1eYqN7ZObF-mq8-il17DlP2GLcQqFEyWfKHLW2pceTm1aYzzsjUPCjjEc-L0HAUVGardh8PbjoBdBYPtEtmT6kJOhcQDf0atOPMLtO5jSODe1vEYpboMp-HJ6Ncs"
-              />
-            </form>
+          
+          
 
             {/* Report Button */}
             <a
               className="btn btn-sm bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
-              href="/report/idea/1047"
+              onClick={handleReport}
             >
               <i className="fas fa-flag mr-2"></i> Report
             </a>

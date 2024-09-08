@@ -4,6 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../store';
+import { Link } from 'react-router-dom';
 
 const CommentBox = (props) => {
   const navigate = useNavigate();
@@ -15,10 +16,9 @@ const CommentBox = (props) => {
     navigate('/reply');
   };
 
+
   const img = props.profilePicture; // This will now correctly reference the passed prop
   const profilePictureUrl = img
-    // ? `https://api.ru-novel.ru/uploads/${img}`
-    // : '/default-avatar.png'; 
   const formattedTime = formatDistanceToNow(new Date(props.time), { addSuffix: true });
 
   return (
@@ -35,7 +35,7 @@ const CommentBox = (props) => {
                   className="avatar rounded-full w-10 h-10 mr-2"
                   src={profilePictureUrl}
                   alt={props.username}
-                  onError={(e) => { e.target.onerror = null; e.target.src = '/dist/img/anon.jpg'; }}
+                  
                 />
                 {props.username}
               </a>
@@ -50,18 +50,13 @@ const CommentBox = (props) => {
             {props.content}
           </div>
           <div className="actions flex space-x-4">
-            <a
+            <button
               className="btn btn-sm btn-outline btn-link text-blue-500 hover:underline"
               onClick={handleClick}
             >
               <i className="fas fa-reply mr-1"></i> Reply
-            </a>
-            <a
-              className="btn btn-sm btn-outline text-red-500 hover:underline"
-              href="/report/ideacomment/81424"
-            >
-              <i className="fas fa-flag mr-1"></i> Report
-            </a>
+            </button>
+           
           </div>
         </div>
 

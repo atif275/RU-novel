@@ -57,6 +57,7 @@ const SugContent = (props) => {
       dispatch(userActions.setCommentsData(props.arr));
       console.log(props.arr);
       console.log(isAuth);
+      dispatch(userActions.setUserEmail(props.arr.email))
       navigate('/comments');
     } else {
       navigate('/login');

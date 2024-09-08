@@ -15,7 +15,7 @@ export const AdminSidebar = ({ setSelectedComponent }) => {
                 {!collapsed && (
                     <div className="logo">
                         <Link to="/admin-dashboard" title="Royal Road">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo3.png?alt=media&token=5992bcd8-4adb-4c8c-89db-9e40ac5b2cef" alt="Logo" className="h-8" />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo1.png?alt=media&token=fa805337-746c-4820-8c12-18dbbd99d05a" alt="Logo" className="h-36 w-48 " />
                         </Link>
                         
                     </div>

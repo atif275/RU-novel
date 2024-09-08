@@ -1,36 +1,7 @@
-
-import React, { useState,useEffect } from "react";
-import { FaArrowLeft, FaHome, FaPaperPlane } from "react-icons/fa";
-import borderImage from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersbronze-2-min.png"
-import borderImage2 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersbronze-3-min.png"
-import borderImage3 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersbronze-3-min.png";
-import borderImage4 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersbronze-4-min.png";
-import borderImage5 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersbronze-5-min.png";
-import borderImage6 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersdia-1-min.png";
-import borderImage7 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersdia-2-min.png";
-import borderImage8 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersdia-3-min.png";
-import borderImage9 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersdia-4-min.png";
-import borderImage10 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersdia-5-min.png";
-import borderImage11 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersgold-1-min.png";
-import borderImage12 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersgold-2-min.png";
-import borderImage13 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersgold-3-min.png";
-import borderImage14 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersgold-4-min.png";
-import borderImage15 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersgold-5-min.png";
-import borderImage16 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersiron-1-min.png";
-import borderImage17 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersiron-2-min.png";
-import borderImage18 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersiron-3-min.png";
-import borderImage19 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersiron-4-min.png";
-import borderImage20 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersiron-5-min.png";
-import borderImage21 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersplat-1-min.png";
-import borderImage22 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersplat-2-min.png";
-import borderImage23 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersplat-3-min.png";
-import borderImage24 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersplat-4-min.png";
-import borderImage25 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/bordersplat-5-min.png";
-import borderImage26 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/borderssilver-1-min.png";
-import borderImage27 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/borderssilver-2-min.png";
-import borderImage28 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/borderssilver-3-min.png";
-import borderImage29 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/borderssilver-4-min.png";
-import borderImage30 from "/Users/ATIFHANIF/project/RU-novel/frontend/src/assets/borderssilver-5-min.png";
+import React, { useState, useEffect } from "react";
+import { FaHome } from "react-icons/fa";
+import { toast } from 'react-toastify'; 
+import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -39,32 +10,77 @@ function Borderwardrobe() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
+
+
+
+    const premier =1
+    const currentUser = useSelector((state) => state.userData.user);
+    const fictionCounts = currentUser?.fictions?.length || 0;
+
+
+
+
+    const [borders, setBorders] = useState([]);
+    const [bordersP, setBordersP] = useState([]);
+
+    const [currentBorder, setCurrentBorder] = useState('');
+    const [selectedBorder, setSelectedBorder] = useState(currentUser.profilePictureBorder);
+
+    useEffect(() => {
+        const fetchBorders = async () => {
+            try {
+                const { data } = await axios.get('https://api.ru-novel.ru/api/level/borders', {
+                    params: {
+                        tag: 'level',
+                        fictionCount: fictionCounts // Assuming the desired number of borders based on a specific condition
+                    }
+                });
+                setBorders(data);
+                if (currentUser && currentUser.profilePictureBorder) {
+                    setCurrentBorder(currentUser.profilePictureBorder);
+                }
+            } catch (error) {
+                console.error('Error fetching borders:', error);
+            }
+        };
+        fetchBorders();
+    }, [currentUser]);
+
+    const fetchPremiumBorders = async () => {
+        try {
+            const { data } = await axios.get('https://api.ru-novel.ru/api/premium/borders', {
+                params: {
+                    tag: 'premium' // Fetch only premium borders
+                }
+            });
+            setBordersP(data); // Assuming you have a state variable 'setBorders' for storing the borders
+            if (currentUser && currentUser.profilePictureBorder) {
+                setCurrentBorder(currentUser.profilePictureBorder); // Update current border if needed
+            }
+        } catch (error) {
+            console.error('Error fetching premium borders:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPremiumBorders();
+    }, [currentUser]);
     
-    const borderImages = [borderImage, borderImage2,    borderImage3, borderImage4, borderImage5, borderImage6, borderImage7,
-        borderImage8, borderImage9, borderImage10, borderImage11, borderImage12,
-        borderImage13, borderImage14, borderImage15, borderImage16, borderImage17,
-        borderImage18, borderImage19, borderImage20, borderImage21, borderImage22,
-        borderImage23, borderImage24, borderImage25, borderImage26, borderImage27,
-        borderImage28, borderImage29, borderImage30];
-        
-        
-        const [currentBorder, setCurrentBorder] = useState(borderImage2); 
-        const currentUser = useSelector((state) => state.userData.user); 
-        const [selectedBorder, setSelectedBorder] = useState(currentUser.profilePictureBorder);
-        
+    
+
 
     const changeBorder = async (newBorder) => {
         try {
             const response = await axios.put(`https://api.ru-novel.ru/update-border/${currentUser.username}`, {
-                newBorder: newBorder
+                newBorder: newBorder.imageUrl
             });
 
-            setSelectedBorder(response.data.profilePictureBorder);
-            alert('Border updated successfully!');
+            setCurrentBorder(newBorder.imageUrl);
+            toast.success('Border updated successfully!');
         } catch (error) {
             console.error('Error updating border:', error);
-            alert('Failed to update border.');
+            toast.error('Failed to update border.');
         }
     };
 
@@ -97,7 +113,7 @@ function Borderwardrobe() {
         // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
         { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
     ];
-    
+
     const notificationOptions = [
         { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
         { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
@@ -107,7 +123,7 @@ function Borderwardrobe() {
         { icon: 'fa-home', label: 'UserCP', link: '/my/usercp' },
         { icon: 'fa-list', label: 'Edit Signature', link: '/account/signature' }
     ];
-    
+
     const myOptions = [
         { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
@@ -121,6 +137,7 @@ function Borderwardrobe() {
 
     return (
         <div className="w-full bg-cover bg-center bg-fixed">
+            <ToastContainer position="top-right" autoClose={5000} />
             <div className="container pt-2 mx-auto sm:px-6 sm:pr-4 bg-gray-100 w-full pb-8 shadow-lg">
                 {/* Image Container */}
                 <div className="relative flex h-[130px] items-center p-4 bg-opacity-50 bg-[url(https://www.royalroad.com/dist/img/collaborators_header.jpg)] bg-cover ">
@@ -299,7 +316,7 @@ function Borderwardrobe() {
 
                                     {/* Overlay Image (Border) */}
                                     <img
-                                        src={selectedBorder}
+                                        src={currentUser.profilePictureBorder}
                                         alt="Border"
                                         className="absolute w-50 h-40"  // Adjust width and height to fit perfectly around the avatar
                                         style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
@@ -309,9 +326,9 @@ function Borderwardrobe() {
                                 {/* Right side: Current Level Box */}
                                 <div>
                                     <h3 className="text-lg font-bold mb-2 text-center">current level</h3>
-                                    <div className="bg-blue-200 p-5">
+                                    <div className="cursor-pointer hover:bg-blue-500 bg-blue-200 p-5">
 
-                                        <div className="relative flex justify-center items-center">
+                                        <div className=" relative flex justify-center items-center">
                                             {/* Background Image (Avatar) */}
                                             <img
                                                 src={currentUser.profilePicture}
@@ -321,7 +338,7 @@ function Borderwardrobe() {
 
                                             {/* Overlay Image (Border) */}
                                             <img
-                                                src={selectedBorder}
+                                                src={currentUser.profilePictureBorder}
                                                 alt="Border"
                                                 className="absolute w-25 h-20"  // Adjust width and height to fit perfectly around the avatar
                                                 style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
@@ -338,47 +355,60 @@ function Borderwardrobe() {
                             <div className="text-center mb-4">
                                 <h3 className="text-lg font-bold mb-2">Level Borders</h3>
                                 <div className="">
-                                <div className="grid grid-cols-3 gap-4">
-                                    {borderImages.map((border, index) => (
-                                        <div key={index} className="relative flex justify-center items-center bg-blue-200 p-4" onClick={() => changeBorder(border)}>
-                                            <img
-                                                src={currentUser.profilePicture}
-                                                alt="Avatar"
-                                                className="w-[37px] h-[37px] object-cover rounded-full"
-                                            />
-                                            <img
-                                                src={border}
-                                                alt="Border"
-                                                className="absolute w-25 h-20"
-                                                style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        {borders.map((border, index) => (
+                                            <div key={index} className="cursor-pointer hover:bg-blue-500 relative flex justify-center items-center bg-blue-200 p-4" onClick={() => changeBorder(border)}>
+                                                <img
+                                                    src={currentUser.profilePicture}
+                                                    alt="Avatar"
+                                                    className="w-[37px] h-[37px] object-cover rounded-full"
+                                                />
+                                                <img
+                                                    src={border.imageUrl}
+                                                    alt={border.name}
+                                                    className="absolute w-25 h-20"
+                                                    style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <hr className="my-4 border-gray-300" />
 
                             {/* Premium Unlock */}
-                            <div className="text-center">
-                                <h3 className="text-lg font-bold mb-2">Get Premium this month to unlock:</h3>
-                                <div className="relative flex justify-center items-center bg-gray-200 p-4">
-                                    {/* Background Image (Avatar) */}
-                                    <img
-                                        src={currentUser.profilePicture}
-                                        alt="Avatar"
-                                        className="w-[37px] h-[37px] object-cover rounded-full grayscale"
-                                    />
 
-                                    {/* Overlay Image (Border) */}
-                                    <img
-                                        src={borderImage}
-                                        alt="Border"
-                                        className="absolute w-25 h-20 grayscale"  // Adjust width and height to fit perfectly around the avatar
-                                        style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
-                                    />
+                            <div className="text-center mb-4">
+                                <h3 className="text-lg font-bold mb-2">Get Premium this month to unlock:</h3>
+                                <div className="">
+                                    <div className="grid grid-cols-3 gap-4">
+                                        {bordersP.map((border, index) => (
+                                            <div 
+                                                key={index}
+                                                className={`cursor-pointer hover:bg-blue-500  relative flex justify-center items-center bg-blue-200 p-4 ${index < premier ? '' : 'grayscale cursor-not-allowed'}`}
+                                                onClick={() => index < premier ? changeBorder(border) : null}
+                                                style={{
+                                                    pointerEvents: index < premier ? 'auto' : 'none', // Disables click events for non-premier items
+                                                }}
+                                            >
+                                                <img
+                                                    src={currentUser.profilePicture}
+                                                    alt="Avatar"
+                                                    className="w-[37px] h-[37px] object-cover rounded-full"
+                                                />
+                                                <img
+                                                    src={border.imageUrl}
+                                                    alt={border.name}
+                                                    className="absolute w-25 h-20"
+                                                    style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
+
+
 
                             <div className="flex justify-end mt-4">
                                 <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4">

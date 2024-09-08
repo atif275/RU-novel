@@ -8,6 +8,7 @@ const initialState = {
   user:{},
   isAuthenticated:false,
   email:'',
+  userEmail:'',
   searchQuery: '',
   searchResults: [],
   comments:{},
@@ -98,6 +99,9 @@ const slice = createSlice({
 setTickets(state,action){
     state.tickets=action.payload
 },
+setUserEmail(state,action){
+  state.userEmail=action.payload
+},
    setTicketsArr(state,action){
     state.ticketArr=action.payload
    }   
@@ -105,6 +109,7 @@ setTickets(state,action){
      
   }
 });
+
 
 export const userActions = slice.actions;
 
