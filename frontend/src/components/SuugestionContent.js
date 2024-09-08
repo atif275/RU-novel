@@ -120,7 +120,7 @@ const SugContent = (props) => {
                 className="avatar rounded-full w-10 h-10 object-cover"
                 src={profilePictureUrl}
                 alt={props.username}
-                onError={(e) => (e.target.src = "/dist/img/anon.jpg")}
+                
               />
               <span className="ml-2 font-semibold text-[#337AB7]">{props.username}</span>
             </a>
