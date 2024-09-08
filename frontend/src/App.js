@@ -137,6 +137,13 @@ import WritathonPage from "./pages/WritathonPage";
 import { Navigate } from 'react-router-dom';
 import SearchPage from "./pages/SearchPage"
 function App() {
+  const resizeObserverErrHandler = (e) => {
+    if (e.message === 'ResizeObserver loop completed with undelivered notifications.') {
+      e.stopImmediatePropagation();
+    }
+  };
+  
+  window.addEventListener('error', resizeObserverErrHandler);
   // console.log("App component rendered");
   const theme = useSelector(state => state.userData.theme);
   const isAdmin=localStorage.getItem('adminLogin');
@@ -281,7 +288,7 @@ function App() {
                   <>
                    <HomePage />
                   <Fiction />
-                  {/* <AdminFiction /> */}
+                  
                   <Footer />
                   <PostFooter />
                   </>
@@ -293,11 +300,9 @@ function App() {
                 
                 <Route path="/admin/fiction/:id/:title" element={
                   <>
-                   {/* <HomePage /> */}
-                  {/* <Fiction /> */}
+                 
                   <AdminFiction />
-                  {/* <Footer />
-                  <PostFooter /> */}
+                  
                   </>
                   } />
                 
@@ -692,6 +697,18 @@ function App() {
   
             
           </Routes> 
+         
+        <Routes>
+          <Route path="/fictions/advanced/search" element={
+           <>
+            <HomePage />
+            <SearchPage/>
+            <Footer />
+            <PostFooter />
+           </> 
+          } />
+          
+        </Routes>
           <Routes>
           
           <Route path="/support/knowledgebase/discovery-and-rankings" element={<DiscoveryPage />} />

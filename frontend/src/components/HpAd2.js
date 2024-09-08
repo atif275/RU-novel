@@ -34,7 +34,7 @@ const HpAd2 = () => {
 
   return (
     <div className='w-full '>
-      <div className="flex justify-center items-center w-full h-[200px] bg-white">
+      <div className="flex justify-center ml-3  items-center w-3/2 h-auto bg-white">
         {loading ? (
           <div>Loading...</div>
         ) : adData && adData.image ? (

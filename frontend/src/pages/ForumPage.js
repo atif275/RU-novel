@@ -218,7 +218,7 @@ function ForumsPage() {
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Popular Threads
                 </h3>
-                <div className="bg-custom-black flex items-center pr-2 px-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex items-center  px-2 w-6 h-6 mr-4 text-white text-bold ">
                   <button
                     onClick={() => toggleOpen("popular")}
                     className="text-white bg-custom-black"
@@ -302,7 +302,7 @@ function ForumsPage() {
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Community
                 </h3>
-                <div className="bg-custom-black flex items-center pr-2 p-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold ">
                   <button
                     onClick={() => toggleOpen("community")}
                     className="text-white bg-custom-black"
@@ -386,7 +386,7 @@ function ForumsPage() {
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Fictions
                 </h3>
-                <div className="bg-custom-black flex items-center pr-2 p-2 w-6 h-6 mr-4 text-white text-bold">
+                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold">
                   <button
                     onClick={() => toggleOpen("fiction")}
                     className="text-white bg-custom-black"
@@ -471,7 +471,7 @@ function ForumsPage() {
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Write Tips & Discussions Table
                 </h3>
-                <div className="bg-custom-black flex items-center pr-2 p-2 w-6 h-6 mr-4 text-white text-bold">
+                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold">
                   <button
                     onClick={() => toggleOpen("discussion")}
                     className="text-white bg-custom-black"
@@ -557,7 +557,7 @@ function ForumsPage() {
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Forums
                 </h3>
-                <div className="bg-custom-black flex items-center pr-2 p-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold ">
                   <button
                     onClick={() => toggleOpen("forum")}
                     className="text-white bg-custom-black"

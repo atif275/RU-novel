@@ -138,11 +138,11 @@ const SignupPage = () => {
           </div>
 
           <div className="form-group mb-6 relative">
-            <label className="block text-[#41444f] mb-2" htmlFor="username">
+            <label className="block text-white mb-2" htmlFor="username">
               Username:
             </label>
             <input
-              className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+              className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
               type="text"
               id="username"
               name="username"
@@ -156,11 +156,11 @@ const SignupPage = () => {
           </div>
 
           <div className="form-group mb-6 relative">
-            <label className="block text-[#41444f] mb-2" htmlFor="email">
+            <label className="block text-white mb-2" htmlFor="email">
               Email address:
             </label>
             <input
-              className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+              className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
               type="email"
               id="email"
               name="email"
@@ -175,11 +175,11 @@ const SignupPage = () => {
 
           <div className="flex flex-wrap -mx-2 mb-6">
             <div className="w-full md:w-1/2 px-2 mb-4 relative">
-              <label className="block text-[#41444f] mb-2" htmlFor="password">
+              <label className="block text-white mb-2" htmlFor="password">
                 Password:
               </label>
               <input
-                className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+                className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
                 type="password"
                 id="password"
                 name="password"
@@ -193,11 +193,11 @@ const SignupPage = () => {
             </div>
 
             <div className="w-full md:w-1/2 px-2 mb-4 relative">
-              <label className="block text-[#41444f] mb-2" htmlFor="password2">
+              <label className="block text-white mb-2" htmlFor="password2">
                 Password again:
               </label>
               <input
-                className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+                className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
                 type="password"
                 id="password2"
                 name="password2"
@@ -213,11 +213,11 @@ const SignupPage = () => {
 
           <div className="flex flex-wrap -mx-2 mb-6">
             <div className="w-full md:w-1/2 px-2 mb-4 relative">
-              <label className="block text-[#41444f] mb-2" htmlFor="gender">
+              <label className="block text-white mb-2" htmlFor="gender">
                 Gender:
               </label>
               <select
-                className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+                className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
                 id="gender"
                 name="gender"
                 onChange={formik.handleChange}
@@ -235,11 +235,11 @@ const SignupPage = () => {
             </div>
 
             <div className="w-full md:w-1/2 px-2 mb-4 relative">
-              <label className="block text-[#41444f] mb-2" htmlFor="birthday">
+              <label className="block text-white mb-2" htmlFor="birthday">
                 Date of birth:
               </label>
               <DatePicker
-                className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none mt-2"
+                className="w-full p-2 bg-gray-700 text-white rounded outline-none mt-2"
                 onChange={handleDateChange}
                 format="YYYY-MM-DD"
               />
@@ -439,9 +439,9 @@ export default SignupPage;
 //           </div>
           
 //           <div className="form-group mb-4">
-//             <label className="block text-[#41444f] mb-2" htmlFor="username">Username:</label>
+//             <label className="block text-white mb-2" htmlFor="username">Username:</label>
 //             <input
-//               className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none"
+//               className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //               type="text"
 //               id="username"
 //               name="username"
@@ -455,9 +455,9 @@ export default SignupPage;
 //           </div>
           
 //           <div className="form-group mb-4">
-//             <label className="block text-[#41444f] mb-2" htmlFor="email">Email address:</label>
+//             <label className="block text-white mb-2" htmlFor="email">Email address:</label>
 //             <input
-//               className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none"
+//               className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //               type="email"
 //               id="email"
 //               name="email"
@@ -472,9 +472,9 @@ export default SignupPage;
 
 //           <div className="flex flex-wrap -mx-2">
 //             <div className="w-full md:w-1/2 px-2 mb-4">
-//               <label className="block text-[#41444f] outline-none mb-2" htmlFor="password">Password:</label>
+//               <label className="block text-white outline-none mb-2" htmlFor="password">Password:</label>
 //               <input
-//                 className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none"
+//                 className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //                 type="password"
 //                 id="password"
 //                 name="password"
@@ -487,9 +487,9 @@ export default SignupPage;
 //               ) : null}
 //             </div>
 //             <div className="w-full md:w-1/2 px-2 mb-4">
-//               <label className="block text-[#41444f] outline-none mb-2" htmlFor="password2">Password again:</label>
+//               <label className="block text-white outline-none mb-2" htmlFor="password2">Password again:</label>
 //               <input
-//                 className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none"
+//                 className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //                 type="password"
 //                 id="password2"
 //                 name="password2"
@@ -505,9 +505,9 @@ export default SignupPage;
 
 //           <div className="flex flex-wrap -mx-2">
 //             <div className="w-full md:w-1/2 px-2 mb-4">
-//               <label className="block text-[#41444f] mb-2" htmlFor="gender">Gender:</label>
+//               <label className="block text-white mb-2" htmlFor="gender">Gender:</label>
 //               <select
-//                 className="w-full p-2 bg-gray-700 text-[#888888] outline-none rounded"
+//                 className="w-full p-2 bg-gray-700 text-white outline-none rounded"
 //                 id="gender"
 //                 name="gender"
 //                 onChange={formik.handleChange}
@@ -524,7 +524,7 @@ export default SignupPage;
 //               ) : null}
 //             </div>
 //             <div className="w-full md:w-1/2 px-2 mb-4">
-//               <label className="block text-[#41444f] mb-2" htmlFor="birthday">Date of birth:</label>
+//               <label className="block text-white mb-2" htmlFor="birthday">Date of birth:</label>
 //               <DatePicker
 //                 className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //                 id="birthday"
@@ -542,9 +542,9 @@ export default SignupPage;
 //           </div>
           
 //           <div className="form-group mb-4">
-//             <label className="block text-[#41444f] mb-2" htmlFor="referrer">Referral code:</label>
+//             <label className="block text-white mb-2" htmlFor="referrer">Referral code:</label>
 //             <input
-//               className="w-full p-2 bg-gray-700 text-[#888888] rounded outline-none"
+//               className="w-full p-2 bg-gray-700 text-white rounded outline-none"
 //               type="text"
 //               id="referrer"
 //               name="referrer"
@@ -568,7 +568,7 @@ export default SignupPage;
 //                 onBlur={formik.handleBlur}
 //                 checked={formik.values.agree}
 //               />
-//               <span className="ml-2 text-[#41444f]">I agree to the terms and conditions</span>
+//               <span className="ml-2 text-white">I agree to the terms and conditions</span>
 //             </label>
 //           </div>
 

@@ -1,9 +1,18 @@
 // src/components/HpBanner.js
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-
+import { useNavigate } from 'react-router-dom';
 const HpBanner = () => {
+
+
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+   
+    navigate('/support/knowledgebase');
+  };
+
   const slides = [
     {
       img: "https://www.royalroadcdn.com/public/blog/a-price-update-AACA_vNKbxU.jpg?time=1719852695",
@@ -48,12 +57,12 @@ const HpBanner = () => {
                 <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl mb-4">
                   {slide.description}
                 </p>
-                <a
-                  href={slide.link}
+                <button
+                  onClick={handleNavigate}
                   className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
                 >
                   Learn More
-                </a>
+                </button>
               </div>
             </div>
           </div>

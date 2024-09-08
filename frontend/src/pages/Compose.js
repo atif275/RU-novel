@@ -322,7 +322,7 @@ function Compose() {
                                 <div className="mb-4">
                                     <label className="block font-bold mb-2">Message</label>
                                     <Editor
-                                        apiKey='u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h'
+                                        apiKey='cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3'
                                         initialValue="<p>This is the initial content of the editor</p>"
                                         init={{
                                             height: 300,
@@ -383,7 +383,7 @@ function Compose() {
                                     <div className="mb-4">
                                         <label className="block font-bold mb-2">Message</label>
                                         <Editor
-                                            apiKey='u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h'
+                                            apiKey='cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3'
                                            
                                             value={message}
                                             onEditorChange={(content) => setMessage(content)}

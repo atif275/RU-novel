@@ -115,9 +115,9 @@ function Search() {
           </span>
         </div>
         <div className="w-full mt-4 md:mt-0">
-          <Link
-            to="#search-collapse"
-            className="btn p-4 bg-[#fafafa]   lg:block text-[#a0a9b4] w-full md:w-auto font-blue"
+        <Link
+            to="/fictions/advanced/search"
+            className="items-center justify-between btn p-4 bg-custom-blue   lg:block text-white w-full md:w-auto font-blue"
           >
             Advanced Search
           </Link>
@@ -131,6 +131,7 @@ function Search() {
             currentResults.map((book) => (
               <FictionListItem 
                 key={book._id} 
+                _id = {book._id}
                 title={book.title} 
                 tags={book.tags}
                 image={book.image} 

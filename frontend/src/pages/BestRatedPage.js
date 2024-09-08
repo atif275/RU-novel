@@ -213,7 +213,7 @@ const BestRatedPage = () => {
             </div>
             ) : (
                 <div className="text-center py-10">
-                  <p className="text-lg text-gray-600">No books found.</p>
+                  <p className="text-lg text-gray-600">Loading...</p>
                 </div>
               )}
           </div>
