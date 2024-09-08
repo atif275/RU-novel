@@ -1373,7 +1373,7 @@ exports.sort=async(req,res)=>{
     const comments = await Commentdb.find().sort({ createdAt: -1 }); // Sort by createdAt descending
     res.json(comments);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching comments', error });
+    res.status(500).json({ message: 'Errror fetchingg comments', error });
   }
 }
 
