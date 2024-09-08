@@ -14,7 +14,7 @@ const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 passport.use(new GoogleStrategy({
   clientID: clientID,
   clientSecret: clientSecret,
-  callbackURL: '/auth/google/callback',
+  callbackURL: 'https://api.ru-novel.ru//auth/google/callback',
   scope: ['profile', 'email'],
 },
 async (accessToken, refreshToken, profile, done) => {
