@@ -51,7 +51,7 @@ const Ach = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -819,7 +819,7 @@ const Ach = () => {
                 <div className="text-[#000000CC]">
                   <h1 className="text-4xl ">Achievements</h1>
                   <p className="py-4">
-                    Achievements are awarded for many things on Royal Road. Some
+                    Achievements are awarded for many things on RU Novel. Some
                     are automatic, like the review upvotes and top list
                     achievements, others are rewarded for participating in
                     one-time events, and some are given manually, such as the
@@ -830,12 +830,12 @@ const Ach = () => {
                     On special occasions, it is possible that one-off unique
                     achievements get given out. An example would be the
                     achievement given to the first person that reached the
-                    maximum level on Royal Road.
+                    maximum level on RU Novel.
                   </p>
 
                   <p className="py-4">
                     The achievements currently obtainable by your account on
-                    Royal Road are shown on the Achievement Management Page.
+                    RU Novel are shown on the Achievement Management Page.
                     Further achievement paths are opened up as more actions that
                     provide achievements are started. Author achievements are
                     not visible to users without any fictions, for example.
@@ -850,7 +850,7 @@ const Ach = () => {
 
                   <p className="py-4">
                     Apart from the experience they can also be showcased in a
-                    couple of places on Royal Road. The first places are on your
+                    couple of places on RU Novel. The first places are on your
                     fiction. Up to 15 achievements are shown under the About the
                     Author section on these pages.
                   </p>

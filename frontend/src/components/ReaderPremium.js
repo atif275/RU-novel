@@ -51,7 +51,7 @@ const ReaderPre = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -881,7 +881,7 @@ const ReaderPre = () => {
                           href="#support-royal-road"
                           className="hover:underline hover:text-blue-900 transition-colors"
                         >
-                          Support Royal Road!
+                          Support RU Novel!
                         </a>
                         <br />
                         <a
@@ -936,7 +936,7 @@ const ReaderPre = () => {
                   <p className="py-4">
                     When enabled in the browser, this will give you the quickest
                     notice available of a new chapter release. For push
-                    notifications to work, you do not need to have Royal Road
+                    notifications to work, you do not need to have RU Novel
                     open at all; it will be sent through your browser as a
                     notification.
                   </p>
@@ -1151,7 +1151,7 @@ const ReaderPre = () => {
                     className="text-[#337AB7] text-3xl mt-5"
                     id="support-royal-road"
                   >
-                    Support Royal Road!
+                    Support RU Novel!
                   </h1>
                   <p className="py-4">
                     You also support the site with your premium, and we thank
@@ -1290,7 +1290,7 @@ Feel free to check out which one is more convenient for you.
                             href="#support-royal-road"
                             className="hover:underline hover:text-blue-900 transition-colors"
                           >
-                            Support Royal Road!
+                            Support RU Novel!
                           </a>
                           <br />
                           <a

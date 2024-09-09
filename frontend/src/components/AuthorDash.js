@@ -51,7 +51,7 @@ const Author = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -881,7 +881,7 @@ const Author = () => {
                     header or by selecting [Author Dashboard] after clicking
                     your username in the top right corner of the site.<br></br>
                     <br></br>
-                    The main place for everything author-related on Royal Road
+                    The main place for everything author-related on RU Novel
                     is the Author Dashboard. There, you will find the management
                     options for your fictions and a quick view of user
                     interaction on your fiction, such as reviews and comments.

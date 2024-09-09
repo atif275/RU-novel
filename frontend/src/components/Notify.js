@@ -51,7 +51,7 @@ const Notify = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -860,7 +860,7 @@ const Notify = () => {
                   <h1 className="text-4xl ">Notification</h1>
 
                   <p className="py-4">
-                    On Royal Road, we have multiple notifications informing you
+                    On RU Novel, we have multiple notifications informing you
                     of updates on the site, fictions, comment replies, forum
                     replies, and more. It is possible to set what notifications
                     you want to receive in what way using our notification

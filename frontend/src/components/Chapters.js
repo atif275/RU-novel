@@ -51,7 +51,7 @@ const Chapters = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -887,7 +887,7 @@ const Chapters = () => {
                 <div className="text-[#000000CC]">
                   <h1 className="text-4xl ">Chapters</h1>
                   <p className="mt-5">
-                    In order to publish on Royal Road, you need to go through
+                    In order to publish on RU Novel, you need to go through
                     our submission process. Only once the fiction is approved
                     can you see it on your author dashboard.
                   </p>
@@ -1151,10 +1151,10 @@ const Chapters = () => {
                     blank, it automatically defaults to no border.
                   </p>
                   <p className="py-4">
-                    <strong>Important!</strong> Royal Road has a built-in
+                    <strong>Important!</strong> RU Novel has a built-in
                     border. Because of this, borders currently do not work in
                     the table editor and will automatically default back to the
-                    Royal Road border.
+                    RU Novel border.
                   </p>
                   <p className="py-4">
                     <strong>Caption:</strong> Specifies a table's header. Always
@@ -1350,7 +1350,7 @@ const Chapters = () => {
                     The editor does support the copy and pasting of tables but
                     is has limitations. Certain properties will get lost. See
                     the following example of a table made in Microsoft Word
-                    being pasted to the Royal Road editor.{" "}
+                    being pasted to the RU Novel editor.{" "}
                   </p>
                   <p className="py-4"> Words Table. </p>
                   <img
@@ -1369,7 +1369,7 @@ const Chapters = () => {
                   </p>
 
                   <p>
-                    Copy and pasting tables from the Royal Road editor to
+                    Copy and pasting tables from the RU Novel editor to
                     another instance of the editor does keep the formatting.
                     This will be helpful when transferring tables between
                     chapters.
@@ -1378,7 +1378,7 @@ const Chapters = () => {
                     Polls
                   </h1>
                   <p className="py-4">
-                    On Royal Road we provide a way for authors to poll their
+                    On RU Novel we provide a way for authors to poll their
                     readers on a chapter. When checking the ‘Add a poll to the
                     chapter?’ checkbox while editing or releasing a chapter, you
                     will see the following options appear.

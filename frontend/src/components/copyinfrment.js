@@ -51,7 +51,7 @@ const Copy = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -826,7 +826,7 @@ const Copy = () => {
                         href="#regard"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                        Regarding content on Royal Road that was not published by the original creator: 
+                        Regarding content on RU Novel that was not published by the original creator: 
                       </a>
                       <br></br>
 
@@ -834,7 +834,7 @@ const Copy = () => {
                         href="#permission"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                       f you are a Royal Road author and you found your content on another platform that you didn't give permission to: 
+                       f you are a RU Novel author and you found your content on another platform that you didn't give permission to: 
                       </a>
                       <br></br> <a
                         href="#first"
@@ -883,12 +883,12 @@ const Copy = () => {
                   </p>
 
                   <h1 className="text-[#337AB7] text-3xl mt-5" id="regard">
-                    Regarding content on Royal Road that was not published by
+                    Regarding content on RU Novel that was not published by
                     the original creator:
                   </h1>
 
                   <p className="py-4">
-                    Since day one, we, at Royal Road, have expressed how much we
+                    Since day one, we, at RU Novel, have expressed how much we
                     take plagiarism seriously. While we cannot combat copyright
                     infringement and plagiarism all over the internet, we can do
                     so on our platform.<br></br>
@@ -913,7 +913,7 @@ const Copy = () => {
                   </p>
 
                   <h1 className="text-[#337AB7] text-3xl mt-5" id="permission">
-                    If you are a Royal Road author and you found your content on
+                    If you are a RU Novel author and you found your content on
                     another platform that you didn't give permission to:
                   </h1>
 
@@ -933,7 +933,7 @@ const Copy = () => {
                     Thanks to regulations, most websites provide a way of
                     dealing with copyright-infringing content in a direct manner
                     by simply contacting them or reporting the fiction. We, at
-                    Royal Road take action as soon as possible when we are made
+                    RU Novel take action as soon as possible when we are made
                     aware of the violation. However, some of the other platforms
                     do not. In these cases, don’t lose hope as you can request a
                     DMCA (Digital Millennium Copyright Act) takedown notice.
@@ -1087,7 +1087,7 @@ const Copy = () => {
                     <br />
                     To provide clear verification for you: Please note that the
                     story is available online at{" "}
-                    <strong>"Royal Road Fiction page link"</strong>.<br />
+                    <strong>"RU Novel Fiction page link"</strong>.<br />
                     It was published <strong>X years ago</strong>. You can
                     easily confirm the date to verify that it was uploaded there
                     long before
@@ -1100,10 +1100,10 @@ const Copy = () => {
                       I am going to publish this story on Amazon under the
                       account [Amazon Author Name]
                     </strong>
-                    " at the top of the Royal Road description.
+                    " at the top of the RU Novel description.
                     <br />
                     <br />
-                    I have attached an image of the Royal Road page to show
+                    I have attached an image of the RU Novel page to show
                     where you can find the verification information I mentioned.
                     <br />"
                   </p>
@@ -1128,7 +1128,7 @@ const Copy = () => {
                     className="mt-5 h-[200%]"
                     src="https://www.royalroadcdn.com/public/knowledgeBase/image-aabaywtngxqpng.png?time=1697043145"
                   ></img>
-                  <p className="py-4">Sometimes, however, they require further verification that you are the original author. If you are published on our platform, you can direct an email to admin@royalroad.com for assistance. Please note that if your content on Royal Road was affected, we would appreciate being updated about the situation regarding what steps you followed and how long it took you to resolve the issue. Any new information an author may provide could be beneficial to others to make the whole process easier for them in case they also got affected by plagiarism.<br></br><br></br>
+                  <p className="py-4">Sometimes, however, they require further verification that you are the original author. If you are published on our platform, you can direct an email to admin@royalroad.com for assistance. Please note that if your content on RU Novel was affected, we would appreciate being updated about the situation regarding what steps you followed and how long it took you to resolve the issue. Any new information an author may provide could be beneficial to others to make the whole process easier for them in case they also got affected by plagiarism.<br></br><br></br>
 
 
 
@@ -1146,7 +1146,7 @@ Unfortunately, the internet is filled with pirate sites, and some of them could 
                         href="#regard"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                        Regarding content on Royal Road that was not published by the original creator: 
+                        Regarding content on RU Novel that was not published by the original creator: 
                       </a>
                       <br></br>
 
@@ -1154,7 +1154,7 @@ Unfortunately, the internet is filled with pirate sites, and some of them could 
                         href="#permission"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                       If you are a Royal Road author and you found your content on another platform that you didn't give permission to: 
+                       If you are a RU Novel author and you found your content on another platform that you didn't give permission to: 
                       </a>
                       <br></br> <a
                         href="#first"

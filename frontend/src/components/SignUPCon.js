@@ -104,16 +104,16 @@ const SignUPCon = () => {
           onSubmit={handleSubmit}
         >
           <p className="text-center">
-            You've successfully authenticated with <strong>Royal Road</strong>. Please
+            You've successfully authenticated with <strong>RU Novel</strong>. Please
             enter a user name for this site below and click the Register button to
             finish logging in.
           </p>
           <div className="bg-yellow-100 text-gray-700 p-4 rounded-md flex items-start">
             <i className="fa fa-2x fa-info-circle mr-2"></i>
             <div>
-              If you wish to associate your <strong>Royal Road</strong> account with
-              an existing Royal Road account instead, please log in with your
-              Royal Road account, then proceed to the settings page{" "}
+              If you wish to associate your <strong>RU Novel</strong> account with
+              an existing RU Novel account instead, please log in with your
+              RU Novel account, then proceed to the settings page{" "}
               <a href="/account/externallogins" className="text-blue-600">
                 here
               </a>

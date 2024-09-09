@@ -51,7 +51,7 @@ const Security = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -898,7 +898,7 @@ const Security = () => {
                   <h1 className="text-4xl ">Security</h1>
 
                   <p className="py-4">
-                    On Royal Road, we value the security of our accounts and
+                    On RU Novel, we value the security of our accounts and
                     offer multiple ways to further secure your account. Some of
                     these systems are behind the scenes, while others require
                     action from users, like two-factor authentication.
@@ -1025,7 +1025,7 @@ const Security = () => {
                   </h1>
                   <p className="py-4">
                     Before you delete your account, it is recommended to
-                    download all data that Royal Road stores about you. The
+                    download all data that RU Novel stores about you. The
                     following data is included when downloading your account:
                   </p>
                   <ul className="ml-5 mt-3 list-disc">

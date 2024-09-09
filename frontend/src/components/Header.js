@@ -48,11 +48,11 @@ const PageHeader = () => {
       <header className={`h-20 w-full z-50 ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-white text-black'}`}>
         <div className="container mx-auto flex items-center justify-between h-full px-4 lg:px-8">
           <div className="flex items-center lg:ml-20 ml-0">
-            <Link to="/" title="Royal Road">
+            <Link to="/" title="RU Novel">
               <img
                 // src="https://www.royaload.com/dist/img/logo/rr-logo-gold-white-small-min.png"
                 src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo3.png?alt=media&token=5992bcd8-4adb-4c8c-89db-9e40ac5b2cef"
-                alt="Royal Road"
+                alt="RU Novel"
                 className="h-64 lg:h-64"
               />
               

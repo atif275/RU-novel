@@ -53,7 +53,7 @@ const Fictionstat = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -878,13 +878,13 @@ const Fictionstat = () => {
                   <h1 className="text-[#337AB7] text-3xl mt-5 " id="definitions">
                   Definitions 
                   </h1>
-                  <p class="py-4"><strong>O</strong>ngoing: The Ongoing tag indicates that a fiction is still being actively written and has had a chapter update in the past 35 days. This is the default tag on Royal Road and requires no action from the author of a fiction.</p>
+                  <p class="py-4"><strong>O</strong>ngoing: The Ongoing tag indicates that a fiction is still being actively written and has had a chapter update in the past 35 days. This is the default tag on RU Novel and requires no action from the author of a fiction.</p>
 
 <p class="py-4"><strong>H</strong>iatus: The Hiatus tag is set automatically after 35 days since the last chapter update. There is a certain expectation that a story tagged as Hiatus, will be continued at a later date. An author can actively add this tag to their fiction as well. If a fiction on hiatus is updated, the status will change to "ongoing" after the next midnight GMT.</p>
 
-<p class="py-4"><strong>D</strong>ropped: Authors can decide to set the fiction status as Dropped, which means that the fiction is incomplete and will not get any more chapters in the future. This is true to the story's status on Royal Road, so even if you continued the story elsewhere, if you won't continue updating it on this platform, you need to tag it as such.</p>
+<p class="py-4"><strong>D</strong>ropped: Authors can decide to set the fiction status as Dropped, which means that the fiction is incomplete and will not get any more chapters in the future. This is true to the story's status on RU Novel, so even if you continued the story elsewhere, if you won't continue updating it on this platform, you need to tag it as such.</p>
 
-<p class="py-4"><strong>S</strong>tub: The story is no longer available in its full format on Royal Road. Stubs are fictions that do not have all content available on Royal Road. This can be because of exclusivity contracts with, for example, Amazon's Kindle Unlimited. In order to read these fictions completely, a reader will need to leave Royal Road and/or pay for the work. This tag excludes the fiction from certain ranking lists.</p>
+<p class="py-4"><strong>S</strong>tub: The story is no longer available in its full format on RU Novel. Stubs are fictions that do not have all content available on RU Novel. This can be because of exclusivity contracts with, for example, Amazon's Kindle Unlimited. In order to read these fictions completely, a reader will need to leave RU Novel and/or pay for the work. This tag excludes the fiction from certain ranking lists.</p>
 
 <p class="py-4"><strong>C</strong>ompleted: Authors can set their fiction as complete. Complete fictions are not expected to receive more updates in the future and are complete works. If a chapter was added, the complete status would not be changed.</p>
 

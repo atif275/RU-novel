@@ -9,7 +9,7 @@ export const Footer = () => {
                 <a href="/support" className="hover:text-gray-600">Support</a>
                 <a href="/status" className="hover:text-gray-600">Status</a>
             </div>
-            <span>© 2024 Royal Road</span>
+            <span>© 2024 RU Novel</span>
         </footer>
     );
 };

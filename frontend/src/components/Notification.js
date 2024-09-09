@@ -51,7 +51,7 @@ const Notifications = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -870,7 +870,7 @@ const Notifications = () => {
                     Notifications
                   </h1>
                   <p className="mt-5">
-                    Royal Road has 3 ways of notifying you that a fiction
+                    RU Novel has 3 ways of notifying you that a fiction
                     released an update. You need to enable the Email and Push
                     notifications on a per-fiction basis as they are not enabled
                     by default. These can be found in the Follow List, by
@@ -897,7 +897,7 @@ const Notifications = () => {
 
                   <p className="py-4">
                     An alternative way to get updates about new chapters is via
-                    email. Royal Road offers you the ability to receive these
+                    email. RU Novel offers you the ability to receive these
                     updates to the email address that is currently registered
                     with your account.<br></br>
                     <br></br>

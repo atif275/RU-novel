@@ -53,7 +53,7 @@ const  Donation = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -847,7 +847,7 @@ const  Donation = () => {
                   
 
                   <p className="py-4">
-                  Royal Road does not take any percentage of these donations, they are held externally via PayPal and Royal Road doesn't hold any responsibility for them.
+                  RU Novel does not take any percentage of these donations, they are held externally via PayPal and RU Novel doesn't hold any responsibility for them.
 
 
 
@@ -858,7 +858,7 @@ const  Donation = () => {
                   <ul className="mt-5 ml-8 list-disc">
                   <li className="py-2">
                   
-                  Royal Road may revoke donation privileges at its own discretion.
+                  RU Novel may revoke donation privileges at its own discretion.
                  </li>
                 </ul>
                    

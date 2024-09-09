@@ -90,7 +90,7 @@ const PopularThisWeekPage = () => {
                   </form>
                 </div>
                 <div className="mt-4 text-gray-600">
-                The most popular stories on Royal Road.
+                The most popular stories on RU Novel.
                                     </div>
                                     <div className="w-full border-t border-gray-200 mt-6" style={{ borderWidth: "0.5px" }}></div>
                                 </div>

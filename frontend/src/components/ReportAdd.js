@@ -51,7 +51,7 @@ const ReportAdd = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -824,11 +824,11 @@ const ReportAdd = () => {
                   <h1 className="text-4xl ">Report an Ad</h1>
 
                   <p className="py-4">
-                  Royal Road generates income via advertisement, but we hold our ads to the highest standard. We have a limited number of ads per page, we limit the types of advertisements we show on the platform, and we make sure that our ads are not intrusive or malicious.<br></br><br></br>
+                  RU Novel generates income via advertisement, but we hold our ads to the highest standard. We have a limited number of ads per page, we limit the types of advertisements we show on the platform, and we make sure that our ads are not intrusive or malicious.<br></br><br></br>
 
 If you noticed an ad that doesn't hold up to our standard or which might even feel malicious, please report it. <br></br><br></br>
 
-To report an ad, navigate back to a page on Royal Road, then press Report Ad on any available ad space you see. This will report past ads you saw, including the one(s) that gave you problems.Even if you no longer see the malicious ad, it will be enough to report any advertisement with the [Report Ad] button underneath it. Our ad monetization team will receive a report for the last 20 ads you saw and they will review them.  
+To report an ad, navigate back to a page on RU Novel, then press Report Ad on any available ad space you see. This will report past ads you saw, including the one(s) that gave you problems.Even if you no longer see the malicious ad, it will be enough to report any advertisement with the [Report Ad] button underneath it. Our ad monetization team will receive a report for the last 20 ads you saw and they will review them.  
 
 
                   </p>

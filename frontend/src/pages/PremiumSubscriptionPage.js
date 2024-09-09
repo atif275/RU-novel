@@ -130,7 +130,7 @@ const email = user.email;
                       </li>
                       <li className="flex items-center mb-2">
                         <i className="fa fa-heart mr-2 text-lg"></i>Support
-                        Royal Road!
+                        RU Novel!
                       </li>
                     </ul>
                     <button
@@ -202,7 +202,7 @@ const email = user.email;
                       </li>
                       <li className="flex items-center mb-2">
                         <i className="fa fa-heart mr-2 text-lg"></i>Support
-                        Royal Road!
+                        RU Novel!
                       </li>
                     </ul>
                     <button

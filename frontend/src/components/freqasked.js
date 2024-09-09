@@ -51,7 +51,7 @@ const Freq = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -841,7 +841,7 @@ const Freq = () => {
                         href="#protected-story"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                        Is my story protected by copyright when I post it on Royal Road?
+                        Is my story protected by copyright when I post it on RU Novel?
 
                       </a>
                       <br></br>
@@ -901,7 +901,7 @@ const Freq = () => {
                  
 
                   <h1 className="text-[#337AB7] text-3xl mt-5" id="protected-story">
-                  Is my story protected by copyright when I post it on Royal Road?
+                  Is my story protected by copyright when I post it on RU Novel?
                   </h1>
                   <p className="py-2">
                   Anything you write is automatically copyrighted by you, but that does not mean it’s registered in your country’s copyright office. You may use [copyrighted.com] or other available resources for this.
@@ -936,7 +936,7 @@ const Freq = () => {
                         href="#protected-story"
                         className="hover:underline hover:text-blue-900 transition-colors"
                       >
-                        Is my story protected by copyright when I post it on Royal Road?
+                        Is my story protected by copyright when I post it on RU Novel?
 
                       </a>
                       <br></br>

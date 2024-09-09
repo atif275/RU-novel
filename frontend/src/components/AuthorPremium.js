@@ -51,7 +51,7 @@ const AuthPre = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -1106,10 +1106,10 @@ const AuthPre = () => {
                   <p className="py-4">
                     Referrer statistics are automatically tracked from on-site
                     links. These can be viewed from the second tab in the
-                    referrer list where it says Royal Road.<br></br>
+                    referrer list where it says RU Novel.<br></br>
                     <br></br>
                     Using referrers for links on external sites pointing towards
-                    Royal Road requires some extra work. For this functionality,
+                    RU Novel requires some extra work. For this functionality,
                     Google Analytics Referrers are used. This works by adding a
                     couple flags to the end of an URL pointing at your fiction
                     page or a chapter specifically.<br></br>
@@ -1362,7 +1362,7 @@ const AuthPre = () => {
                     Automatic Draft Saving
                   </h1>
                   <p className="py-4">
-                    When using the fiction editor on Royal Road when Author
+                    When using the fiction editor on RU Novel when Author
                     premium is active, it will automatically save the text
                     entered every minute so no work gets lost by accident.
                   </p>
@@ -1376,7 +1376,7 @@ const AuthPre = () => {
                   <p className="py-4">
                     Many authors write their fiction using external text
                     editors. In order to streamline the process of importing
-                    multiple chapters to Royal Road at once, the chapter import
+                    multiple chapters to RU Novel at once, the chapter import
                     feature is created. This feature is found in the Author
                     Dashboard under Advanced. For the following screenshots, a
                     single .docx file will be used, the process differs slightly

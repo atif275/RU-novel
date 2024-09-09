@@ -51,7 +51,7 @@ const Premium = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -875,7 +875,7 @@ const Premium = () => {
                   </h1>
 
                   <p className="py-4">
-                    This is the basic subscription for Royal Road users who want
+                    This is the basic subscription for RU Novel users who want
                     an ad-free browsing experience and push notifications (for
                     convenience), as well as some vanity features:
                   </p>
@@ -888,7 +888,7 @@ const Premium = () => {
                     <li className="mt-2">Monthly Avatar Border</li>
                     <li className="mt-2">Early Access to New Features</li>
                     <li className="mt-2">Custom Profile Header</li>
-                    <li className="mt-2">Support Royal Road!</li>
+                    <li className="mt-2">Support RU Novel!</li>
                   </ul>
 
                   <h1

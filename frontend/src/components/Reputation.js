@@ -51,7 +51,7 @@ const Reputation = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -858,7 +858,7 @@ const Reputation = () => {
                     General
                   </h1>
                   <p className="py-4">
-                  Experience, Reputation, and Achievements are part of the interaction and reward systems on Royal Road. These serve to encourage users to participate and collect rewards by performing tasks. These tasks have a wide range, from logging in every day to reaching the top of best rated to reporting bugs. The automated rewards are in the form of experience and achievements while reputation is reserved for user-to-user interaction.
+                  Experience, Reputation, and Achievements are part of the interaction and reward systems on RU Novel. These serve to encourage users to participate and collect rewards by performing tasks. These tasks have a wide range, from logging in every day to reaching the top of best rated to reporting bugs. The automated rewards are in the form of experience and achievements while reputation is reserved for user-to-user interaction.
                   You can also find those with the highest EXP and reputation on the member list https://www.royalroad.com/user/memberlist 
                   </p>
                   <h1 className="text-[#337AB7] text-3xl mt-5" id="rep">

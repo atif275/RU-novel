@@ -53,7 +53,7 @@ const Rules = () => {
         </div>
         <div>
           <h2 className="text-lg font-bold">Knowledge Base</h2>
-          <span>All about Royal Road</span>
+          <span>All about RU Novel</span>
           <ul className="page-breadcrumb breadcrumb mt-2">
            
           </ul>
@@ -818,7 +818,7 @@ const Rules = () => {
               <div className="text-[#000000CC]">
                 <h1 className="text-4xl " >Welcome to the Knowledge Base!</h1>
                 <p className="mt-5">
-                You can use the search bar above to find articles about Royal Road.
+                You can use the search bar above to find articles about RU Novel.
 
 
                 </p>

@@ -51,7 +51,7 @@ const Add = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -824,7 +824,7 @@ const Add = () => {
                     <strong>How to Start a Campaign?</strong>
                     <br />
                     <br />
-                    You can start an internal Royal Road Advertising Campaign in
+                    You can start an internal RU Novel Advertising Campaign in
                     your Author Dashboard  Left side menu [Advertising]. There
                     are Leaderboard and rectangular advertisement campaigns
                     available at the moment. You can find the pricing by
@@ -832,10 +832,10 @@ const Add = () => {
                     page.
                     <br />
                     <br />
-                    If you wish to advertise a Royal Road novel, you can enjoy
+                    If you wish to advertise a RU Novel novel, you can enjoy
                     our discounted prices for paid advertisements. This offer is
-                    limited to stories that are fully available on Royal Road.
-                    If you are not promoting a Royal Road link with a novel that
+                    limited to stories that are fully available on RU Novel.
+                    If you are not promoting a RU Novel link with a novel that
                     is fully available on the platform, or if you are a
                     publisher, then note that the normal pricing is still a
                     great value. We are just being extra generous with the
@@ -857,7 +857,7 @@ const Add = () => {
                     Road or platforms such as Amazon's online store. While we do
                     not rule out the possibility of considering other platforms
                     in the future, we won't accept advertisements for platforms
-                    that compete with Royal Road.
+                    that compete with RU Novel.
                     <br />
                     <br />
                     If you want to link your ad to another site that was not
@@ -891,7 +891,7 @@ const Add = () => {
                     <br />
                     <br />
                     You must include a note notifying the users that the
-                    campaign is for content not on Royal Road.
+                    campaign is for content not on RU Novel.
                     <br />
                     <br />
                     Your campaign image needs to inform our readers that it is

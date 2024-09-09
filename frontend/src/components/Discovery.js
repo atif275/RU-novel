@@ -51,7 +51,7 @@ const Discovery = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -922,7 +922,7 @@ const Discovery = () => {
                 <div className="text-[#000000CC]">
                   <h1 className="text-4xl ">Discovery & Rankings</h1>
                   <p className="mt-5">
-                    On Royal Road, there are many rankings and discovery lists
+                    On RU Novel, there are many rankings and discovery lists
                     available and multiple ways to see them. Each ranking has a
                     genre filter, and the default is to show all genres at once.
                   </p>
@@ -932,7 +932,7 @@ const Discovery = () => {
                   ></img>
                   <p className="mt-5">
                     Aside from the multiple lists and rankings available on
-                    Royal Road, we also offer several recommendation engines to
+                    RU Novel, we also offer several recommendation engines to
                     find fictions that we think you might like, based on both
                     your own reading history and the reading history of others
                     that read the fictions that you are reading. In order for a
@@ -944,7 +944,7 @@ const Discovery = () => {
                     Front Page
                   </h1>
                   <p className="py-4">
-                    The first encounter with lists on Royal Road will be the
+                    The first encounter with lists on RU Novel will be the
                     front page. Here you can see the: Latest Updates, Rising
                     Stars, Popular This Week, Best Completed, and Best Ongoing
                     lists.
@@ -960,7 +960,7 @@ const Discovery = () => {
                   </h1>
 
                   <p className="py-4">
-                    Best rated is the list where all fiction on Royal Road are
+                    Best rated is the list where all fiction on RU Novel are
                     ranked based on their combined rating and review score.
                     There is a weight to the average rating score and the number
                     of ratings. It is possible that a fiction with a lower
@@ -974,7 +974,7 @@ const Discovery = () => {
                   <p className="py-4">
                     Trending uses complex calculations to try and pick the
                     popular stories that aren't too popular. Stories that end up
-                    on Royal Road's front page, for example, will rarely if ever
+                    on RU Novel's front page, for example, will rarely if ever
                     make it onto the list. However, it should show the somewhat
                     popular stories that are a good read. This list is limited
                     to 50 fictions per genre.
@@ -1008,7 +1008,7 @@ const Discovery = () => {
                   <p className="py-4">
                     Note: If you don't have the [Show Stubs] toggle on, it means
                     that you will only see the list of stories that are
-                    available on Royal Road in full.
+                    available on RU Novel in full.
                   </p>
                   <h1 className="text-[#337AB7] text-3xl mt-5 " id="new">
                     New Releases
@@ -1041,7 +1041,7 @@ const Discovery = () => {
                     Recommended for you looks at what you previously read and
                     tries to find fictions that match the profile. This feature
                     is still in Beta status and can be found on the Front Page
-                    of Royal Road.<br></br>
+                    of RU Novel.<br></br>
                     <br></br>
                     You can find this list on the home page, but you need to be
                     logged in.

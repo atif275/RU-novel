@@ -51,7 +51,7 @@ const Optimize = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -1034,7 +1034,7 @@ const Optimize = () => {
                   ></img>
 
                   <p className="py-4">
-                    Theme default uses either White or Royal Road Dark depending
+                    Theme default uses either White or RU Novel Dark depending
                     on if you use the global Light or Dark theme. The OLED Black
                     option is added as an option to offer true black backgrounds
                     for the reader to avoid burn-in on OLED screens. The

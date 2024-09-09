@@ -185,7 +185,7 @@ function ForumsPage() {
               </div>
               <div>
                 <p className="text-black text-2xl ">
-                  Welcome to Royal Road's Official Forum
+                  Welcome to RU Novel's Official Forum
                 </p>
                 <span className="text-black">Feel free to browse around.</span>
                 <ul className="breadcrumb text-sm text-white">

@@ -54,7 +54,7 @@ const Rules = () => {
         </div>
         <div>
           <h2 className="text-lg font-bold">Knowledge Base</h2>
-          <span>All about Royal Road</span>
+          <span>All about RU Novel</span>
           <ul className="page-breadcrumb breadcrumb mt-2">
            
           </ul>
@@ -1117,7 +1117,7 @@ const Rules = () => {
                     Reviews comparing the story to another according to the
                     following rules will be removed: Accusing an author of
                     plagiarism in reviews is forbidden. Any story violating
-                    Royal Road terms of use (such as plagiarism) should be
+                    RU Novel terms of use (such as plagiarism) should be
                     reported directly using the report system via the report
                     button on the violating fiction or chapter. If the story
                     plagiarizes your content, please check out the DMCA takedown
@@ -1149,7 +1149,7 @@ const Rules = () => {
                   </li>
                   <li className="py-2">
                     Discouraging an author from writing is viewed as taboo on
-                    Royal Road.
+                    RU Novel.
                   </li>
                   <li className="py-2">
                     Note that while the review could generalize the story as a
@@ -1250,7 +1250,7 @@ const Rules = () => {
                 </h1>
                 <ul className="mt-5 ml-8 list-disc">
                   <li className="py-2">
-                    Review swaps are allowed on Royal Road. In fact, you can
+                    Review swaps are allowed on RU Novel. In fact, you can
                     request them in our Reviews forum. However, rating and
                     review swaps promising high scores is prohibited.
                   </li>

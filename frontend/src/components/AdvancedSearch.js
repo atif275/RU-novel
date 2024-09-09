@@ -51,7 +51,7 @@ const Advanced = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -1085,7 +1085,7 @@ const Advanced = () => {
                     <strong> Ongoing</strong> <br></br> <br></br>
                     The Ongoing tag indicates that a fiction is still being
                     actively written and has had a chapter update in the past 35
-                    days. This is the default tag on Royal Road and requires no
+                    days. This is the default tag on RU Novel and requires no
                     action from the author of a fiction.
                   </p>
 

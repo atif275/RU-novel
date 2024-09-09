@@ -51,7 +51,7 @@ const Contact = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -877,7 +877,7 @@ const Contact = () => {
                 <div className="text-[#000000CC]">
                   <h1 className="text-4xl ">Content Guidelines</h1>
                   <p className="mt-5">
-                    Royal Road allows creative freedom and tries not to censor
+                    RU Novel allows creative freedom and tries not to censor
                     content when possible. However, we have certain standards
                     and limitations that must be met in order to publish or
                     interact with the community.
@@ -890,7 +890,7 @@ const Contact = () => {
                     post here.
                   </p>
                   <p className="mt-5">
-                    Per our terms, by submitting a story to Royal Road, you
+                    Per our terms, by submitting a story to RU Novel, you
                     represent that you have all necessary rights and that you
                     are not infringing or violating any third party’s rights by
                     posting it. If Your Content infringes another person’s
@@ -898,7 +898,7 @@ const Contact = () => {
                     has been infringed upon, please send a DMCA takedown
                     request. If you are aware of an infringement done for
                     someone else’s content, please submit it via our report
-                    system: Knowledge Base | Royal Road.
+                    system: Knowledge Base | RU Novel.
                   </p>
                   <p className="mt-5">
                     Note that Fictions that are submitted to our platform are
@@ -999,7 +999,7 @@ const Contact = () => {
                   </h1>
                   <p className="py-2">
                     We accept all languages. However, based on our users'
-                    geographical locations, Royal Road predominantly has novels
+                    geographical locations, RU Novel predominantly has novels
                     in English. Accordingly, if the story is not in English, we
                     highly recommend adding what language the fiction is written
                     into its title.
@@ -1061,7 +1061,7 @@ const Contact = () => {
                     Restriction on non-fictional world content
                   </h1>
                   <p className="py-2">
-                    Royal Road is a platform dedicated to fictional content,
+                    RU Novel is a platform dedicated to fictional content,
                     offering users an escape into a world of imagination. While
                     real-life people, current events, and real-world religions
                     can be incorporated into fictional stories with certain
@@ -1120,7 +1120,7 @@ const Contact = () => {
                   <p className="py-2">
                     {" "}
                     <strong>
-                      While Royal Road tolerates a certain level of mature
+                      While RU Novel tolerates a certain level of mature
                       content to allow authors their creative freedom, we still
                       have some prohibited content.
                     </strong>

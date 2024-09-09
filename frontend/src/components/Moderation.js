@@ -51,7 +51,7 @@ const Moderation = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -920,7 +920,7 @@ const Moderation = () => {
                 <div className="text-[#000000CC]">
                   <h1 className="text-4xl ">Moderation Tools for Users</h1>
                   <p className="mt-5">
-                    Users on Royal Road have a number of tools to moderate their
+                    Users on RU Novel have a number of tools to moderate their
                     experience on the platform.
                   </p>
 
@@ -934,7 +934,7 @@ const Moderation = () => {
                   </h1>
 
                   <p className="py-4">
-                    On Royal Road, we value user experience highly. When
+                    On RU Novel, we value user experience highly. When
                     thinking about the user experience on a web fiction
                     platform, you might think about just the discovery features
                     or just the reading interface itself, but what about the
@@ -974,7 +974,7 @@ const Moderation = () => {
                     don’t want to see them on your screen or anywhere in the
                     comment section. Then you can block them. These
                     user-specific block functions can be found when clicking on
-                    the username of any member on Royal Road.
+                    the username of any member on RU Novel.
                   </p>
 
                   <img

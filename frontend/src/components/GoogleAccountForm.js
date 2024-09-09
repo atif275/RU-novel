@@ -116,8 +116,8 @@ const GoogleAccountForm = () => {
             <i className="fa fa-2x fa-info-circle mr-2"></i>
             <div>
               If you wish to associate your <strong>Google</strong> account with
-              an existing Royal Road account instead, please log in with your
-              Royal Road account, then proceed to the settings page{" "}
+              an existing RU Novel account instead, please log in with your
+              RU Novel account, then proceed to the settings page{" "}
               <a href="/account/externallogins" className="text-blue-600">
                 here
               </a>

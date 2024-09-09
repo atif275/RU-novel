@@ -51,7 +51,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 sm:w-1/2 px-4 mb-8">
             <h2 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>About</h2>
             <p>
-              Royal Road®️ is the home of web novels and fan fictions! In our amazing community, you can find various talented individuals who write as a hobby or even professionally, artists who create art for them, and many, many readers who provide valuable feedback and encouragement.
+              RU Novel®️ is the home of web novels and fan fictions! In our amazing community, you can find various talented individuals who write as a hobby or even professionally, artists who create art for them, and many, many readers who provide valuable feedback and encouragement.
             </p>
           </div>
 
@@ -59,7 +59,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 sm:w-1/2 px-4 mb-8">
             <h2 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-[#c2a970]' : 'text-[#32C5D2]'}`}>Amazon Affiliate</h2>
             <div className="text-sm">
-              Royal Road®️ as an Amazon Associate earns from qualifying purchases.
+              RU Novel®️ as an Amazon Associate earns from qualifying purchases.
             </div>
           </div>
 

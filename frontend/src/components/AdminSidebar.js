@@ -14,7 +14,7 @@ export const AdminSidebar = ({ setSelectedComponent }) => {
             <div className="flex items-center p-5 justify-between" id="logo-bg" >
                 {!collapsed && (
                     <div className="logo">
-                        <Link to="/admin-dashboard" title="Royal Road">
+                        <Link to="/admin-dashboard" title="RU Novel">
                         <img src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo1.png?alt=media&token=fa805337-746c-4820-8c12-18dbbd99d05a" alt="Logo" className="h-36 w-48 " />
                         </Link>
                         

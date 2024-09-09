@@ -51,7 +51,7 @@ const Activation = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -862,7 +862,7 @@ const Activation = () => {
                   <h1 className="text-4xl ">Sign up & Activation</h1>
 
                   <p className="py-4">
-                    In order to make full use of all the features Royal Road can
+                    In order to make full use of all the features RU Novel can
                     provide you will need an account. In this section all steps
                     and options to making your account will be explained.
                   </p>
@@ -873,7 +873,7 @@ const Activation = () => {
                     Creating your account
                   </h1>
                   <p className="py-4">
-                    Creating an account on Royal Road can be done from the
+                    Creating an account on RU Novel can be done from the
                     sign-up page. There, you will be asked for the following
                     details: Username, Email, Password, Gender, and Date of
                     Birth.
@@ -907,14 +907,14 @@ const Activation = () => {
                   ></img>
 
                   <p className="py-4">
-                    In order to use Royal Road, you will have to accept the
+                    In order to use RU Novel, you will have to accept the
                     Terms and Conditions. While not the most entertaining read
-                    on Royal Road, we do ask you to read it before accepting
+                    on RU Novel, we do ask you to read it before accepting
                     during account signup.
                   </p>
 
                   <p className="py-4">
-                    The Royal Road newsletter is sent periodically and contains
+                    The RU Novel newsletter is sent periodically and contains
                     updates about new features, book launches, news, and other
                     updates. We will not spam and you can unsubscribe at any
                     point.
@@ -957,8 +957,8 @@ const Activation = () => {
 
                   <p className="py-4">
                     The referral code is there to reward people who invite other
-                    users to Royal Road. The referral code can be found at the
-                    referral page when signed in on Royal Road.
+                    users to RU Novel. The referral code can be found at the
+                    referral page when signed in on RU Novel.
                   </p>
                   <img
                     className="mt-3 h-[200%]"
@@ -976,7 +976,7 @@ const Activation = () => {
                   </h1>
 
                   <p className="py-4">
-                    In order to access some of the core features of Royal Road,
+                    In order to access some of the core features of RU Novel,
                     your account will have to be verified. This is done by
                     clicking on the button in the email you will be sent from
                     us. Without verification, you can still use most of the

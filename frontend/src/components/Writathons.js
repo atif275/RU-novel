@@ -51,7 +51,7 @@ const Writathon = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -875,10 +875,10 @@ const Writathon = () => {
                   <h1 className="text-4xl ">Writathon</h1>
 
                   <p className="py-4">
-                    Writathon is Royal Road’s writing challenge for our authors,
+                    Writathon is RU Novel’s writing challenge for our authors,
                     it is a personal challenge first and foremost. To win, you
                     need to write at least 55,555 words in 5 weeks while also
-                    publishing the story on Royal Road, here you will find
+                    publishing the story on RU Novel, here you will find
                     readers as you write your story. <br />
                     <br />
                     We run the Writathon starting from April 1st and October
@@ -973,7 +973,7 @@ const Writathon = () => {
                     The challenge operates on an honor-based system, and as long
                     as you uphold the challenge's spirit, you may tailor it to
                     your specific needs. For example if you maintain a backlog
-                    (advance chapters not available on Royal Road) and intend to
+                    (advance chapters not available on RU Novel) and intend to
                     release them while concurrently building a new backlog, then
                     that's allowed. However, you must remain true to the spirit
                     of the challenge, meaning you must publish at least 55,555
@@ -997,7 +997,7 @@ const Writathon = () => {
                     How to Participate
                   </h1>
                   <p className="py-4">
-                    First, you need to submit your Fiction to Royal Road and
+                    First, you need to submit your Fiction to RU Novel and
                     wait until it's verified by the staff. You can read about
                     how to submit your first Fiction here.
                     <br />
@@ -1010,7 +1010,7 @@ const Writathon = () => {
                     <br />
                     Recommended but optional: For the spirit of the challenge,
                     and to inform the other authors and readers - please add
-                    [participant in the Royal Road Writathon challenge] in the
+                    [participant in the RU Novel Writathon challenge] in the
                     description of your story.
                   </p>
 

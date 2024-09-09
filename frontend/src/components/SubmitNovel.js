@@ -51,7 +51,7 @@ const SubmitNovel = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -918,7 +918,7 @@ const SubmitNovel = () => {
 
                   <ol className="mt-5 ml-8 list-decimal">
                     <li className="py-2">
-                      Register for an account on Royal Road if you have not
+                      Register for an account on RU Novel if you have not
                       already. This can be easily done from our Welcome page or
                       by clicking the “Login" button in the top right corner and
                       selecting "Create an account" at the bottom of the login
@@ -974,7 +974,7 @@ const SubmitNovel = () => {
                     rejected.
                     <br></br>
                     <br></br>
-                    Before getting approved on Royal Road, there is a manual
+                    Before getting approved on RU Novel, there is a manual
                     check by the staff to make sure the rules are followed. Here
                     the fiction is checked for Plagiarism, Links in the
                     Synopsis, Fanfiction tagging, Sexual content, Political or
@@ -1014,7 +1014,7 @@ const SubmitNovel = () => {
                   </p>
                   <p className="py-4">
                     To prove your ownership, you can edit the description on the
-                    other sites/platforms with a message to the Royal Road
+                    other sites/platforms with a message to the RU Novel
                     staff. It can be a link to your profile page where your
                     fiction will appear once it is approved. Or a message like:
                     "I will be posting this story on RoyalRoad.com," or anything
@@ -1025,7 +1025,7 @@ const SubmitNovel = () => {
                   <p className="py-4">
                     Alternatively, if your email address is public on the other
                     site(s), you can link where it is and we will confirm if it
-                    is the same as the email address you've used on Royal Road.
+                    is the same as the email address you've used on RU Novel.
                   </p>
                   <p className="py-4">
                     Once you add the verification note, reply to a support
@@ -1099,7 +1099,7 @@ const SubmitNovel = () => {
                     approving a fiction. In this case, a ticket will be opened
                     and we will ask what we need to know. After asking these
                     questions, we will decide on what future action might be
-                    needed.Royal Road reserves the right to reject anything and
+                    needed.RU Novel reserves the right to reject anything and
                     everything regardless of the rules stated here, as we look
                     at each story as individually. However, you are more likely
                     to have your fiction approved if you followed all of the
@@ -1121,7 +1121,7 @@ const SubmitNovel = () => {
                     Cover
                   </h1>
                   <p className="py-4">
-                    On Royal Road, we allow covers up to a size of 400x600
+                    On RU Novel, we allow covers up to a size of 400x600
                     pixels. If you do not have a cover in this exact resolution
                     or aspect ratio, do not worry. There is a cropping tool
                     available after uploading an image, this will make sure a
@@ -1178,7 +1178,7 @@ const SubmitNovel = () => {
                     Genres and Tags
                   </h1>
                   <p className="py-4">
-                    Tags on Royal Road are there to show potential readers what
+                    Tags on RU Novel are there to show potential readers what
                     your fiction contains, or what it does not contain. It helps
                     with searchability and classification for recommendations as
                     well. While you are free to tag your fiction the way you

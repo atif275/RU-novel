@@ -51,7 +51,7 @@ const Exp = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -827,9 +827,9 @@ const Exp = () => {
                   <h1 className="text-4xl ">Experience
                   </h1>
                
-                   <p className="py-4">Where reputation is user driven, experience is automatically awarded for completing actions and achieving milestones on the site. There are many ways to get experience on Royal Road, they are listed below in no particular order.</p>
+                   <p className="py-4">Where reputation is user driven, experience is automatically awarded for completing actions and achieving milestones on the site. There are many ways to get experience on RU Novel, they are listed below in no particular order.</p>
                   <p className="py-4">
-                  ·         Logging in (or just visiting if you are always logged in) daily to Royal Road <br></br><br></br>
+                  ·         Logging in (or just visiting if you are always logged in) daily to RU Novel <br></br><br></br>
 
 ·         Gaining Reputation levels <br></br><br></br>
 
@@ -839,7 +839,7 @@ const Exp = () => {
 
 ·         Making, and voting on reviews <br></br><br></br>
 
-·         Referring new users to Royal Road <br></br><br></br>
+·         Referring new users to RU Novel <br></br><br></br>
 
 ·        Gaining new achievements*
                   </p>

@@ -51,7 +51,7 @@ const Reviews = () => {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about Royal Road</span>
+                <span>All about RU Novel</span>
                 <ul className="page-breadcrumb breadcrumb mt-2"></ul>
               </div>
             </div>
@@ -869,7 +869,7 @@ const Reviews = () => {
                     Hiding Reviews
                   </h1>
                   <p className="py-4">
-                    On Royal Road, authors can choose to hide certain reviews
+                    On RU Novel, authors can choose to hide certain reviews
                     from showing up. Not everybody likes all reviews they get
                     and being presented with the same review you do not like or
                     want to see all the time can be draining.<br></br>
@@ -895,7 +895,7 @@ const Reviews = () => {
                     Review Swaps
                   </h1>
                   <p className="py-4">
-                    Review swaps are allowed on Royal Road. In fact, you can
+                    Review swaps are allowed on RU Novel. In fact, you can
                     request them in our Reviews forum. However, it is prohibited
                     to agree to a swap while promising a high rating. If you
                     agree to a review swap, we expect you to actually read the
