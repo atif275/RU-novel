@@ -203,8 +203,9 @@ function App() {
     }}
     >
       <BrowserRouter>
+      <Routes>
       
-        <Routes>
+        
          
           <Route path="/" element={
             <>
@@ -223,66 +224,66 @@ function App() {
           
           } />
           
-        </Routes>
-        <Routes>
+        
+        
           
           <Route path="/report/comment" element={ <RPage/>} />
         
   
             
-          </Routes>
-        <Routes>
+          
+        
           
           <Route path="/ads/author" element={ <APage/>} />
         
   
             
-          </Routes>
-        <Routes>
+          
+        
             
             <Route path="/submit-chapter/:fictionId" element={<SubmitChapter />} />
-        </Routes>
-        <Routes>
+        
+        
           
           <Route path="/tos" element={ <TermsPage/>} />
         
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/privacypolicy" element={ <PP/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/cookiepolicy" element={ <CookiePage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/dmca" element={ <DmPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/blog" element={ <SuggestionsPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/contact/email" element={ <ContactEmailPage/>} />
         
   
             
-          </Routes>
-        <Routes>
+          
+        
                 
                 <Route path="/fiction/:id/:title" element={
                   <>
@@ -294,9 +295,9 @@ function App() {
                   </>
                   } />
                 
-              </Routes>
+              
 
-              <Routes>
+              
                 
                 <Route path="/admin/fiction/:id/:title" element={
                   <>
@@ -306,8 +307,8 @@ function App() {
                   </>
                   } />
                 
-              </Routes>
-              <Routes>
+              
+              
                 
                 <Route path="/submission/fiction/:id/:title" element={
                   <>
@@ -319,12 +320,12 @@ function App() {
                   </>
                   } />
                 
-              </Routes>
+              
               
 
               
 
-              <Routes>
+              
           <Route
             path="/fiction/:fictionId/:fictionTitle/chapter/:chapterId/:chapterTitle"
             element={
@@ -337,9 +338,9 @@ function App() {
               </>
             }
           />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route
             path="/admin/fiction/:fictionId/:fictionTitle/chapter/:chapterId/:chapterTitle"
             element={
@@ -352,8 +353,8 @@ function App() {
               </>
             }
           />
-        </Routes>
-        <Routes>
+        
+        
           <Route
             path="/submission/fiction/:fictionId/:fictionTitle/chapter/:chapterId/:chapterTitle"
             element={
@@ -366,10 +367,10 @@ function App() {
               </>
             }
           />
-        </Routes>
+        
 
 
-        <Routes>
+        
          
          <Route path="/Fiction" element={
            <>
@@ -383,9 +384,9 @@ function App() {
          
          } />
          
-       </Routes>
+       
 
-       <Routes>
+       
          
          <Route path="/premium" element={
           user ? (
@@ -406,8 +407,8 @@ function App() {
          
          } />
          
-       </Routes>
-       <Routes>
+       
+       
           <Route path="/user/achievements" element={
             <>
               <HomePage />
@@ -416,11 +417,11 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
         
         {/* /memberlist */}
-        <Routes>
+        
           <Route path="/user/memberlist" element={
            <>
             <HomePage />
@@ -430,9 +431,9 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
         {/* /fictions/best-rated */}
-        <Routes>
+        
           <Route path="/fictions/best-rated" element={
            <>
             {/* <SignUp /> */}
@@ -443,9 +444,9 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
         {/* /fictions/trending */}
-        <Routes>
+        
           <Route path="/fictions/trending" element={
            <>
             <HomePage />
@@ -455,9 +456,9 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
         {/* /fictions/active-popular (OnGoingFiction) */}
-        <Routes>
+        
           <Route path="/fictions/active-popular" element={
            <>
             <HomePage />
@@ -467,9 +468,9 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
         {/* /fictions/complete */}
-        <Routes>
+        
           <Route path="/fictions/complete" element={
            <>
             <HomePage />
@@ -479,10 +480,10 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         {/* /fictions/weekly-popular */}
-        <Routes>
+        
           <Route path="/fictions/weekly-popular" element={
            <>
             <HomePage />
@@ -492,10 +493,10 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         {/* /fictions/latest-updates */}
-        <Routes>
+        
           <Route path="/fictions/latest-updates" element={
            <>
             <HomePage />
@@ -505,10 +506,10 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         {/* /fictions/new */}
-        <Routes>
+        
           <Route path="/fictions/new" element={
            <>
             <HomePage />
@@ -518,10 +519,10 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         {/* /fictions/rising-stars */}
-        <Routes>
+        
           <Route path="/fictions/rising-stars" element={
            <>
            <HomePage />
@@ -531,10 +532,10 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         {/* /fictions/writathon */}
-        <Routes>
+        
           <Route path="/fictions/writathon" element={
            <>
            
@@ -543,9 +544,9 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
         {/* /fictions/search */}
-        <Routes>
+        
           <Route path="/fictions/search" element={
            <>
             <HomePage />
@@ -555,11 +556,11 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
 
         {/* /forums */}
-        <Routes>
+        
           <Route path="/forums" element={
            <>
            <HomePage />
@@ -569,12 +570,12 @@ function App() {
            </> 
           } />
           
-        </Routes>
-
         
 
         
-        <Routes>
+
+        
+        
           <Route path="/messages" element={
            <>
             <HomePage />
@@ -584,8 +585,8 @@ function App() {
            </> 
           } />
           
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/account" element={
            <>
             <HomePage />
@@ -595,62 +596,62 @@ function App() {
            </> 
           } />
           
-        </Routes>
+        
 
         
         
         
-       <Routes>
+       
           {/* Set up the route for SearchResult */}
           <Route path="/search" element={<SearchResult />} />
           
-        </Routes>
-        <Routes>
+        
+        
           {/* Set up the route for SearchResult */}
           <Route path="/login" element={<Login />} />
           
-        </Routes>
-        <Routes>
+        
+        
           
           <Route path="/register" element={<SignUp />} />
           
-        </Routes>
+        
 
-        <Routes>
+        
           
           <Route path="/google/account" element={<GoogelAccount />} />
           
-        </Routes>
+        
       
-        <Routes>
+        
           
           <Route path="/facebook/account" element={<FacebookAccount />} />
           
-        </Routes>
-        <Routes>
+        
+        
           
           <Route path="/error" element={<Error />} />
           
-        </Routes>
-        <Routes>
+        
+        
           
           <Route path="/signup/configuration" element={< SignUPConPage/>} />
           
-        </Routes> 
+         
 
-        <Routes>
+        
           
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           
-        </Routes> 
-        <Routes>
+         
+        
           
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       
 
           
-        </Routes> 
-        <Routes>
+         
+        
           <Route path="/user/borders" element={
             <>
               <HomePage />
@@ -659,46 +660,46 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           
           <Route path="/reset-password" element={<ResetPasswordPage />} />
         
   
             
-          </Routes> 
+           
 
-          <Routes>
+          
           
           <Route path="/support/knowledgebase" element={<KnowledgePage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/rules-about-ratings-and-reviews" element={<RulesPage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/content-guidelines" element={<ContactPage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/general-rules" element={<GRulePage />} />
         
   
             
-          </Routes> 
+           
          
-        <Routes>
+        
           <Route path="/fictions/advanced/search" element={
            <>
             <HomePage />
@@ -708,211 +709,211 @@ function App() {
            </> 
           } />
           
-        </Routes>
-          <Routes>
+        
+          
           
           <Route path="/support/knowledgebase/discovery-and-rankings" element={<DiscoveryPage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/advanced-search" element={<AdvancedPage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/optimize-the-reading-experience" element={<OptimizePage />} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/personalized-lists" element={ <PersonalizedPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/notifications" element={ <NotificationPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/genres-and-tags" element={ <GenresPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/author-dashboard" element={ <AuthPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/chapters" element={ <ChapPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/submitting-and-verifying-novels" element={ <SubNovelPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/comments" element={ <ComPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/reviews" element={ <ReviewsPage/>} />
         
   
             
-          </Routes> 
-          <Routes>
+           
+          
           
           <Route path="/support/knowledgebase/fiction-status" element={ <FicPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/deleting-your-fiction" element={ <DeleteFicPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/donation" element={ <DonationPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/credit-collaborate-and-moderate" element={ <CreditPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/moderation-tools-for-users" element={ <ModerationPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/reputation" element={ <RepPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/experience" element={ <ExpPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/achievments" element={ <AchPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/writathon" element={ <WritathonPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/signup-and-activation" element={ <ActPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/security" element={ <SecPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/notification" element={ <NotifyPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/contact-the-staff" element={ <ContactStaffPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/report-a-bug" element={ <ReportBugPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/site-loading-slowly" element={ <SlowLoadPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/report-an-ad" element={ <ReportAddPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/report-a-user-interaction" element={ <RIPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/suggestions" element={ <SuggestionsPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
         <Route
           path="/create/idea"
           element={
@@ -923,9 +924,9 @@ function App() {
             )
           }
         />
-      </Routes>
+      
 
-      <Routes>
+      
         <Route
           path="/comments"
           element={
@@ -936,9 +937,9 @@ function App() {
             )
           }
         />
-      </Routes>
+      
 
-      <Routes>
+      
         <Route
           path="/reply"
           element={
@@ -949,66 +950,66 @@ function App() {
             )
           }
         />
-      </Routes>
-          <Routes>
+      
+          
           
           <Route path="support/knowledgebase/fredquently-asked-questions" element={ <FreqPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="support/knowledgebase/copyright-infringement" element={ <CopyPage/>} />
         
   
             
-          </Routes>
+          
 
-          <Routes>
+          
           
           <Route path="support/knowledgebase/premium" element={ <PremiumPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="support/knowledgebase/author-premium" element={ <AuthorPrePage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="support/knowledgebase/reader-premium" element={ <ReaderPrePage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/knowledgebase/paid-advertisement-for-my-story" element={ <AddPage/>} />
         
   
             
-          </Routes>
-          <Routes>
+          
+          
           
           <Route path="/support/status" element={ <StatusPage/>} />
         
   
             
-          </Routes>
-          {/* <Routes>
+          
+          {/* 
           
           <Route path="/support/ticket" element={ <TicketsPage/>} />
         
   
             
-          </Routes> */}
+           */}
           
-          <Routes>
+          
           
           <Route
           path="/support/ticket"
@@ -1025,9 +1026,9 @@ function App() {
 
   
             
-          </Routes>
+          
 
-          <Routes>
+          
         <Route
           path="/support/new-ticket"
           element={
@@ -1040,11 +1041,11 @@ function App() {
             )
           }
         />
-      </Routes>
+      
           {/* // ---------------------------------------------------------------------------SABHEEE Routes Start----------------------------------------------------- */}
 
         {/* /author-dashboard */}
-        <Routes>
+        
           <Route path="/author-dashboard" element={
            
              user ? (
@@ -1060,19 +1061,19 @@ function App() {
            
           } />
 
-        </Routes>
+        
         
 
-        <Routes>
+        
             <Route
                 path="/admin-dashboard"
                 element={isAdmin ? <AdminDashboardPage /> : <Navigate to="/login" />}
             />
       
-       </Routes>
+       
         {/* Sabhee profile */}
 
-        <Routes>
+        
           <Route path="/profile" element={
             <>
               <HomePage />
@@ -1081,9 +1082,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/account" element={
             <>
               <HomePage />
@@ -1093,8 +1094,8 @@ function App() {
             </>
           } />
           {/* sabhee privacy $ security */}
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/account/changeemail" element={
             <>
               <HomePage />
@@ -1103,8 +1104,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/account/changepassword" element={
             <>
               <HomePage />
@@ -1113,8 +1114,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/account/twofactorauthentication" element={
             <>
               <HomePage />
@@ -1123,8 +1124,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/account/externallogins" element={
             <>
               <HomePage />
@@ -1133,9 +1134,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/account/download" element={
             <>
               <HomePage />
@@ -1144,10 +1145,10 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
 
-        <Routes>
+        
           <Route path="/account/delete" element={
             <>
               <HomePage />
@@ -1156,9 +1157,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
         {/* notificationOptions */}
-        <Routes>
+        
           <Route path="/account/notifications" element={
             <>
               <HomePage />
@@ -1167,8 +1168,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/notifications/threads" element={
             <>
               <HomePage />
@@ -1177,8 +1178,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/notifications/list" element={
             <>
               <HomePage />
@@ -1187,9 +1188,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/my/usercp" element={
             <>
               <HomePage />
@@ -1198,9 +1199,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/account/signature" element={
             <>
               <HomePage />
@@ -1209,12 +1210,12 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
         {/*  */}
 
 
         {/* messageOptions */}
-        <Routes>
+        
           <Route path="/private/send" element={
             <>
               <HomePage />
@@ -1223,8 +1224,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-        <Routes>
+        
+        
           <Route path="/private/1" element={
             <>
               <HomePage />
@@ -1233,9 +1234,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/private/2" element={
             <>
               <HomePage />
@@ -1244,9 +1245,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/private/3" element={
             <>
               <HomePage />
@@ -1255,9 +1256,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/private/4" element={
             <>
               <HomePage />
@@ -1266,9 +1267,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
         {/* /my/follows */}
-        <Routes>
+        
           <Route path="/my/follows" element={
             <>
               <HomePage />
@@ -1277,9 +1278,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/my/favorites" element={
             <>
               <HomePage />
@@ -1288,9 +1289,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/my/readlater" element={
             <>
               <HomePage />
@@ -1299,9 +1300,9 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
+        
 
-        <Routes>
+        
           <Route path="/my/history" element={
             <>
               <HomePage />
@@ -1310,8 +1311,8 @@ function App() {
               <PostFooter />
             </>
           } />
-        </Routes>
-
+        
+</Routes>
 
 
 
