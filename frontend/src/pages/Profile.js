@@ -3,7 +3,7 @@ import { FaBook, FaCommentDots, FaStar, FaStream, FaMailBulk, FaAward, FaUserAlt
 import { useSelector } from "react-redux";
 import { BiUserCircle } from 'react-icons/bi';
 import { MdRateReview, MdMessage, MdStarBorder } from 'react-icons/md';
-
+import { useNavigate } from 'react-router-dom';
 function Profile() {
   const [activeTab, setActiveTab] = useState('overview');
   const user = useSelector((state) => state.userData.user);
@@ -18,6 +18,18 @@ function Profile() {
     reputation: <MdStarBorder className="inline mr-2 text-xl" />,
   };
   const profilePictureUrl = user.profilePicture
+
+  const navigate = useNavigate();
+  const NavigateToMessages = () => {
+    // console.log("messg press");
+    navigate('/private/1');
+  };
+  const NavigateToProfile = () => {
+    // console.log("profile press");
+    navigate('/account');
+  };
+
+
    
 
   return (
@@ -46,10 +58,10 @@ function Profile() {
           {/* Buttons in the upper right corner */}
           <div className=''>
             <div className="absolute top-0 right-0 flex">
-              <button className="bg-white p-2 mr-1 rounded-lg shadow-lg m-4">
+              <button className="bg-white p-2 mr-1 rounded-lg shadow-lg m-4" onClick={NavigateToMessages}>
                 <FaComment className="text-blue-500" />
               </button>
-              <button className="bg-white p-2 rounded-lg shadow-lg m-4 ml-1">
+              <button className="bg-white p-2 rounded-lg shadow-lg m-4 ml-1" onClick={NavigateToProfile}>
                 <FaPen className="text-blue-500 " />
               </button>
             </div>
