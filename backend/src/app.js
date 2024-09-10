@@ -9,7 +9,7 @@ const session = require('express-session');
 const path = require('path');
 const passport = require('../Controller/Oauth'); // Import the passport configuration
 // const Books = require('../model/BookThread');
-const Review = require('../model/reviews');s
+const Review = require('../model/reviews');
 const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
 
