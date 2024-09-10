@@ -249,9 +249,9 @@ function Favorites() {
                         <div className="flex space-x-8 mb-6 ml-1">
                             <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
                             <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
-                            <Link to="/history" className="text-gray-900 font-bold border-b-4 border-blue-500">History</Link>
-                            <Link to="/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
-                            <Link to="/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
+                            <Link to="/my/history" className="text-gray-900 font-bold border-b-4 border-blue-500">History</Link>
+                            <Link to="/my/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
+                            <Link to="/my/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
                         </div>
                         <div className='bg-white p-6'>
                             <div className="flex justify-between items-center mb-4">

@@ -6,9 +6,15 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase functions
+import app from '../firebase'; // Import your Firebase configuration
 
 
 function ProfileInfoPage() {
+  const [isEditable, setIsEditable] = useState(false);
+  const handleEditClick = () => {
+    setIsEditable(!isEditable);
+  };
   const [formData, setFormData] = useState({
     username: "",
     title:"",
@@ -21,6 +27,9 @@ function ProfileInfoPage() {
     bio: "",
     profilePicture: "",
   });
+
+  const [imageURL, setImageURL] = useState("");
+  const [uploading, setUploading] = useState(false);
 
 
   const email = useSelector((state) => state.userData.email);
@@ -44,7 +53,9 @@ function ProfileInfoPage() {
           twitter: userData.twitter || "",
           facebook: userData.facebook || "",
           bio: userData.bio || "",
+          profilePicture: userData.profilePicture || "",
         });
+        setImageURL(userData.profilePicture || "");
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
@@ -60,12 +71,13 @@ function ProfileInfoPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const updatedData = { ...formData, profilePicture: imageURL };
       const response = await fetch(`https://api.ru-novel.ru/api/users/${email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedData),
       });
 
       if (response.ok) {
@@ -80,10 +92,34 @@ function ProfileInfoPage() {
       toast.error("Error updating profile");
     }
   };
-  const profilePictureUrl = user.profilePicture;
-  // ? `https://api.ru-novel.ru/uploads/${user.profilePicture}`
-  // : '/default-avatar.png';
+  // Function to handle image upload
+  async function handleImageChange(e) {
+    // console.log("xxxxxx"+e.target.files[0]);
+    const image = e.target.files[0];
+    if(image){
+      try {
+        setUploading(true);
+        const storage = getStorage(app);
+        const storageRef = ref(storage, "user-profile-images/" +image.name);
+        await uploadBytes(storageRef,image);
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log(downloadURL);
+        setImageURL(downloadURL);
+        
+        
+      } catch (error) {
+        // console.log(error);
+        
+      }finally{
+        setUploading(false);
+      }
 
+    }
+    // setImage(e.target.files[0]);
+};
+
+  const profilePictureUrl = user.profilePicture;
+ 
 
   const [activeTab, setActiveTab] = useState("profileInfo");
   
@@ -344,9 +380,8 @@ const myOptions = [
                               >
                                 <div className=" pl-2 w-full flex items-center">
                                   <img
-                                    src={profilePictureUrl}
-                                    // src="https://www.royalroad.com/dist/img/anon.jpg"
-                                    // className="mr-2"
+                                    src={imageURL}
+                                    
                                     className="w-24 h-24  mr-2"
                                     alt="alttt"
                                   ></img>
@@ -355,22 +390,25 @@ const myOptions = [
                                     src={`data:image/jpeg;base64,${formData.profilePicture}`}
                                     alt="Profile"
                                   /> */}
-                                  <button
+                                  {/* <button
                                     className="ml-12 bg-custom-blue p-2 text-white "
-                                    // onClick={() => document.getElementById('profilePictureInput').click()}
+                                     onClick={() => document.getElementById('profilePictureInput').click()}
                                   >
                                     Change Avatar
-                                  </button>
+                                  </button> */}
                                   <input
+                                    id="file-input"
+                                    className="hidden"
                                     type="file"
-                                    id="profilePictureInput"
-                                    style={{ display: 'none' }}
-                                    accept="image/*"
-                                    // onChange={handleFileChange}
+                                    accept=".png,.jpg,.jpeg,.bmp"
+                                    name="avatar"
+                                    onChange={handleImageChange} 
                                   />
-                                  {/* <select className=" border border-gray-100 p-2 bg-white w-full" id="PrimaryUserGroup" name="PrimaryUserGroup" required>
-                                        <option value="2" selected>Penguin Guild</option>
-                                    </select> */}
+                                  
+                                  <label htmlFor="file-input" className={`bg-custom-blue p-2 text-white cursor-pointer`}>
+                                    {uploading ? "Uploading Avatar..." : "Change Avatar"}
+                                  </label>
+                                
                                 </div>
                               </div>
                             </div>
@@ -388,25 +426,25 @@ const myOptions = [
                                 <div className="flex items-center w-full bg-gray-200 ">
                                   <i className="fa fa-user text-gray-500 p-2"></i>
                                   <input
-                                    className="w-full "
-                                    
+                                    className="w-full"
                                     id="username"
                                     name="username"
                                     placeholder="Enter desired display name"
                                     type="text"
                                     value={formData.username}
                                     onChange={handleChange}
+                                    readOnly={!isEditable} // Make it read-only if not editable
                                   />
-                                  <a
-                                    className="flex bg-custom-blue "
-                                    target="_blank"
-                                    href="/account/changeusername"
+                                  <button
+                                    className="flex bg-custom-blue cursor-pointer"
+                                    type="button" 
+                                    onClick={handleEditClick}
                                   >
                                     <div className="flex items-center p-2 text-white">
-                                      <i className="fas fa-link pr-2"></i>
-                                      <p> Edit</p>
+                                      <i className="fas fa-edit pr-2"></i>
+                                      <p>{isEditable ? 'Save' : 'Edit'}</p>
                                     </div>
-                                  </a>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -513,25 +551,18 @@ const myOptions = [
                                 style={{ flex: "3" }}
                               >
                                 <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fa fa-calendar text-gray-500 "></i>
-                                  <input
-                                    type="text"
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="birthday"
-                                    name="birthday"
-                                    value={formData.birthday}
-                                    onChange={handleChange}
-                                    placeholder="Select a date"
-                                    autoComplete="off"
-                                    data-date-end-date="0d"
-                                    data-date-format="dd/mm/yyyy"
-                                    data-default-view-date="-20y"
-                                    data-provide="datepicker"
-                                    data-val="true"
-                                    data-val-regex="Date must be in format dd/MM/yyyy or yyyy-MM-dd"
-                                    data-val-regex-pattern="^(?:[0-2]?\d|30|31)\/(?:0?\d|1[0-2])\/(?:19\d{2}|20\d{2})|(\d{4}-\d{2}-\d{2})$"
-                                    
-                                  />
+                                <i className="fa fa-calendar text-gray-500 "></i>
+                                <input
+                                  type="date" // Change type to 'date'
+                                  className="form-control border border-gray-100 rounded p-2 flex-grow"
+                                  id="birthday"
+                                  name="birthday"
+                                  value={formData.birthday}
+                                  onChange={handleChange}
+                                  placeholder="Select a date"
+                                  autoComplete="off"
+                                  max={new Date().toISOString().split('T')[0]} // Restricts future dates
+                                />
                                 </div>
                               </div>
                             </div>
@@ -725,13 +756,14 @@ const myOptions = [
 
                           <div className="items-center text-center mt-6 text-white">
                           <ToastContainer />
-                            <button
-                              className="bg-custom-light-blue py-1 px-2"
-                              type="submit"
-                              onClick={handleSubmit}
-                            >
-                              Update profile
-                            </button>
+                          <button
+                          className="bg-custom-light-blue py-1 px-2"
+                          type="submit"
+                          onClick={handleSubmit}
+                          disabled={uploading} // Disable button while uploading
+                        >
+                          {uploading ? "Updating..." : "Update profile"}
+                        </button>
                           </div>
                         </form>
                       </div>

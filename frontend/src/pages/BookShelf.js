@@ -1,58 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { FaStar } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import DOMPurify from 'dompurify';
+import { FaBookmark } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import axios from 'axios';
+import AuthorProfile from '../components/AuthorProfile2';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Favorites() {
-    const [favoriteBooks, setFavoriteBooks] = useState([]);
-    const [expandedIndex, setExpandedIndex] = useState(null);
+function BookShelf() {
+    const [activeTab, setActiveTab] = useState("");
+    const [followedAuthors, setFollowedAuthors] = useState([]);
+    const [authorProfiles, setAuthorProfiles] = useState([]);
 
-    const email = useSelector((state) => state.userData.email); // Get the user's email from the state
+    const email = useSelector((state) => state.userData.email);
 
     useEffect(() => {
-        const fetchFavoriteBooks = async () => {
+        const fetchFollowedAuthors = async () => {
             try {
                 const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
-                const favoriteTitles = userResponse.data.favorites;
+                const followedAuthors = userResponse.data.follows;
+                setFollowedAuthors(followedAuthors);
 
-                const bookRequests = favoriteTitles.map((title) =>
-                    axios.get(`https://api.ru-novel.ru/api/bookthreads/${encodeURIComponent(title)}`)
+                const authorProfilesPromises = followedAuthors.map(authorName => 
+                    axios.get(`https://api.ru-novel.ru/api/userssssss/${authorName}`)
                 );
-                const bookResponses = await Promise.all(bookRequests);
-                const books = bookResponses.map(response => response.data);
-
-                setFavoriteBooks(books);
+                const profiles = await Promise.all(authorProfilesPromises);
+                setAuthorProfiles(profiles.map(profile => profile.data));
             } catch (error) {
-                console.error("Error fetching favorite books:", error);
+                console.error('Error fetching followed authors:', error);
             }
         };
 
-        if (email) {
-            fetchFavoriteBooks();
-        }
+        fetchFollowedAuthors();
     }, [email]);
     useEffect(() => {
         window.scrollTo(0, 0);
       }, []);
       
 
-    const toggleShowMore = (index) => {
-        setExpandedIndex(expandedIndex === index ? null : index);
-    };
-
-    const handleUnfavorite = async (bookTitle) => {
+    const handleUnfollow = async (authorName) => {
         try {
-            await axios.post(`https://api.ru-novel.ru/api/users/${email}/unfavorite`, { bookTitle });
-            toast.success('Book removed from favorites successfully!');
-            const updatedFavorites = favoriteBooks.filter(book => book.title !== bookTitle);
-            setFavoriteBooks(updatedFavorites);
+            await axios.post(`https://api.ru-novel.ru/api/users/${email}/unfollow`, { authorName });
+            toast.success('Author unfollowed successfully!');
+            const updatedAuthors = authorProfiles.filter(author => author.username !== authorName);
+            setAuthorProfiles(updatedAuthors);
         } catch (error) {
-            console.error("Error removing book from favorites:", error);
-            toast.error('Error removing book from favorites.');
+            console.error('Error unfollowing author:', error);
+            toast.error('Error unfollowing author.');
         }
     };
 
@@ -121,13 +115,12 @@ function Favorites() {
                                         key={option.key}
                                         className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
                                     >
-                                        <i className={`fas ${option.icon} text-black mr-2`}></i>
+                                        <i className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key ? "bg-custom-blue text-white" : ""}`}></i>
                                         <Link to={option.link} className="flex-grow">{option.label}</Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-
                         {/* Settings List */}
                         <div className="mt-4 bg-white">
                             <div className="bg-gray-600 text-white text-md p-2 pl-4">Settings</div>
@@ -137,13 +130,12 @@ function Favorites() {
                                         key={option.key}
                                         className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
                                     >
-                                        <i className={`fas ${option.icon} text-black mr-2`}></i>
+                                        <i className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key ? "bg-custom-blue text-white" : ""}`}></i>
                                         <Link to={option.link} className="flex-grow">{option.label}</Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-
                         {/* Security & Privacy List */}
                         <div className="mt-4 bg-white">
                             <div className="bg-gray-600 text-white text-md p-2 pl-4">Security & Privacy</div>
@@ -154,29 +146,14 @@ function Favorites() {
                                         className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
                                     >
                                         <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+                                        <Link to={option.link} className="flex-grow">
+                                            {option.label}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-
-                        {/* Notification List */}
-                        {/* <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Notifications</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {notificationOptions.map((option, index) => (
-                                    <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
-                                    >
-                                        <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div> */}
-
-                        {/* Forum List */}
+                       
                         <div className="mt-4 bg-white">
                             <div className="bg-gray-600 text-white text-md p-2 pl-4">Forum</div>
                             <ul className="divide-y divide-gray-200 p-2 text-sm">
@@ -186,12 +163,13 @@ function Favorites() {
                                         className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
                                     >
                                         <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+                                        <Link to={option.link} className="flex-grow">
+                                            {option.label}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-
                         {/* My List */}
                         <div className="mt-4 bg-white">
                             <div className="bg-gray-600 text-white text-md p-2 pl-4">My</div>
@@ -202,67 +180,69 @@ function Favorites() {
                                         className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
                                     >
                                         <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+                                        <Link to={option.link} className="flex-grow">
+                                            {option.label}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     </div>
-
-                    {/* Main Content */}
                     <div className="flex-1 ml-4 mt-4">
                         <div className="flex space-x-8 mb-6 ml-1">
                             <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
-                            <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
+                            <Link to="/bookshelf" className="text-gray-900 font-bold border-b-4 border-blue-500">Bookshelf</Link>
                             <Link to="/my/history" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">History</Link>
                             <Link to="/my/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
                             <Link to="/my/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
-                            <Link to="/my/favorites" className="text-gray-900 font-bold border-b-4 border-blue-500">Favorites</Link>
                         </div>
-                        <div className='bg-white p-6'>
-                            <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-xl font-bold text-red-600"><FaStar className="inline mr-2" />Favorites</h2>
-                            </div>
-                            <hr className="my-4 border-gray-300" />
+                        <div className="bg-white p-6">
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-xl font-bold text-red-600">
+      <FaBookmark className="inline mr-2" />
+      BookShelf
+    </h2>
+  </div>
+  <hr className="my-4 border-gray-300" />
 
-                            {favoriteBooks.map((item, index) => (
-                                <div key={index} className="mb-6 border-b border-gray-300 pb-6">
-                                    <div className="flex justify-between">
-                                        <div className="flex items-start space-x-4">
-                                            <img src={item.image} alt={item.title} className="w-24 h-36 object-cover" />
-                                            <div className="flex flex-col">
-                                                <div className="flex flex-col mb-2">
-                                                    <h3 className="text-2xl font-bold text-red-600">{item.title}</h3>
-                                                    <span className="text-sm font-semibold text-blue-600">{item.stats.pages} PAGES</span>
-                                                </div>
-                                                <div className="text-sm mt-2">
-                                                    <p className="font-semibold mb-2">Readers can expect:</p>
-                                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.synopsis) }} />
-                                                    {expandedIndex === index && (
-                                                        <p className="mt-2 text-gray-700">{item.description}</p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between items-center mt-4">
-                                        <div className="flex-1 text-center">
-                                            <button
-                                                onClick={() => toggleShowMore(index)}
-                                                className="text-gray-600 font-semibold hover:text-gray-800"
-                                            >
-                                                {expandedIndex === index ? "SHOW LESS" : "SHOW MORE"}
-                                            </button>
-                                        </div>
-                                        <button 
-                                            onClick={() => handleUnfavorite(item.title)}
-                                            className="bg-[#e26a6a] text-white px-4 py-2 hover:bg-red-600 whitespace-nowrap">
-                                            Unfavorite
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+  {/* Bookshelf Content */}
+  <div className="flex flex-wrap">
+    {/* Follow List */}
+    <div className="w-full md:w-1/3 p-4">
+      <Link to="/my/follows">
+        <div className="shadow-lg rounded-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300 p-6 h-full flex flex-col justify-between">
+          <h2 className="text-xl font-bold text-red-600 hover:underline">Follow List</h2>
+          <p className="text-gray-500 text-sm mt-2">
+            What you're currently following
+          </p>
+        </div>
+      </Link>
+    </div>
+
+    {/* Read Later */}
+    <div className="w-full md:w-1/3 p-4">
+      <Link to="/my/readlater">
+        <div className="shadow-lg rounded-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300 p-6 h-full flex flex-col justify-between">
+          <h2 className="text-xl font-bold text-red-600 hover:underline">Read Later</h2>
+          <p className="text-gray-500 text-sm mt-2">
+            Fictions you've saved for another time.
+          </p>
+        </div>
+      </Link>
+    </div>
+
+    {/* Favorites */}
+    <div className="w-full md:w-1/3 p-4">
+      <Link to="/my/favorites">
+        <div className="shadow-lg rounded-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300 p-6 h-full flex flex-col justify-between">
+          <h2 className="text-xl font-bold text-red-600 hover:underline">Favorites</h2>
+          <p className="text-gray-500 text-sm mt-2">Your favorite fictions.</p>
+        </div>
+      </Link>
+    </div>
+  </div>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -270,4 +250,4 @@ function Favorites() {
     );
 }
 
-export default Favorites;
+export default BookShelf;

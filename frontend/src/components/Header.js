@@ -1,16 +1,22 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSignIn, faChevronDown, faUser, faPencil, faEnvelopeOpen, faBook, faClock, faStar, faHistory, faCogs, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
+import { faBars,faSignIn, faChevronDown, faUser, faPencil, faEnvelopeOpen, faBook, faClock, faStar, faHistory, faCogs, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faBell,faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../store';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+
 
 const PageHeader = () => {
   
+  const [messagesVisible, setMessagesVisible] = useState(false);
+  const [messages, setMessages] = useState([]); 
+  const [noMessages, setNoMessages] = useState(false); 
+
+  const dropdownRef = useRef(null);
+  const messagedownRef = useRef(null);
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.userData.theme);
   const barsClick = useSelector((state) => state.userData.barsClick);
@@ -29,6 +35,59 @@ const PageHeader = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+  const toggleMessages = async () => {
+    setMessagesVisible(!messagesVisible);
+
+    // Fetch messages when opening the messages div
+    if (!messagesVisible) {
+      try {
+        const response = await fetch("https://api.ru-novel.ru/api/header/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            recipient: user.username,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.length === 0) {
+            setNoMessages(true);
+            setMessages([]);
+          } else {
+            setNoMessages(false);
+            setMessages(data);
+          }
+        } else {
+          console.error("Error fetching messages");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+    const handleClicksOutside = (event) => {
+      if (messagedownRef.current && !messagedownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClicksOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClicksOutside);
+      document.addEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   const handleLogout = () => {
     dispatch(userActions.setLogout(false));
@@ -74,7 +133,40 @@ const PageHeader = () => {
                 </Link>
               </li>
               {isAuthenticated ? (
-                <li className="relative group">
+                <>
+               <li className="relative block mt-5" ref={messagedownRef}>
+                  <button
+                    onClick={toggleMessages}
+                    className="flex items-center text-gray-400 hover:text-[#23527C]"
+                    aria-label="Messages"
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} className="text-[18px] lg:text-[20px]" />
+                  </button>
+                  {/* Messages div */}
+                  {messagesVisible && (
+                    <div
+                      className={`absolute mt-2 p-4 text-[#bcc2cb] space-y-2 w-48 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
+                      style={{ zIndex: 10 }}
+                    >
+                      {noMessages ? (
+                        <p>No new messages.</p>
+                      ) : (
+                        messages
+                          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sorting messages in descending order by timestamp
+                          .map((message, index) => (
+                            <div key={index} className="p-2 border-b border-gray-500">
+                              <p className="font-bold">{message.sender}</p>
+                              <p>{message.subject}</p>
+                            </div>
+                          ))
+                      )}
+                    </div>
+                  )}
+                </li>
+                
+                
+                <li className="relative group" ref={dropdownRef}>
+                  
                   <button
                     className={`flex items-center px-2 py-2 lg:py-3 text-sm ${theme === 'dark' ? 'text-white' : 'text-black'}`}
                     style={{ height: '110%' }}
@@ -165,6 +257,7 @@ const PageHeader = () => {
                     </ul>
                   )}
                 </li>
+                </>
               ) : (
                 <li>
                   <Link

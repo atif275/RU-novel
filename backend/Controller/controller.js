@@ -16,7 +16,7 @@ const Border = require('../model/Border');
 const { v4: uuidv4 } = require('uuid');
 const QIWI_SECRET_KEY = 'your_qiwi_secret_key';
 const QIWI_PUBLIC_KEY = 'your_qiwi_public_key'; // Used for client-side interactions if needed
-
+const userDatabase = mongoose.connection.useDb('user_data');
 
 const jwtSecret='MynameisAhsan#'
 const sendResetEmail = require('./nodemailer'); 
@@ -1417,5 +1417,26 @@ exports.report=async(req,res)=>{
   } catch (error) {
     console.error('Error submitting report:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+}
+exports.message=async(req,res)=>{
+  const Message = userDatabase.collection('messages');
+  const { recipient } = req.body;
+
+  try {
+      // Fetching messages for the recipient, including 'message' field
+      const messages = await Message.find({ recipient: recipient })
+          .project({ subject: 1, sender: 1, message: 1, createdAt: 1 })  // Project relevant fields
+          .sort({ createdAt: -1 })  // Sort by date in descending order
+          .toArray();  // Convert cursor to array
+
+      if (messages.length === 0) {
+          return res.status(404).json({ message: 'No messages found' });
+      }
+
+      res.status(200).json(messages);
+  } catch (error) {
+      console.error('Error fetching messages:', error);
+      res.status(500).json({ message: 'Server error' });
   }
 }
