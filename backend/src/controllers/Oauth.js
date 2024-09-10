@@ -10,7 +10,7 @@ const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 
 // const callbackURL = process.env.NODE_ENV === 'production'
 //   ? 'https://api.ru-novel.ru//auth/google/callback'
-//   : 'http://localhost:5001/auth/google/callback';
+//   : 'https://api.ru-novel.ru/auth/google/callback';
   
 passport.use(new GoogleStrategy({
   clientID: clientID,
@@ -40,7 +40,7 @@ async (accessToken, refreshToken, profile, done) => {
 passport.use(new FacebookStrategy({
     clientID: facebookID,
     clientSecret: facebookSecret,
-    callbackURL: 'http://localhost:5001/auth/facebook/callback',
+    callbackURL: 'https://api.ru-novel.ru/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   async (accessToken, refreshToken, profile, done) => {

@@ -17,9 +17,9 @@ function Chapter() {
   useEffect(() => {
     const fetchChapterData = async () => {
       try {
-        // console.log(`Fetching chapter data for fictionId: ${fictionId}, chapterId: ${chapterId}`);
+        console.log(`Fetching chapter data for fictionId: ${fictionId}, chapterId: ${chapterId}`);
         const response = await axios.get(`https://api.ru-novel.ru/api/books/${fictionId}`);
-        // console.log('Book Data:', response.data);
+        console.log('Book Data:', response.data);
         setBookData(response.data);
 
         // Find the specific chapter within the book's chapters array
@@ -31,9 +31,9 @@ function Chapter() {
         }
 
         // Fetch author data based on authorName
-        // console.log(`Fetching author data for authorName: ${response.data.author}`);
+        console.log(`Fetching author data for authorName: ${response.data.author}`);
         const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
-        // console.log('Author Data:', authorResponse.data);
+        console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -71,7 +71,7 @@ function Chapter() {
             <AuthorProfile authorData={authorData} authorName={authorData.username} />
           </div>
           <div>
-          {/* <ChCommentData book="a" chapter="b" /> */}
+            <ChCommentData bookName={bookData.title} chapterName={chapterData.title} />
           </div>
         </InnerContainer>
       </FnContainer>

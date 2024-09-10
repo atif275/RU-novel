@@ -12,6 +12,7 @@ import {
 
 // ---------------------------------------------------------------------------SABHEEE import  WORKS-----------------------------------------------------
 import Followlist from "./pages/FollowsList"
+import ReviewsList from "./pages/ReviewsList";
 import Favorites from "./pages/Favorites"
 import Readlater from "./pages/Readlater";
 import History from "./pages/ReadingPage";
@@ -66,6 +67,8 @@ import DiscoveryPage from "./pages/DiscoveryPage";
 import AdvancedPage from "./pages/AdvancedSearchPage";
 import PremiumSubscriptionPage from "./pages/PremiumSubscriptionPage";
 import Achievement from "./pages/Achievement";
+
+
 
 
 import { useSelector } from "react-redux";
@@ -229,7 +232,59 @@ function App() {
           
           <Route path="/report/comment" element={ <RPage/>} />
         
-  
+        
+          <Route path="/my/follows" element={
+            <>
+              <HomePage />
+              <Followlist />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+      
+
+          <Route path="/my/favorites" element={
+            <>
+              <HomePage />
+              <Favorites />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+       
+
+        
+          <Route path="/my/readlater" element={
+            <>
+              <HomePage />
+              <Readlater />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+       
+
+    
+          <Route path="/my/history" element={
+            <>
+              <HomePage />
+              <History />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+
+
+     
+          <Route path="/my/reviews" element={
+            <>
+              <HomePage />
+              <ReviewsList />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+      
             
           
         

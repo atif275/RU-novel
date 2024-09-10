@@ -4,6 +4,9 @@ const replySchema = new mongoose.Schema({
   author: { type: String },
   pfp: { type: String }, 
   text: { type: String },
+  datetime: { type: Date },
+  repcount: { type: Number, default: 0 },
+  reppedBy: { type: [String], default: [] }, // Array to track users who repped the reply
 });
 
 const commentSchema = new mongoose.Schema({
@@ -12,10 +15,12 @@ const commentSchema = new mongoose.Schema({
   text: { type: String },
   book: { type: String },
   chapter: { type: String },
+  datetime: { type: Date },
   repcount: { type: Number, default: 0 },
+  reppedBy: { type: [String], default: [] }, // Array to track users who repped the comment
   replies: [replySchema],
-}, { timestamps: true });
+});
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = mongoose.model('Commentt', commentSchema);
 
 module.exports = Comment;

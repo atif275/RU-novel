@@ -40,7 +40,7 @@ async (accessToken, refreshToken, profile, done) => {
 passport.use(new FacebookStrategy({
     clientID: facebookID,
     clientSecret: facebookSecret,
-    callbackURL: 'http://localhost:5001/auth/facebook/callback',
+    callbackURL: 'https://api.ru-novel.ru/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   async (accessToken, refreshToken, profile, done) => {

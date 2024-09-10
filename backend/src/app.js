@@ -4,12 +4,12 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const threadRoutes = require('./routes/ForumThreadRoutes');  // Adjust the path as necessary
 const bookThreadRoutes = require('./routes/BookThreadRoutes');
-
+const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
 const path = require('path');
 const passport = require('../Controller/Oauth'); // Import the passport configuration
 // const Books = require('../model/BookThread');
-const Review = require('../model/reviews');
+const Review = require('../model/reviews');s
 const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
 
@@ -88,6 +88,8 @@ app.get('/api/hello', (req, res) => {
   res.send('Hello World from the backend!');
 });
 
+//maaz
+
 app.get('/api/books', async (req, res) => {
   try {
     const books = await BookThread.find();
@@ -142,6 +144,7 @@ app.get('/api/reviews', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 app.post('/api/reviews', async (req, res) => {
   const { title, text, rating, datetime, user, profilepic, bookName } = req.body;
@@ -872,6 +875,188 @@ app.post('/api/user/removeNotInterested', async (req, res) => {
     res.json({ message: 'Book removed from Not Interested successfully' });
   } catch (error) {
     console.error('Error removing book from Not Interested:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.get('/api/reviews/usersss/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Find reviews where the user field matches the provided username
+    const userReviews = await Review.find({ user: username });
+
+    if (userReviews.length === 0) {
+      return res.status(404).json({ message: 'No reviews found for this user' });
+    }
+
+    return res.status(200).json(userReviews);
+  } catch (error) {
+    console.error('Error fetching user reviews:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.delete('/api/reviewss/:reviewId', async (req, res) => {
+  const { reviewId } = req.params;
+
+  try {
+    const deletedReview = await Review.findByIdAndDelete(reviewId);
+
+    if (!deletedReview) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+
+    res.status(200).json({ message: 'Review deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting review:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Assuming you're using Express.js and Mongoose
+
+app.post('/api/book/:title/increment-views', async (req, res) => {
+  const { title } = req.params;
+
+  try {
+    const book = await BookThread.findOne({ title });
+
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    book.stats.views = (book.stats.views || 0) + 1;
+    await book.save();
+
+    res.status(200).json({ message: 'Book views incremented successfully' });
+  } catch (error) {
+    console.error('Error incrementing book views:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/commentsss', async (req, res) => {
+  const { author, pfp, text, book, chapter, datetime, repcount, replies } = req.body;
+
+  try {
+      const newComment = new Comment({
+          author,
+          pfp,
+          text,
+          book,
+          chapter,
+          datetime,
+          repcount,
+          replies,
+      });
+
+      await newComment.save();
+      res.status(201).json(newComment);
+  } catch (error) {
+      console.error('Error saving comment:', error);
+      res.status(500).json({ message: 'Failed to save comment' });
+  }
+});
+
+app.get('/api/commentssss', async (req, res) => {
+  const { book, chapter } = req.query;
+
+  try {
+    const comments = await Commentt.find({ book, chapter });
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/comments/:commentId/reply', async (req, res) => {
+  const { commentId } = req.params;
+  const { author, pfp, text, datetime, repcount } = req.body;
+
+  try {
+    const comment = await Commentt.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    const newReply = { author, pfp, text, datetime, repcount };
+
+    comment.replies.push(newReply);
+    await comment.save();
+
+    res.status(201).json(newReply);
+  } catch (error) {
+    console.error('Error adding reply:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/comments/:commentId/rep', async (req, res) => {
+  const { commentId } = req.params;
+  const { userId } = req.body; // Assuming you're passing the userId from the frontend
+
+  try {
+    const comment = await Commentt.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    // Check if user has already repped the comment
+    const userReppedIndex = comment.reppedBy.indexOf(userId);
+    if (userReppedIndex === -1) {
+      // User has not repped yet, increase the rep count and add userId to reppedBy array
+      comment.repcount += 1;
+      comment.reppedBy.push(userId);
+    } else {
+      // User has already repped, decrease the rep count and remove userId from reppedBy array
+      comment.repcount -= 1;
+      comment.reppedBy.splice(userReppedIndex, 1);
+    }
+
+    await comment.save();
+
+    res.status(200).json({ repcount: comment.repcount });
+  } catch (error) {
+    console.error('Error toggling reputation:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/comments/:commentId/reply/:replyId/rep', async (req, res) => {
+  const { commentId, replyId } = req.params;
+  const { userId } = req.body; // Assuming you're passing the userId from the frontend
+
+  try {
+    const comment = await Commentt.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    const reply = comment.replies.id(replyId);
+    if (!reply) {
+      return res.status(404).json({ message: 'Reply not found' });
+    }
+
+    // Check if user has already repped the reply
+    const userReppedIndex = reply.reppedBy.indexOf(userId);
+    if (userReppedIndex === -1) {
+      // User has not repped yet, increase the rep count and add userId to reppedBy array
+      reply.repcount += 1;
+      reply.reppedBy.push(userId);
+    } else {
+      // User has already repped, decrease the rep count and remove userId from reppedBy array
+      reply.repcount -= 1;
+      reply.reppedBy.splice(userReppedIndex, 1);
+    }
+
+    await comment.save();
+
+    res.status(200).json({ repcount: reply.repcount });
+  } catch (error) {
+    console.error('Error toggling reputation:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

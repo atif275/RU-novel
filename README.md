@@ -50,7 +50,7 @@ Start the server:
 npm run dev
 ```
 
-This will start the Node.js server on `http://localhost:5001/`.
+This will start the Node.js server on `https://api.ru-novel.ru/`.
 
 #### Setting up the Frontend
 

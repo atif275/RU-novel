@@ -28,9 +28,9 @@ function Fiction() {
         setBookData(response.data);
 
         // Fetch author data based on authorName
-        // console.log(`Fetching author data for authorName: ${response.data.author}`);
+        console.log(`Fetching author data for authorName: ${response.data.author}`);
         const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
-        // console.log('Author Data:', authorResponse.data);
+        console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
       } catch (error) {
         console.error('Error fetching book data:', error);

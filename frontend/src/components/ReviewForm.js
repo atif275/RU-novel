@@ -185,7 +185,7 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
           <div className="w-px h-full bg-gray-200"></div>
           <div className="w-3/4 p-3">
             <Editor
-              apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
+              apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
               value={content}
               init={{
                 height: 200,
@@ -207,7 +207,7 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
           <span className="text-red-600 text-lg font-bold mr-2">!</span>
           <p className="text-sm font-bold">
             BE NICE! Fair critique is fair, but be respectful & follow the{' '}
-            <button href="#" className="underline text-yellow-600">review rules</button>.
+            <a href="/support/knowledgebase" className="underline text-yellow-600">review rules</a>.
           </p>
         </div>
 
