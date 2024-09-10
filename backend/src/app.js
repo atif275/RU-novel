@@ -1060,3 +1060,21 @@ app.post('/api/comments/:commentId/reply/:replyId/rep', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.get('/api/commentss/usersss/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Find reviews where the user field matches the provided username
+    const userReviews = await Commentt.find({ author: username });
+
+    if (userReviews.length === 0) {
+      return res.status(404).json({ message: 'No reviews found for this user' });
+    }
+
+    return res.status(200).json(userReviews);
+  } catch (error) {
+    console.error('Error fetching user reviews:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
