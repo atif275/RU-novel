@@ -42,7 +42,7 @@ import Borderwardrobe from "./pages/Borderwardrobe";
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile'; 
 import MemberListPage from "./pages/MemberListPage";
-
+import { AuthorFictions}  from './components/AuthorFictions';
 import Chapter from './pages/Chapter';  
 import AdminChapter from "./pages/AdminChapter";
 import Fiction from "./pages/Fiction";
@@ -68,7 +68,7 @@ import AdvancedPage from "./pages/AdvancedSearchPage";
 import PremiumSubscriptionPage from "./pages/PremiumSubscriptionPage";
 import Achievement from "./pages/Achievement";
 
-
+import BookShelf from "./pages/BookShelf";
 
 
 import { useSelector } from "react-redux";
@@ -139,6 +139,8 @@ import RisingStarsPage from "./pages/RisingStarsPage";
 import WritathonPage from "./pages/WritathonPage";
 import { Navigate } from 'react-router-dom';
 import SearchPage from "./pages/SearchPage"
+import FictionList from './pages/FictionList';
+
 function App() {
   const resizeObserverErrHandler = (e) => {
     if (e.message === 'ResizeObserver loop completed with undelivered notifications.') {
@@ -233,31 +235,17 @@ function App() {
           <Route path="/report/comment" element={ <RPage/>} />
         
         
-          <Route path="/my/follows" element={
-            <>
-              <HomePage />
-              <Followlist />
-              <Footer />
-              <PostFooter />
-            </>
-          } />
+         
       
 
-          <Route path="/my/favorites" element={
-            <>
-              <HomePage />
-              <Favorites />
-              <Footer />
-              <PostFooter />
-            </>
-          } />
+          
        
 
-        
-          <Route path="/my/readlater" element={
+     
+          <Route path="/fictions" element={
             <>
               <HomePage />
-              <Readlater />
+              < FictionList/>
               <Footer />
               <PostFooter />
             </>
@@ -265,14 +253,14 @@ function App() {
        
 
     
-          <Route path="/my/history" element={
+          {/* <Route path="/my/history" element={
             <>
               <HomePage />
               <History />
               <Footer />
               <PostFooter />
             </>
-          } />
+          } /> */}
 
 
      
@@ -1362,6 +1350,15 @@ function App() {
             <>
               <HomePage />
               <History />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+
+<Route path="/bookshelf" element={
+            <>
+              <HomePage />
+              <BookShelf />
               <Footer />
               <PostFooter />
             </>
