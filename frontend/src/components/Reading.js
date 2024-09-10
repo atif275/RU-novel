@@ -82,7 +82,7 @@ const Reading = ({ chapters = [], bookTitle }) => {
         <div dangerouslySetInnerHTML={{ __html: chapterData.content }} />
       </div>
       <ChAd1 />
-      <div className='bg-[#f2f2f2] text-[#000c] p-[10px]'>
+      {/* <div className='bg-[#f2f2f2] text-[#000c] p-[10px]'>
         <h1 className='text-[18px] font-bold font-[Open Sans, sans-serif] flex gap-2 items-center mb-4'>
           <FaStickyNote />
           A NOTE FROM {chapterData.authorName?.toUpperCase()}
@@ -100,7 +100,7 @@ const Reading = ({ chapters = [], bookTitle }) => {
         <p className='text-[14px] font-[Ubuntu, sans-serif] mx-2 mb-2'>
           Welcome! Enjoy this chapter and stay tuned for more updates.
         </p>
-      </div>
+      </div> */}
 
       <hr className='mt-6 bg-gray-200 h-[2px]'></hr>
 

@@ -80,6 +80,7 @@ function Messages() {
                                         <div className="mb-4">
                                             <label className="block font-bold mb-2">Message</label>
                                             <Editor
+                                            apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
                                                 initialValue="<p>This is the initial content of the editor</p>"
                                                 init={{
                                                     height: 300,

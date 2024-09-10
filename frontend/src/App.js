@@ -114,7 +114,7 @@ import OnGoingFictionsPage from "./pages/OnGoingFictionsPage";
 import CompletePage from "./pages/CompletePage";
 import AccountOptionsPage from "./pages/AccountOptionsPage";
 import ProfileInfoPage from "./pages/ProfileInfoPage";
-
+import CommentsList from "./pages/CommentsList";
 import TermsPage from "./pages/TermsPage";
 import FreqPage from "./pages/FreqAskedPage";
 import CopyPage from "./pages/CopyPage";
@@ -822,8 +822,16 @@ function App() {
         
   
             
-           
-          
+         
+          <Route path="/my/comments" element={
+            <>
+              <HomePage />
+              <CommentsList />
+              <Footer />
+              <PostFooter />
+            </>
+          } />
+      
           
           <Route path="/support/knowledgebase/reviews" element={ <ReviewsPage/>} />
         

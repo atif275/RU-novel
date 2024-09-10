@@ -1,9 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../store';
 
 const Postfooter = () => {
+  const dispatch = useDispatch();
   const theme = useSelector(state => state.userData.theme);
+  useEffect(() => {
+    dispatch(userActions.setBarsClick(false))
+   
+  }, []);
+  
 
   return (
     <div style={{ width: '100%' }} className={`py-4 text-sm font-light ${theme === 'dark' ? 'bg-[#131313] text-[#A2ABB7]' : 'bg-[#3b434c] text-[#a2abb7]'}`}>

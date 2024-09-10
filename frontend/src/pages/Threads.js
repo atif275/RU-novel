@@ -47,7 +47,7 @@ function Threads() {
     ];
 
     const myOptions = [
-        { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
+        { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
         { icon: 'fa-star', label: 'Favorites', link: '/my/favorites' },
         { icon: 'fa-clock', label: 'Read Later', link: '/my/readlater' },

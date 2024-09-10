@@ -82,7 +82,7 @@ function Favorites() {
         // { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
         { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
         // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-        { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
+        // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
     ];
     
     const notificationOptions = [
@@ -96,7 +96,7 @@ function Favorites() {
     ];
     
     const myOptions = [
-        { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
+        { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
         { icon: 'fa-star', label: 'Favorites', link: '/my/favorites' },
         { icon: 'fa-clock', label: 'Read Later', link: '/my/readlater' },
@@ -212,12 +212,14 @@ function Favorites() {
                     {/* Main Content */}
                     <div className="flex-1 ml-4 mt-4">
                         <div className="flex space-x-8 mb-6 ml-1">
-                            <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
-                            <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
+                        <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
+                            <Link to="/my/favorites" className="text-gray-900 font-bold border-b-4 border-blue-500">Favorites</Link>
+                            <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>
                             <Link to="/my/history" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">History</Link>
                             <Link to="/my/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
                             <Link to="/my/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
-                            <Link to="/my/favorites" className="text-gray-900 font-bold border-b-4 border-blue-500">Favorites</Link>
+                            <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
+                            <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
                         </div>
                         <div className='bg-white p-6'>
                             <div className="flex justify-between items-center mb-4">
@@ -226,42 +228,48 @@ function Favorites() {
                             <hr className="my-4 border-gray-300" />
 
                             {favoriteBooks.map((item, index) => (
-                                <div key={index} className="mb-6 border-b border-gray-300 pb-6">
-                                    <div className="flex justify-between">
-                                        <div className="flex items-start space-x-4">
-                                            <img src={item.image} alt={item.title} className="w-24 h-36 object-cover" />
-                                            <div className="flex flex-col">
-                                                <div className="flex flex-col mb-2">
-                                                    <h3 className="text-2xl font-bold text-red-600">{item.title}</h3>
-                                                    <span className="text-sm font-semibold text-blue-600">{item.stats.pages} PAGES</span>
-                                                </div>
-                                                <div className="text-sm mt-2">
-                                                    <p className="font-semibold mb-2">Readers can expect:</p>
-                                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.synopsis) }} />
-                                                    {expandedIndex === index && (
-                                                        <p className="mt-2 text-gray-700">{item.description}</p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between items-center mt-4">
-                                        <div className="flex-1 text-center">
-                                            <button
-                                                onClick={() => toggleShowMore(index)}
-                                                className="text-gray-600 font-semibold hover:text-gray-800"
-                                            >
-                                                {expandedIndex === index ? "SHOW LESS" : "SHOW MORE"}
-                                            </button>
-                                        </div>
-                                        <button 
-                                            onClick={() => handleUnfavorite(item.title)}
-                                            className="bg-[#e26a6a] text-white px-4 py-2 hover:bg-red-600 whitespace-nowrap">
-                                            Unfavorite
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+    <div key={index} className="mb-6 border-b border-gray-300 pb-6">
+        <div className="flex justify-between">
+            <div className="flex items-start space-x-4">
+                <img src={item.image} alt={item.title} className="w-24 h-36 object-cover" />
+                <div className="flex flex-col">
+                    <div className="flex flex-col mb-2">
+                        <h3 className="text-2xl font-bold text-red-600">{item.title}</h3>
+                        <span className="text-sm font-semibold text-blue-600">{item.stats.pages} PAGES</span>
+                    </div>
+                    <div className="text-sm mt-2">
+                        <p className="font-semibold mb-2">Readers can expect:</p>
+                        <div
+                            className={`transition-all overflow-hidden ${expandedIndex === index ? 'max-h-none' : 'max-h-[100px]'}`}
+                            style={{ maxHeight: expandedIndex === index ? 'none' : '100px' }}
+                        >
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.synopsis) }} />
+                            {expandedIndex === index && (
+                                <p className="mt-2 text-gray-700">{item.description}</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="flex justify-between items-center mt-4">
+            <div className="flex-1 text-center">
+                <button
+                    onClick={() => toggleShowMore(index)}
+                    className="text-gray-600 font-semibold hover:text-gray-800"
+                >
+                    {expandedIndex === index ? "SHOW LESS" : "SHOW MORE"}
+                </button>
+            </div>
+            <button 
+                onClick={() => handleUnfavorite(item.title)}
+                className="bg-[#e26a6a] text-white px-4 py-2 hover:bg-red-600 whitespace-nowrap">
+                Unfavorite
+            </button>
+        </div>
+    </div>
+))}
+
                         </div>
                     </div>
                 </div>

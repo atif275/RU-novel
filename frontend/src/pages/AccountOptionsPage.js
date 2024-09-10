@@ -62,7 +62,7 @@ function AccountOptionsPage() {
   ];
 
   const myOptions = [
-    { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
+    { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
     { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
     { icon: 'fa-star', label: 'Favorites', link: '/my/favorites' },
     { icon: 'fa-clock', label: 'Read Later', link: '/my/readlater' },
@@ -300,6 +300,7 @@ function AccountOptionsPage() {
                     <div className="mb-4">
                       <label className="block font-bold mb-2">Message</label>
                       <Editor
+                      apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
                         initialValue="<p>This is the initial content of the editor</p>"
                         init={{
                           height: 300,

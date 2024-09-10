@@ -3,6 +3,7 @@ import { FaCalendar, FaInfoCircle, FaBook, FaComment, FaListAlt } from "react-ic
 import { FaLocationPin } from "react-icons/fa6";
 
 const AuthorProfile2 = ({ authorData, onUnfollow }) => {
+  
   if (!authorData) return null;
 
   return (
@@ -16,12 +17,14 @@ const AuthorProfile2 = ({ authorData, onUnfollow }) => {
               alt="Author Badge"
               className="absolute w-[50px] h-[50px] object-cover left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
             />
-            <img
-              src="https://www.royalroad.com/dist/img/borders/bordersbronze-5-min.png"
-              alt="Border Frame"
-              className="absolute w-full h-full object-cover"
-            />
-          </div>
+            { authorData.profilePictureBorder && authorData.profilePictureBorder !== '' && (
+              <img
+                src={authorData.profilePictureBorder}
+                alt="Border Frame"
+                className="absolute w-full h-full object-cover"
+              />
+            )}
+           </div>
           <div className="flex flex-col justify-center items-center">
             <button className="bg-[#337ab7] text-white text-[12px] px-[10px] py-[5px] w-[100px] h-[30px] flex gap-1 items-center">
               <FaBook /> {authorData.fictions.length} Fictions

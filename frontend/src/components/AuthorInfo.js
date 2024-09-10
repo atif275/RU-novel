@@ -69,11 +69,21 @@ const AuthorInfo = ({ authorData, authorName }) => {
 
       <div className="flex flex-col items-center space-y-4 mt-4">
         {/* Author Avatar */}
-        <img
-          src={authorData.profilePicture || "https://www.royalroadcdn.com/public/avatars/avatar-460434-AACAmlsHkBU.png?time=1722049568"}
-          alt="Author Avatar"
-          className="w-32 h-32 object-cover rounded-full"
-        />
+        <div className="relative w-64 h-64">
+            <img
+              src={authorData.profilePicture || "https://www.royalroadcdn.com/public/avatars/avatar-460434-AACAmlsHkBU.png?time=1722049568"}
+              alt="Author Badge"
+              className="absolute w-32 h-32 object-cover left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+            />
+            { authorData.profilePictureBorder && authorData.profilePictureBorder !== '' && (
+              <img
+                src={authorData.profilePictureBorder}
+                alt="Border Frame"
+                className="absolute w-full h-full object-cover"
+              />
+            )}
+           </div>
+        
 
         {/* Author Name */}
         <span className="text-red-500 font-bold text-lg">{authorData.username}</span>

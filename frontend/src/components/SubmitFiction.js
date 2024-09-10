@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import { useSelector } from "react-redux";
 import { Editor } from "@tinymce/tinymce-react";
 import { toast, ToastContainer } from 'react-toastify';
@@ -23,9 +23,28 @@ export const SubmitFiction = () => {
         chapters: [{ title: '', content: '' }],
     });
     const [image, setImage] = useState(null);
+    const [isFormValid, setIsFormValid] = useState(false); // State to track form validation
 
     // Retrieve the username from the Redux store
     const username = useSelector(state => state.userData.user.username);
+      // Define refs for each field
+  const titleRef = useRef(null);
+  const synopsisRef = useRef(null);
+  const genreRef = useRef(null);
+  const tagRef = useRef(null);
+  const chapterTitleRef = useRef(null);
+  const chapterContentRef = useRef(null);
+  const imageRef = useRef(null);
+  useEffect(() => {
+    const resizeObserverErrorHandler = (e) => {
+      e.preventDefault();
+    };
+    window.addEventListener('error', resizeObserverErrorHandler);
+  
+    return () => {
+      window.removeEventListener('error', resizeObserverErrorHandler);
+    };
+  }, []);
 
     const handleEditorChange = (content) => setSynopsis(content);
 
@@ -179,9 +198,50 @@ const tagTooltips = {
             chapters
         }));
     };
+     // Validate the form to check if all required fields are filled
+     useEffect(() => {
+      const isFormComplete = () => {
+        return (
+          imageURL && // Image must be uploaded
+          formData.title.trim() !== '' && // Title must not be empty
+          synopsis.trim() !== '' && // Synopsis must not be empty
+          formData.genres.length > 0 && // At least one genre must be selected
+          formData.tags.length > 0 && // At least one tag must be selected
+          formData.chapters[0].title.trim() !== '' && // Chapter title must not be empty
+          formData.chapters[0].content.trim() !== '' // Chapter content must not be empty
+        );
+      };
+    
+      setIsFormValid(isFormComplete());
+    }, [formData, synopsis, imageURL, formData.genres, formData.tags]);
+    
+     // Function to focus on the first empty field
+  const focusOnFirstEmptyField = () => {
+    if (!imageURL) {
+      imageRef.current.focus();
+    } else if (formData.title.trim() === '') {
+      titleRef.current.focus();
+    } else if (synopsis.trim() === '') {
+      synopsisRef.current.scrollIntoView(); // Scroll into view for the editor
+    } else if (formData.genres.length === 0) {
+      genreRef.current.scrollIntoView(); // Scroll into view for genre checkboxes
+    } else if (formData.tags.length === 0) {
+      tagRef.current.scrollIntoView(); // Scroll into view for tag checkboxes
+    } else if (formData.chapters[0].title.trim() === '') {
+      chapterTitleRef.current.focus();
+    } else if (formData.chapters[0].content.trim() === '') {
+      chapterContentRef.current.scrollIntoView(); // Scroll into view for the editor
+    }
+  };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!isFormValid) {
+          toast.error("Please Fill all fields.");
+          focusOnFirstEmptyField(); // Focus on the first empty field if the form is invalid
+          return;
+        }
     
         if (!username) {
             toast.error("Please log in to submit fiction.");
@@ -215,7 +275,7 @@ const tagTooltips = {
             if (response.ok) {
                 toast.success('Fiction submitted successfully!');
                 navigate('/');
-                window.location.reload();
+                // window.location.reload();
             } 
              else {
                 toast.error('Failed to submit fiction. Please try again.');
@@ -266,6 +326,10 @@ const tagTooltips = {
             link(s) to any pages that have the edited description to make the
             process faster.
           </p>
+          <p className="bg-red-500 text-white p-4 rounded mt-4">
+  Please note that all fields are mandatory except for <strong>Content Ownership</strong> and <strong>Manual Release</strong>, which are optional. This includes the <strong>Title</strong>, <strong>Cover Image</strong>, <strong>Synopsis</strong>, <strong>Genres</strong> (at least one genre must be selected), <strong>Tags</strong> (at least one tag must be selected), <strong>Chapter Title</strong>, and <strong>Chapter Content</strong>. Make sure all required fields are completed before submitting.
+</p>
+
         </div>
 
         {/* Fiction Section */}
@@ -276,7 +340,7 @@ const tagTooltips = {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="cover"
           >
-            Cover
+            Cover *
           </label>
           <div className="md:ml-16">
             <div className="flex flex-col md:flex-row">
@@ -289,6 +353,7 @@ const tagTooltips = {
                 <input
                   
                   type="file"
+                  ref={imageRef}
                   className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
                   onChange={handleImageChange}
                 />
@@ -305,7 +370,7 @@ const tagTooltips = {
                 <div className="bg-red-100 p-2 rounded flex items-center mt-4">
                   <i className="fas fa-exclamation-triangle text-red-500 mr-2"></i>
                   <p className="text-sm text-gray-600">
-                    The cover art is optional. Do not use copyrighted covers
+                    The cover art is mandatory. Do not use copyrighted covers
                     that you don't own and have no permission to use. You can
                     check the{" "}
                     <a
@@ -329,13 +394,14 @@ const tagTooltips = {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="title"
           >
-            Title
+            Title *
           </label>
           <div className="md:ml-16">
             <input
               id="title"
               name="title"
               type="text"
+              ref={titleRef}
               placeholder="Title of fiction"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.title}
@@ -349,10 +415,11 @@ const tagTooltips = {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="synopsis"
           >
-            Synopsis
+            Synopsis *
           </label>
           <div className="md:ml-16">
             <Editor
+              ref={synopsisRef}
               apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
               initialValue="<p>This is the initial content of the editor</p>"
               init={{
@@ -373,7 +440,7 @@ const tagTooltips = {
 
       {/* Genres Section */}
 <div className="mb-4">
-  <label className="block text-gray-700 text-sm font-bold mb-2">Genres</label>
+  <label className="block text-gray-700 text-sm font-bold mb-2">Genres *</label>
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
     {Object.keys(genreTooltips).map((genre) => (
       <label key={genre} className="flex items-center">
@@ -382,7 +449,8 @@ const tagTooltips = {
           className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
           name="genres"
           value={genre}
-          onChange={handleFormChange}
+          ref={genreRef}
+          onChange={handleGenreChange}
         />
         <span className="ml-2 text-gray-700">
           {genre}
@@ -410,7 +478,7 @@ const tagTooltips = {
 
 {/* Tags Section */}
 <div className="mb-4">
-  <label className="block text-gray-700 text-sm font-bold mb-2">Tags</label>
+  <label className="block text-gray-700 text-sm font-bold mb-2">Tags *</label>
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:ml-16">
     {Object.keys(tagTooltips).map((tag) => (
       <label key={tag} className="flex items-center">
@@ -419,7 +487,8 @@ const tagTooltips = {
           className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded mt-1"
           name="tags"
           value={tag}
-          onChange={handleFormChange}
+          ref={tagRef}
+          onChange={handleTagChange}
         />
         <span className="ml-2 text-gray-700">
           {tag}
@@ -449,7 +518,7 @@ const tagTooltips = {
         {/* Content Ownership Section */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Content Ownership
+            Content Ownership (optional)
           </label>
           <div className="flex flex-col md:ml-16">
             <span className="text-gray-700 font-bold mr-4">
@@ -470,7 +539,7 @@ const tagTooltips = {
         {/* Manual Release Section */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Manual Release
+            Manual Release (optional)
           </label>
           <div className="flex flex-col md:ml-16">
             <label className="flex items-center mt-2">
@@ -495,13 +564,14 @@ const tagTooltips = {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="chapterTitle"
           >
-            Chapter Title
+            Chapter Title *
           </label>
           <div className="md:ml-16">
             <input
               id="chapterTitle"
               name="title"
               type="text"
+              ref ={chapterTitleRef}
               placeholder="Title of Chapter"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.chapters[0].title}
@@ -514,10 +584,11 @@ const tagTooltips = {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="chapterContent"
           >
-            Chapter Content
+            Chapter Content *
           </label>
           <div className="md:ml-16">
             <Editor
+            ref={chapterContentRef}
               apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
               initialValue="<p>Chapter content here...</p>"
               init={{
@@ -549,14 +620,23 @@ const tagTooltips = {
 
         {/* Submit Button */}
         <div className="flex justify-center">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            onClick={handleSubmit} 
-          >
-            Submit
-          </button>
-        </div>
+  <button
+    className={`${
+      isFormValid ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-300 cursor-not-allowed'
+    } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+    type="submit"
+    onClick={handleSubmit}
+    disabled={!isFormValid}
+    data-tooltip-id="submit-tooltip" // Attach tooltip to button
+  >
+    Submit
+  </button>
+  {!isFormValid && (
+    <Tooltip id="submit-tooltip" place="top" effect="solid">
+      All fields must be filled properly to enable submission.
+    </Tooltip>
+  )}
+</div>
       </div>
     </div>
   );

@@ -90,7 +90,7 @@ function BookShelf() {
     ];
     
     const myOptions = [
-        { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
+        { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
         { icon: 'fa-star', label: 'Favorites', link: '/my/favorites' },
         { icon: 'fa-clock', label: 'Read Later', link: '/my/readlater' },
@@ -190,11 +190,15 @@ function BookShelf() {
                     </div>
                     <div className="flex-1 ml-4 mt-4">
                         <div className="flex space-x-8 mb-6 ml-1">
-                            <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
-                            <Link to="/bookshelf" className="text-gray-900 font-bold border-b-4 border-blue-500">Bookshelf</Link>
+                        <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
+                            <Link to="/my/favorites" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Favorites</Link>
+                            <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>
                             <Link to="/my/history" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">History</Link>
                             <Link to="/my/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
                             <Link to="/my/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
+                            <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
+                            <Link to="/bookshelf" className="text-gray-900 font-bold border-b-4 border-blue-500">Bookshelf</Link>
+                            
                         </div>
                         <div className="bg-white p-6">
   <div className="flex justify-between items-center mb-4">

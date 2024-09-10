@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars,faSignIn, faChevronDown, faUser, faPencil, faEnvelopeOpen, faBook, faClock, faStar, faHistory, faCogs, faSignOut } from '@fortawesome/free-solid-svg-icons';
@@ -71,23 +70,23 @@ const PageHeader = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Close profile dropdown if clicked outside
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
       }
-    };
-    const handleClicksOutside = (event) => {
+  
+      // Close message dropdown if clicked outside
       if (messagedownRef.current && !messagedownRef.current.contains(event.target)) {
-        setDropdownVisible(false);
+        setMessagesVisible(false); // Close the message dropdown
       }
     };
-
-    document.addEventListener('mousedown', handleClicksOutside);
+  
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClicksOutside);
-      document.addEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, [dropdownRef, messagedownRef]);
+  
 
   const handleLogout = () => {
     dispatch(userActions.setLogout(false));
@@ -125,7 +124,7 @@ const PageHeader = () => {
             <ul className="flex space-x-4">
               <li className="relative">
                 <Link
-                  to="#"
+                  to="/private/1"
                   className="flex items-center text-gray-400 hover:text-[#23527C]"
                   aria-label="Notifications - 0 new"
                 >
@@ -134,7 +133,7 @@ const PageHeader = () => {
               </li>
               {isAuthenticated ? (
                 <>
-               <li className="relative block mt-5" ref={messagedownRef}>
+               <li className="relative block mt-5" ref={messagedownRef} >
                   <button
                     onClick={toggleMessages}
                     className="flex items-center text-gray-400 hover:text-[#23527C]"
@@ -186,7 +185,7 @@ const PageHeader = () => {
                       className={`absolute right-0 mt-2 text-[#bcc2cb] space-y-2 w-40 lg:w-48 text-sm ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
                     >
                       <li>
-                        <Link to="/profile" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/profile" className="flex items-center px-3 py-1 hover:bg-[#55616f]" onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faUser} className="mr-2 text-[#6fa7d7]" />
                           My Profile
                         </Link>
@@ -197,8 +196,8 @@ const PageHeader = () => {
                             ? '/author-dashboard'
                             : '/admin-dashboard'
                           } 
-                          className="flex items-center px-3 py-1 hover:bg-[#55616f]">
-                          <FontAwesomeIcon icon={faPencil} className="mr-2 text-[#6fa7d7]" />
+                          className="flex items-center px-3 py-1 hover:bg-[#55616f]" onClick={() => setDropdownVisible(false)} >
+                          <FontAwesomeIcon icon={faPencil} className="mr-2 text-[#6fa7d7]"  />
                           {user.role === 'author'
                             ? 'Author Dashboard'
                             : user.role === 'admin'
@@ -211,39 +210,39 @@ const PageHeader = () => {
                         </Link> */}
                       </li>
                       <li>
-                        <Link to="/messages" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/private/1" className="flex items-center px-3 py-1 hover:bg-[#55616f]"onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faEnvelopeOpen} className="mr-2 text-[#6fa7d7]" />
                           Inbox
                         </Link>
                       </li>
                       <li className="divider"></li>
                       <li>
-                        <Link to="/my/follows" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/my/follows" className="flex items-center px-3 py-1 hover:bg-[#55616f]" onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faBook} className="mr-2 text-[#6fa7d7]" />
                           Follow List
                         </Link>
                       </li>
                       <li>
-                        <Link to="/my/readlater" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/my/readlater" className="flex items-center px-3 py-1 hover:bg-[#55616f]"onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faClock} className="mr-2 text-[#6fa7d7]" />
                           Read Later
                         </Link>
                       </li>
                       <li>
-                        <Link to="/my/favorites" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/my/favorites" className="flex items-center px-3 py-1 hover:bg-[#55616f]"onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faStar} className="mr-2 text-[#6fa7d7]" />
                           Favorites
                         </Link>
                       </li>
                       <li>
-                        <Link to="/my/history" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/my/history" className="flex items-center px-3 py-1 hover:bg-[#55616f]"onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faHistory} className="mr-2 text-[#6fa7d7]" />
                           History
                         </Link>
                       </li>
                       <li className="divider"></li>
                       <li>
-                        <Link to="/account/options" className="flex items-center px-3 py-1 hover:bg-[#55616f]">
+                        <Link to="/account" className="flex items-center px-3 py-1 hover:bg-[#55616f]"onClick={() => setDropdownVisible(false)} >
                           <FontAwesomeIcon icon={faCogs} className="mr-2 text-[#6fa7d7]" />
                           Settings
                         </Link>
@@ -282,6 +281,36 @@ const PageHeader = () => {
               {/* <FontAwesomeIcon icon={faBell} className="text-[18px] lg:text-[20px]" /> */}
             </Link>
             {isAuthenticated ? (
+               <>
+               <li className="relative block mt-5" ref={messagedownRef} >
+                  <button
+                    onClick={toggleMessages}
+                    className="flex items-center text-gray-400 hover:text-[#23527C]"
+                    aria-label="Messages"
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} className="text-[18px] lg:text-[20px]" />
+                  </button>
+                  {/* Messages div */}
+                  {messagesVisible && (
+                    <div
+                      className={`absolute mt-2 p-4 text-[#bcc2cb] space-y-2 w-48 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
+                      style={{ zIndex: 10 }}
+                    >
+                      {noMessages ? (
+                        <p>No new messages.</p>
+                      ) : (
+                        messages
+                          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sorting messages in descending order by timestamp
+                          .map((message, index) => (
+                            <div key={index} className="p-2 border-b border-gray-500">
+                              <p className="font-bold">{message.sender}</p>
+                              <p>{message.subject}</p>
+                            </div>
+                          ))
+                      )}
+                    </div>
+                  )}
+                </li>
               <div className="relative">
                 <button
                   className={`flex items-center px-2 py-2 lg:py-3 text-sm ${theme === 'dark' ? 'text-white' : 'text-black'}`}
@@ -359,6 +388,7 @@ const PageHeader = () => {
                   </ul>
                 )}
               </div>
+              </>
             ) : (
               <div>
                 <Link

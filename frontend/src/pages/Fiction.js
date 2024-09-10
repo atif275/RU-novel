@@ -79,7 +79,7 @@ function Fiction() {
             <div className='w-full lg:w-[30%] m-0 p-0 flex flex-col lg:ml-4 bg-gray-200 h-auto'>
               <SidePanel authorName={bookData.author} bookName={bookData.title} />
               <FnAd2 />
-              <AuthorInfo authorData={authorData} />
+              <AuthorInfo authorData={authorData} authorName={bookData.author} />
               <FnAd2 />
             </div>
           </div>

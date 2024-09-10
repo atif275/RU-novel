@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReviewSection from '../components/ReviewCard2';
+import ChCommentData from '../components/ChCommentData2';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ function ReviewsList() {
         setUsername(username);
 
         // Fetch the reviews by the username
-        const reviewsResponse = await axios.get(`https://api.ru-novel.ru/api/reviews/usersss/${username}`);
+        const reviewsResponse = await axios.get(`https://api.ru-novel.ru/api/commentss/usersss/${username}`);
         setReviews(reviewsResponse.data);
       } catch (error) {
         console.error('Error fetching user data and reviews:', error);
@@ -47,7 +47,7 @@ function ReviewsList() {
     // { key: 'settings', icon: "fa-cogs", label: "Settings", link: "/account/options" },
     // { key: 'premium', icon: "fa-star", label: "Premium", link: "/account/premium" },
     { key: 'achievements', icon: "fa-trophy", label: "Achievements", link: "/user/achievements" },
-    { key: 'borderWardrobe', icon: "fa-portrait", label: "Border Wardrobe", link: "/user/borders" },
+    // { key: 'borderWardrobe', icon: "fa-portrait", label: "Border Wardrobe", link: "/user/borders" },
     // { key: 'referFriend', icon: "fa-envelope-square", label: "Refer A Friend", link: "/account/refer-a-friend" }
   ];
 
@@ -57,14 +57,14 @@ function ReviewsList() {
     // { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
     { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
     // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-    // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' }
+    { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' }
   ];
 
-  // const notificationOptions = [
-  //   { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
-  //   { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
-  //   { icon: 'fa-bell', label: 'Notification History', link: '/notifications/list' }
-  // ];
+  const notificationOptions = [
+    { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
+    { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
+    { icon: 'fa-bell', label: 'Notification History', link: '/notifications/list' }
+  ];
 
   const forumOptions = [
     { icon: 'fa-home', label: 'UserCP', link: '/my/usercp' },
@@ -200,12 +200,12 @@ function ReviewsList() {
                             <Link to="/my/favorites" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Favorites</Link>
                             <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>
                             <Link to="/my/history" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">History</Link>
-                            <Link to="/my/reviews" className="text-gray-900 font-bold border-b-4 border-blue-500">Reviews</Link>
-                            <Link to="/my/comments" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Comments</Link>
+                            <Link to="/my/reviews" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Reviews</Link>
+                            <Link to="/my/comments" className="text-gray-900 font-bold border-b-4 border-blue-500">Comments</Link>
                             <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
                             <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
             </div>
-          <ReviewSection reviews={reviews} onReviewDelete={handleReviewDelete} />
+          <ChCommentData comments={reviews} onCommentDelete={handleReviewDelete} />
         </div>
       </div>
     </div>

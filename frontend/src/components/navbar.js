@@ -87,6 +87,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -94,11 +95,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className={` w-[85%] sm:w-1/2 lg:w-full text-[#bcc2cb] ${theme === 'dark' ? 'bg-[#181818]' : 'bg-navbar-bg'}`}>
+    <div className={`w-full text-[#bcc2cb] ${theme === 'dark' ? 'bg-[#181818]' : 'bg-navbar-bg'}`}>
       <div className="container  mx-auto px-4 flex  flex-col lg:flex-row items-center justify-between">
         {/* Navbar Items */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start w-full lg:w-auto lg:space-x-4 space-y-4 lg:space-y-0">
-          <ul className="flex flex-col ml-20 lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 w-full lg:w-auto">
+          <ul className="flex flex-col lg:ml-20 lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 w-full lg:w-auto">
             <li className="relative group">
               <button className="flex items-center px-2 py-3 hover:bg-[#55616f] hover:text-white text-sm" style={{height: '110%'}} onClick={handleClick}>
                 <FontAwesomeIcon icon={faBook} className="mr-2" /> 
@@ -271,11 +272,11 @@ const Navbar = () => {
 </div>
 <div className="xs:block">
 <Link 
-    className="btn btn-icon-only p-2 mr-2 btn-primary popovers adv-search rounded-lg shadow hover:bg-[#28587a] transition-all duration-200" 
+    className="btn btn-icon-only p-2 mr-2 btn-primary popovers adv-search rounded-lg shadow  transition-all duration-200" 
    
     to="/fictions/advanced/search"
   >
-    <FontAwesomeIcon icon={faList} className='text-white text-lg p-2 bg-[#337ab7]' />
+    <FontAwesomeIcon icon={faList} className='hover:bg-[#28587a] text-white text-lg p-2 bg-[#337ab7]' />
   </Link>
 </div>
 
