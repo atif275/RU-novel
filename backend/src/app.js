@@ -7,15 +7,15 @@ const bookThreadRoutes = require('./routes/BookThreadRoutes');
 const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
 const path = require('path');
-// const passport = require('../Controller/Oauth'); // Import the passport configuration
-const passport = require('../Controller/passport');
+ const passport = require('../Controller/Oauth'); // Import the passport configuration
+//const passport = require('../Controller/passport');
 // const Books = require('../model/BookThread');
 const Review = require('../model/reviews');
 const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
-const authRoute = require("../router/auth");
+// const authRoute = require("../router/auth");
 const cookieSession = require("cookie-session");
-const passportStrategy = require("passport");
+//const passportStrategy = require("../Controller/passport");
 const BookThread = require('./models/BookThread'); // Ensure the path is correct
 const Book = require('./models/books');
 const Submission = require('./models/Submission'); // Import the Submission model
@@ -64,11 +64,11 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(passportStrategy.initialize());
-app.use(passportStrategy.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
- app.use("/auth", authRoute);
+ //app.use("/auth", authRoute);
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -262,35 +262,35 @@ app.get('/api/current-user', (req, res) => {
   }
 });
 
-// app.get('/auth/google',
-//   passport.authenticate('google', { scope: ['email', 'profile'] })
-// );
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
 
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
 
-// app.get('/auth/google/callback', 
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   (req, res) => {
-//     const userEmail = req.user.user.email;
-//     if (req.user.isNewUser) {
-//       res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
-//     } else  {
-//       res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    const userEmail = req.user.user.email;
+    if (req.user.isNewUser) {
+      res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
+    } else  {
+      res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
       
-//     }
+    }
     
-//   }
-// );
+  }
+);
 
 app.get('/auth/facebook',
-passportStrategy.authenticate('facebook', { scope: ['email','profile'] })
+  passport.authenticate('facebook', { scope: ['email','profile'] })
 );
 
 app.get('/auth/facebook/callback',
-passportStrategy.authenticate('facebook', {
+  passport.authenticate('facebook', {
     failureRedirect: 'https://ru-novel.ru/error' // Redirects if authentication fails
   }),
   (req, res) => {
