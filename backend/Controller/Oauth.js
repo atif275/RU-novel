@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const Userdb = require('../model/user');
 
@@ -8,32 +8,19 @@ const clientSecret = "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";
 const facebookID = "1252397179082903";
 const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 
-passport.use(new GoogleStrategy({
-  clientID: clientID,
-  clientSecret: clientSecret,
-  callbackURL: '/auth/google/callback',
-  scope: ['profile', 'email'],
-},
-async (accessToken, refreshToken, profile, done) => {
-  try {
-    let user = await Userdb.findOne({ googleId: profile.id });
-    if (!user) {
-      // New user signing up
-      user = new Userdb({
-        googleId: profile.id,
-        username: profile.displayName,
-        email: profile.emails[0].value,
-        profilePicture: profile.photos[0].value
-      });
-      await user.save();
-      return done(null, { user, isNewUser: true });
-    }
-    // Existing user logging in
-    return done(null, { user, isNewUser: false });
-  } catch (err) {
-    done(err, null);
-  }
-}));
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: clientID,
+			clientSecret:clientSecret,
+			callbackURL: "/auth/google/callback",
+			scope: ["profile", "email"],
+		},
+		function (accessToken, refreshToken, profile, callback) {
+			callback(null, profile);
+		}
+	)
+);
 passport.use(new FacebookStrategy({
     clientID: facebookID,
     clientSecret: facebookSecret,
