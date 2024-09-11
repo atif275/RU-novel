@@ -286,11 +286,11 @@ app.get('/logout', (req, res) => {
 // );
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook', { scope: ['email','profile'] })
+passportStrategy.authenticate('facebook', { scope: ['email','profile'] })
 );
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
+passportStrategy.authenticate('facebook', {
     failureRedirect: 'https://ru-novel.ru/error' // Redirects if authentication fails
   }),
   (req, res) => {
