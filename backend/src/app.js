@@ -60,13 +60,12 @@ app.use(cors(corsOptions));
 // }));
 
 
-app.use(
-	cookieSession({
-		name: "session",
-		keys: ["cyberwolve"],
-		maxAge: 24 * 60 * 60 * 100,
-	})
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'Q3a1ExLoIVXYVFhk6yU7dGL84UD78DfK',  // Make sure to use a secure secret in production
+  resave: false,
+  saveUninitialized: false,  // Only save sessions that are initialized
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }  // Session expiry in 1 day
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
