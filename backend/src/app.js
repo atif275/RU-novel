@@ -15,7 +15,7 @@ const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
 const authRoute = require("../router/auth");
 const cookieSession = require("cookie-session");
-const passportStrategy = require("../Controller/passport");
+const passportStrategy = require("passport");
 const BookThread = require('./models/BookThread'); // Ensure the path is correct
 const Book = require('./models/books');
 const Submission = require('./models/Submission'); // Import the Submission model
@@ -64,8 +64,8 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passportStrategy.initialize());
+app.use(passportStrategy.session());
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
  app.use("/auth", authRoute);
