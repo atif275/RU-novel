@@ -7,20 +7,35 @@ const clientID = process.env.clientID;
 const clientSecret = process.env.clientSecret;
 const facebookID = "1252397179082903";
 const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
+passport.use(new GoogleStrategy({
+  clientID: process.env.clientID,
+  clientSecret: process.env.clientSecret,
+  callbackURL: '/auth/google/callback',
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    let user = await Userdb.findOne({ googleId: profile.id });
+    if (!user) {
+      // New user signing up
+      user = new Userdb({
+        googleId: profile.id,
+        username: profile.displayName,
+        email: profile.emails[0].value,
+        profilePicture: profile.photos[0].value
+      });
+      await user.save();
+    }
 
-passport.use(
-	new GoogleStrategy(
-		{
-			clientID: clientID,
-			clientSecret:clientSecret,
-			callbackURL: "/auth/google/callback",
-			scope: ["profile", "email"],
-		},
-		function (accessToken, refreshToken, profile, callback) {
-			callback(null, profile);
-		}
-	)
-);
+    if (!user._id) {
+      throw new Error('User ID not found');
+    }
+
+    return done(null, user); // Pass the complete user object
+  } catch (err) {
+    return done(err);
+  }
+}));
+
 passport.use(new FacebookStrategy({
     clientID: facebookID,
     clientSecret: facebookSecret,
