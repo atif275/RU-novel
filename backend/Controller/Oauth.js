@@ -7,7 +7,8 @@ require('dotenv').config();
 
 const clientID = process.env.clientID;
 const clientSecret =  process.env.clientSecret;
-
+console.log("xxxx"+clientID);
+console.log(clientSecret);
 const facebookID = "1252397179082903";
 const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 
