@@ -65,7 +65,7 @@ const LoginForm = () => {
   });
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'https://api.ru-novel.ru/auth/google';
+    window.location.href = 'https://api.ru-novel.ru/auth/google/callback';
   };
 
   const handleFaceBookSignIn = () => {
