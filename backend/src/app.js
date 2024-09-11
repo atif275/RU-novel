@@ -271,19 +271,19 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    const userEmail = req.user.user.email;
-    if (req.user.isNewUser) {
-      res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
-    } else  {
-      res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
+// app.get('/auth/google/callback', 
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   (req, res) => {
+//     const userEmail = req.user.user.email;
+//     if (req.user.isNewUser) {
+//       res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
+//     } else  {
+//       res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
       
-    }
+//     }
     
-  }
-);
+//   }
+// );
 
 app.get('/auth/facebook',
   passport.authenticate('facebook', { scope: ['email','profile'] })
