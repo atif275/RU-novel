@@ -262,9 +262,9 @@ app.get('/api/current-user', (req, res) => {
   }
 });
 
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { scope: ['email', 'profile'] })
-// );
+app.get('/auth/google/callback',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
