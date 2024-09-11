@@ -1,27 +1,24 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const Userdb = require('../models/user');
-
+const Userdb = require('../model/user');
+require('dotenv').config();
 const clientID = process.env.clientID;
-const clientSecret =  process.env.clientSecret;
+const clientSecret = process.env.clientSecret;
 const facebookID = "1252397179082903";
 const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
 
-// const callbackURL = process.env.NODE_ENV === 'production'
-//   ? 'https://api.ru-novel.ru//auth/google/callback'
-//   : 'https://api.ru-novel.ru/auth/google/callback';
-  
 passport.use(new GoogleStrategy({
   clientID: clientID,
   clientSecret: clientSecret,
-  callbackURL: 'https://api.ru-novel.ru/auth/google/callback', // Use the dynamic callbackURL
+  callbackURL: '/auth/google/callback',
   scope: ['profile', 'email'],
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await Userdb.findOne({ googleId: profile.id });
     if (!user) {
+      // New user signing up
       user = new Userdb({
         googleId: profile.id,
         username: profile.displayName,
@@ -31,11 +28,13 @@ async (accessToken, refreshToken, profile, done) => {
       await user.save();
       return done(null, { user, isNewUser: true });
     }
+    // Existing user logging in
     return done(null, { user, isNewUser: false });
   } catch (err) {
     done(err, null);
   }
 }));
+
 
 passport.use(new FacebookStrategy({
     clientID: facebookID,
