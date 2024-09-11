@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'; // To access the logged-in user's data
 import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ChCommentData from '../components/ChCommentData2';
+import ReviewSection from '../components/ReviewCard2';
+import axios from 'axios';
 import {
   faBookOpen,
   faFileAlt,
@@ -19,6 +22,133 @@ const dashboardItems = [
 ];
 
 export const AuthorDashboard= ({ onNewFiction }) =>  {
+    const [reviews, setReviews] = useState([]);
+    const email = useSelector((state) => state.userData.email);
+    const [comments, setComments] = useState([]);
+    const [username, setUsername] = useState('');
+    const [replyContent, setReplyContent] = useState(''); // Define state in CommentsList
+    const [showReplyEditor, setShowReplyEditor] = useState(false); // Define state in CommentsList
+    const [selectedCommentId, setSelectedCommentId] = useState(null);
+  
+  
+    useEffect(() => {
+      const fetchUserAndReviews = async () => {
+        try {
+          // Fetch the username based on the email
+          const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
+          const { username } = userResponse.data;
+          setUsername(username);
+  
+          // Fetch the reviews by the username
+          const reviewsResponse = await axios.get(`https://api.ru-novel.ru/api/reviews/usersss/${username}`);
+          setReviews(reviewsResponse.data);
+        } catch (error) {
+          console.error('Error fetching user data and reviews:', error);
+        }
+      };
+      const fetchUserAndComments = async () => {
+        try {
+          // Fetch the username based on the email
+          const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
+          const { username } = userResponse.data;
+          setUsername(username);
+  
+          // Fetch the comments by the username
+          const commentsResponse = await axios.get(`https://api.ru-novel.ru/api/commentss/usersss/${username}`);
+          setComments(commentsResponse.data);
+        } catch (error) {
+          console.error('Error fetching user data and comments:', error);
+        }
+      };
+  
+      if (email) {
+        fetchUserAndReviews();
+        fetchUserAndComments();
+      }
+    }, [email]);
+  
+    const handleReviewDelete = (reviewId) => {
+      setReviews((prevReviews) => prevReviews.filter((review) => review._id !== reviewId));
+    };
+    const handlePostReply = async (commentId, replyContent) => {
+        if (!replyContent.trim()) return; // Check if the reply content is valid
+      
+        try {
+          // Fetch the user data based on the logged-in email
+          const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
+          const { username, profilePicture } = userResponse.data;
+      
+          // Construct the reply object with all necessary data
+          const reply = {
+            author: username,
+            pfp: profilePicture,
+            text: replyContent,
+            datetime: new Date(),
+            repcount: 0,
+          };
+      
+          // Post the reply to the server
+          const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/reply`, reply);
+      
+          // Update the comments state with the new reply
+          setComments((prevComments) =>
+            prevComments.map((comment) =>
+              comment._id === commentId
+                ? { ...comment, replies: [...comment.replies, response.data] }
+                : comment
+            )
+          );
+      
+          // Reset the reply editor and close it
+          setReplyContent('');
+          setShowReplyEditor(false);
+          // Optionally, show a success message
+          // toast.success('Reply posted successfully!');
+        } catch (error) {
+          console.error('Error posting reply:', error);
+          // Optionally, show an error message
+          // toast.error('Failed to post reply.');
+        }
+      };
+      
+      // Function to handle adding +Rep to a comment
+      const handleAddRepToComment = async (commentId) => {
+        try {
+          const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/rep`);
+          // Update the rep count of the comment
+          setComments((prevComments) =>
+            prevComments.map((comment) =>
+              comment._id === commentId
+                ? { ...comment, repcount: response.data.repcount }
+                : comment
+            )
+          );
+        } catch (error) {
+          console.error('Error adding +Rep to comment:', error);
+        }
+      };
+    
+      // Function to handle adding +Rep to a reply
+      const handleAddRepToReply = async (commentId, replyId) => {
+        try {
+          const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/reply/${replyId}/rep`);
+          // Update the rep count of the reply
+          setComments((prevComments) =>
+            prevComments.map((comment) =>
+              comment._id === commentId
+                ? {
+                    ...comment,
+                    replies: comment.replies.map((reply) =>
+                      reply._id === replyId ? { ...reply, repcount: response.data.repcount } : reply
+                    ),
+                  }
+                : comment
+            )
+          );
+        } catch (error) {
+          console.error('Error adding +Rep to reply:', error);
+        }
+      };
 
     const [dashboardData, setDashboardData] = useState({
         fictionsCount: 0,
@@ -78,18 +208,25 @@ export const AuthorDashboard= ({ onNewFiction }) =>  {
             </div>
             <div className="flex mt-4 space-x-4">
                 <div className="flex-1">
-                    <div className="bg-white p-4 shadow rounded">
-                        <h2 className="text-lg font-semibold">Recent Reviews</h2>
-                        <div className="mt-2 border-t border-gray-200 p-4">
+                    <div className="bg-white shadow rounded h-full">
+                        {/* <h2 className="text-lg font-semibold">Recent Reviews</h2> */}
+                        <div className="">
                             {/* Placeholder for dynamic content */}
+                            <ReviewSection reviews={reviews} onReviewDelete={handleReviewDelete} />
                         </div>
                     </div>
                 </div>
                 <div className="flex-1">
-                    <div className="bg-white p-4 shadow rounded">
-                        <h2 className="text-lg font-semibold">Recent Comments</h2>
-                        <div className="mt-2 border-t border-gray-200 p-4">
+                    <div className="bg-white shadow rounded h-full">
+                        {/* <h2 className="text-lg font-semibold">Recent Comments</h2> */}
+                        <div className="">
                             {/* Placeholder for dynamic content */}
+                            <ChCommentData
+                                comments={comments}
+                                onReply={(commentId, replyContent) => handlePostReply(commentId, replyContent)}
+                                onRep={(commentId) => handleAddRepToComment(commentId)}
+                                onReplyRep={(commentId, replyId) => handleAddRepToReply(commentId, replyId)}
+                            />
                         </div>
                     </div>
                 </div>

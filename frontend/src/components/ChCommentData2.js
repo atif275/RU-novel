@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaReply, FaPlusSquare } from 'react-icons/fa';
 import DOMPurify from 'dompurify';
+import { Editor } from "@tinymce/tinymce-react";
+import { FaStar, FaThumbsUp, FaThumbsDown, FaQuoteLeft, FaTrashAlt } from 'react-icons/fa';
+const ChCommentData = ({ comments, onReply, onRep, onReplyRep }) => {
+  const [replyContent, setReplyContent] = useState(''); // Manage reply content state
+  const [showReplyEditor, setShowReplyEditor] = useState(false); // Manage reply editor visibility state
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
 
-const ChCommentData = ({ comments }) => {
+  const handleReplyClick = (commentId) => {
+    setSelectedCommentId(commentId);
+    setShowReplyEditor(!showReplyEditor); // Toggle reply editor
+  };
+
+  const handleReplyPost = (commentId) => {
+    if (replyContent.trim()) {
+      onReply(commentId, replyContent);
+      setReplyContent('');
+      setShowReplyEditor(false);
+    }
+  };
+
+  // Function to handle adding +Rep to comments
+  const handleRepClick = (commentId) => {
+    onRep(commentId); // Call parent function to handle comment rep
+  };
+
+  // Function to handle adding +Rep to replies
+  const handleReplyRepClick = (commentId, replyId) => {
+    onReplyRep(commentId, replyId); // Call parent function to handle reply rep
+  };
+
   return (
-    <div className="bg-white p-2 md:p-8 mt-4">
-      <h1 className="text-[16px] text-[#666666] mx-6">Comments</h1>
+    <div className="bg-white p-2 lg:p-10 md:p-10 ">
+      <h3 className="text-[16px] font-bold text-red-600 flex items-center">
+          <FaQuoteLeft className='mr-2 text-gray-500 text-[16px]' />
+          My Comments
+        </h3>
       <hr className="bg-[#666666] mt-4 mx-6"></hr>
 
       {/* Display Comments */}
@@ -35,17 +66,52 @@ const ChCommentData = ({ comments }) => {
               </div>
 
               <div className="flex items-center justify-end gap-2 md:gap-4 mt-4">
-                <button 
+                <button
                   className="flex gap-2 items-center rounded-full h-7 border border-gray-500 text-[11px] px-2 md:px-4"
+                  onClick={() => handleReplyClick(comment._id)}
                 >
                   <FaReply /> reply
                 </button>
-                <button 
+                <button
                   className="flex gap-2 items-center rounded-full h-7 border border-gray-500 text-[11px] px-2 md:px-4"
+                  onClick={() => handleRepClick(comment._id)}
                 >
                   <FaPlusSquare /> +Rep ({comment.repcount})
                 </button>
               </div>
+
+              {/* Display reply editor if reply button is clicked */}
+              {showReplyEditor && selectedCommentId === comment._id && (
+                <div className="mt-4 ml-8">
+                  <Editor
+                    apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+                    value={replyContent}
+                    init={{
+                      height: 150,
+                      menubar: false,
+                      plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                      ],
+                      toolbar:
+                        'undo redo | formatselect | bold italic underline strikethrough | \
+                        alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | \
+                        link image | removeformat | preview code',
+                    }}
+                    onEditorChange={(newContent) => setReplyContent(newContent)}
+                  />
+                  <div className="flex items-center justify-end gap-4 mt-2">
+                    <button className="h-[30px] px-3 border border-gray-500 text-[12px]" onClick={() => setShowReplyEditor(false)}>Cancel</button>
+                    <button
+                      className="h-[30px] px-3 bg-[#337ab7] text-white text-[12px]"
+                      onClick={() => handleReplyPost(comment._id)}
+                    >
+                      Post
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Display Replies */}
               {comment.replies.map((reply) => (
@@ -71,8 +137,9 @@ const ChCommentData = ({ comments }) => {
                     </span>
                   </div>
                   <div className="flex items-center justify-end gap-2 md:gap-4 mt-2">
-                    <button 
+                    <button
                       className="flex gap-2 items-center rounded-full h-7 border border-gray-500 text-[11px] px-2 md:px-4"
+                      onClick={() => handleReplyRepClick(comment._id, reply._id)}
                     >
                       <FaPlusSquare /> +Rep ({reply.repcount})
                     </button>

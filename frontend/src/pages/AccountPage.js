@@ -31,23 +31,23 @@ function AccountOptionsPage() {
   const settingsOptions = [
     { key: 'profileInfo', icon: "fa-id-card", label: "Profile Info", link: "/account" },
     { key: 'settings', icon: "fa-cogs", label: "Settings", link: "/account/options" },
-    { key: 'premium', icon: "fa-star", label: "Premium", link: "/account/premium" },
+    // { key: 'premium', icon: "fa-star", label: "Premium", link: "/account/premium" },
     { key: 'achievements', icon: "fa-trophy", label: "Achievements", link: "/user/achievements" },
     { key: 'borderWardrobe', icon: "fa-portrait", label: "Border Wardrobe", link: "/user/borders" },
-    {
-      key: 'referFriend',
-      icon: "fa-envelope-square",
-      label: "Refer A Friend",
-      link: "/account/refer-a-friend",
-    },
+    // {
+    //   key: 'referFriend',
+    //   icon: "fa-envelope-square",
+    //   label: "Refer A Friend",
+    //   link: "/account/refer-a-friend",
+    // },
   ];
   const securityOptions = [
     { icon: 'fa-envelope', label: 'Change Email', link: '/account/changeemail' },
     { icon: 'fa-lock', label: 'Change Password', link: '/account/changepassword' },
-    { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
+    // { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
     { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
-    { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-    { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
+    // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
+    // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
   ];
 
   const notificationOptions = [
@@ -68,7 +68,7 @@ function AccountOptionsPage() {
     { icon: 'fa-history', label: 'Reading History', link: '/my/history' },
     { icon: 'fa-star-half-alt', label: 'Reviews', link: '/my/reviews' },
     { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
-    { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
+    // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
   ];
   
 
@@ -183,7 +183,7 @@ function AccountOptionsPage() {
 
             {/* Notification List */}
 
-            <div className="mt-4 bg-white">
+            {/* <div className="mt-4 bg-white">
             <div className="bg-gray-600 text-white text-md p-2 pl-4">
                 Notifications
                 </div>
@@ -201,7 +201,7 @@ function AccountOptionsPage() {
               ))}
             </ul>
                 
-            </div>
+            </div> */}
 
             {/* Forum List */}
 

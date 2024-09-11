@@ -35,7 +35,7 @@ function Editsignature() {
         // { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
         { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
         // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-        { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
+        // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
     ];
     
     const notificationOptions = [

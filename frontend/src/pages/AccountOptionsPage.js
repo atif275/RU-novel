@@ -47,8 +47,8 @@ function AccountOptionsPage() {
     { icon: 'fa-lock', label: 'Change Password', link: '/account/changepassword' },
     { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
     { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
-    { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-    { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
+    // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
+    // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
   ];
 
   const notificationOptions = [
@@ -69,7 +69,7 @@ function AccountOptionsPage() {
     { icon: 'fa-history', label: 'Reading History', link: '/my/history' },
     { icon: 'fa-star-half-alt', label: 'Reviews', link: '/my/reviews' },
     { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
-    { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
+    // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
   ];
   
 

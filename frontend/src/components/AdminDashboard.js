@@ -153,16 +153,16 @@ export const AdminDashboard = () => {
             </div> */}
             <div className="flex mt-4 space-x-4">
                 <div className="flex-1">
-                <div className="bg-white p-4 shadow rounded">
+                <div className="bg-white p-4 shadow rounded h-full">
                         <div className="flex justify-between items-center pb-4">
                             <h2 className="text-lg font-semibold text-center">Recent Suggestions</h2>
                             <button 
-    className={`py-2 px-4 rounded ${allChecked ? 'bg-red-500 hover:bg-red-700 text-white' : 'bg-gray-300 text-gray-500'}`}
-    onClick={handleDelete("suggestions")} // Corrected here
-    disabled={!allChecked}
->
-    Delete
-</button>
+                                className={`py-2 px-4 rounded ${allChecked ? 'bg-red-500 hover:bg-red-700 text-white' : 'bg-gray-300 text-gray-500'}`}
+                                onClick={handleDelete("suggestions")} // Corrected here
+                                disabled={!allChecked}
+                            >
+                                Delete
+                            </button>
                         </div>
                         <table className="min-w-full">
                             <thead >
@@ -208,7 +208,7 @@ export const AdminDashboard = () => {
                 </div>
                 
                 <div className="flex-1">
-                <div className="bg-white p-4 shadow rounded">
+                <div className="bg-white p-4 shadow rounded h-full">
                         <div className="flex justify-between items-center pb-4">
                             <h2 className="text-lg font-semibold text-center">Recent Tickets</h2>
                             <button 

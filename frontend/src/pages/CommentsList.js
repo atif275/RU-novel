@@ -5,34 +5,117 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function ReviewsList() {
-  const [reviews, setReviews] = useState([]);
   const email = useSelector((state) => state.userData.email);
   const [username, setUsername] = useState('');
+  const [comments, setComments] = useState([]);
+  const [replyContent, setReplyContent] = useState(''); // Define state in CommentsList
+  const [showReplyEditor, setShowReplyEditor] = useState(false); // Define state in CommentsList
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
 
   useEffect(() => {
-    const fetchUserAndReviews = async () => {
+    const fetchUserAndComments = async () => {
       try {
         // Fetch the username based on the email
         const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
         const { username } = userResponse.data;
         setUsername(username);
 
-        // Fetch the reviews by the username
-        const reviewsResponse = await axios.get(`https://api.ru-novel.ru/api/commentss/usersss/${username}`);
-        setReviews(reviewsResponse.data);
+        // Fetch the comments by the username
+        const commentsResponse = await axios.get(`https://api.ru-novel.ru/api/commentss/usersss/${username}`);
+        setComments(commentsResponse.data);
       } catch (error) {
-        console.error('Error fetching user data and reviews:', error);
+        console.error('Error fetching user data and comments:', error);
       }
     };
 
     if (email) {
-      fetchUserAndReviews();
+      fetchUserAndComments();
     }
   }, [email]);
 
-  const handleReviewDelete = (reviewId) => {
-    setReviews((prevReviews) => prevReviews.filter((review) => review._id !== reviewId));
+  const handlePostReply = async (commentId, replyContent) => {
+    if (!replyContent.trim()) return; // Check if the reply content is valid
+  
+    try {
+      // Fetch the user data based on the logged-in email
+      const userResponse = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
+      const { username, profilePicture } = userResponse.data;
+  
+      // Construct the reply object with all necessary data
+      const reply = {
+        author: username,
+        pfp: profilePicture,
+        text: replyContent,
+        datetime: new Date(),
+        repcount: 0,
+      };
+  
+      // Post the reply to the server
+      const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/reply`, reply);
+  
+      // Update the comments state with the new reply
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === commentId
+            ? { ...comment, replies: [...comment.replies, response.data] }
+            : comment
+        )
+      );
+  
+      // Reset the reply editor and close it
+      setReplyContent('');
+      setShowReplyEditor(false);
+      // Optionally, show a success message
+      // toast.success('Reply posted successfully!');
+    } catch (error) {
+      console.error('Error posting reply:', error);
+      // Optionally, show an error message
+      // toast.error('Failed to post reply.');
+    }
   };
+  
+  // Function to handle adding +Rep to a comment
+  const handleAddRepToComment = async (commentId) => {
+    try {
+      const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/rep`);
+      // Update the rep count of the comment
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === commentId
+            ? { ...comment, repcount: response.data.repcount }
+            : comment
+        )
+      );
+    } catch (error) {
+      console.error('Error adding +Rep to comment:', error);
+    }
+  };
+
+  // Function to handle adding +Rep to a reply
+  const handleAddRepToReply = async (commentId, replyId) => {
+    try {
+      const response = await axios.post(`https://api.ru-novel.ru/api/comments/${commentId}/reply/${replyId}/rep`);
+      // Update the rep count of the reply
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === commentId
+            ? {
+                ...comment,
+                replies: comment.replies.map((reply) =>
+                  reply._id === replyId ? { ...reply, repcount: response.data.repcount } : reply
+                ),
+              }
+            : comment
+        )
+      );
+    } catch (error) {
+      console.error('Error adding +Rep to reply:', error);
+    }
+  };
+
+  // const handleReviewDelete = (reviewId) => {
+  //   setReviews((prevReviews) => prevReviews.filter((review) => review._id !== reviewId));
+  // };
 
   const messageOptions = [
     { key: 'compose', icon: 'fa-envelope', label: 'Compose', link: '/private/send', isActive: true },
@@ -47,7 +130,7 @@ function ReviewsList() {
     // { key: 'settings', icon: "fa-cogs", label: "Settings", link: "/account/options" },
     // { key: 'premium', icon: "fa-star", label: "Premium", link: "/account/premium" },
     { key: 'achievements', icon: "fa-trophy", label: "Achievements", link: "/user/achievements" },
-    // { key: 'borderWardrobe', icon: "fa-portrait", label: "Border Wardrobe", link: "/user/borders" },
+    { key: 'borderWardrobe', icon: "fa-portrait", label: "Border Wardrobe", link: "/user/borders" },
     // { key: 'referFriend', icon: "fa-envelope-square", label: "Refer A Friend", link: "/account/refer-a-friend" }
   ];
 
@@ -57,14 +140,14 @@ function ReviewsList() {
     // { icon: 'fa-key', label: 'Two Factor Auth', link: '/account/twofactorauthentication' },
     { icon: 'fa-external-link-square', label: 'External Logins', link: '/account/externallogins' },
     // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
-    { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' }
+    // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' }
   ];
 
-  const notificationOptions = [
-    { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
-    { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
-    { icon: 'fa-bell', label: 'Notification History', link: '/notifications/list' }
-  ];
+  // const notificationOptions = [
+  //   { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
+  //   { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
+  //   { icon: 'fa-bell', label: 'Notification History', link: '/notifications/list' }
+  // ];
 
   const forumOptions = [
     { icon: 'fa-home', label: 'UserCP', link: '/my/usercp' },
@@ -72,7 +155,7 @@ function ReviewsList() {
   ];
 
   const myOptions = [
-    { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
+    { icon: 'fa-book', label: 'Fictions', link: '/author-dashboard' },
     { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
     { icon: 'fa-star', label: 'Favorites', link: '/my/favorites' },
     { icon: 'fa-clock', label: 'Read Later', link: '/my/readlater' },
@@ -205,7 +288,12 @@ function ReviewsList() {
                             <Link to="/fictions" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Fictions</Link>
                             <Link to="/bookshelf" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Bookshelf</Link>
             </div>
-          <ChCommentData comments={reviews} onCommentDelete={handleReviewDelete} />
+            <ChCommentData
+              comments={comments}
+              onReply={(commentId, replyContent) => handlePostReply(commentId, replyContent)}
+              onRep={(commentId) => handleAddRepToComment(commentId)}
+              onReplyRep={(commentId, replyId) => handleAddRepToReply(commentId, replyId)}
+            />
         </div>
       </div>
     </div>

@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "./Sidebar.css"
 export const AdminSidebar = ({ setSelectedComponent }) => {
     const [collapsed, setCollapsed] = useState(false);
+    useEffect(() => {
+        const handleResize = () => {
+            setCollapsed(window.innerWidth < 1180);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     const toggleSidebar = () => setCollapsed(!collapsed);
 
     const handleMenuItemClick = (item) => {
@@ -10,12 +18,12 @@ export const AdminSidebar = ({ setSelectedComponent }) => {
     };
 
     return (
-        <div id="sidebar-bg"className={`transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} min-h-screen bg-black text-white flex flex-col `}>
-            <div className="flex items-center p-5 justify-between" id="logo-bg" >
-                {!collapsed && (
-                    <div className="logo">
+        <div id="sidebar-bg" className={`transition-all duration-300 ${collapsed ? 'w-16 min-w-16 max-w-16' : 'w-64 min-w-64 max-w-64'} min-h-screen bg-black text-white flex flex-col`}>
+        <div className="flex items-center p-5 justify-between" id="logo-bg">
+            {!collapsed && (
+                <div className="logo">
                         <Link to="/admin-dashboard" title="RU Novel">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Flogo1.png?alt=media&token=fa805337-746c-4820-8c12-18dbbd99d05a" alt="Logo" className="h-36 w-48 " />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2FRU%20Novel%20%20Logo%20350x51%20.png?alt=media&token=96255b7b-f421-42a1-98e0-2ad265c31738" alt="Logo" className="mt-2" />
                         </Link>
                         
                     </div>
@@ -27,7 +35,7 @@ export const AdminSidebar = ({ setSelectedComponent }) => {
                         </button>
                 </div>
             </div>
-            <ul className={`menu-nav flex-1 ${collapsed ? 'flex-col justify-center' : 'flex-col items-start'} mt-5 pl-[16px] pr-5 `}>
+            <ul className={`menu-nav flex-1 ${collapsed ? 'flex-col justify-center' : 'flex-col items-start'} mt-5 pl-[16px] pr-5`}>
                 {['Admin Dashboard', 'Manage Employees', 'Submissions', 'Transactions', 'Advertising', 'UTM Tags','Borders','Notes'].map((item, index) => (
                     <li key={index} className="menu-item w-full">
                         <button onClick={() => handleMenuItemClick(item)} className={`menu-link p-2 flex ${collapsed ? 'justify-center' : 'justify-start'} items-center`}>

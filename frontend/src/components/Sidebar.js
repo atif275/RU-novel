@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "./Sidebar.css"
 export const Sidebar = ({ setSelectedComponent }) => {
     const [collapsed, setCollapsed] = useState(false);
+    useEffect(() => {
+        const handleResize = () => {
+            setCollapsed(window.innerWidth < 1180);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const toggleSidebar = () => setCollapsed(!collapsed);
 
     const handleMenuItemClick = (item) => {
@@ -10,10 +19,10 @@ export const Sidebar = ({ setSelectedComponent }) => {
     };
 
     return (
-        <div id="sidebar-bg"className={`transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} min-h-screen bg-black text-white flex flex-col `}>
-            <div className="flex items-center p-5 justify-between" id="logo-bg" >
-                {!collapsed && (
-                    <div className="logo">
+        <div id="sidebar-bg" className={`transition-all duration-300 ${collapsed ? 'w-16 min-w-16 max-w-16' : 'w-64 min-w-64 max-w-64'} min-h-screen bg-black text-white flex flex-col`}>
+        <div className="flex items-center p-5 justify-between" id="logo-bg">
+            {!collapsed && (
+                <div className="logo">
                         <Link to="/" title="RU - Novel">
                         <img 
                              src="https://www.royalroad.com/dist/img/logo/rr-logo-smallcaps-flat-white-min.png" 
@@ -30,7 +39,7 @@ export const Sidebar = ({ setSelectedComponent }) => {
                         </button>
                 </div>
             </div>
-            <ul className={`menu-nav flex-1 ${collapsed ? 'flex-col justify-center' : 'flex-col items-start'} mt-5 pl-[16px] pr-5 `}>
+            <ul className={`menu-nav flex-1 ${collapsed ? 'flex-col justify-center' : 'flex-col items-start'} mt-5 pl-[16px] pr-5`}>
                 {['Author Dashboard', 'Submissions','Fictions', 'Notes', 'Writathon', 'Invitations'].map((item, index) => (
                     <li key={index} className="menu-item w-full">
                         <button onClick={() => handleMenuItemClick(item)} className={`menu-link p-2 flex ${collapsed ? 'justify-center' : 'justify-start'} items-center`}>
@@ -43,4 +52,3 @@ export const Sidebar = ({ setSelectedComponent }) => {
         </div>
     );
 };
-

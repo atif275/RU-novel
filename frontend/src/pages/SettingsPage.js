@@ -113,12 +113,12 @@ function ProfileInfoPage() {
       label: "Download Account",
       link: "/account/download",
     },
-    {
-      icon: "fa-user-slash",
-      label: "Delete Account",
-      link: "/account/delete",
-      specialClass: "font-red-thunderbird bold",
-    },
+    // {
+    //   icon: "fa-user-slash",
+    //   label: "Delete Account",
+    //   link: "/account/delete",
+    //   specialClass: "font-red-thunderbird bold",
+    // },
   ];
 
   const notificationOptions = [
