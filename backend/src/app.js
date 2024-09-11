@@ -8,7 +8,7 @@ const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
 const path = require('path');
 // const passport = require('../Controller/Oauth'); // Import the passport configuration
-const passport = require('passport');
+const passport = require('../Controller/passport');
 // const Books = require('../model/BookThread');
 const Review = require('../model/reviews');
 const submissionRoutes = require('./routes/submissionRoutes');
@@ -68,7 +68,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use("/auth", authRoute);
+ app.use("/auth", authRoute);
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -262,9 +262,9 @@ app.get('/api/current-user', (req, res) => {
   }
 });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-);
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['email', 'profile'] })
+// );
 
 app.get('/logout', (req, res) => {
   req.logout();
