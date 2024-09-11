@@ -7,13 +7,15 @@ const bookThreadRoutes = require('./routes/BookThreadRoutes');
 const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
 const path = require('path');
-const passport = require('../Controller/Oauth'); // Import the passport configuration
+// const passport = require('../Controller/Oauth'); // Import the passport configuration
+const passport = require('passport');
 // const Books = require('../model/BookThread');
 const Review = require('../model/reviews');
 const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
-
-
+const authRoute = require("../router/auth");
+const cookieSession = require("cookie-session");
+const passportStrategy = require("../Controller/Oauth");
 const BookThread = require('./models/BookThread'); // Ensure the path is correct
 const Book = require('./models/books');
 const Submission = require('./models/Submission'); // Import the Submission model
@@ -23,7 +25,13 @@ dotenv.config();
 
 const app = express();
 
-
+app.use(
+	cookieSession({
+		name: "session",
+		keys: ["cyberwolve"],
+		maxAge: 24 * 60 * 60 * 100,
+	})
+);
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 const PORT = process.env.PORT || 5001;
@@ -60,7 +68,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
+app.use("/auth", authRoute);
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

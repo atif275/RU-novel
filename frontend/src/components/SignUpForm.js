@@ -72,8 +72,15 @@ const SignupPage = () => {
     formik.setFieldValue('birthday', date ? date.format('YYYY-MM-DD') : '');
   };
 
+  // const handleGoogleSignIn = () => {
+  //   window.location.href = 'https://api.ru-novel.ru/auth/google';
+  // };
   const handleGoogleSignIn = () => {
-    window.location.href = 'https://api.ru-novel.ru/auth/google';
+    // window.location.href = 'https://api.ru-novel.ru/auth/google';
+    window.open(
+			`https://api.ru-novel.ru/auth/google/callback`,
+			"_self"
+		);
   };
 
   const handleFaceBookSignIn = () => {
