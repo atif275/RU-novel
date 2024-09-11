@@ -6,6 +6,7 @@ const threadRoutes = require('./routes/ForumThreadRoutes');  // Adjust the path 
 const bookThreadRoutes = require('./routes/BookThreadRoutes');
 const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
+
 const path = require('path');
  const passport = require('../Controller/Oauth'); // Import the passport configuration
 //const passport = require('../Controller/passport');
@@ -25,13 +26,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(
-	cookieSession({
-		name: "session",
-		keys: ["cyberwolve"],
-		maxAge: 24 * 60 * 60 * 100,
-	})
-);
+
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 const PORT = process.env.PORT || 5001;
@@ -58,11 +53,20 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-app.use(session({
-  secret: '1234asas',
-  resave: false,
-  saveUninitialized: true
-}));
+// app.use(session({
+//   secret: '1234asas',
+//   resave: false,
+//   saveUninitialized: true
+// }));
+
+
+app.use(
+	cookieSession({
+		name: "session",
+		keys: ["cyberwolve"],
+		maxAge: 24 * 60 * 60 * 100,
+	})
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
