@@ -307,7 +307,7 @@ app.get('/auth/facebook/callback',
     if (req.user.isNewUser) {
       res.redirect(`https://ru-novel.ru/facebook/account?email=${encodeURIComponent(userEmail)}`);
     } else {
-      res.redirect(`https://ru-novel.ru?name=${encodeURIComponent(userEmail)}`);
+      res.redirect(`https://ru-novel.ru?email=${encodeURIComponent(userEmail)}`);
     }
   }
 );
