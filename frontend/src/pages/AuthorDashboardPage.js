@@ -34,7 +34,7 @@ const handleNewFictionClick = () => {
 };
 
   const renderContent = () => {
-    window.location.reload();
+    // window.location.reload();
     switch (selectedComponent) {
       case 'Author Dashboard':
         return <AuthorDashboard onNewFiction={handleNewFictionClick} />;
