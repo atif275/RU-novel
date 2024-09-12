@@ -51,7 +51,7 @@ async (accessToken, refreshToken, profile, done) => {
       return done(null, false, { message: 'Email is required to sign up' });
     }
 
-    let user = await Userdb.findOne({ email: profile.email });
+    let user = await Userdb.findOne({ email: email });
     if (!user) {
       user = new Userdb({
         facebookId: profile.id,
