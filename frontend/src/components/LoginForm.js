@@ -69,7 +69,7 @@ const LoginForm = () => {
   };
 
   const handleFaceBookSignIn = () => {
-    window.location.href = 'https://api.ru-novel.ru/auth/facebook';
+    window.location.href = 'https://api.ru-novel.ru/auth/facebook/callback';
   };
   const handleSignIn = () => {
      navigate('/error')
