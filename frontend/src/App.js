@@ -1099,14 +1099,15 @@ function App() {
         
           <Route path="/author-dashboard" element={
            
-             user ? (
-              <AuthorDashboardPage />
-            ) : (
-              <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                You need to be logged in to create a new ticket.
-              </div>
-            )
+            //  user ? (
+            //   <AuthorDashboardPage />
+            // ) : (
+            //   <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            //     You need to be logged in to create a new ticket.
+            //   </div>
+            // )
              
+            <AuthorDashboardPage />
              
               
            
