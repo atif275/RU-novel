@@ -82,7 +82,7 @@ const SignupPage = () => {
   // };
 
   const handleFaceBookSignIn = () => {
-    window.location.href = 'https://api.ru-novel.ru/auth/facebook';
+    window.location.href = 'https://api.ru-novel.ru/auth/facebook/callback';
   };
   const handleMicroSignIn = () => {
     navigate('/error')

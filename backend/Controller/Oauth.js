@@ -5,8 +5,8 @@ const Userdb = require('../model/user');
 require('dotenv').config();
 const clientID = process.env.clientID;
 const clientSecret = process.env.clientSecret;
-const facebookID = "1252397179082903";
-const facebookSecret = "149a03dccd816bb96e97a5adb18ecdfc";
+const facebookID =  process.env.facebookID;
+const facebookSecret =  process.env.facebookSecret;
 
 passport.use(new GoogleStrategy({
   clientID: clientID,
@@ -39,7 +39,7 @@ async (accessToken, refreshToken, profile, done) => {
 passport.use(new FacebookStrategy({
     clientID: facebookID,
     clientSecret: facebookSecret,
-    callbackURL: 'https://api.ru-novel.ru/auth/facebook/callback',
+    callbackURL: '/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   async (accessToken, refreshToken, profile, done) => {
