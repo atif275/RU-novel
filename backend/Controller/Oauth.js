@@ -37,39 +37,38 @@ async (accessToken, refreshToken, profile, done) => {
 
 
 passport.use(new FacebookStrategy({
-    clientID: facebookID,
-    clientSecret: facebookSecret,
-    callbackURL: 'https://api.ru-novel.ru/auth/facebook/callback',
-    profileFields: ['id', 'displayName', 'photos', 'email']
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
-  
-      if (!email) {
-        // If no email is provided, return an error
-        return done(null, false, { message: 'Email is required to sign up' });
-      }
-  
-      let user = await Userdb.findOne({ facebookId: profile.id });
-      if (!user) {
-        // New user signing up
-        user = new Userdb({
-          facebookId: profile.id,
-          username: profile.displayName,
-          email: email,
-          profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null // Check if photos exist
-        });
-        await user.save();
-        return done(null, { user, isNewUser: true });
-      }
-      // Existing user logging in
-      return done(null, { user, isNewUser: false });
-    } catch (err) {
-      done(err, null);
+  clientID: facebookID,
+  clientSecret: facebookSecret,
+  callbackURL: 'https://api.ru-novel.ru/auth/facebook/callback',
+  profileFields: ['id', 'displayName', 'photos', 'email'],  // Ensure 'email' is here
+  scope: ['email']  // Request email scope
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+
+    if (!email) {
+      return done(null, false, { message: 'Email is required to sign up' });
     }
-  }));
-  
+
+    let user = await Userdb.findOne({ facebookId: profile.id });
+    if (!user) {
+      user = new Userdb({
+        facebookId: profile.id,
+        username: profile.displayName,
+        email: email,
+        profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null
+      });
+      await user.save();
+      return done(null, { user, isNewUser: true });
+    }
+
+    return done(null, { user, isNewUser: false });
+  } catch (err) {
+    done(err, null);
+  }
+}));
+
   
 
 // Serialize and deserialize user
