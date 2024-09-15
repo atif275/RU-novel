@@ -130,11 +130,11 @@ const SignupPage = () => {
             <i className="fab fa-microsoft mr-2"></i>
             with Microsoft
           </button>
-          <button className="text-center w-full py-2 my-1 d-block bg-black text-white rounded"
+          {/* <button className="text-center w-full py-2 my-1 d-block bg-black text-white rounded"
           onClick={handleMicroSignIn}>
             <i className="fab fa-apple mr-2"></i>
             with Apple
-          </button>
+          </button> */}
         </div>
 
         <form onSubmit={formik.handleSubmit} className="form-login-details">

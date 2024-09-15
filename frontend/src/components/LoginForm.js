@@ -118,7 +118,7 @@ const LoginForm = () => {
             <i className="fab fa-microsoft mr-2"></i>
             with Microsoft
           </button>
-          <button
+          {/* <button
             className="text-center w-full py-2 my-1 d-block bg-black text-white rounded"
             type="button"
             title="Log in using your Apple account"
@@ -126,7 +126,7 @@ const LoginForm = () => {
           >
             <i className="fab fa-apple mr-2"></i>
             with Apple
-          </button>
+          </button> */}
         </div>
 
         <form onSubmit={formik.handleSubmit} className="form-login-details">

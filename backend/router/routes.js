@@ -423,7 +423,54 @@ router.get('/api/premium/borders', async (req, res) => {
 router.post('/api/header/messages',control.message)
 
 
+// Route to get user notes
+router.get('/get-notes/:username', async (req, res) => {
+  const { username } = req.params;
 
+  if (!username) {
+    return res.status(400).json({ message: 'Username is required' });
+  }
+
+  try {
+    const user = await Userdb.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ notes: user.notes });
+  } catch (error) {
+    console.error('Failed to retrieve notes:', error);
+    res.status(500).json({ message: 'Error retrieving notes' });
+  }
+});
+
+
+
+
+// POST endpoint to save or update notes
+router.post('/save-notes', async (req, res) => {
+  const { username, notes } = req.body;
+
+  if (!username || !notes) {
+      return res.status(400).json({ message: 'Username and notes are required' });
+  }
+
+  try {
+      const user = await Userdb.findOne({ username: username });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Here, you should decide whether to append to the existing notes or replace them
+      user.notes = `${user.notes ? user.notes + '\n' : ''}${notes}`;
+      await user.save();
+
+      res.status(200).json({ message: 'Notes updated successfully', notes: user.notes });
+  } catch (error) {
+      console.error('Failed to save notes:', error);
+      res.status(500).json({ message: 'Error updating notes' });
+  }
+});
 
 
   module.exports = router;
