@@ -462,7 +462,8 @@ router.post('/save-notes', async (req, res) => {
       }
 
       // Here, you should decide whether to append to the existing notes or replace them
-      user.notes = `${user.notes ? user.notes + '\n' : ''}${notes}`;
+      // user.notes = `${user.notes ? user.notes + '\n' : ''}${notes}`;
+      user.notes = notes;
       await user.save();
 
       res.status(200).json({ message: 'Notes updated successfully', notes: user.notes });
