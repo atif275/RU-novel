@@ -1440,3 +1440,19 @@ exports.message=async(req,res)=>{
       res.status(500).json({ message: 'Server error' });
   }
 }
+
+exports.token1=async(req,res)=>{
+  const { username } = req.body;
+    
+  try {
+      const user = await Userdb.findOne({ username });
+
+      if (user) {
+          return res.json({  user });
+      } else {
+          return res.status(404).json({ success: false, message: 'User not found' });
+      }
+  } catch (error) {
+      return res.status(500).json({ success: false, message: 'Server error', error });
+  }
+}

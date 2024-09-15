@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../store';
 import { useNavigate } from 'react-router-dom';
-
+import Message from "./Message";
 
 const PageHeader = () => {
   
@@ -143,23 +143,8 @@ const PageHeader = () => {
                   </button>
                   {/* Messages div */}
                   {messagesVisible && (
-                    <div
-                      className={`absolute mt-2 p-4 text-[#bcc2cb] space-y-2 w-48 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
-                      style={{ zIndex: 10 }}
-                    >
-                      {noMessages ? (
-                        <p>No new messages.</p>
-                      ) : (
-                        messages
-                          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sorting messages in descending order by timestamp
-                          .map((message, index) => (
-                            <div key={index} className="p-2 border-b border-gray-500">
-                              <p className="font-bold">{message.sender}</p>
-                              <p>{message.subject}</p>
-                            </div>
-                          ))
-                      )}
-                    </div>
+                    <Message messages={messages} noMessages={noMessages} />
+                    
                   )}
                 </li>
                 

@@ -473,6 +473,8 @@ router.post('/save-notes', async (req, res) => {
   }
 });
 
+router.post('/api/token1',control.token1)
+
 
   module.exports = router;
   
