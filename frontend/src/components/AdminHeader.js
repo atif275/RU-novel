@@ -12,13 +12,13 @@ export const AdminHeader = ({ selectedComponent, breadcrumb }) => {
   const navigate = useNavigate();
   const toggleSidebar = () => setSidebarVisible(!sidebarVisible);
   const menuItems = [
-    { icon: "fa-user", label: "My Profile", link: "/profile" },
-    { icon: "fa-envelope", label: "My Messages", link: "/messages" },
-    { icon: "fa-bookmark", label: "Follows", link: "/my/follows" },
-    { icon: "fa-clock", label: "Read Later", link: "/my/readlater" },
-    { icon: "fa-star", label: "Favorites", link: "/my/favorites" },
-    { icon: "fa-history", label: "History", link: "/my/history" },
-    { icon: "fa-cog", label: "Settings", link: "/settings" },
+    // { icon: "fa-user", label: "My Profile", link: "/profile" },
+    { icon: "fa-envelope", label: "My Messages", link: "/admin/messages" },
+    // { icon: "fa-bookmark", label: "Follows", link: "/my/follows" },
+    // { icon: "fa-clock", label: "Read Later", link: "/my/readlater" },
+    // { icon: "fa-star", label: "Favorites", link: "/my/favorites" },
+    // { icon: "fa-history", label: "History", link: "/my/history" },
+    // { icon: "fa-cog", label: "Settings", link: "/settings" },
   ];
 
   const handleLogout = () => {
@@ -168,7 +168,7 @@ export const AdminHeader = ({ selectedComponent, breadcrumb }) => {
               src={profilePictureUrl}
               alt={user.username}
               className="h-8 w-8 rounded-full cursor-pointer"
-              onClick={toggleSidebar} // Toggle sidebar visibility on click
+               onClick={toggleSidebar} // Toggle sidebar visibility on click
             />
           </div>
 

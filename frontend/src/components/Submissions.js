@@ -101,7 +101,13 @@ const handleViewDetails = (id,title) => {
                                     <td className="px-6 py-4">{submission.requestType}</td>
                                     <td className="px-6 py-4">{submission.author}</td>
                                     <td className="px-6 py-4">{submission.title}</td>
-                                    <td className="px-6 py-4">{submission.submittedDate}</td>
+                                    <td className="px-6 py-4">
+                                    {new Date(submission.submittedDate).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: '2-digit',
+                                    })}
+                                    </td>
                                     <td className="px-6 py-4"><button onClick={() => handleViewDetails(submission._id, submission.title)} className="text-blue-600 hover:text-blue-800">Show Details</button></td>
                                     <td className="px-6 py-4">{submission.status}</td>
                                     <td className="px-6 py-4">

@@ -312,11 +312,19 @@ function ForumsPage() {
                           </h4>
                           <div className="text-xs">
                             by{" "}
-                            <p >
+                            <p>
                               {topic.author}
                             </p>
-                            , <time>{topic.lastPostDate}</time>
+                            ,{" "}
+                            <time>
+                              {new Date(topic.lastPostDate).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: '2-digit',
+                              })}
+                            </time>
                           </div>
+
                         </div>
                         <div className="lg:px-16 flex items-center">
                           <div className="sm:flex-wrap sm:justify-between text-xs md:text-sm">
@@ -339,12 +347,18 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <p >
-                              {topic.lastPoster}
-                            </p>
-                            <br />
-                            <time>{topic.lastPostDate}</time>
-                          </div>
+  <p>
+    {topic.lastPoster}
+  </p>
+  <br />
+  <time>
+    {new Date(topic.lastPostDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })}
+  </time>
+</div>
                         </div>
                       </div>
                     </div>
@@ -424,12 +438,19 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <p>
-                              {topic.lastPoster}
-                            </p>
-                            <br />
-                            <time>{topic.lastActivityDate}</time>
-                          </div>
+  <p>
+    {topic.lastPoster}
+  </p>
+  <br />
+  <time>
+    {new Date(topic.lastActivityDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })}
+  </time>
+</div>
+
                         </div>
                       </div>
                     </div>
@@ -508,13 +529,20 @@ function ForumsPage() {
                             src={topic.avatarUrl}
                             alt={topic.lastPoster}
                           />
-                          <div className="ml-4 text-xs">
-                            <p>
-                              {topic.lastPoster}
-                            </p>
-                            <br />
-                            <time>{topic.lastActivityDate}</time>
-                          </div>
+                         <div className="ml-4 text-xs">
+  <p>
+    {topic.lastPoster}
+  </p>
+  <br />
+  <time>
+    {new Date(topic.lastActivityDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })}
+  </time>
+</div>
+
                         </div>
                       </div>
                     </div>
@@ -593,13 +621,20 @@ function ForumsPage() {
                             src={topic.avatarUrl}
                             alt={topic.lastPoster}
                           />
-                          <div className="ml-4 text-xs">
-                            <p>
-                              {topic.lastPoster}
-                            </p>
-                            <br />
-                            <time>{topic.lastActivityDate}</time>
-                          </div>
+                         <div className="ml-4 text-xs">
+  <p>
+    {topic.lastPoster}
+  </p>
+  <br />
+  <time>
+    {new Date(topic.lastActivityDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })}
+  </time>
+</div>
+
                         </div>
                       </div>
                     </div>
@@ -679,12 +714,19 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <p>
-                              {topic.lastPoster}
-                            </p>
-                            <br />
-                            <time>{topic.lastActivityDate}</time>
-                          </div>
+  <p>
+    {topic.lastPoster}
+  </p>
+  <br />
+  <time>
+    {new Date(topic.lastActivityDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })}
+  </time>
+</div>
+
                         </div>
                       </div>
                     </div>

@@ -67,7 +67,7 @@ import DiscoveryPage from "./pages/DiscoveryPage";
 import AdvancedPage from "./pages/AdvancedSearchPage";
 import PremiumSubscriptionPage from "./pages/PremiumSubscriptionPage";
 import Achievement from "./pages/Achievement";
-
+import AdminPageHeader from './components/AdminHeaders';
 import BookShelf from "./pages/BookShelf";
 
 
@@ -125,7 +125,12 @@ import AddPage from "./pages/AddPage";
 import StatusPage from "./pages/StatusPage";
 import TicketsPage from "./pages/TicketsPage";
 import NewTicketPage from "./pages/newTicketPage";
-
+import AdminAccountOptionsPage from "./pages/AdminAccountOptionsPage";
+import AdminProfileInfoPage from "./pages/AdminProfileInfoPage";
+import AdminInbox from "./pages/AdminInbox";
+import AdminSentitems from "./pages/AdminSentitems";
+import AdminDrafts from "./pages/AdminDrafts";
+import AdminTrashcan from "./pages/AdminTrashcan";
 //components
 import HomePageContent from "./components/HomePageContent";
 import PostFooter from './components/PostFooter';
@@ -140,6 +145,7 @@ import WritathonPage from "./pages/WritathonPage";
 import { Navigate } from 'react-router-dom';
 import SearchPage from "./pages/SearchPage"
 import FictionList from './pages/FictionList';
+
 
 function App() {
   const resizeObserverErrHandler = (e) => {
@@ -627,6 +633,15 @@ function App() {
             <PostFooter />
            </> 
           } />
+
+<Route path="/admin/messages" element={
+           <>
+            <AdminPageHeader />
+            <AdminAccountOptionsPage />
+             
+             
+           </> 
+          } />
           
         
         
@@ -639,6 +654,14 @@ function App() {
            </> 
           } />
           
+          <Route path="/admin/account" element={
+           <>
+           <AdminPageHeader />
+            <AdminProfileInfoPage />
+            {/* <Messages /> */}
+            {/* <PostFooter /> */}
+           </> 
+          } />
         
 
         
@@ -1286,6 +1309,14 @@ function App() {
               <PostFooter />
             </>
           } />
+
+<Route path="/admin/private/1" element={
+            <>
+             <AdminPageHeader />
+              <AdminInbox />
+              
+            </>
+          } />
         
 
         
@@ -1295,6 +1326,13 @@ function App() {
               <Sentitems />
               <Footer />
               <PostFooter />
+            </>
+          } />
+           <Route path="/admin/private/2" element={
+            <>
+             <AdminPageHeader />
+              <AdminSentitems />
+              
             </>
           } />
         
@@ -1308,6 +1346,14 @@ function App() {
               <PostFooter />
             </>
           } />
+           <Route path="/admin/private/3" element={
+            <>
+             <AdminPageHeader />
+              <AdminDrafts />
+              
+            </>
+          } />
+         
         
 
         
@@ -1317,6 +1363,15 @@ function App() {
               <Trashcan />
               <Footer />
               <PostFooter />
+            </>
+          } />
+          <Route path="/admin/private/4" element={
+            <>
+              {/* <HomePage /> */}
+              <AdminPageHeader />
+              <AdminTrashcan />
+              {/* <Footer /> */}
+              {/* <PostFooter /> */}
             </>
           } />
         

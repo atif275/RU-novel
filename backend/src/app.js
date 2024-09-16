@@ -22,9 +22,162 @@ const Book = require('./models/books');
 const Submission = require('./models/Submission'); // Import the Submission model
 
 /////////
+const ForumThread = require('./models/ForumThread');
+const PopularThread = require('./models/PopularThread');
+const CommunityThread = require('./models/CommunityThread');
+const DiscussionThread = require('./models/DiscussionThread');
+const FictionThread = require('./models/FictionThread');
+const RecentThread = require('./models/RecentThreads');
+
+/////////
 dotenv.config();
 
 const app = express();
+
+//////
+// Function to seed the database with dummy data
+const seedDatabase = async () => {
+  try {
+    // Forum Threads Dummy Data
+    const forumThreadData = [
+      {
+        title: "Death",
+        description: "Mastering AI-Directed Writing: The Ultimate Comprehensive Guid",
+        topics: 345,
+        posts: 3245,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      },
+      {
+        title: "Game",
+        description: "Something great just happened to you on Royal Road and you want to sha…",
+        topics: 28,
+        posts: 130,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      }
+    ];
+
+    const popularThreadData = [
+      {
+        title: "Marketing: Welcome to The Tavern. All MCs welcome! Come, have a drink.",
+        replies: 3440,
+        views: 42830,
+        author: "Mekanip",
+        date: "Mon Jan 29 2024 00:53:00 GMT+0300",
+        lastPoster: "atif275",
+        lastPostDate: "Sun Aug 04 2024 00:49:00 GMT+0300",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      },
+      {
+        title: "Advertisement: Welcome to The Novel. All MCs welcome! Come, have a drink.",
+        replies: 102,
+        views: 398,
+        author: "atif275",
+        date: "Jan 29 2024",
+        lastPoster: "Fluffy Marshmallow",
+        lastPostDate: "Aug 04 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      }
+    ];
+
+    const communityThreadData = [
+      {
+        title: "Celebration",
+        description: "Something great just happened to you on Royal Road and you want to sha…",
+        topics: 10,
+        posts: 50,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      },
+      {
+        title: "Deployment",
+        description: "Something great just happened to you on Royal Road and you want to sha…",
+        topics: 78,
+        posts: 130,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      }
+    ];
+
+    const discussionThreadData = [
+      {
+        title: "Guides by the Community",
+        description: "Mastering AI-Directed Writing: The Ultimate Comprehensive Guid",
+        topics: 340,
+        posts: 450,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      },
+      {
+        title: "Guides by the Community",
+        description: "Something great just happened to you on Royal Road and you want to sha…",
+        topics: 28,
+        posts: 130,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      }
+    ];
+
+    const fictionThreadData = [
+      {
+        title: "Art",
+        description: "Mastering AI-Directed Writing: The Ultimate Comprehensive Guid",
+        topics: 345,
+        posts: 3245,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      },
+      {
+        title: "Life to live",
+        description: "Something great just happened to you on Royal Road and you want to sha…",
+        topics: 28,
+        posts: 130,
+        note: "Thoughts on Ai novels",
+        lastPoster: "Mekanip",
+        lastActivityDate: "Aug 05 2024",
+        avatarUrl: "https://www.royalroadcdn.com/public/avatars/avatar-452028-AACA-RXP1BQ.png?time=1709485459"
+      }
+    ];
+
+    // Insert dummy data only if the collection is empty
+    const insertDataIfEmpty = async (Model, data) => {
+      const count = await Model.countDocuments();
+      if (count === 0) {
+        await Model.insertMany(data);
+        console.log(`${Model.modelName} data inserted!`);
+      } else {
+        console.log(`${Model.modelName} already contains data.`);
+      }
+    };
+
+    await insertDataIfEmpty(ForumThread, forumThreadData);
+    await insertDataIfEmpty(PopularThread, popularThreadData);
+    await insertDataIfEmpty(CommunityThread, communityThreadData);
+    await insertDataIfEmpty(DiscussionThread, discussionThreadData);
+    await insertDataIfEmpty(FictionThread, fictionThreadData);
+
+    console.log('Database seeding complete!');
+  } catch (error) {
+    console.error('Error seeding the database:', error);
+  }
+};
+
+//////
 
 
 app.use(express.static(path.join(__dirname, "/frontend/build")));
@@ -71,6 +224,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB connected');
+    seedDatabase();
     
     // Start the server only after the database is connected
     app.listen(PORT, () => {
