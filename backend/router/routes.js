@@ -391,7 +391,7 @@ router.get('/api/level/borders', async (req, res) => {
     let borders = await Border.find(query);
 
     // Dynamically determine how many borders to send based on fictionCount
-    const count = parseInt(fictionCount, 2);
+    const count = parseInt(fictionCount, 10);
     let numberOfBorders = 0;
     if (!isNaN(count) && count > 0) {
       numberOfBorders = Math.floor(count / 2) + 1; // For every 10 increase in fictionCount, add one more border

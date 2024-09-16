@@ -16,8 +16,8 @@ function Borderwardrobe() {
 
     const premier =0
     const currentUser = useSelector((state) => state.userData.user);
-    const fictionCounts = currentUser?.fictions?.length || 0;
-
+     const fictionCounts = currentUser?.fictions?.length || 0;
+    //const fictionCounts = 5;
 
 
 
@@ -33,9 +33,10 @@ function Borderwardrobe() {
                 const { data } = await axios.get('https://api.ru-novel.ru/api/level/borders', {
                     params: {
                         tag: 'level',
-                        fictionCount: {fictionCounts} // Assuming the desired number of borders based on a specific condition
+                        fictionCount: fictionCounts // Assuming the desired number of borders based on a specific condition
                     }
                 });
+                console.log(data);  
                 setBorders(data);
                 if (currentUser && currentUser.profilePictureBorder) {
                     setCurrentBorder(currentUser.profilePictureBorder);
@@ -54,6 +55,7 @@ function Borderwardrobe() {
                     tag: 'premium' // Fetch only premium borders
                 }
             });
+            // console.log(data);  
             setBordersP(data); // Assuming you have a state variable 'setBorders' for storing the borders
             if (currentUser && currentUser.profilePictureBorder) {
                 setCurrentBorder(currentUser.profilePictureBorder); // Update current border if needed

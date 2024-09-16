@@ -46,12 +46,15 @@ function Profile() {
             />
 
             {/* Overlay Image (Border) */}
-            <img
-              src={user.profilePictureBorder}
-              alt="Border"
-              className="absolute w-100 h-40"  // Adjust width and height to fit perfectly around the avatar
-              style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
-            />
+            {user.profilePictureBorder && user.profilePictureBorder !== "" && (
+  <img
+    src={user.profilePictureBorder}
+    alt="Border"
+    className="absolute w-100 h-40"  // Adjust width and height to fit perfectly around the avatar
+    style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
+  />
+)}
+
           </div>
           {/* <img src={profilePictureUrl}
             alt={user.username} className="h-24 w-24 rounded-full" /> */}
@@ -86,7 +89,7 @@ function Profile() {
           {/* Navigation Sidebar */}
           <div className="w-48 bg-white shadow-lg rounded-lg" style={{ maxHeight: '330px', overflowY: 'auto' }}>
             <ul className="divide-y divide-gray-200">
-              {['overview', 'fictions', 'reviews', 'favorites', 'threads', 'posts', 'achievements', 'reputation'].map((tab) => (
+              {['overview', 'fictions', 'reviews', 'favorites', 'achievements'].map((tab) => (
                 <li
                   key={tab}
                   className={`hover:bg-blue-500 hover:text-white cursor-pointer p-2 flex items-center ${activeTab === tab ? 'bg-blue-500 text-white' : ''}`}
@@ -153,7 +156,7 @@ function Profile() {
                   </div>
 
                   {/* Reputation Level */}
-                  <div className='flex-1 p-2 ml-2 bg-white shadow-lg rounded-lg'>
+                  {/* <div className='flex-1 p-2 ml-2 bg-white shadow-lg rounded-lg'>
                     <div className="flex justify-between items-center mb-2">
                       <div>
                         <div className="text-2xl font-bold text-green-400">0</div>
@@ -165,7 +168,7 @@ function Profile() {
                     <div className="bg-gray-200 rounded-full overflow-hidden h-2 mb-2">
                       <div className="bg-green-600 h-full" style={{ width: '0%' }}></div>
                     </div>
-                  </div>
+                  </div> */}
 
                 </div>
                 {/* Additional Reputation Information */}
@@ -183,7 +186,7 @@ function Profile() {
                 {tabIcons[activeTab] || <MdMessage className="inline mr-2 text-xl" />}
                 <h2 className="inline text-xl font-bold mb-2">{activeTab[0].toUpperCase() + activeTab.slice(1)}</h2>
                 <div className="border-t mt-2 pt-2">
-                  Content for {activeTab[0].toUpperCase() + activeTab.slice(1)} goes here...
+                  No {activeTab[0].toUpperCase() + activeTab.slice(1)} ...
                 </div>
               </div>
             )}
