@@ -1,75 +1,154 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch,useSelector } from "react-redux";
+import { userActions } from "../store";
 const SubmitNovel = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const inputRef = useRef(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const theme=useSelector((state)=>state.userData.theme)
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+  
+      if (value) {
+        // Filter suggestions based on input
+        const matchingSuggestions = Object.keys(pageMapping).filter(keyword =>
+          keyword.includes(value.toLowerCase())
+        );
+        setSuggestions(matchingSuggestions);
+      } else {
+        setSuggestions([]);
+      }
+    };
+  
+    const inputRef=useRef(null)
 
-  const navigate = useNavigate();
+    const dispatch=useDispatch()
+    
+    const navigate=useNavigate()
+    useEffect(() => {
+      dispatch(userActions.setBarsClick(false));
+      inputRef.current?.focus(); // Auto focus on search input
+  }, [dispatch]);
+    const generateSlug = (title) => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+          .replace(/^-+|-+$/g, '');    // Remove leading and trailing hyphens
+      };
+      
+      const handleSuggestionClick = (suggestion) => {
+        const destination = pageMapping[suggestion];
+        navigate(destination);
+      };
 
-  const generateSlug = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric characters with hyphens
-      .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
-  };
+    const pageMapping = {
+      "rules about rating and reviews": "/support/knowledgebase/rules-about-ratings-and-reviews",
+      "content guidelines": "/support/knowledgebase/content-guidelines",
+    
+      "general rules": "/support/knowledgebase/general-rules",
+      "discovery & rankings": "/support/knowledgebase/discovery-and-rankings",
+      "advanced search": "/support/knowledgebase/advanced-search",
+        "optimize the reading experience":"/support/knowledgebase/optimize-the-reading-experience",
+        "personalized lists":"/support/knowledgebase/personalized-lists",
+        "notifications":"/support/knowledgebase/notifications",
+        "genres and tags":"/support/knowledgebase/genres-and-tags",
+        "author dashboard":"/support/knowledgebase/author-dashboard",
+        "chapters":"/support/knowledgebase/chapters",
+        "submitting and verifying novels":"/support/knowledgebase/submitting-and-verifying-novels",
+        "chapters":"/support/knowledgebase/chapters",
+        "comments":"/support/knowledgebase/comments",
+        "reviews":"/support/knowledgebase/reviews",
+        "fiction status":"/support/knowledgebase/fiction-status",
+        "deleting your fiction":"/support/knowledgebase/deleting-your-fiction",
+        "donation":"/support/knowledgebase/donation",
+        "credit collaborate and moderate":"/support/knowledgebase/credit-collaborate-and-moderate",
+        "moderation tools for users":"/support/knowledgebase/moderation-tools-for-users",
+        "reputation":"/support/knowledgebase/reputation",
+        "experience":"/support/knowledgebase/experience",
+        "achievments":"/support/knowledgebase/achievments",
+        "writathon":"/support/knowledgebase/writathon",
+        "signup and activation":"/support/knowledgebase/signup-and-activation",
+        "security":"/support/knowledgebase/security",
+        "notification":"/support/knowledgebase/notification",
+        "contact the staff":"/support/knowledgebase/contact-the-staff",
+        "the site is loading slowly":"/support/knowledgebase/site-loading-slowly",
+        "report a bug":"/support/knowledgebase/report-a-bug",
+        "report an ad":"/support/knowledgebase/report-an-ad",
+        "report a user interaction":"/support/knowledgebase/report-a-user-interaction",
+        "frequently asked questions":"/support/knowledgebase/fredquently-asked-questions",
+        "copyright infringement":"/support/knowledgebase/copyright-infringement",
+        "premium":"/support/knowledgebase/premium",
+        "reader premium":"/support/knowledgebase/reader-premium",
+        "author premium":"/support/knowledgebase/author-premium",
+        "paid advertisement for my story":"/support/knowledgebase/paid-advertisement-for-my-story",
+    };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const slug = generateSlug(searchTerm); // Generate slug when search is submitted
-    // console.log("Search Term:", searchTerm);
-    navigate(`/support/knowledgebase/${slug}`);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
+    const handleSearch = (e) => {
+      e.preventDefault();
+      // Generate slug from the search term
+      const slug = generateSlug(searchTerm);
+  
+      // Check if the slug matches any key in the pageMapping
+      const destination = pageMapping[slug] || "/support/knowledgebase";
+      
+      // Navigate to the matched URL or fallback URL
+      navigate(destination);
+    };
+  
+    const toggleSidebar = () => {
+      setIsSidebarVisible(!isSidebarVisible);
+    };
+  
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <div className="text-white rounded-md">
-        <div className="col-xs-12 text-white">
-          <div
-            className="portlet light mb-2 page-header"
-            style={{
-              background:
-                'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
-              padding: "15px 20px",
-            }}
-          >
-            <div className="p-2 flex items-center">
-              <div className="mr-4">
-                <i
-                  className="fa fa-fw fa-book-open text-navy text-4xl"
-                  style={{ lineHeight: "initial" }}
-                ></i>
-              </div>
-              <div>
-                <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about RU Novel</span>
-                <ul className="page-breadcrumb breadcrumb mt-2"></ul>
-              </div>
-            </div>
-          </div>
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+     <div className="text-white rounded-md">
+  <div className="col-xs-12 text-white">
+    <div
+      className="portlet light mb-2 page-header"
+      style={{
+        background:
+          'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
+        padding: "15px 20px",
+      }}
+    >
+      <div className="p-2 flex items-center">
+        <div className="mr-4">
+          <i
+            className="fa fa-fw fa-book-open text-navy text-4xl"
+            style={{ lineHeight: "initial" }}
+          ></i>
+        </div>
+        <div>
+          <h2 className="text-lg font-bold">Knowledge Base</h2>
+          <span>All about Royal Road</span>
+          <ul className="page-breadcrumb breadcrumb mt-2">
+           
+          </ul>
         </div>
       </div>
+    </div>
+  </div>
+  </div>
 
-      <div className="bg-white text-black rounded-md p-6">
+
+  <div className={` ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-white text-black '} rounded-md p-6`}>
         <div className="portlet light">
-          {isSidebarVisible && (
-            <div className=" w-[75%] sm-[50%] p-4 bg-[#FAF9F6] mb-2 ">
+          {isSidebarVisible &&<div className={` w-[75%] sm-[50%] p-4 mb-2 ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-[#FAF9F6]   '}` }>
               <div className="backdrop">
                 <strong>Rules</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
+                  
                     <Link
                       to="/support/knowledgebase/rules-about-ratings-and-reviews"
-                      className="hover:underline hover:text-blue-900 transition-colors"
+                      className="hover:underline hover:text-blue-900  transition-colors"
                     >
                       Rules about Ratings and Reviews
                     </Link>
@@ -77,7 +156,7 @@ const SubmitNovel = () => {
                   <div>
                     <Link
                       to="/support/knowledgebase/content-guidelines"
-                      className="hover:underline hover:text-blue-900 transition-colors  "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Content Guidelines
                     </Link>
@@ -96,43 +175,42 @@ const SubmitNovel = () => {
               <div className="backdrop">
                 <strong>Reading</strong>
                 <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/discovery-and-rankings"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Discovery & Ranking
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-90 text-[#000000CC] transition-colors"
-                    >
-                      Advanced Search
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/optimize-the-reading-experience"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Optimize the Reading Experience
-                    </Link>
-                  </div>
+                <div>
+                      <Link
+                        to="/support/knowledgebase/discovery-and-rankings"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Discovery & Ranking
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/advanced-search"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Advanced Search
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/optimize-the-reading-experience"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Optimize the Reading Experience
+                      </Link>
+                    </div>
                   <div>
                     <Link
                       to="/support/knowledgebase/personalized-lists"
-                      className="hover:underline hover:text-blue-900 transition-colors "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Personalized Lists
                     </Link>
                   </div>
                   <div>
-                    
                     <Link
                       to="/support/knowledgebase/notifications"
-                      className="hover:underline hover:text-blue-900 transition-colors "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Notifications
                     </Link>
@@ -167,14 +245,9 @@ const SubmitNovel = () => {
                     </Link>
                   </div>
                   <div>
-                  <FontAwesomeIcon
-                      icon={faCaretRight}
-                      className="text-[#000000CC] mr-1 "
-                    />
-                  
                     <Link
                       to="/support/knowledgebase/submitting-and-verifying-novels"
-                      className="hover:underline hover:text-blue-900 transition-colors text-[#000000CC]"
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Submitting and Verifying Novels
                     </Link>
@@ -231,7 +304,7 @@ const SubmitNovel = () => {
               </div>
 
               <div className="backdrop">
-              <strong>Moderation Tools For Users</strong>
+                <strong>Modertaion Tools For Users</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
                     <Link
@@ -410,40 +483,43 @@ const SubmitNovel = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
+            </div> }
+          
           <div className="row">
             <div className="block md:hidden col-xs-12 mb-5">
-              <button
-                className="btn btn-default toc-toggle"
-                onClick={toggleSidebar}
-              >
+              <button className="btn btn-default toc-toggle" onClick={toggleSidebar}>
                 <i className="fas fa-bars"></i> Table of Contents
               </button>
             </div>
 
-            <div className="row mb-4">
-              <div className="col-md-12">
-                <form onSubmit={handleSearch}>
-                  <div className="form-group">
-                    <div
-                      id="knowledge-base-search-container"
-                      className="relative"
-                    >
-                      <div className="searchbox">
-                        <div className="searchbox-container">
-                          <div className="sui-search-box flex items-center border rounded-md p-2">
+          <div className="row mb-4">
+            <div className="col-md-12">
+              <form onSubmit={handleSearch}>
+                <div className="form-group">
+                  <div
+                    id="knowledge-base-search-container"
+                    className="relative"
+                  >
+                    <div className="searchbox">
+                      <div className="searchbox-container">
+                        
+                      <div className={`sui-search-box flex items-center border rounded-md p-2  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}>
+                          
                             <div className="flex-grow">
                               <input
                                 id="downshift-0-input"
                                 aria-autocomplete="list"
                                 aria-labelledby="downshift-0-label"
                                 autoComplete="off"
-                                placeholder="Search for support page by writing it name"
-                                className="w-full border-none focus:outline-none"
+                             
+                                className={`w-full border-none focus:outline-none  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}
+                                ref={inputRef}
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                 onChange={handleInputChange}
+                                  placeholder="Search..."
+
+                                
+                                
                               />
                             </div>
                             <input
@@ -453,19 +529,31 @@ const SubmitNovel = () => {
                               value="Search"
                             />
                           </div>
-                        </div>
+                    
                       </div>
-
-                      {/* Search results */}
-                      <ul className="sui-results-container">
-                        {/* Add more search results here */}
-                      </ul>
                     </div>
-                  </div>
-                </form>
-              </div>
-            </div>
 
+                    {suggestions.length > 0 && (
+            <ul className={`absolute mt-1 border w-full border-gray-300  rounded shadow-lg ${theme === 'dark' ? 'bg-[#131313] text-white' : ' bg-white '}`}>
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className={`p-2 cursor-pointer w-full font-bold    ${theme === 'dark' ? 'hover:bg-gray-800' : ' hover:bg-gray-200 '}`}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                
+                  {suggestion}
+                </li>
+                
+              ))}
+            </ul>
+          )}
+                  
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
             {/* Layout for Sidebar and Content */}
             <div className="flex flex-wrap">
               {/* Sidebar for larger screens */}
@@ -576,14 +664,15 @@ const SubmitNovel = () => {
                     <div>
                     <FontAwesomeIcon
                         icon={faCaretRight}
-                        className="text-[#000000CC] mr-1"
+                        className={` mr-1 ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}
                       />
                       <Link
                         to="/support/knowledgebase/submitting-and-verifying-novels"
-                        className="hover:underline text-[#000000CC] hover:text-blue-900 transition-colors"
+                        className={`hover:underline hover:text-blue-900 transition-colors ${theme === 'dark' ? 'text-white' : 'text-[#000000CC]'}`} 
                       >
-                        Submitting and Verifying Novels
+                       Submitting and Verifying Novels
                       </Link>
+                   
                     </div>
                     <div>
                       <Link
@@ -913,12 +1002,12 @@ const SubmitNovel = () => {
                 </div>
               </div>
               <div className="w-full md:w-1/2 p-4  ">
-                <div className="text-[#000000CC]">
+              <div className= {` ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}>
                   <h1 className="text-4xl ">Submitting and verifying novels</h1>
 
                   <ol className="mt-5 ml-8 list-decimal">
                     <li className="py-2">
-                      Register for an account on RU Novel if you have not
+                      Register for an account on Royal Road if you have not
                       already. This can be easily done from our Welcome page or
                       by clicking the “Login" button in the top right corner and
                       selecting "Create an account" at the bottom of the login
@@ -974,7 +1063,7 @@ const SubmitNovel = () => {
                     rejected.
                     <br></br>
                     <br></br>
-                    Before getting approved on RU Novel, there is a manual
+                    Before getting approved on Royal Road, there is a manual
                     check by the staff to make sure the rules are followed. Here
                     the fiction is checked for Plagiarism, Links in the
                     Synopsis, Fanfiction tagging, Sexual content, Political or
@@ -1014,7 +1103,7 @@ const SubmitNovel = () => {
                   </p>
                   <p className="py-4">
                     To prove your ownership, you can edit the description on the
-                    other sites/platforms with a message to the RU Novel
+                    other sites/platforms with a message to the Royal Road
                     staff. It can be a link to your profile page where your
                     fiction will appear once it is approved. Or a message like:
                     "I will be posting this story on RoyalRoad.com," or anything
@@ -1025,7 +1114,7 @@ const SubmitNovel = () => {
                   <p className="py-4">
                     Alternatively, if your email address is public on the other
                     site(s), you can link where it is and we will confirm if it
-                    is the same as the email address you've used on RU Novel.
+                    is the same as the email address you've used on Royal Road.
                   </p>
                   <p className="py-4">
                     Once you add the verification note, reply to a support
@@ -1099,7 +1188,7 @@ const SubmitNovel = () => {
                     approving a fiction. In this case, a ticket will be opened
                     and we will ask what we need to know. After asking these
                     questions, we will decide on what future action might be
-                    needed.RU Novel reserves the right to reject anything and
+                    needed.Royal Road reserves the right to reject anything and
                     everything regardless of the rules stated here, as we look
                     at each story as individually. However, you are more likely
                     to have your fiction approved if you followed all of the
@@ -1121,7 +1210,7 @@ const SubmitNovel = () => {
                     Cover
                   </h1>
                   <p className="py-4">
-                    On RU Novel, we allow covers up to a size of 400x600
+                    On Royal Road, we allow covers up to a size of 400x600
                     pixels. If you do not have a cover in this exact resolution
                     or aspect ratio, do not worry. There is a cropping tool
                     available after uploading an image, this will make sure a
@@ -1178,7 +1267,7 @@ const SubmitNovel = () => {
                     Genres and Tags
                   </h1>
                   <p className="py-4">
-                    Tags on RU Novel are there to show potential readers what
+                    Tags on Royal Road are there to show potential readers what
                     your fiction contains, or what it does not contain. It helps
                     with searchability and classification for recommendations as
                     well. While you are free to tag your fiction the way you

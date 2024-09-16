@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "../store";
 import { formatDistanceToNow, isValid } from "date-fns";
 import { useRef } from "react";
-import {notification} from "antd";
+
 import CommentBox from "./CommentBox";
 
 const Commenting = () => {
@@ -15,6 +15,7 @@ const Commenting = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.userData.isAuthenticated);
   const comData=useSelector((state)=>state.userData.comData)
+  const theme=useSelector((state)=>state.userData.theme)
 
  const email=useSelector((state)=>state.userData.email)
  const comBox=useSelector((state)=>state.userData.comBox)
@@ -120,12 +121,7 @@ const Commenting = () => {
         const data = await response.json();
         if (data) {
           console.log('data',data)
-          inputRef.current.value = '';
-          notification.success({
-            message: "Comment Submitted",
-            description: "Your comment has been submitted successfully.",
-            placement: "topRight",
-          });
+          inputRef.current.value = ''; 
         }
       } else {
         console.error("Error fetching user data:", response.statusText);
@@ -151,7 +147,7 @@ const Commenting = () => {
   };
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
       <div
         className="image-header bg-cover bg-center w-[100%]"
         style={{
@@ -160,13 +156,13 @@ const Commenting = () => {
       >
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center space-x-4">
-            <i className="fas fa-lightbulb text-white text-3xl ml-5"></i>
+            <i className={`fas fa-lightbulb text-3xl ml-5 ${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-white '}`}></i>
             <div className="flex flex-col">
-              <h2 className="text-2xl font-bold text-white"></h2>
-              <span className="text-white text-2xl">
+              <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#FFFFFFCC]' : ' text-white '}`}></h2>
+              <span className={` text-2xl ${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-white '}`}>
                   {commentsData.title}
               </span>
-              <a href="/ideas" className="text-white">
+              <a  className= {`${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-white '}`}>
                 Ideas . {commentsData.title}
               </a>
             </div>
@@ -182,7 +178,7 @@ const Commenting = () => {
           </div>
         </div>
       </div>
-      <div className="portlet-body idea-body bg-white p-4 mt-4 shadow-md rounded-lg">
+      <div className={`portlet-body idea-body p-4 mt-4 shadow-md rounded-lg ${theme === 'dark' ? 'bg-[#131313]' : 'bg-white'}`}>
       <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-6">
         {/* Vote Section */}
         <div className="votes">
@@ -202,7 +198,7 @@ const Commenting = () => {
         <div className="details flex-1">
           <div className="idea-header flex items-center space-x-4">
             {/* Avatar */}
-            <a className="username flex items-center" href="/profile/68759">
+            <a className="username flex items-center" >
               <img
                 className="avatar rounded-full w-10 h-10 object-cover"
                 src={profilePictureUrl}
@@ -225,20 +221,20 @@ const Commenting = () => {
 
           {/* Title */}
           <h3 className="idea-title text-xl font-bold text-[#337AB7] mt-2 hover:text-blue-600">
-            <a href="/ideas/1047">
+            <a >
               {commentsData.title}
             </a>
           </h3>
 
           {/* Description */}
-          <div className="idea-description text-gray-700 mt-2">
+          <div className={`idea-description mt-2 ${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-gray-700 '}`}>
              {commentsData.content}
           </div>
 
           {/* Tags */}
           <div className="tags flex space-x-2 mt-4">
             <span className="status badge bg-blue-500 text-white px-2 py-1 rounded-full">Open</span>
-            <span className="category badge bg-gray-300 text-gray-700 px-2 py-1 rounded-full">{commentsData.category}</span>
+            <span className={`category badge  px-2 py-1 rounded-full ${theme === 'dark' ? 'bg-[#242424] text-white' : ' bg-gray-300 text-gray-700 '}`}>{commentsData.category}</span>
           </div>
 
           {/* Footer */}
@@ -248,12 +244,14 @@ const Commenting = () => {
 
             {/* Comment Button */}
             <a
-              className="btn btn-sm bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
-              
-
-            >
-              <i className="fas fa-comment mr-2"></i> {comData.length} Comments
-            </a>
+  className={`btn btn-sm px-4 py-2 rounded-md ${
+    theme === 'dark'
+      ? 'bg-[#242424] text-white hover:bg-[#181818]'
+      : 'bg-gray-200 text-black hover:bg-gray-300'
+  }`}
+>
+  <i className="fas fa-comment mr-2"></i> {comData.length} Comments
+</a>
 
             {/* Follow Button */}
           
@@ -261,22 +259,26 @@ const Commenting = () => {
 
             {/* Report Button */}
             <a
-              className="btn btn-sm bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
-              onClick={handleReport}
-            >
-              <i className="fas fa-flag mr-2"></i> Report
-            </a>
+  className={`btn btn-sm px-4 py-2 rounded-md ${
+    theme === 'dark'
+      ? 'bg-[#242424] text-white hover:bg-[#181818]'
+      : 'bg-gray-200 text-black hover:bg-gray-300'
+  }`}
+  onClick={handleReport}
+>
+  <i className="fas fa-flag mr-2"></i> Report
+</a>
           </div>
         </div>
       </div>
     </div>
     <form
-      className="w-full bg-white p-4 mt-5 rounded-lg shadow-md"
+      className={`w-full p-4 mt-5  rounded-lg shadow-md ${theme === 'dark' ? 'bg-[#131313]' : 'bg-white '}`}
       
     >
       <div className="form-group mb-4">
         <textarea
-          className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`form-control w-full p-3   ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC] border border-[#181818] outline-none' : 'bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500  border border-gray-300'}`}
           rows="3"
           name="Comment"
           placeholder="Write a comment..."
@@ -294,7 +296,11 @@ const Commenting = () => {
         </button>
         <button
           type="reset"
-          className="btn btn-sm bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300"
+          className={`btn btn-sm px-4 py-2 rounded-md ${
+            theme === 'dark'
+              ? 'bg-[#242424] text-white hover:bg-[#181818]'
+              : 'bg-gray-200 text-black hover:bg-gray-300'
+          }`}
           
         >
           Cancel
@@ -302,7 +308,7 @@ const Commenting = () => {
       </div>
     </form>
 
-    <div className="m-4">{comData.length} &nbsp;comments</div>
+    <div className={`m-4 ${theme === 'dark' ? 'text-white' : ' '}`}>{comData.length} &nbsp;comments</div>
 
        
     {

@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function ContactEmail() {
+  const theme=useSelector((state)=>state.userData.theme)
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <div className="bg-white p-6 rounded-md">
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+      <div className={`p-6 rounded-md ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white '}`}>
 
       <div className="flex flex-wrap items-center">
         {/* Icon Section */}
-        <div className="w-full sm:w-1/4 text-center mb-4 sm:mb-0">
+        <div className="w-full sm:w-1/4 text-center mb-4 sm:mb-0 ">
           <i className="fas fa-user text-5xl" style={{ lineHeight: '1em' }}></i>
         </div>
 
@@ -20,7 +22,7 @@ function ContactEmail() {
             <p className="text-sm lowercase mb-4">
               The fastest way to get answers is by creating a support ticket so our teams can use the internal tracker to help you best.
             </p>
-            <Link href="/support/ticket" className="btn btn-primary px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
+            <Link to="/support/ticket" className="btn btn-primary px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
               Open a support ticket
             </Link>
           </div>
@@ -30,7 +32,7 @@ function ContactEmail() {
 
       </div>
 
-      <div className="bg-white p-6 mt-6 rounded-md shadow-md">
+      <div className={`p-6 mt-6 rounded-md shadow-md ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white '}`}>
       <div className="flex flex-wrap items-center">
         {/* Icon Section */}
         <div className="w-full sm:w-1/4 text-center mb-4 sm:mb-0">

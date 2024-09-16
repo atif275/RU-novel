@@ -1,15 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 function AuthorAdd() {
+
+  const theme=useSelector((state)=>state.userData.theme)
+
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <img src="https://i.imgur.com/wzJJomG.png" alt="" className="mb-4 w-full" />
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4  ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+      <img src="https://i.imgur.com/wzJJomG.png" alt="" className="mb-4" />
 
       {/* Container for Billboard, Leaderboard, and Rectangle */}
-      <div className="bg-white rounded-md p-4 border border-gray-300">
+      <div className={`rounded-md p-4   ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white border border-gray-300  '}`}>
         <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4 items-center">
           {/* Home Billboard */}
-          <div className="w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center bg-gray-100 border border-black">
+          <div className={`w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center border border-black ${theme === 'dark' ? 'bg-[#181818] text-[#FFFFFFCC]' : 'bg-gray-100  '}`} >
             <h3 className="text-center text-sm">
               Home Billboard
               <br />
@@ -18,7 +22,7 @@ function AuthorAdd() {
           </div>
 
           {/* Leaderboard */}
-          <div className="w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center bg-gray-100 border border-black">
+          <div className={`w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center  border border-black ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-gray-100  '}`}>
             <h3 className="text-center text-sm">
               Leaderboard
               <br />
@@ -33,7 +37,7 @@ function AuthorAdd() {
           </div>
 
           {/* Rectangle Section */}
-          <div className="w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center bg-gray-100 border border-black">
+          <div className={`w-full md:w-[300px] h-[250px] flex flex-col items-center justify-center  border border-black ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-gray-100   '}`}>
             <h3 className="text-center text-sm">
               Rectangle
               <br />
@@ -53,13 +57,13 @@ function AuthorAdd() {
           <strong>How to start a campaign?</strong>
         </p>
         <p className="mt-2">
-          You can start an internal RU - Novel Advertising Campaign in your Author Dashboard &gt; Left side menu [Advertising]. There are Leaderboard and rectangular advertisement campaigns available at the moment.
+          You can start an internal RU Novel Advertising Campaign in your Author Dashboard &gt; Left side menu [Advertising]. There are Leaderboard and rectangular advertisement campaigns available at the moment.
         </p>
         <p className="mt-2">
           You can find the pricing by clicking [New Campaign] and scrolling to the bottom of the page.
         </p>
         <p className="mt-2">
-          If you wish to advertise a RU - Novel novel, you can enjoy our discounted prices for paid advertisements. This offer is limited to stories that are fully available on RU - Novel. If you are not promoting a RU - Novel link with a novel that is fully available on the platform, or if you are a publisher, then note that the normal pricing is still a great value. We are just being extra generous with the discount.
+          If you wish to advertise a RU Novel novel, you can enjoy our discounted prices for paid advertisements. This offer is limited to stories that are fully available on RU Novel. If you are not promoting a RU Novel link with a novel that is fully available on the platform, or if you are a publisher, then note that the normal pricing is still a great value. We are just being extra generous with the discount.
         </p>
 
         <p className="mt-4">
@@ -73,7 +77,7 @@ function AuthorAdd() {
           <strong>Which content can be promoted?</strong>
         </p>
         <p className="mt-2">
-          We welcome advertisements for content available on RU - Novel or platforms such as Amazon's online store. While we do not rule out the possibility of considering other platforms in the future, we won't accept advertisements for platforms that compete with RU - Novel.
+          We welcome advertisements for content available on RU Novel or platforms such as Amazon's online store. While we do not rule out the possibility of considering other platforms in the future, we won't accept advertisements for platforms that compete with RU Novel.
         </p>
         <p className="mt-2">
           If you want to link your ad to another site that was not mentioned above, please beware that it is possible that we will reject it. So feel free to reach out in a support ticket before designing the ad.
@@ -96,10 +100,10 @@ function AuthorAdd() {
           <strong>What is a good Ad design practice?</strong>
         </p>
         <p className="mt-2">
-          You must include a note notifying the users that the campaign is for content not on RU - Novel.
+          You must include a note notifying the users that the campaign is for content not on RU Novel.
         </p>
         <p className="mt-2">
-          Your campaign image needs to inform our readers that it is an Amazon ad and not an ad for a free web fiction on RU - Novel. By doing this, our readers won't suddenly be sent off-site when they are not interested. And assures you that those clicking the ad are doing so with the purpose of checking a book on Amazon and thus are more likely to convert into readers/buyers over there. You can add a note stating it is [Available at Amazon] using Amazon's templates.
+          Your campaign image needs to inform our readers that it is an Amazon ad and not an ad for a free web fiction on RU Novel. By doing this, our readers won't suddenly be sent off-site when they are not interested. And assures you that those clicking the ad are doing so with the purpose of checking a book on Amazon and thus are more likely to convert into readers/buyers over there. You can add a note stating it is [Available at Amazon] using Amazon's templates.
         </p>
         <p className="mt-2">
           As an example, download the file called [Available at Amazon Lockup Download (US)] which you can find here.

@@ -8,6 +8,7 @@ function Tickets() {
   const dispatch = useDispatch();
   const email = useSelector((state) => state.userData.email);
   const ticketArr = useSelector((state) => state.userData.ticketArr || []); 
+  const theme=useSelector((state)=>state.userData.theme)
 
   const fetchUserData = async () => {
     try {
@@ -21,10 +22,10 @@ function Tickets() {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Fetched data:", data);
+        console.log("Fetched data:", data);
         if (data) {
           dispatch(userActions.setTicketsArr(data));
-          // console.log(data); // Save the fetched tickets in Redux state
+          console.log(data); // Save the fetched tickets in Redux state
         }
       } else {
         console.error("Error fetching user data:", response.statusText);
@@ -35,21 +36,22 @@ function Tickets() {
   };
 
   useEffect(() => {
+    dispatch(userActions.setBarsClick(false));
     if (email) {
       fetchUserData(); // Fetch tickets when the component mounts or when the email changes
     }
   }, [email]);
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <div className="bg-white p-4">
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+      <div className={` p-4 ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white '}`}>
         <div className="flex flex-col md:flex-row justify-start items-center md:items-start space-y-4 md:space-y-0 md:space-x-4">
           <div className='md:w-1/3 h-full pt-[4%] pl-[10%]'>
             <div className="items-center bg-gray-400 text-white text-4xl font-bold p-4 pl-6 w-full md:w-[25%]" style={{ borderRadius: '50%' }}>
               ?
             </div>
           </div>
-          <div className="p-6 bg-gray-100 rounded-lg shadow-md w-full md:w-2/3">
+          <div className={`p-6 rounded-lg shadow-md w-full md:w-2/3 ${theme === 'dark' ? 'bg-[#181818] text-[#FFFFFFCC]' : 'bg-gray-100 '}`}>
             <h5 className="text-xl font-semibold mb-2 text-center">Need some help?</h5>
             <p className="mb-4">
               Our team is happy to help or answer any question you may have. All you need to do is to create a support ticket, ask your question, and our team will respond as soon as possible.
@@ -61,7 +63,7 @@ function Tickets() {
         </div>
       </div>
 
-      <div className='bg-white p-4 mt-6'>
+      <div className={`p-4 mt-6 ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white '}`}>
         <div className='flex justify-between'>
           <p>Your Support Tickets</p>
           <button className='bg-[#337AB7] p-2 text-white rounded-md'>

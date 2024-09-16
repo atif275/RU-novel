@@ -231,8 +231,8 @@ function History() {
                                     <tbody>
                                         {readingHistoryData.map((item, index) => (
                                             <tr key={index} className="hover:bg-gray-100">
-                                                <td className="p-2"><a href="#" className="text-blue-500 hover:text-blue-700">{item.title}</a></td>
-                                                <td className="p-2"><a href="#" className="text-blue-500 hover:text-blue-700">{item.chapter}</a></td>
+                                                <td className="p-2"><p className="text-blue-500 hover:text-blue-700">{item.title}</p></td>
+                                                <td className="p-2"><p  className="text-blue-500 hover:text-blue-700">{item.chapter}</p></td>
                                                 <td className="p-2 text-right">{item.timeAgo}</td>
                                                 <td className="p-2 text-right"><button className="text-blue-500 hover:text-blue-600">Read</button></td>
                                             </tr>

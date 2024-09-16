@@ -133,7 +133,7 @@ const ReviewSection = ({ bookName }) => {
                 <h2 className="text-[18px] font-bold text-gray-700">{review.title}</h2>
                 <div className='flex gap-1 items-end'>
                   <p className="text-[14px] font-bold text-red-600">BY </p>
-                  <button href='#' className="text-[12px] font-bold text-blue-600 hover:underline">{review.user || 'Anonymous'}</button>
+                  <button  className="text-[12px] font-bold text-blue-600 hover:underline">{review.user || 'Anonymous'}</button>
                 </div>
               </div>
               {/* Date */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faPinterest, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +40,18 @@ const Footer = () => {
    const navigate=useNavigate()
   const handleThemeChange = (e) => {
     dispatch(userActions.setTheme(e.target.value));
+    localStorage.setItem("theme",e.target.value);
   };
+
+  useEffect(()=>{
+    const theme1=localStorage.getItem('theme')
+     if(theme1==='dark'){
+       dispatch(userActions.setTheme("dark"));
+     }
+     else if(theme1==='light'){
+       dispatch(userActions.setTheme("light"));
+     }
+ },[theme])
   
 
   return (

@@ -261,7 +261,7 @@ const Navbar = () => {
     onClick={handleClick}
     onMouseDown={handleMouseDown}
     ref={inputRef}
-    style={theme === 'light' ? inputStyle : {}}
+    
   />
   <button type="submit">
     <FontAwesomeIcon

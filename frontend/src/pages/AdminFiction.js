@@ -12,18 +12,23 @@ import FnAd2 from '../components/FnAd2';
 import AuthorInfo from '../components/AuthorInfo';
 import OthersAlsoLiked from '../components/OtherAlsoLiked';
 import ReviewCard from '../components/ReviewCard';
-import ChaptersPagination from '../components/ChaptersPagination';
+import ChaptersPagination from '../components/AdminChaptersPagination';
 import ReviewForm from '../components/ReviewForm';
 
 function AdminFiction() {
   const { id } = useParams();
   const [bookData, setBookData] = useState(null);
+  const [authorData, setAuthorData] = useState(null);
+  const [reviews, setReviews] = useState([]); // State to manage reviews
 
   useEffect(() => {
     const fetchBookData = async () => {
       try {
         const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${id}`);
         setBookData(response.data);
+        const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
+        console.log('Author Data:', authorResponse.data);
+        setAuthorData(authorResponse.data);
       } catch (error) {
         console.error('Error fetching book data:', error);
       }
@@ -54,11 +59,11 @@ function AdminFiction() {
           <div className='w-full flex flex-col lg:flex-row m-0 p-0 h-auto'>
             <div className='w-full lg:w-[70%] m-0 p-0 flex flex-col bg-gray-200'>
               <Info bookData={bookData} />
-              {/* <Statistics stats={bookData.stats} /> */}
+              {/* <Statistics stats={bookData.stats?  } /> */}
               {/* <FnAd1 /> */}
               <div className='w-full m-0 p-0 h-auto flex flex-col bg-gray-200'>
                 {/* <OthersAlsoLiked bookId={id} /> */}
-                <ChaptersPagination bookId={id} />
+                <ChaptersPagination bookId={id} bookTitle = {bookData}/>
                 {/* <ReviewForm bookName={bookData.title} /> */}
                 {/* <ReviewCard bookName={bookData.title} /> */}
               </div>
@@ -66,7 +71,7 @@ function AdminFiction() {
             <div className='w-full lg:w-[30%] m-0 p-0 flex flex-col lg:ml-4 bg-gray-200 h-auto'>
               {/* <SidePanel /> */}
               {/* <FnAd2 /> */}
-              <AuthorInfo bookData={bookData} />
+              <AuthorInfo authorData={authorData} authorName={bookData.author} />
               {/* <FnAd2 /> */}
             </div>
           </div>

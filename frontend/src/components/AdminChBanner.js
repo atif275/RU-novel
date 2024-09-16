@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaBook, FaExclamationTriangle, FaStar } from "react-icons/fa";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
-const ChBanner = () => {
+const ChBanner = (bookTitle) => {
   const { fictionId, chapterId } = useParams(); // Get fictionId and chapterId from URL parameters
   const [chapterData, setChapterData] = useState(null);
 
@@ -28,10 +28,10 @@ const ChBanner = () => {
             characterImage: bookData.image, // You can change this if there's a specific character image
           });
         } else {
-          // console.error('Chapter not found');
+           console.error('Chapter not found');
         }
       } catch (error) {
-        // console.error('Error fetching chapter data:', error);
+         console.error('Error fetching chapter data:', error);
       }
     };
 
@@ -43,7 +43,7 @@ const ChBanner = () => {
   }
 
   return (
-    <div className='relative flex flex-col md:flex-row bg-black h-auto md:h-[180px] m-0 p-0'>
+    <div className='relative flex flex-col md:flex-row bg-black h-auto md:h-[180px] m-0 p-0 z-0'>
       <img
         src={chapterData.bannerImage || 'https://www.royalroadcdn.com/public/topcovers/90655-topcover.png?time=1721748398?v=1721748398'}
         alt='Banner'
@@ -58,7 +58,7 @@ const ChBanner = () => {
       </div>
       <div className='relative w-full md:w-1/2 flex flex-col p-6 gap-2 z-10'>
         <div className='w-full flex flex-col md:flex-row gap-2 text-white justify-center items-center md:justify-start font-light text-[18px] lg:text-[24px]'>
-          <a href={`/fiction/${chapterData.fictionId}/${chapterData.fictionTitle}`}>
+          <a href={`/admin/fiction/${chapterData.fictionId}/${chapterData.fictionTitle}`}>
             {chapterData.fictionTitle || '[Fiction Title]'}
           </a>
           <div className='m-0 p-0 flex gap-1'>
@@ -75,16 +75,20 @@ const ChBanner = () => {
           {chapterData.title || 'Chapter Title'}
         </div>
       </div>
-      <div className='relative w-full md:w-1/4 flex flex-col gap-2 justify-between px-4 py-2 md:py-8 z-10'>
-        <div className='w-full h-[34px] bg-[#337ab7] flex gap-1 justify-center items-center text-white text-[14px] px-3 py-1'>
-          <FaBook /> Fiction Page
-        </div>
-        <div className='w-full h-[34px] bg-[#ffffff] flex gap-1 justify-center items-center text-black text-[14px] px-3 py-1'>
+      <div className='relative w-full md:w-1/4 flex flex-col gap-2 justify-center px-4 py-2 md:py-8 z-10'>
+        <Link 
+          to={`/admin/fiction/${fictionId}/${bookTitle}`} // Make sure fictionId and bookTitle are correctly referenced here
+        >
+          <div className='w-full h-[34px] bg-[#337ab7] flex gap-1 justify-center items-center text-white text-[14px] px-3 py-1 hover:bg-[#2c5f8c]'>
+            <FaBook /> Fiction Page
+          </div>
+        </Link>
+        {/* <div className='w-full h-[34px] bg-[#ffffff] flex gap-1 justify-center items-center text-black text-[14px] px-3 py-1'>
           Donate
         </div>
         <div className='w-full h-[34px] bg-[#d91e18] flex gap-1 justify-center items-center text-white text-[14px] px-3 py-1'>
           <FaExclamationTriangle /> Report Chapter
-        </div>
+        </div> */}
       </div>
     </div>
   );

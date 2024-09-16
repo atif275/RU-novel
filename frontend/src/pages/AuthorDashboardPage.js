@@ -30,7 +30,7 @@ function AuthorDashboardPage() {
 };
 
 const handleNewFictionClick = () => {
-  setSelectedComponent('SubmitFiction'); // Assuming this is the case for the new form
+  setSelectedComponent('Submit Fiction'); // Assuming this is the case for the new form
 };
 
   const renderContent = () => {
@@ -48,7 +48,7 @@ const handleNewFictionClick = () => {
         return <Invitations />;
       // case 'Advertising':
       //   return <Advertising />;
-      case 'SubmitFiction':
+      case 'Submit Fiction':
         return <SubmitFiction/>;
 
         case 'Fictions':

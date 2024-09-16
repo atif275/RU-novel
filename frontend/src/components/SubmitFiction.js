@@ -273,10 +273,12 @@ const tagTooltips = {
             });
     
             if (response.ok) {
-                toast.success('Fiction submitted successfully!');
+              toast.success('Fiction submitted successfully!');
+              setTimeout(() => {
                 navigate('/');
-                // window.location.reload();
-            } 
+              }, 3000); // Delay navigation by 3 seconds to allow toast to be shown
+            }
+            
              else {
                 toast.error('Failed to submit fiction. Please try again.');
             }
@@ -371,16 +373,8 @@ const tagTooltips = {
                   <i className="fas fa-exclamation-triangle text-red-500 mr-2"></i>
                   <p className="text-sm text-gray-600">
                     The cover art is mandatory. Do not use copyrighted covers
-                    that you don't own and have no permission to use. You can
-                    check the{" "}
-                    <a
-                      href="https://www.royalroad.com/forums/8636"
-                      target="_blank"
-                      className="text-blue-500 underline"
-                    >
-                      Art Forum
-                    </a>{" "}
-                    for community guides and resources, or showcase your cover
+                    that you don't own and have no permission to use. 
+                    For community guides and resources, or showcase your cover
                     art and discuss it.
                   </p>
                 </div>

@@ -5,14 +5,14 @@ import { notification } from "antd";
 const Reporting = (props) => {
   const inputRef = useRef();
   const titleRef = useRef();
+  const theme = useSelector((state) => state.userData.theme);
   const email = useSelector((state) => state.userData.email); // User's email
-  const userEmail=useSelector((state)=>state.userData.userEmail)
+  const userEmail = useSelector((state) => state.userData.userEmail);
   const [reportType, setReportType] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     console.log(userEmail)
     try {
       const response = await fetch("https://api.ru-novel.ru/api/report", {
         method: "POST",
@@ -28,24 +28,34 @@ const Reporting = (props) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         notification.success({
-            message: "Report Submitted",
-            description: "Your report has been submitted successfully.",
-            placement: "topRight",
-          });
-        console.log("Report submitted successfully", data);
-          
+          message: "Report Submitted",
+          description: "Your report has been submitted successfully.",
+          placement: "topRight",
+        });
       } else {
-        console.error("Error submitting report");
+        notification.error({
+          message: "Submission Failed",
+          description: "An error occurred while submitting the report.",
+          placement: "topRight",
+        });
       }
     } catch (error) {
+      notification.error({
+        message: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        placement: "topRight",
+      });
       console.error("Error:", error);
     }
   };
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
+    <div
+      className={`lg:w-[90%] lg:ml-20 h-full p-4 ${
+        theme === "dark" ? "bg-[#181818]" : "bg-[#f3f6f9]"
+      }`}
+    >
       <div className="text-black rounded-md">
         <div className="portlet-body p-4">
           <div className="text-red-600 validation-summary-valid mb-4">
@@ -60,13 +70,22 @@ const Reporting = (props) => {
               <input type="hidden" name="ReportedContentType" value="idea" />
 
               <div className="form-group">
-                <label htmlFor="ReportType" className="block text-lg font-medium">
+                <label
+                  htmlFor="ReportType"
+                  className={`block text-lg font-medium ${
+                    theme === "dark" ? "text-[#FFFFFFCC]" : ""
+                  }`}
+                >
                   Why are you reporting this idea?
                 </label>
                 <select
                   name="ReportType"
                   id="ReportType"
-                  className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className={`block w-full mt-1 p-2 ${
+                    theme === "dark"
+                      ? "bg-[#131313] text-[#FFFFFFCC] focus:outline-none"
+                      : "border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  }`}
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
                   ref={inputRef}
@@ -84,7 +103,9 @@ const Reporting = (props) => {
               <div className="form-group">
                 <label
                   htmlFor="AdditionalInformation"
-                  className="block text-lg font-medium"
+                  className={`block text-lg font-medium ${
+                    theme === "dark" ? "text-[#FFFFFFCC]" : ""
+                  }`}
                 >
                   Additional Information (Maximum 1000 characters){" "}
                   <span className="text-red-600">Required</span>
@@ -94,7 +115,11 @@ const Reporting = (props) => {
                   id="AdditionalInformation"
                   rows="8"
                   maxLength="1000"
-                  className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className={`block w-full mt-1 p-2 ${
+                    theme === "dark"
+                      ? "bg-[#131313] text-[#FFFFFFCC] focus:outline-none"
+                      : "border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  }`}
                   value={additionalInfo}
                   onChange={(e) => setAdditionalInfo(e.target.value)}
                   ref={titleRef}

@@ -10,6 +10,7 @@ const Suggestions = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
+  const theme=useSelector((state)=>state.userData.theme)
 
   const isAuthenticated = useSelector((state) => state.userData.isAuthenticated);
   const commentsArr = useSelector((state) => state.userData.commentsArray);
@@ -58,11 +59,12 @@ const Suggestions = () => {
   
 
   useEffect(() => {
+    dispatch(userActions.setBarsClick(false));
     fetchComments();
   }, [location]); // Re-fetch comments when location changes
 
-  const fetchComments2 = async () => {
-
+  const fetcho = async (e) => {
+         e.preventDefault()
     try {
       const response = await fetch("https://api.ru-novel.ru/api/load/search", {
         method: "POST",
@@ -76,6 +78,7 @@ const Suggestions = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("g bolo",data)
         dispatch(userActions.setCommentsArray(data));
       } else {
         console.error("Error submitting idea");
@@ -109,26 +112,29 @@ const Suggestions = () => {
   };
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`} >
       <div
         className="image-header bg-cover bg-center w-[100%]"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/dist/img/ideas.jpg')`,
         }}
       >
-        <div className="flex justify-between items-center py-6">
-          <div className="flex items-center space-x-4">
-            <i className="fas fa-lightbulb text-white text-3xl ml-5"></i>
-            <div className="flex flex-col">
-              <h2 className="text-2xl font-bold text-white">Ideas</h2>
-              <span className="text-white">
-                The top ideas submitted by the users for the website
-              </span>
-              <span className="text-white">
-                Ideas
-              </span>
-            </div>
-          </div>
+        <div className={`flex justify-between items-center py-6 ${theme === 'dark' ? 'text-[#FFFFFCCC]' : 'text-white'}`}>
+  <div className="flex items-center space-x-4">
+    <i className="fas fa-lightbulb text-3xl ml-5"></i>
+    <div className="flex flex-col">
+      <h2 className="text-2xl font-bold">
+        Ideas
+      </h2>
+      <span>
+        The top ideas submitted by the users for the website
+      </span>
+      <span>
+        Ideas
+      </span>
+    </div>
+  </div>
+
           <div className="md:flex items-center space-x-2 mr-5">
             <button
               className="btn bg-gray-200 hidden md:block text-gray-800 flex items-center px-4 py-2 rounded-md hover:bg-gray-300"
@@ -152,14 +158,16 @@ const Suggestions = () => {
           </div>
         </div>
       </div>
-      <form className="p-4 bg-white w-full">
+      <form className={`p-4 w-full 4 ${theme === 'dark' ? 'bg-[#131313]' : 'bg-white '}`}
+       onSubmit={fetcho}
+      >
         <div className="sui-search-box__wrapper w-full">
           <input
             placeholder="Search"
-            className="bg-[#EFF3F8] p-2 w-[92%] rounded-md"
+            className={`p-2 w-[92%] rounded-md 4 ${theme === 'dark' ? 'bg-[#181818] text-[#FFFFFFCC] outline-none' : 'bg-[#f3f6f9] '}`}
             ref={inputRef}
           />
-          <button className="bg-[#5B9BD1] mt-2 lg:mt-0 p-2 text-white" onClick={fetchComments2}>Search</button>
+          <button className="bg-[#5B9BD1] mt-2 lg:mt-0 p-2 text-white">Search</button>
         </div>
       </form>
 

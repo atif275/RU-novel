@@ -1,75 +1,154 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch,useSelector } from "react-redux";
+import { userActions } from "../store";
 const AuthPre = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const inputRef = useRef(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const theme=useSelector((state)=>state.userData.theme)
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+  
+      if (value) {
+        // Filter suggestions based on input
+        const matchingSuggestions = Object.keys(pageMapping).filter(keyword =>
+          keyword.includes(value.toLowerCase())
+        );
+        setSuggestions(matchingSuggestions);
+      } else {
+        setSuggestions([]);
+      }
+    };
+  
+    const inputRef=useRef(null)
 
-  const navigate = useNavigate();
+    const dispatch=useDispatch()
+    
+    const navigate=useNavigate()
+    useEffect(() => {
+      dispatch(userActions.setBarsClick(false));
+      inputRef.current?.focus(); // Auto focus on search input
+  }, [dispatch]);
+    const generateSlug = (title) => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+          .replace(/^-+|-+$/g, '');    // Remove leading and trailing hyphens
+      };
+      
+      const handleSuggestionClick = (suggestion) => {
+        const destination = pageMapping[suggestion];
+        navigate(destination);
+      };
 
-  const generateSlug = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric characters with hyphens
-      .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
-  };
+    const pageMapping = {
+      "rules about rating and reviews": "/support/knowledgebase/rules-about-ratings-and-reviews",
+      "content guidelines": "/support/knowledgebase/content-guidelines",
+    
+      "general rules": "/support/knowledgebase/general-rules",
+      "discovery & rankings": "/support/knowledgebase/discovery-and-rankings",
+      "advanced search": "/support/knowledgebase/advanced-search",
+        "optimize the reading experience":"/support/knowledgebase/optimize-the-reading-experience",
+        "personalized lists":"/support/knowledgebase/personalized-lists",
+        "notifications":"/support/knowledgebase/notifications",
+        "genres and tags":"/support/knowledgebase/genres-and-tags",
+        "author dashboard":"/support/knowledgebase/author-dashboard",
+        "chapters":"/support/knowledgebase/chapters",
+        "submitting and verifying novels":"/support/knowledgebase/submitting-and-verifying-novels",
+        "chapters":"/support/knowledgebase/chapters",
+        "comments":"/support/knowledgebase/comments",
+        "reviews":"/support/knowledgebase/reviews",
+        "fiction status":"/support/knowledgebase/fiction-status",
+        "deleting your fiction":"/support/knowledgebase/deleting-your-fiction",
+        "donation":"/support/knowledgebase/donation",
+        "credit collaborate and moderate":"/support/knowledgebase/credit-collaborate-and-moderate",
+        "moderation tools for users":"/support/knowledgebase/moderation-tools-for-users",
+        "reputation":"/support/knowledgebase/reputation",
+        "experience":"/support/knowledgebase/experience",
+        "achievments":"/support/knowledgebase/achievments",
+        "writathon":"/support/knowledgebase/writathon",
+        "signup and activation":"/support/knowledgebase/signup-and-activation",
+        "security":"/support/knowledgebase/security",
+        "notification":"/support/knowledgebase/notification",
+        "contact the staff":"/support/knowledgebase/contact-the-staff",
+        "the site is loading slowly":"/support/knowledgebase/site-loading-slowly",
+        "report a bug":"/support/knowledgebase/report-a-bug",
+        "report an ad":"/support/knowledgebase/report-an-ad",
+        "report a user interaction":"/support/knowledgebase/report-a-user-interaction",
+        "frequently asked questions":"/support/knowledgebase/fredquently-asked-questions",
+        "copyright infringement":"/support/knowledgebase/copyright-infringement",
+        "premium":"/support/knowledgebase/premium",
+        "reader premium":"/support/knowledgebase/reader-premium",
+        "author premium":"/support/knowledgebase/author-premium",
+        "paid advertisement for my story":"/support/knowledgebase/paid-advertisement-for-my-story",
+    };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const slug = generateSlug(searchTerm); // Generate slug when search is submitted
-    // console.log("Search Term:", searchTerm);
-    navigate(`/support/knowledgebase/${slug}`);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
+    const handleSearch = (e) => {
+      e.preventDefault();
+      // Generate slug from the search term
+      const slug = generateSlug(searchTerm);
+  
+      // Check if the slug matches any key in the pageMapping
+      const destination = pageMapping[slug] || "/support/knowledgebase";
+      
+      // Navigate to the matched URL or fallback URL
+      navigate(destination);
+    };
+  
+    const toggleSidebar = () => {
+      setIsSidebarVisible(!isSidebarVisible);
+    };
+  
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <div className="text-white rounded-md">
-        <div className="col-xs-12 text-white">
-          <div
-            className="portlet light mb-2 page-header"
-            style={{
-              background:
-                'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
-              padding: "15px 20px",
-            }}
-          >
-            <div className="p-2 flex items-center">
-              <div className="mr-4">
-                <i
-                  className="fa fa-fw fa-book-open text-navy text-4xl"
-                  style={{ lineHeight: "initial" }}
-                ></i>
-              </div>
-              <div>
-                <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about RU Novel</span>
-                <ul className="page-breadcrumb breadcrumb mt-2"></ul>
-              </div>
-            </div>
-          </div>
+    <div className={`lg:w-[90%] lg:ml-20 h-full overflow-x-hidden p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+     <div className="text-white rounded-md">
+  <div className="col-xs-12 text-white">
+    <div
+      className="portlet light mb-2 page-header"
+      style={{
+        background:
+          'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
+        padding: "15px 20px",
+      }}
+    >
+      <div className="p-2 flex items-center">
+        <div className="mr-4">
+          <i
+            className="fa fa-fw fa-book-open text-navy text-4xl"
+            style={{ lineHeight: "initial" }}
+          ></i>
+        </div>
+        <div>
+          <h2 className="text-lg font-bold">Knowledge Base</h2>
+          <span>All about Royal Road</span>
+          <ul className="page-breadcrumb breadcrumb mt-2">
+           
+          </ul>
         </div>
       </div>
+    </div>
+  </div>
+  </div>
 
-      <div className="bg-white text-black rounded-md p-6">
+
+  <div className={` ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-white text-black '} rounded-md p-6`}>
         <div className="portlet light">
-          {isSidebarVisible && (
-            <div className=" w-[75%] sm-[50%] p-4 bg-[#FAF9F6] mb-2 ">
+          {isSidebarVisible &&<div className={` w-[75%] sm-[50%] p-4 mb-2 ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-[#FAF9F6]   '}` }>
               <div className="backdrop">
                 <strong>Rules</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
+                  
                     <Link
                       to="/support/knowledgebase/rules-about-ratings-and-reviews"
-                      className="hover:underline hover:text-blue-900 transition-colors"
+                      className="hover:underline hover:text-blue-900  transition-colors"
                     >
                       Rules about Ratings and Reviews
                     </Link>
@@ -77,7 +156,7 @@ const AuthPre = () => {
                   <div>
                     <Link
                       to="/support/knowledgebase/content-guidelines"
-                      className="hover:underline hover:text-blue-900 transition-colors  "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Content Guidelines
                     </Link>
@@ -96,30 +175,30 @@ const AuthPre = () => {
               <div className="backdrop">
                 <strong>Reading</strong>
                 <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/discovery-and-rankings"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Discovery & Ranking
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-90 text-[#000000CC] transition-colors"
-                    >
-                      Advanced Search
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/optimize-the-reading-experience"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Optimize the Reading Experience
-                    </Link>
-                  </div>
+                <div>
+                      <Link
+                        to="/support/knowledgebase/discovery-and-rankings"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Discovery & Ranking
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/advanced-search"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Advanced Search
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/optimize-the-reading-experience"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Optimize the Reading Experience
+                      </Link>
+                    </div>
                   <div>
                     <Link
                       to="/support/knowledgebase/personalized-lists"
@@ -150,10 +229,9 @@ const AuthPre = () => {
                 <strong>Writing</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
-                    
                     <Link
                       to="/support/knowledgebase/author-dashboard"
-                      className="hover:underline hover:text-blue-900 transition-colors  "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Author Dashboard
                     </Link>
@@ -226,7 +304,7 @@ const AuthPre = () => {
               </div>
 
               <div className="backdrop">
-                <strong>Moderation Tools For Users</strong>
+                <strong>Modertaion Tools For Users</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
                     <Link
@@ -388,13 +466,9 @@ const AuthPre = () => {
                     </Link>
                   </div>
                   <div>
-                  <FontAwesomeIcon
-                      icon={faCaretRight}
-                      className="text-[#000000CC] mr-1 "
-                    />
                     <Link
                       to="/support/knowledgebase/author-premium"
-                      className="hover:underline hover:text-blue-900 text-[#000000CC] transition-colors"
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Author Premium
                     </Link>
@@ -409,40 +483,43 @@ const AuthPre = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
+            </div> }
+          
           <div className="row">
             <div className="block md:hidden col-xs-12 mb-5">
-              <button
-                className="btn btn-default toc-toggle"
-                onClick={toggleSidebar}
-              >
+              <button className="btn btn-default toc-toggle" onClick={toggleSidebar}>
                 <i className="fas fa-bars"></i> Table of Contents
               </button>
             </div>
 
-            <div className="row mb-4">
-              <div className="col-md-12">
-                <form onSubmit={handleSearch}>
-                  <div className="form-group">
-                    <div
-                      id="knowledge-base-search-container"
-                      className="relative"
-                    >
-                      <div className="searchbox">
-                        <div className="searchbox-container">
-                          <div className="sui-search-box flex items-center border rounded-md p-2">
+          <div className="row mb-4">
+            <div className="col-md-12">
+              <form onSubmit={handleSearch}>
+                <div className="form-group">
+                  <div
+                    id="knowledge-base-search-container"
+                    className="relative"
+                  >
+                    <div className="searchbox">
+                      <div className="searchbox-container">
+                        
+                      <div className={`sui-search-box flex items-center border rounded-md p-2  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}>
+                          
                             <div className="flex-grow">
                               <input
                                 id="downshift-0-input"
                                 aria-autocomplete="list"
                                 aria-labelledby="downshift-0-label"
                                 autoComplete="off"
-                                placeholder="Search for support page by writing it name"
-                                className="w-full border-none focus:outline-none"
+                             
+                                className={`w-full border-none focus:outline-none  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}
+                                ref={inputRef}
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                 onChange={handleInputChange}
+                                  placeholder="Search..."
+
+                                
+                                
                               />
                             </div>
                             <input
@@ -452,18 +529,31 @@ const AuthPre = () => {
                               value="Search"
                             />
                           </div>
-                        </div>
+                    
                       </div>
-
-                      {/* Search results */}
-                      <ul className="sui-results-container">
-                        {/* Add more search results here */}
-                      </ul>
                     </div>
+
+                    {suggestions.length > 0 && (
+            <ul className={`absolute mt-1 border w-full border-gray-300  rounded shadow-lg ${theme === 'dark' ? 'bg-[#131313] text-white' : ' bg-white '}`}>
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className={`p-2 cursor-pointer w-full font-bold    ${theme === 'dark' ? 'hover:bg-gray-800' : ' hover:bg-gray-200 '}`}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                
+                  {suggestion}
+                </li>
+                
+              ))}
+            </ul>
+          )}
+                  
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
+          </div>
 
             {/* Layout for Sidebar and Content */}
             <div className="flex flex-wrap">
@@ -796,14 +886,14 @@ const AuthPre = () => {
                     <div>
                     <FontAwesomeIcon
                         icon={faCaretRight}
-                        className="text-[#000000CC] mr-1"
+                        className={` mr-1 ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}
                       />
                       <Link
                         to="/support/knowledgebase/author-premium"
-                        className="hover:underline hover:text-blue-900 text-[#000000CC]  transition-colors"
+                        className={`hover:underline hover:text-blue-900 transition-colors ${theme === 'dark' ? 'text-white' : 'text-[#000000CC]'}`} 
                       >
-                        Author Premium
-                      </Link>
+                     Author Premium
+                        </Link>  
                     </div>
                     <div>
                       <Link
@@ -817,156 +907,9 @@ const AuthPre = () => {
                 </div>
               </div>
 
-              <div className=" block md:hidden  md:w-[100%]  ">
-                <div className="backdrop">
-                  <strong>In this article</strong>
-                  <div className="ml-5 text-blue-700">
-                    <div>
-                    <a
-                          href="#analytics"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Detailed Analytics
-                        </a>
-                        <br></br>
-                        <a
-                          href="#distribution"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Rating Distribution
-                        </a>
-                        <br></br>
-                        <a
-                          href="#timeline"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Rating Timeline
-                        </a>
-                        <br></br>
-                        <a
-                          href="#page-views"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Fiction Pageviews
-                        </a>
-                        <br></br>
-                        <a
-                          href="#activity"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Reader Activity
-                        </a>
-                        <br></br>
-                        <a
-                          href="#referrers"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Referrers
-                        </a>
-                        <br></br>
-                        <a
-                          href="#using"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Using Referrers
-                        </a>
-                        <br></br>
-                        <a
-                          href="#user-retention"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          User Retention
-                        </a>
-                        <br></br>
-                        <a
-                          href="#chapter"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Pageviews per Chapter
-                        </a>
-                        <br></br>
-                        <a
-                          href="#ratings-over-time"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Ratings over time
-                        </a>
-                        <br></br>
-                        <a
-                          href="#ratings-per-chapter"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Ratings per Chapter
-                        </a>
-                        <br></br>
-                        <a
-                          href="#follower-history"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Follower History
-                        </a>
-                        <br></br>
-                        <a
-                          href="#favourites-history"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Favourites History
-                        </a>
-                        <br></br>
-                        <a
-                          href="#review-push-notifications"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Review Push Notifications
-                        </a>
-                        <br></br>
-                        <a
-                          href="#customizable-fiction-header"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Customizable Fiction Header
-                        </a>
-                        <br></br>
-                        <a
-                          href="#custom-line-breaks"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Custom Line Breaks
-                        </a>
-                        <br></br>
-                        <a
-                          href="#epub-export"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Epub Export
-                        </a>
-                        <br></br>
-                        <a
-                          href="#find-replace"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Find & Replace
-                        </a>
-                        <br></br>
-                        <a
-                          href="#automatic-draft-saving"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Automatic Draft Saving
-                        </a>
-                        <br></br>
-                        <a
-                          href="#chapter-import"
-                          className="hover:underline hover:text-blue-900 transition-colors"
-                        >
-                          Chapter Import
-                        </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
               <div className="w-full md:w-1/2 p-4  ">
-                <div className="text-[#000000CC]">
+                <div className={` ${theme === 'dark' ? 'text-white' : 'text-[#0000CC] '}`}>
                   <h1 className="text-4xl ">Author Premium</h1>
 
                   <h1 className="text-3xl text-[#337AB7] mt-5 " id="features">
@@ -1106,10 +1049,10 @@ const AuthPre = () => {
                   <p className="py-4">
                     Referrer statistics are automatically tracked from on-site
                     links. These can be viewed from the second tab in the
-                    referrer list where it says RU Novel.<br></br>
+                    referrer list where it says Royal Road.<br></br>
                     <br></br>
                     Using referrers for links on external sites pointing towards
-                    RU Novel requires some extra work. For this functionality,
+                    Royal Road requires some extra work. For this functionality,
                     Google Analytics Referrers are used. This works by adding a
                     couple flags to the end of an URL pointing at your fiction
                     page or a chapter specifically.<br></br>
@@ -1362,7 +1305,7 @@ const AuthPre = () => {
                     Automatic Draft Saving
                   </h1>
                   <p className="py-4">
-                    When using the fiction editor on RU Novel when Author
+                    When using the fiction editor on Royal Road when Author
                     premium is active, it will automatically save the text
                     entered every minute so no work gets lost by accident.
                   </p>
@@ -1376,7 +1319,7 @@ const AuthPre = () => {
                   <p className="py-4">
                     Many authors write their fiction using external text
                     editors. In order to streamline the process of importing
-                    multiple chapters to RU Novel at once, the chapter import
+                    multiple chapters to Royal Road at once, the chapter import
                     feature is created. This feature is found in the Author
                     Dashboard under Advanced. For the following screenshots, a
                     single .docx file will be used, the process differs slightly

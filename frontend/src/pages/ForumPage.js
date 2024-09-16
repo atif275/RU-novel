@@ -9,6 +9,11 @@ function ForumsPage() {
   const [forumThreads, setForumThreads] = useState([]);
   const [recentThreads, setRecentThreads] = useState([]);
 
+
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [filteredResults, setFilteredResults] = useState({}); // State to store filtered results
+  const [recommendations, setRecommendations] = useState([]); // State for search recommendations
+
   const [hoverIndex, setHoverIndex] = useState(null); // State to track hovered item
 
   // Create a ref object
@@ -45,23 +50,64 @@ function ForumsPage() {
     }
   };
   useEffect(() => {
-    // Initial maxHeight setup
-    Object.keys(refs).forEach((key) => {
-      const section = refs[key].current;
-      if (section) {
-        section.style.maxHeight = isOpen[key]
-          ? `${section.scrollHeight}px`
-          : "0";
-      }
-    });
+    if (searchQuery === "") {
+      // If search is empty, reset filteredResults to show all threads
+      setFilteredResults({
+        popularThreads,
+        communityThreads,
+        fictionThreads,
+        discussionThreads,
+        forumThreads,
+      });
+    } else {
+      // Filter threads based on the search query
+      const filterThreads = (threads) =>
+        threads.filter((thread) =>
+          thread.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+      setFilteredResults({
+        popularThreads: filterThreads(popularThreads),
+        communityThreads: filterThreads(communityThreads),
+        fictionThreads: filterThreads(fictionThreads),
+        discussionThreads: filterThreads(discussionThreads),
+        forumThreads: filterThreads(forumThreads),
+      });
+
+      // Generate search recommendations
+      const allTitles = [
+        ...popularThreads,
+        ...communityThreads,
+        ...fictionThreads,
+        ...discussionThreads,
+        ...forumThreads,
+      ].map((thread) => thread.title);
+
+      setRecommendations(
+        allTitles.filter((title) =>
+          title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+    }
   }, [
-    communityThreads,
+    searchQuery,
     popularThreads,
+    communityThreads,
     fictionThreads,
     discussionThreads,
     forumThreads,
-  ]); // Dependencies should include any state that affects content height
+  ]);
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // New function to handle recommendation click
+  const handleRecommendationClick = (title) => {
+    setSearchQuery(title); // Update search query to the clicked recommendation
+  };
+
+ 
   useEffect(() => {
     // Fetch Popular Threads
     fetch("https://api.ru-novel.ru/api/popularthreads")
@@ -143,6 +189,11 @@ function ForumsPage() {
       .catch((error) => console.error("Failed to fetch recent threads", error));
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // The filtering will already happen via the useEffect based on searchQuery.
+  };
+
   return (
     <div className="w-full mb-4">
       <div className="container mx-auto sm:px-6 sm:pr-4 lg:px-16  bg-white pt-2">
@@ -213,12 +264,20 @@ function ForumsPage() {
         <div className="flex flex-wrap">
           {/* Popular Threads Table */}
           <div className="w-full md:w-3/4 px-4">
+            {/* Display Filtered Threads */}
+            {Object.values(filteredResults).every(
+              (threads) => threads.length === 0
+            ) && <p>No results found.</p>}
+          {filteredResults.popularThreads &&
+              filteredResults.popularThreads.length > 0 && (
+             
             <div className="bg-white shadow mb-4">
               <div className="flex justify-between items-center bg-custom-gray">
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Popular Threads
                 </h3>
-                <div className="bg-custom-black flex items-center  px-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex justify-center items-center px-2 w-6 h-6 mr-4 text-white text-bold">
+
                   <button
                     onClick={() => toggleOpen("popular")}
                     className="text-white bg-custom-black"
@@ -234,8 +293,8 @@ function ForumsPage() {
                   transition: "max-height 0.5s ease-in-out",
                 }}
               >
-                {popularThreads.length > 0 ? (
-                  popularThreads.map((topic, index) => (
+                {filteredResults.popularThreads.length > 0 ? (
+                  filteredResults.popularThreads.map((topic, index) => (
                     <div key={index} className="flex justify-between">
                       <div className="`fora-icon forum_unread w-1/8 md:w-1/12 p-4 text-white bg-white ">
                         <div className="lg:w-10 lg:h-10 w-8 h-8 bg-red-600 flex items-center justify-center ">
@@ -245,18 +304,17 @@ function ForumsPage() {
                       <div className="sm:flex-1 md:flex p-2 text-black">
                         <div className="lg:w-2/5">
                           <h4 className="font-bold text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
+                            <p
+                             
                             >
                               {topic.title}
-                            </a>
+                            </p>
                           </h4>
                           <div className="text-xs">
                             by{" "}
-                            <a href={`/profile/${topic.author}`}>
+                            <p >
                               {topic.author}
-                            </a>
+                            </p>
                             , <time>{topic.lastPostDate}</time>
                           </div>
                         </div>
@@ -281,9 +339,9 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <a href={`/profile/${topic.lastPoster}`}>
+                            <p >
                               {topic.lastPoster}
-                            </a>
+                            </p>
                             <br />
                             <time>{topic.lastPostDate}</time>
                           </div>
@@ -296,13 +354,18 @@ function ForumsPage() {
                 )}
               </div>
             </div>
+            )}
+            
             {/* Community Table */}
+            {filteredResults.communityThreads &&
+              filteredResults.communityThreads.length > 0 && (
             <div className="bg-white shadow mb-4">
               <div className="flex justify-between items-center bg-custom-gray">
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Community
                 </h3>
-                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex justify-center items-center px-2 w-6 h-6 mr-4 text-white text-bold">
+
                   <button
                     onClick={() => toggleOpen("community")}
                     className="text-white bg-custom-black"
@@ -318,8 +381,8 @@ function ForumsPage() {
                   transition: "max-height 0.5s ease-in-out",
                 }}
               >
-                {communityThreads.length > 0 ? (
-                  communityThreads.map((topic, index) => (
+                {filteredResults.communityThreads.length > 0 ? (
+                  filteredResults.communityThreads.map((topic, index) => (
                     <div key={index} className="flex justify-between">
                       <div className="fora-icon forum_unread w-1/8 md:w-1/12 p-4 text-white bg-white">
                         <div className="lg:w-10 lg:h-10 w-8 h-8 bg-red-600 flex items-center justify-center">
@@ -329,21 +392,17 @@ function ForumsPage() {
                       <div className="sm:flex-1 md:flex p-2 text-black">
                         <div className="lg:w-2/5">
                           <h4 className=" font-bold text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
-                            >
-                              {topic.title} {/* Topic heading */}
-                            </a>
+                            <p>
+                              {topic.title}
+                            </p>
                           </h4>
 
                           <h4 className="pt-2 text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
+                            <p
+                             
                             >
                               {topic.description} {/* Topic Description */}
-                            </a>
+                            </p>
                           </h4>
                         </div>
                         <div className="lg:px-16 flex items-center">
@@ -365,9 +424,9 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <a href={`/profile/${topic.lastPoster}`}>
+                            <p>
                               {topic.lastPoster}
-                            </a>
+                            </p>
                             <br />
                             <time>{topic.lastActivityDate}</time>
                           </div>
@@ -380,13 +439,17 @@ function ForumsPage() {
                 )}
               </div>
             </div>
+             )}
             {/* Fiction Table */}
+            {filteredResults.fictionThreads &&
+              filteredResults.fictionThreads.length > 0 && (
             <div className="bg-white shadow mb-4">
               <div className="flex justify-between items-center bg-custom-gray">
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Fictions
                 </h3>
-                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold">
+                <div className="bg-custom-black flex justify-center items-center px-2 w-6 h-6 mr-4 text-white text-bold">
+
                   <button
                     onClick={() => toggleOpen("fiction")}
                     className="text-white bg-custom-black"
@@ -403,8 +466,8 @@ function ForumsPage() {
                   transition: "max-height 0.5s ease-in-out",
                 }}
               >
-                {fictionThreads.length > 0 ? (
-                  fictionThreads.map((topic, index) => (
+                {filteredResults.fictionThreads.length > 0 ? (
+                  filteredResults.fictionThreads.map((topic, index) => (
                     <div key={index} className="flex justify-between">
                       <div className="fora-icon forum_unread w-1/8 md:w-1/12 p-4 text-white bg-white">
                         <div className="lg:w-10 lg:h-10 w-8 h-8 bg-red-600 flex items-center justify-center">
@@ -414,21 +477,17 @@ function ForumsPage() {
                       <div className="sm:flex-1 md:flex p-2 text-black">
                         <div className="lg:w-2/5">
                           <h4 className="font-bold text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
-                            >
-                              {topic.title} {/* Topic heading */}
-                            </a>
+                            <p>
+                              {topic.title}
+                            </p>
                           </h4>
 
                           <h4 className="pt-2 text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
+                            <p
+                              
                             >
                               {topic.description} {/* Topic Description */}
-                            </a>
+                            </p>
                           </h4>
                         </div>
                         <div className="lg:px-16 flex items-center">
@@ -450,9 +509,9 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <a href={`/profile/${topic.lastPoster}`}>
+                            <p>
                               {topic.lastPoster}
-                            </a>
+                            </p>
                             <br />
                             <time>{topic.lastActivityDate}</time>
                           </div>
@@ -465,13 +524,17 @@ function ForumsPage() {
                 )}
               </div>
             </div>
+            )}
             {/* Write Tips & Discussions Table */}
+            {filteredResults.discussionThreads &&
+              filteredResults.discussionThreads.length > 0 && (
             <div className="bg-white shadow mb-4">
               <div className="flex justify-between items-center bg-custom-gray">
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Write Tips & Discussions Table
                 </h3>
-                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold">
+                <div className="bg-custom-black flex justify-center items-center px-2 w-6 h-6 mr-4 text-white text-bold">
+
                   <button
                     onClick={() => toggleOpen("discussion")}
                     className="text-white bg-custom-black"
@@ -488,8 +551,8 @@ function ForumsPage() {
                   transition: "max-height 0.5s ease-in-out",
                 }}
               >
-                {discussionThreads.length > 0 ? (
-                  discussionThreads.map((topic, index) => (
+                {filteredResults.discussionThreads.length > 0 ? (
+                  filteredResults.discussionThreads.map((topic, index) => (
                     <div key={index} className="flex justify-between">
                       <div className="fora-icon forum_unread w-1/8 md:w-1/12 p-4 text-white bg-white">
                         <div className="lg:w-10 lg:h-10 w-8 h-8 bg-red-600 flex items-center justify-center">
@@ -499,21 +562,17 @@ function ForumsPage() {
                       <div className="sm:flex-1 md:flex p-2 text-black">
                         <div className="lg:w-2/5">
                           <h4 className="font-bold text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
-                            >
-                              {topic.title} {/* Topic heading */}
-                            </a>
+                            <p>
+                              {topic.title}
+                            </p>
                           </h4>
 
                           <h4 className="pt-2 text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
+                            <p
+                             
                             >
                               {topic.description} {/* Topic Description */}
-                            </a>
+                            </p>
                           </h4>
                         </div>
                         <div className="lg:px-16 flex items-center">
@@ -535,9 +594,9 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <a href={`/profile/${topic.lastPoster}`}>
+                            <p>
                               {topic.lastPoster}
-                            </a>
+                            </p>
                             <br />
                             <time>{topic.lastActivityDate}</time>
                           </div>
@@ -550,14 +609,17 @@ function ForumsPage() {
                 )}
               </div>
             </div>
-
+              )}
             {/* Forum Table */}
+            {filteredResults.forumThreads &&
+              filteredResults.forumThreads.length > 0 && (
             <div className="bg-white shadow mb-4">
               <div className="flex justify-between items-center bg-custom-gray">
                 <h3 className="font-bold bg-custom-gray pl-4 py-2 text-white text-sm">
                   Forums
                 </h3>
-                <div className="bg-custom-black flex items-center  p-2 w-6 h-6 mr-4 text-white text-bold ">
+                <div className="bg-custom-black flex justify-center items-center px-2 w-6 h-6 mr-4 text-white text-bold">
+
                   <button
                     onClick={() => toggleOpen("forum")}
                     className="text-white bg-custom-black"
@@ -574,8 +636,8 @@ function ForumsPage() {
                   transition: "max-height 0.5s ease-in-out",
                 }}
               >
-                {forumThreads.length > 0 ? (
-                  forumThreads.map((topic, index) => (
+                {filteredResults.forumThreads.length > 0 ? (
+                  filteredResults.forumThreads.map((topic, index) => (
                     <div key={index} className="flex justify-between">
                       <div className="fora-icon forum_unread w-1/8 md:w-1/12 p-4 text-white bg-white">
                         <div className="lg:w-10 lg:h-10 w-8 h-8 bg-red-600 flex items-center justify-center">
@@ -585,21 +647,17 @@ function ForumsPage() {
                       <div className="sm:flex-1 md:flex p-2 text-black">
                         <div className="lg:w-2/5">
                           <h4 className="font-bold text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
-                            >
-                              {topic.title} {/* Topic heading */}
-                            </a>
+                            <p>
+                              {topic.title}
+                            </p>
                           </h4>
 
                           <h4 className="pt-2 text-sm">
-                            <a
-                              href={`/forums/thread/${topic.id}`}
-                              title="View topic"
+                            <p
+                             
                             >
                               {topic.description} {/* Topic Description */}
-                            </a>
+                            </p>
                           </h4>
                         </div>
                         <div className="lg:px-16 flex items-center">
@@ -621,9 +679,9 @@ function ForumsPage() {
                             alt={topic.lastPoster}
                           />
                           <div className="ml-4 text-xs">
-                            <a href={`/profile/${topic.lastPoster}`}>
+                            <p>
                               {topic.lastPoster}
-                            </a>
+                            </p>
                             <br />
                             <time>{topic.lastActivityDate}</time>
                           </div>
@@ -636,41 +694,51 @@ function ForumsPage() {
                 )}
               </div>
             </div>
+              )}
           </div>
+              
           {/* Sidebar */}
-          <div className="w-full md:w-1/4 pl-4 pb-4 mb-4 md:mb-0 ">
-            {/* Search box */}
-            <div className="bg-white p-3 shadow border ">
+          <div className="w-full md:w-1/4 pl-4 pb-4 mb-4 md:mb-0">
+            <div className="bg-white p-3 shadow border">
               <h5 className="font-bold text-md py-4">Search this forum</h5>
-              <form action="/forums/search" method="post">
-                <input type="hidden" name="fid" />
+              <form onSubmit={handleSubmit}>
                 <div className="mb-2">
                   <input
                     type="text"
                     className="form-control w-full bg-gray-100 p-1 pl-2"
                     placeholder="Search for..."
-                    name="q"
-                    ref={searchInputRef} // Applying the ref to the input field
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    ref={searchInputRef}
                   />
                 </div>
-                <div className="p-4">
-                  <p className="text-sm pb-2">Search in:</p>
-                  <select className="form-control w-full text-sm" name="search">
-                    <option value="posts">All Posts</option>
-                    <option value="threads">First Posts Only</option>
-                  </select>
-                </div>
-                <div className="flex justify-end items-center ">
+                <div className="flex justify-end items-center">
                   <button
                     type="submit"
-                    className="px-6 bg-custom-blue hover:bg-custom-hover-blue text-white py-2 "
+                    className="px-6 bg-custom-blue hover:bg-custom-hover-blue text-white py-2"
                   >
-                    <i className="fa fa-search text-white"></i>
-                    Search
+                    <i className="fa fa-search text-white"></i> Search
                   </button>
                 </div>
               </form>
-            </div>
+
+            {/* Recommendations */}
+            {recommendations.length > 0 && (
+                <div className="recommendations mt-2">
+                  <ul>
+                    {recommendations.map((title, index) => (
+                      <li
+                        key={index}
+                        className="text-gray-500 cursor-pointer"
+                        onClick={() => handleRecommendationClick(title)} // Handle recommendation click
+                      >
+                        {title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+          </div>
             {/* Advertisement box */}
             <div className="  mt-6 p-3 shadow border h-auto w-full ">
               <div className="text-xs px-6 flex justify-end items-center text-bold uppercase">
@@ -695,19 +763,17 @@ function ForumsPage() {
                   <div className="sidebar-recent-content text-sm">
                     {recentThreads.map((thread, index) => (
                       <div key={index} className="py-2 flex flex-col">
-                        <a
+                        <p
                           className="sidebar-recent-title text-black font-bold hover:text-blue-800 overflow-hidden truncate"
-                          href={`/forums/thread/${thread._id}`}
-                          title={thread.title}
                           style={{ maxWidth: "100%" }}
                         >
                           {thread.title}
-                        </a>
+                        </p>
                         <div className="text-gray-400">
                           by{" "}
                           <a
                             className="text-gray-700"
-                            href={thread.profileUrl}
+                            
                           >
                             {thread.author}
                           </a>

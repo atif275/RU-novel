@@ -104,7 +104,7 @@ const ReviewSection = ({ reviews, onReviewDelete }) => {
                 <h2 className="text-[18px] font-bold text-gray-700">{review.title}</h2>
                 <div className='flex gap-1 items-end'>
                   <p className="text-[14px] font-bold text-red-600">ON </p>
-                  <button href='#' className="text-[13px] font-bold text-blue-600 hover:underline">{review.bookName || 'Anonymous'}</button>
+                  <button  className="text-[13px] font-bold text-blue-600 hover:underline">{review.bookName || 'Anonymous'}</button>
                 </div>
               </div>
               {/* Date */}

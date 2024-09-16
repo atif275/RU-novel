@@ -1,77 +1,156 @@
 
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch,useSelector } from "react-redux";
+import { userActions } from "../store";
+const Donation = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const theme=useSelector((state)=>state.userData.theme)
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+  
+      if (value) {
+        // Filter suggestions based on input
+        const matchingSuggestions = Object.keys(pageMapping).filter(keyword =>
+          keyword.includes(value.toLowerCase())
+        );
+        setSuggestions(matchingSuggestions);
+      } else {
+        setSuggestions([]);
+      }
+    };
+  
+    const inputRef=useRef(null)
 
-const  Donation = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const inputRef = useRef(null);
+    const dispatch=useDispatch()
+    
+    const navigate=useNavigate()
+    useEffect(() => {
+      dispatch(userActions.setBarsClick(false));
+      inputRef.current?.focus(); // Auto focus on search input
+  }, [dispatch]);
+    const generateSlug = (title) => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+          .replace(/^-+|-+$/g, '');    // Remove leading and trailing hyphens
+      };
+      
+      const handleSuggestionClick = (suggestion) => {
+        const destination = pageMapping[suggestion];
+        navigate(destination);
+      };
 
-  const navigate = useNavigate();
+    const pageMapping = {
+      "rules about rating and reviews": "/support/knowledgebase/rules-about-ratings-and-reviews",
+      "content guidelines": "/support/knowledgebase/content-guidelines",
+    
+      "general rules": "/support/knowledgebase/general-rules",
+      "discovery & rankings": "/support/knowledgebase/discovery-and-rankings",
+      "advanced search": "/support/knowledgebase/advanced-search",
+        "optimize the reading experience":"/support/knowledgebase/optimize-the-reading-experience",
+        "personalized lists":"/support/knowledgebase/personalized-lists",
+        "notifications":"/support/knowledgebase/notifications",
+        "genres and tags":"/support/knowledgebase/genres-and-tags",
+        "author dashboard":"/support/knowledgebase/author-dashboard",
+        "chapters":"/support/knowledgebase/chapters",
+        "submitting and verifying novels":"/support/knowledgebase/submitting-and-verifying-novels",
+        "chapters":"/support/knowledgebase/chapters",
+        "comments":"/support/knowledgebase/comments",
+        "reviews":"/support/knowledgebase/reviews",
+        "fiction status":"/support/knowledgebase/fiction-status",
+        "deleting your fiction":"/support/knowledgebase/deleting-your-fiction",
+        "donation":"/support/knowledgebase/donation",
+        "credit collaborate and moderate":"/support/knowledgebase/credit-collaborate-and-moderate",
+        "moderation tools for users":"/support/knowledgebase/moderation-tools-for-users",
+        "reputation":"/support/knowledgebase/reputation",
+        "experience":"/support/knowledgebase/experience",
+        "achievments":"/support/knowledgebase/achievments",
+        "writathon":"/support/knowledgebase/writathon",
+        "signup and activation":"/support/knowledgebase/signup-and-activation",
+        "security":"/support/knowledgebase/security",
+        "notification":"/support/knowledgebase/notification",
+        "contact the staff":"/support/knowledgebase/contact-the-staff",
+        "the site is loading slowly":"/support/knowledgebase/site-loading-slowly",
+        "report a bug":"/support/knowledgebase/report-a-bug",
+        "report an ad":"/support/knowledgebase/report-an-ad",
+        "report a user interaction":"/support/knowledgebase/report-a-user-interaction",
+        "frequently asked questions":"/support/knowledgebase/fredquently-asked-questions",
+        "copyright infringement":"/support/knowledgebase/copyright-infringement",
+        "premium":"/support/knowledgebase/premium",
+        "reader premium":"/support/knowledgebase/reader-premium",
+        "author premium":"/support/knowledgebase/author-premium",
+        "paid advertisement for my story":"/support/knowledgebase/paid-advertisement-for-my-story",
+    };
 
-  const generateSlug = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric characters with hyphens
-      .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const slug = generateSlug(searchTerm); // Generate slug when search is submitted
-    // console.log("Search Term:", searchTerm);
-    navigate(`/support/knowledgebase/${slug}`);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
+    const handleSearch = (e) => {
+      e.preventDefault();
+      // Generate slug from the search term
+      const slug = generateSlug(searchTerm);
+  
+      // Check if the slug matches any key in the pageMapping
+      const destination = pageMapping[slug] || "/support/knowledgebase";
+      
+      // Navigate to the matched URL or fallback URL
+      navigate(destination);
+    };
+  
+    const toggleSidebar = () => {
+      setIsSidebarVisible(!isSidebarVisible);
+    };
+  
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
-      <div className="text-white rounded-md">
-        <div className="col-xs-12 text-white">
-          <div
-            className="portlet light mb-2 page-header"
-            style={{
-              background:
-                'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
-              padding: "15px 20px",
-            }}
-          >
-            <div className="p-2 flex items-center">
-              <div className="mr-4">
-                <i
-                  className="fa fa-fw fa-book-open text-navy text-4xl"
-                  style={{ lineHeight: "initial" }}
-                ></i>
-              </div>
-              <div>
-                <h2 className="text-lg font-bold">Knowledge Base</h2>
-                <span>All about RU Novel</span>
-                <ul className="page-breadcrumb breadcrumb mt-2"></ul>
-              </div>
-            </div>
-          </div>
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+     <div className="text-white rounded-md">
+  <div className="col-xs-12 text-white">
+    <div
+      className="portlet light mb-2 page-header"
+      style={{
+        background:
+          'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/dist/img/pmheader.jpg") no-repeat center',
+        padding: "15px 20px",
+      }}
+    >
+      <div className="p-2 flex items-center">
+        <div className="mr-4">
+          <i
+            className="fa fa-fw fa-book-open text-navy text-4xl"
+            style={{ lineHeight: "initial" }}
+          ></i>
+        </div>
+        <div>
+          <h2 className="text-lg font-bold">Knowledge Base</h2>
+          <span>All about Royal Road</span>
+          <ul className="page-breadcrumb breadcrumb mt-2">
+           
+          </ul>
         </div>
       </div>
+    </div>
+  </div>
+  </div>
 
-      <div className="bg-white text-black rounded-md p-6">
+
+  <div className={` ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-white text-black '} rounded-md p-6`}>
         <div className="portlet light">
-          {isSidebarVisible && (
-            <div className=" w-[75%] sm-[50%] p-4 bg-[#FAF9F6] mb-2 ">
+          {isSidebarVisible &&<div className={` w-[75%] sm-[50%] p-4 mb-2 ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-[#FAF9F6]   '}` }>
               <div className="backdrop">
                 <strong>Rules</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
+                  
                     <Link
                       to="/support/knowledgebase/rules-about-ratings-and-reviews"
-                      className="hover:underline hover:text-blue-900 transition-colors"
+                      className="hover:underline hover:text-blue-900  transition-colors"
                     >
                       Rules about Ratings and Reviews
                     </Link>
@@ -79,7 +158,7 @@ const  Donation = () => {
                   <div>
                     <Link
                       to="/support/knowledgebase/content-guidelines"
-                      className="hover:underline hover:text-blue-900 transition-colors  "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Content Guidelines
                     </Link>
@@ -98,34 +177,34 @@ const  Donation = () => {
               <div className="backdrop">
                 <strong>Reading</strong>
                 <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/discovery-and-rankings"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Discovery & Ranking
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-90 text-[#000000CC] transition-colors"
-                    >
-                      Advanced Search
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/optimize-the-reading-experience"
-                      className="hover:underline hover:text-blue-900 transition-colors "
-                    >
-                      Optimize the Reading Experience
-                    </Link>
-                  </div>
+                <div>
+                      <Link
+                        to="/support/knowledgebase/discovery-and-rankings"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Discovery & Ranking
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/advanced-search"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Advanced Search
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        to="/support/knowledgebase/optimize-the-reading-experience"
+                        className="hover:underline hover:text-blue-900 transition-colors"
+                      >
+                        Optimize the Reading Experience
+                      </Link>
+                    </div>
                   <div>
                     <Link
                       to="/support/knowledgebase/personalized-lists"
-                      className="hover:underline hover:text-blue-900 transition-colors "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Personalized Lists
                     </Link>
@@ -133,7 +212,7 @@ const  Donation = () => {
                   <div>
                     <Link
                       to="/support/knowledgebase/notifications"
-                      className="hover:underline hover:text-blue-900 transition-colors "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Notifications
                     </Link>
@@ -168,20 +247,17 @@ const  Donation = () => {
                     </Link>
                   </div>
                   <div>
-                   
-
                     <Link
                       to="/support/knowledgebase/submitting-and-verifying-novels"
-                      className="hover:underline hover:text-blue-900 transition-colors "
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Submitting and Verifying Novels
                     </Link>
                   </div>
                   <div>
-                 
                     <Link
                       to="/support/knowledgebase/comments"
-                      className="hover:underline hover:text-blue-900  transition-colors"
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Comments
                     </Link>
@@ -195,7 +271,6 @@ const  Donation = () => {
                     </Link>
                   </div>
                   <div>
-                 
                     <Link
                       to="/support/knowledgebase/fiction-status"
                       className="hover:underline hover:text-blue-900 transition-colors"
@@ -204,22 +279,17 @@ const  Donation = () => {
                     </Link>
                   </div>
                   <div>
-                  
                     <Link
                       to="/support/knowledgebase/deleting-your-fiction"
-                      className="hover:underline hover:text-blue-900   transition-colors"
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Deleting Your Fiction
                     </Link>
                   </div>
                   <div>
-                  <FontAwesomeIcon
-                      icon={faCaretRight}
-                      className="text-[#000000CC] mr-1 "
-                    />
                     <Link
                       to="/support/knowledgebase/donation"
-                      className="hover:underline hover:text-blue-900 text-[#000000CC] transition-colors"
+                      className="hover:underline hover:text-blue-900 transition-colors"
                     >
                       Donation
                     </Link>
@@ -236,7 +306,7 @@ const  Donation = () => {
               </div>
 
               <div className="backdrop">
-              <strong>Moderation Tools For Users</strong>
+                <strong>Modertaion Tools For Users</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
                     <Link
@@ -415,40 +485,43 @@ const  Donation = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
+            </div> }
+          
           <div className="row">
             <div className="block md:hidden col-xs-12 mb-5">
-              <button
-                className="btn btn-default toc-toggle"
-                onClick={toggleSidebar}
-              >
+              <button className="btn btn-default toc-toggle" onClick={toggleSidebar}>
                 <i className="fas fa-bars"></i> Table of Contents
               </button>
             </div>
 
-            <div className="row mb-4">
-              <div className="col-md-12">
-                <form onSubmit={handleSearch}>
-                  <div className="form-group">
-                    <div
-                      id="knowledge-base-search-container"
-                      className="relative"
-                    >
-                      <div className="searchbox">
-                        <div className="searchbox-container">
-                          <div className="sui-search-box flex items-center border rounded-md p-2">
+          <div className="row mb-4">
+            <div className="col-md-12">
+              <form onSubmit={handleSearch}>
+                <div className="form-group">
+                  <div
+                    id="knowledge-base-search-container"
+                    className="relative"
+                  >
+                    <div className="searchbox">
+                      <div className="searchbox-container">
+                        
+                      <div className={`sui-search-box flex items-center border rounded-md p-2  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}>
+                          
                             <div className="flex-grow">
                               <input
                                 id="downshift-0-input"
                                 aria-autocomplete="list"
                                 aria-labelledby="downshift-0-label"
                                 autoComplete="off"
-                                placeholder="Search for support page by writing it name"
-                                className="w-full border-none focus:outline-none"
+                             
+                                className={`w-full border-none focus:outline-none  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}
+                                ref={inputRef}
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                 onChange={handleInputChange}
+                                  placeholder="Search..."
+
+                                
+                                
                               />
                             </div>
                             <input
@@ -458,18 +531,31 @@ const  Donation = () => {
                               value="Search"
                             />
                           </div>
-                        </div>
+                    
                       </div>
-
-                      {/* Search results */}
-                      <ul className="sui-results-container">
-                        {/* Add more search results here */}
-                      </ul>
                     </div>
+
+                    {suggestions.length > 0 && (
+            <ul className={`absolute mt-1 border w-full border-gray-300  rounded shadow-lg ${theme === 'dark' ? 'bg-[#131313] text-white' : ' bg-white '}`}>
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className={`p-2 cursor-pointer w-full font-bold    ${theme === 'dark' ? 'hover:bg-gray-800' : ' hover:bg-gray-200 '}`}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                
+                  {suggestion}
+                </li>
+                
+              ))}
+            </ul>
+          )}
+                  
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
+          </div>
 
             {/* Layout for Sidebar and Content */}
             <div className="flex flex-wrap">
@@ -622,13 +708,14 @@ const  Donation = () => {
                       </Link>
                     </div>
                     <div>
+                   
                     <FontAwesomeIcon
                         icon={faCaretRight}
-                        className="text-[#000000CC] mr-1"
+                        className={` mr-1 ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}
                       />
                       <Link
                         to="/support/knowledgebase/donation"
-                        className="hover:underline hover:text-blue-900 text-[#000000CC] transition-colors"
+                        className={`hover:underline hover:text-blue-900 transition-colors ${theme === 'dark' ? 'text-white' : 'text-[#000000CC]'}`} 
                       >
                         Donation
                       </Link>
@@ -828,7 +915,7 @@ const  Donation = () => {
 
               
               <div className="w-full md:w-2/3 p-4  ">
-                <div className="text-[#000000CC]">
+              <div className= {` ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}>
                   <h1 className="text-4xl ">Donation
                   </h1>
                   <p className="py-4">In order to add a [Donation] request using Paypal or Patreon to your fiction page.</p>
@@ -847,7 +934,7 @@ const  Donation = () => {
                   
 
                   <p className="py-4">
-                  RU Novel does not take any percentage of these donations, they are held externally via PayPal and RU Novel doesn't hold any responsibility for them.
+                  Royal Road does not take any percentage of these donations, they are held externally via PayPal and Royal Road doesn't hold any responsibility for them.
 
 
 
@@ -858,7 +945,7 @@ const  Donation = () => {
                   <ul className="mt-5 ml-8 list-disc">
                   <li className="py-2">
                   
-                  RU Novel may revoke donation privileges at its own discretion.
+                  Royal Road may revoke donation privileges at its own discretion.
                  </li>
                 </ul>
                    

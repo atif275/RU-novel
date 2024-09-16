@@ -94,12 +94,12 @@ function Search() {
   };
 
   return (
-    <div className='lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]'>
-      <div className='flex flex-col md:flex-row items-center px-4 py-8 bg-white'>
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
+      <div className={`flex flex-col md:flex-row items-center px-4 py-8 ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]]' : 'bg-white '}`}>
         <div className="flex flex-col sm:flex-row items-center w-full md:w-[300%] lg:w-[600%]">
           <input
             type="text"
-            className={'form-control p-4 w-full text-[#a0a9b4] border-0 outline-none mb-4 md:mb-0  bg-[#f3f6f9]'}
+            className={`form-control p-4 w-full  border-0 outline-none mb-4 md:mb-0  ${theme === 'dark' ? 'bg-[#181818] text-[#FFFFFFCC]' : 'bg-[#f3f6f9] text-[#a0a9b4] '}`}
             placeholder={searchQuery}
             name="title"
             ref={inputref}
@@ -144,7 +144,7 @@ function Search() {
               />
             ))
           ) : (
-            <p className='bg-white p-8'>No results found</p>
+            <p className={`p-8 ${theme === 'dark' ? 'bg-[#181818] text-white' : 'bg-white'}`}>No results found</p>
           )}
 
           {/* Pagination Controls */}
@@ -170,15 +170,15 @@ function Search() {
         </div>
 
         {/* Hide this div on medium screens and below */}
-        <div className="bg-white w-full md:w-1/3 text-black rounded-md shadow-md mb-6 md:mb-0 hidden md:block" id='ahsan'>
+        <div className={` w-full md:w-1/3  rounded-md shadow-md mb-6 md:mb-0 hidden md:block ${theme === 'dark' ? 'bg-[#131313] text-[#FFFFFFCC]' : 'bg-white text-black '}`} id='ahsan'>
           <div className="border-b border-gray-200 px-4 py-3 flex items-center">
-            <FontAwesomeIcon icon={faAlignLeft} className="text-gray-800 mr-2" />
+            <FontAwesomeIcon icon={faAlignLeft} className={` mr-2 ${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-gray-800 '}`} />
             <span className="font-bold uppercase">Fiction Details</span>
           </div>
           <div className="p-4" id="fiction-details">
             <div className="flex items-center">
               <div className="bg-gray-400 w-1 h-8 md:h-12 mr-3"></div>
-              <h4 className="font-bold uppercase text-gray-900 text-xs md:text-sm">
+              <h4 className={`font-bold uppercase text-xs md:text-sm ${theme === 'dark' ? 'text-[#FFFFFFCC]' : 'text-gray-900 '}`}>
                 Select a fiction on the left to see its information
               </h4>
              

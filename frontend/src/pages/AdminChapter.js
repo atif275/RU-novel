@@ -11,12 +11,31 @@ import ChCommentData from '../components/ChCommentData';
 function AdminChapter() {
   const { fictionId, chapterId } = useParams();
   const [chapterData, setChapterData] = useState(null);
+  const [bookData, setBookData] = useState(null);
+  const [authorData, setAuthorData] = useState(null);
 
   useEffect(() => {
     const fetchChapterData = async () => {
       try {
-        const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`);
-        setChapterData(response.data);
+       // const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`);
+        // setChapterData(response.data);
+
+        const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${fictionId}`);
+        setBookData(response.data);
+
+         // Find the specific chapter within the book's chapters array
+         const chapter = response.data.chapters.find(ch => ch._id === chapterId);
+         if (chapter) {
+           setChapterData(chapter);
+         } else {
+           console.error('Chapter not found');
+         }
+
+         const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
+        console.log('Author Data:', authorResponse.data);
+        setAuthorData(authorResponse.data);
+
+        
       } catch (error) {
         console.error('Error fetching chapter data:', error);
       }
@@ -25,7 +44,7 @@ function AdminChapter() {
     fetchChapterData();
   }, [fictionId, chapterId]);
 
-  if (!chapterData) {
+  if (!chapterData || !bookData || !authorData) {
     return <div>Loading...</div>;
   }
 
@@ -50,7 +69,7 @@ function AdminChapter() {
           />
           </div>
           <div className='m-0 mt-4 p-4 bg-white'>
-            <AuthorProfile authorId={chapterData.authorId} />
+          <AuthorProfile authorData={authorData} authorName={authorData.username} />
           </div>
           <div>
             {/* <ChCommentData /> */}

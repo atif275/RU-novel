@@ -9,6 +9,7 @@ const NewIdea = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.userData.isAuthenticated);
   const email = useSelector((state) => state.userData.email);
+  const theme = useSelector((state) => state.userData.theme);
 
   // Create refs for form inputs
   const titleRef = useRef(null);
@@ -27,7 +28,7 @@ const NewIdea = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("Fetched data:", data);
+        console.log("Fetched data:", data);
         if (data) {
           dispatch(userActions.setComments(data));
         }
@@ -47,13 +48,15 @@ const NewIdea = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log( titleRef.current.value,
-    //    descriptionRef.current.value,
-    //    categoryRef.current.value,
-    //    suggestions.username,
-    //   suggestions.email,
-    //   suggestions.profilePicture,)
-  
+    console.log(
+      titleRef.current.value,
+      descriptionRef.current.value,
+      categoryRef.current.value,
+      suggestions.username,
+      suggestions.email,
+      suggestions.profilePicture
+    );
+
     if (isAuthenticated) {
       try {
         const response = await fetch("https://api.ru-novel.ru/api/newIdea", {
@@ -73,10 +76,10 @@ const NewIdea = () => {
 
         if (response.ok) {
           const data = await response.json();
-          // console.log("Fetched data:", data);
+          console.log("Fetched data:", data);
           if (data) {
-            // console.log(data.comment);
-            navigate('/support/suggestions')
+            console.log(data.comment);
+            navigate("/support/suggestions");
           }
         } else {
           console.error("Error submitting idea");
@@ -90,19 +93,43 @@ const NewIdea = () => {
   };
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
+    <div
+      className={`lg:w-[90%] lg:ml-20 h-full p-4 ${
+        theme === "dark" ? "bg-[#181818]" : "bg-[#f3f6f9]"
+      }`}
+    >
       <div
-        className="image-header bg-cover bg-center w-full  rounded-md"
+        className={`image-header bg-cover bg-center w-full rounded-md ${
+          theme === "dark" ? "bg-[#131313]" : ""
+        }`}
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/dist/img/ideas.jpg')`,
         }}
       >
-        <div className="flex justify-between items-center py-6 px-4">
+        <div
+          className={`flex justify-between items-center py-6 px-4 ${
+            theme === "dark" ? "bg-[#181818]" : ""
+          }`}
+        >
           <div className="flex items-center space-x-4">
-            <i className="fas fa-lightbulb text-white text-3xl"></i>
+            <i
+              className={`fas fa-lightbulb text-3xl ${
+                theme === "dark" ? "text-[#FFFFFFCC]" : "text-white"
+              }`}
+            ></i>
             <div className="flex flex-col">
-              <h2 className="text-2xl font-bold text-white">New Idea</h2>
-              <span className="text-white">
+              <h2
+                className={`text-2xl font-bold ${
+                  theme === "dark" ? "text-[#FFFFFFCC]" : "text-white"
+                }`}
+              >
+                New Idea
+              </h2>
+              <span
+                className={`${
+                  theme === "dark" ? "text-[#FFFFFFCC]" : "text-white"
+                }`}
+              >
                 Do you have an idea of what's missing? Submit it now so the users can discuss it!
               </span>
             </div>
@@ -111,11 +138,18 @@ const NewIdea = () => {
       </div>
 
       <form
-        className="p-6 bg-white rounded-md shadow-md mt-6"
+        className={`p-6 rounded-md shadow-md mt-6 ${
+          theme === "dark" ? "bg-[#131313]" : "bg-white"
+        }`}
         onSubmit={handleSubmit}
       >
         <div className="form-group mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className={`block text-sm font-medium ${
+              theme === "dark" ? "text-[#FFFFFFCC]" : "text-gray-700"
+            }`}
+          >
             Title
           </label>
           <input
@@ -123,35 +157,57 @@ const NewIdea = () => {
             id="title"
             name="title"
             placeholder="Title"
-            ref={titleRef} // Using ref instead of e.target
+            ref={titleRef}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`mt-1 block w-full p-2 ${
+              theme === "dark"
+                ? "bg-[#181818] text-[#FFFFFFCC] focus:outline-none"
+                : "bg-[#f3f6f9] border border-gray-300 rounded-md focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <div className="form-group mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="description"
+            className={`block text-sm font-medium ${
+              theme === "dark" ? "text-[#FFFFFFCC]" : "text-gray-700"
+            }`}
+          >
             Description
           </label>
           <textarea
             id="description"
             name="description"
             placeholder="Description (optional)"
-            ref={descriptionRef} // Using ref instead of e.target
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            ref={descriptionRef}
+            className={`mt-1 block w-full p-2 ${
+              theme === "dark"
+                ? "bg-[#181818] text-[#FFFFFFCC] focus:outline-none"
+                : "bg-[#f3f6f9] border border-gray-300 rounded-md focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <div className="form-group mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="category"
+            className={`block text-sm font-medium ${
+              theme === "dark" ? "text-[#FFFFFFCC]" : "text-gray-700"
+            }`}
+          >
             Category
           </label>
           <select
             id="category"
             name="category"
-            ref={categoryRef} // Using ref instead of e.target
+            ref={categoryRef}
             required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`mt-1 block w-full p-2 ${
+              theme === "dark"
+                ? "bg-[#181818] text-[#FFFFFFCC] focus:outline-none"
+                : "bg-[#f3f6f9] border border-gray-300 rounded-md focus:ring-blue-500"
+            }`}
           >
             <option value="" disabled>
               Select a category

@@ -20,7 +20,7 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
       <div className="absolute inset-0 flex flex-col md:flex-col items-center justify-center ml-28">
         <div className="w-full md:w-1/2 h-1/2 flex flex-col items-center text-center md:items-start md:text-left">
           <h1 className="text-white text-[24px] md:text-[30px]">{title}</h1>
-          <button href='#' className="text-white text-[16px] md:text-[18px]">By {author}</button>
+          <button  className="text-white text-[16px] md:text-[18px]">By {author}</button>
         </div>
         <button
           onClick={handleStartReading}
@@ -34,7 +34,7 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
       <img
         src={image}
         alt='Character'
-        className="absolute left-[10px] lg:left-4 xl:left-10 bottom-[10px] lg:bottom-[-150px] bg-white h-[150px] lg:h-[300px] object-cover border-4"
+        className="absolute left-[10px] lg:left-4 xl:left-10 bottom-[10px] lg:bottom-[-150px] w-[100px] lg:w-[200px] bg-white h-[150px] lg:h-[300px] object-cover border-4"
       />
     </div>
   );

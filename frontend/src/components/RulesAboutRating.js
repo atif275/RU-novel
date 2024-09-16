@@ -1,17 +1,40 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch,useSelector } from "react-redux";
+import { userActions } from "../store";
 const Rules = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const theme=useSelector((state)=>state.userData.theme)
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+  
+      if (value) {
+        // Filter suggestions based on input
+        const matchingSuggestions = Object.keys(pageMapping).filter(keyword =>
+          keyword.includes(value.toLowerCase())
+        );
+        setSuggestions(matchingSuggestions);
+      } else {
+        setSuggestions([]);
+      }
+    };
+  
     const inputRef=useRef(null)
+
+    const dispatch=useDispatch()
     
     const navigate=useNavigate()
-
+    useEffect(() => {
+      dispatch(userActions.setBarsClick(false));
+      inputRef.current?.focus(); // Auto focus on search input
+  }, [dispatch]);
     const generateSlug = (title) => {
         return title
           .toLowerCase()
@@ -19,13 +42,63 @@ const Rules = () => {
           .replace(/^-+|-+$/g, '');    // Remove leading and trailing hyphens
       };
       
-    const handleSearch = (e) => {
-        e.preventDefault();
-        const slug = generateSlug(searchTerm);  // Generate slug when search is submitted
-        // console.log("Search Term:", searchTerm);
-        navigate(`/support/knowledgebase/${slug}`);
+      const handleSuggestionClick = (suggestion) => {
+        const destination = pageMapping[suggestion];
+        navigate(destination);
+      };
 
+    const pageMapping = {
+      "rules about rating and reviews": "/support/knowledgebase/rules-about-ratings-and-reviews",
+      "content guidelines": "/support/knowledgebase/content-guidelines",
     
+      "general rules": "/support/knowledgebase/general-rules",
+      "discovery & rankings": "/support/knowledgebase/discovery-and-rankings",
+      "advanced search": "/support/knowledgebase/advanced-search",
+        "optimize the reading experience":"/support/knowledgebase/optimize-the-reading-experience",
+        "personalized lists":"/support/knowledgebase/personalized-lists",
+        "notifications":"/support/knowledgebase/notifications",
+        "genres and tags":"/support/knowledgebase/genres-and-tags",
+        "author dashboard":"/support/knowledgebase/author-dashboard",
+        "chapters":"/support/knowledgebase/chapters",
+        "submitting and verifying novels":"/support/knowledgebase/submitting-and-verifying-novels",
+        "chapters":"/support/knowledgebase/chapters",
+        "comments":"/support/knowledgebase/comments",
+        "reviews":"/support/knowledgebase/reviews",
+        "fiction status":"/support/knowledgebase/fiction-status",
+        "deleting your fiction":"/support/knowledgebase/deleting-your-fiction",
+        "donation":"/support/knowledgebase/donation",
+        "credit collaborate and moderate":"/support/knowledgebase/credit-collaborate-and-moderate",
+        "moderation tools for users":"/support/knowledgebase/moderation-tools-for-users",
+        "reputation":"/support/knowledgebase/reputation",
+        "experience":"/support/knowledgebase/experience",
+        "achievments":"/support/knowledgebase/achievments",
+        "writathon":"/support/knowledgebase/writathon",
+        "signup and activation":"/support/knowledgebase/signup-and-activation",
+        "security":"/support/knowledgebase/security",
+        "notification":"/support/knowledgebase/notification",
+        "contact the staff":"/support/knowledgebase/contact-the-staff",
+        "the site is loading slowly":"/support/knowledgebase/site-loading-slowly",
+        "report a bug":"/support/knowledgebase/report-a-bug",
+        "report an ad":"/support/knowledgebase/report-an-ad",
+        "report a user interaction":"/support/knowledgebase/report-a-user-interaction",
+        "frequently asked questions":"/support/knowledgebase/fredquently-asked-questions",
+        "copyright infringement":"/support/knowledgebase/copyright-infringement",
+        "premium":"/support/knowledgebase/premium",
+        "reader premium":"/support/knowledgebase/reader-premium",
+        "author premium":"/support/knowledgebase/author-premium",
+        "paid advertisement for my story":"/support/knowledgebase/paid-advertisement-for-my-story",
+    };
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+      // Generate slug from the search term
+      const slug = generateSlug(searchTerm);
+  
+      // Check if the slug matches any key in the pageMapping
+      const destination = pageMapping[slug] || "/support/knowledgebase";
+      
+      // Navigate to the matched URL or fallback URL
+      navigate(destination);
     };
   
     const toggleSidebar = () => {
@@ -34,7 +107,7 @@ const Rules = () => {
   
 
   return (
-    <div className="lg:w-[90%] lg:ml-20 h-full p-4 bg-[#f3f6f9]">
+    <div className={`lg:w-[90%] lg:ml-20 h-full p-4 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#f3f6f9] '}`}>
      <div className="text-white rounded-md">
   <div className="col-xs-12 text-white">
     <div
@@ -65,17 +138,17 @@ const Rules = () => {
   </div>
 
 
-      <div className="bg-white text-black rounded-md p-6">
+  <div className={` ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-white text-black '} rounded-md p-6`}>
         <div className="portlet light">
-          {isSidebarVisible &&<div className=" w-[75%] sm-[50%] p-4 bg-[#FAF9F6] mb-2 ">
+          {isSidebarVisible &&<div className={` w-[75%] sm-[50%] p-4 mb-2 ${theme === 'dark' ? 'bg-[#131313] text-white' : 'bg-[#FAF9F6]   '}` }>
               <div className="backdrop">
                 <strong>Rules</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
-                    <FontAwesomeIcon icon={faCaretRight} className="text-[#000000CC] mr-1"/>
+                  
                     <Link
                       to="/support/knowledgebase/rules-about-ratings-and-reviews"
-                      className="hover:underline hover:text-blue-900 text-[#000000CC] transition-colors"
+                      className="hover:underline hover:text-blue-900  transition-colors"
                     >
                       Rules about Ratings and Reviews
                     </Link>
@@ -126,7 +199,7 @@ const Rules = () => {
                         Optimize the Reading Experience
                       </Link>
                     </div>
-                    <div>
+                  <div>
                     <Link
                       to="/support/knowledgebase/personalized-lists"
                       className="hover:underline hover:text-blue-900 transition-colors"
@@ -155,7 +228,7 @@ const Rules = () => {
               <div className="backdrop">
                 <strong>Writing</strong>
                 <div className="ml-5 text-blue-700">
-                <div>
+                  <div>
                     <Link
                       to="/support/knowledgebase/author-dashboard"
                       className="hover:underline hover:text-blue-900 transition-colors"
@@ -231,136 +304,7 @@ const Rules = () => {
               </div>
 
               <div className="backdrop">
-                <strong>The Gamification System and Events</strong>
-                <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Reputation
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Experience
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Achievements
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Writathon
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="backdrop">
-                <strong>Account</strong>
-                <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      SignUp & Activation
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Security
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/knowledgebase/73"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Notification
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="backdrop">
-                <strong>Support</strong>
-                <div className="ml-5 text-blue-700">
-                  <div>
-                    <Link
-                      to="/support/contact-staff"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Contact the Staff
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/site-loading-slowly"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      The Site is Loading Slowly
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/report-bug"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Report a Bug
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/report-ad"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Report an Ad
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/report-user-interaction"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Report a User Interaction
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/faq"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Frequently Asked Questions
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/support/copyright-infringement"
-                      className="hover:underline hover:text-blue-900 transition-colors"
-                    >
-                      Copyright Infringement
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="backdrop ">
-                <strong>Moderation Tools For Users</strong>
+                <strong>Modertaion Tools For Users</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
                     <Link
@@ -558,18 +502,24 @@ const Rules = () => {
                   >
                     <div className="searchbox">
                       <div className="searchbox-container">
-                       
-                          <div className="sui-search-box flex items-center border rounded-md p-2">
+                        
+                      <div className={`sui-search-box flex items-center border rounded-md p-2  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}>
+                          
                             <div className="flex-grow">
                               <input
                                 id="downshift-0-input"
                                 aria-autocomplete="list"
                                 aria-labelledby="downshift-0-label"
                                 autoComplete="off"
-                                placeholder="Search for support page by writing it name"
-                                className="w-full border-none focus:outline-none"
+                             
+                                className={`w-full border-none focus:outline-none  ${theme === 'dark' ? 'bg-[#131313]' : ' '}`}
+                                ref={inputRef}
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                 onChange={handleInputChange}
+                                  placeholder="Search..."
+
+                                
+                                
                               />
                             </div>
                             <input
@@ -579,20 +529,31 @@ const Rules = () => {
                               value="Search"
                             />
                           </div>
-                        
+                    
                       </div>
                     </div>
 
-                    {/* Search results */}
-                    <ul className="sui-results-container">
-                      {/* Add more search results here */}
-                    </ul>
+                    {suggestions.length > 0 && (
+            <ul className={`absolute mt-1 border w-full border-gray-300  rounded shadow-lg ${theme === 'dark' ? 'bg-[#131313] text-white' : ' bg-white '}`}>
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className={`p-2 cursor-pointer w-full font-bold    ${theme === 'dark' ? 'hover:bg-gray-800' : ' hover:bg-gray-200 '}`}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                
+                  {suggestion}
+                </li>
+                
+              ))}
+            </ul>
+          )}
+                  
                   </div>
                 </div>
               </form>
             </div>
           </div>
-
           {/* Layout for Sidebar and Content */}
           <div className="flex flex-wrap">
             {/* Sidebar for larger screens */}
@@ -601,13 +562,16 @@ const Rules = () => {
                 <strong>Rules</strong>
                 <div className="ml-5 text-blue-700">
                   <div>
-                    <FontAwesomeIcon icon={faCaretRight} className="text-[#000000CC] mr-1"/>
-                    <Link
-                      to="/support/knowledgebase/rules-about-ratings"
-                      className="hover:underline hover:text-blue-900 text-[#000000CC] transition-colors"
-                    >
-                      Rules about Ratings and Reviews
-                    </Link>
+                  <FontAwesomeIcon
+                        icon={faCaretRight}
+                        className={` mr-1 ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}
+                      />
+                      <Link
+                        to="/support/knowledgebase/rules-about-ratings-and-reviews"
+                        className={`hover:underline hover:text-blue-900 transition-colors ${theme === 'dark' ? 'text-white' : 'text-[#000000CC]'}`} 
+                      >
+                        Rules about Rating and Reviews
+                      </Link>
                   </div>
                   <div>
                     <Link
@@ -1013,7 +977,7 @@ const Rules = () => {
                   </div>
                   </div>
             <div className="w-full md:w-1/2 p-4  ">
-              <div className="text-[#000000CC]">
+            <div className= {` ${theme === 'dark' ? 'text-white' : 'text-[#000000CC] '}`}>
                 <h1 className="text-4xl " >Rules about Ratings, and Reviews</h1>
                 <p className="mt-5">
                   Reviews aim to inform prospective readers if the story is
