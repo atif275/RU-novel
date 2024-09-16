@@ -53,11 +53,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.set('trust proxy', 1);
 
-// app.use(session({
-//   secret: '1234asas',
-//   resave: false,
-//   saveUninitialized: true
-// }));
 
 
 app.use(session({
@@ -76,6 +71,28 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB connected');
+    
+    // Start the server only after the database is connected
+    const adminExists = await User.findOne({ email: "admin275@gmail.com" });
+    
+    // If admin doesn't exist, create a new admin user
+    if (!adminExists) {
+      const adminUser = new User({
+        username: "admin",
+        email: "admin275@gmail.com",
+        password: "admin123", // Consider hashing this password before storing
+        gender: "male",
+        status: "active",
+        role: "admin",
+        profilePicture: "https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/user-profile-images%2Fadmin.png?alt=media&token=765cd03d-0937-45ae-bd77-6cab739a9dbe",
+        profilePictureBorder: "https://firebasestorage.googleapis.com/v0/b/ru-novel-images.appspot.com/o/border-images%2Fbordersplat-1-min.png?alt=media&token=474278d7-d8a3-492b-85d9-f03bcccb7354",
+      });
+      
+      await adminUser.save();
+      console.log('Admin user created.');
+    } else {
+      console.log('Admin user already exists.');
+    }
     
     // Start the server only after the database is connected
     app.listen(PORT, () => {
