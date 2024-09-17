@@ -17,6 +17,10 @@ passport.use(new GoogleStrategy({
 async (accessToken, refreshToken, profile, done) => {
   try {
     console.log("profileid = "+ profile.id);
+    const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+    if (!email) {
+      return done(null, false, { message: 'Email is required to sign up' });
+    }
     let user = await Userdb.findOne({ googleId: profile.id });
     if (!user) {
       // New user signing up
