@@ -36,7 +36,7 @@ passport.use('google-link', new GoogleStrategy({
       }
       await user.save();
       console.log("saved to db");
-      console.log("User in strategy:", user._id);
+      console.log("User in strategy:", user._id.toString());
       return done(null, user._id.toString());
 
     } catch (err) {
@@ -83,11 +83,11 @@ async (req, accessToken, refreshToken, profile, done) => {
 }));
 
 // Serialize and deserialize user
-passport.serializeUser((user, done) => {
-    console.log("User in serializeUser:", user);
-    done(null, user._id);
-   
-});
+passport.serializeUser((userId, done) => {
+    console.log("enetered into serilize with id ==="+userId);
+    done(null, userId);  // This will already receive a string if you changed the strategy
+  });
+  
 
 passport.deserializeUser(async (id, done) => {
   try {
