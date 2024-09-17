@@ -55,26 +55,27 @@ passport.use('facebook-link', new FacebookStrategy({
 },
 async (req, accessToken, refreshToken, profile, done) => {
   try {
-    const userId = req.user._id;  // Extract the current user's _id from the session (assumes the user is already logged in)
-    console.log("userid ==="+userId);
-    console.log("profileid ==="+profile.id);
+    const state = JSON.parse(req.query.state);  // Extract the state
+      const userId = state.userId;  // Get the userId passed from frontend
+    console.log("userid facebook ==="+userId);
+    console.log("profileid facebook==="+profile.id);
     let user = await Userdb.findById(userId);  // Find the user by their ID
     if (!user) {
-        console.log("User not found");
+        console.log("User not found facebook");
       return done(null, false, { message: 'User not found' });
     }
 
     // Update the existing user with the Facebook ID
     user.facebookID = profile.id;
-    console.log("updated id");
+    console.log("updated id facebook");
     // If there's no profile picture, update it
     if (user.profilePicture === "" || !user.profilePicture) {
-        console.log("updated profile picture ");
+        console.log("updated profile picture facebook ");
       user.profilePicture = profile.photos[0].value;
     }
 
     await user.save();
-    console.log("saved to db");
+    console.log("saved to db facebook");
     return done(null, user._id.toString());
   } catch (err) {
     console.log("error catch");
