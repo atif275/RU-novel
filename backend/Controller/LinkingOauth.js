@@ -37,7 +37,8 @@ passport.use('google-link', new GoogleStrategy({
       await user.save();
       console.log("saved to db");
       console.log("User in strategy:", user._id);
-      return done(null, user);
+      return done(null, user._id.toString());
+
     } catch (err) {
         console.log("error catch");
       return done(err, null);
