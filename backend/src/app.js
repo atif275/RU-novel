@@ -318,7 +318,7 @@ app.get('/auth/facebook/callback',
 app.get('/auth/google/callback/link', 
   LinkPassport.authenticate('google-link', { failureRedirect: '/account/externallogins' }),
   (req, res) => {
-    res.redirect('/account/externallogins?status=success&provider=google');
+    res.redirect('https://ru-novel.ru/account/externallogins?status=success&provider=google');
   }
 );
 
@@ -326,7 +326,7 @@ app.get('/auth/google/callback/link',
 app.get('/auth/facebook/callback/link',
   LinkPassport.authenticate('facebook-link', { failureRedirect: '/account/externallogins' }),
   (req, res) => {
-    res.redirect('/account/externallogins?status=success&provider=facebook');
+    res.redirect('https://ru-novel.ru/account/externallogins?status=success&provider=facebook');
   }
 );
 

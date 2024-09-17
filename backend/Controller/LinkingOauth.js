@@ -75,7 +75,7 @@ async (req, accessToken, refreshToken, profile, done) => {
 
     await user.save();
     console.log("saved to db");
-    return done(null, user);
+    return done(null, user._id.toString());
   } catch (err) {
     console.log("error catch");
     done(err, null);
