@@ -338,7 +338,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 // Google linking route with userId in state
-app.get('/auth/google/link', ensureAuthenticated, (req, res, next) => {
+app.get('/auth/google/link', (req, res, next) => {
   const userId = req.query.userId;  // Extract userId from query parameter
   req.session.userId = userId;      // Save it in the session
   req.session.save(() => {
@@ -350,7 +350,7 @@ app.get('/auth/google/link', ensureAuthenticated, (req, res, next) => {
 });
 
 // Facebook linking route with userId in state
-app.get('/auth/facebook/link', ensureAuthenticated, (req, res, next) => {
+app.get('/auth/facebook/link', (req, res, next) => {
   const userId = req.query.userId;  // Extract userId from query parameter
   req.session.userId = userId;      // Save it in the session
   req.session.save(() => {
