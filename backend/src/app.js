@@ -9,6 +9,7 @@ const session = require('express-session');
 
 const path = require('path');
  const passport = require('../Controller/Oauth'); // Import the passport configuration
+ const LinkPassport = require('../Controller/Oauth');
 //const passport = require('../Controller/passport');
 // const Books = require('../model/BookThread');
 const Review = require('../model/reviews');
@@ -66,7 +67,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(LinkPassport.initialize());
+app.use(LinkPassport.session());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
  //app.use("/auth", authRoute);
 // MongoDB connection
@@ -312,21 +314,21 @@ app.get('/auth/facebook/callback',
 );
 
 app.get('/auth/google/link', 
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  LinkPassport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 app.get('/auth/google/callback/link', 
-  passport.authenticate('google', { failureRedirect: '/account/externallogins' }),
+LinkPassport.authenticate('google', { failureRedirect: '/account/externallogins' }),
   (req, res) => {
     res.redirect('/account/externallogins?status=success&provider=google');
   }
 );
 app.get('/auth/facebook/link', 
-  passport.authenticate('facebook', { scope: ['email'] })
+LinkPassport.authenticate('facebook', { scope: ['email'] })
 );
 
 app.get('/auth/facebook/callback/link',
-  passport.authenticate('facebook', { failureRedirect: '/account/externallogins' }),
+LinkPassport.authenticate('facebook', { failureRedirect: '/account/externallogins' }),
   (req, res) => {
     res.redirect('/account/externallogins?status=success&provider=facebook');
   }

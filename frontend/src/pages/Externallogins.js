@@ -16,14 +16,16 @@ function Externallogins() {
             await axios.put(`https://api.ru-novel.ru/api/unlink-${provider}`, { userId: currentUser._id });
             toast.success(`${provider} account unlinked successfully.`);
             
-            // Update user in Redux store after unlinking
-            dispatch({
+            await dispatch({
                 type: 'UPDATE_USER',
                 payload: {
                     ...currentUser,
                     [`${provider}Id`]: '' // Remove the ID from the user object
                 }
             });
+            
+            toast.success(`${provider.charAt(0).toUpperCase() + provider.slice(1)} account unlinked successfully.`);
+            window.location.reload();
         } catch (error) {
             console.error('Error unlinking account:', error);
             toast.error(`Failed to unlink ${provider} account.`);
