@@ -19,7 +19,7 @@ passport.use('google-link', new GoogleStrategy({
 async (req, accessToken, refreshToken, profile, done) => {
   try {
     const userId = req.user._id;  // Extract the current user's _id from the session (assumes the user is already logged in)
-
+    console.log("userid === "+userId);
     let user = await Userdb.findById(userId); // Find the user by their ID
     if (!user) {
       return done(null, false, { message: 'User not found' });
