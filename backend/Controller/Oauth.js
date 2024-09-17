@@ -16,6 +16,7 @@ passport.use(new GoogleStrategy({
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
+    console.log("profileid = "+ profile.id);
     let user = await Userdb.findOne({ googleId: profile.id });
     if (!user) {
       // New user signing up
