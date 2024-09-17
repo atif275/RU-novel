@@ -9,7 +9,7 @@ const session = require('express-session');
 
 const path = require('path');
  const passport = require('../Controller/Oauth'); // Import the passport configuration
- const LinkPassport = require('../Controller/Oauth');
+ const LinkPassport = require('../Controller/LinkingOauth');
 //const passport = require('../Controller/passport');
 // const Books = require('../model/BookThread');
 const Review = require('../model/reviews');
