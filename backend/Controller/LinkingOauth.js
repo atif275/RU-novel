@@ -20,21 +20,25 @@ passport.use('google-link', new GoogleStrategy({
       const state = JSON.parse(req.query.state);  // Extract the state
       const userId = state.userId;  // Get the userId passed from frontend
       console.log("userid ==="+userId);
+      console.log("profileid ==="+profile.id);
       // Find the user by userId and update googleId
       let user = await Userdb.findById(userId);
       if (!user) {
+        console.log("User not found");
         return done(new Error('User not found'));
       }
   
       // Update the user's Google ID and other information if necessary
       user.googleId = profile.id;
       if (user.profilePicture === "" || !user.profilePicture) {
+        console.log("updated profile picture ");
         user.profilePicture = profile.photos[0].value;
       }
       await user.save();
-  
+      console.log("saved to db");
       return done(null, user);
     } catch (err) {
+        console.log("error catch");
       return done(err, null);
     }
   }));
@@ -50,30 +54,36 @@ passport.use('facebook-link', new FacebookStrategy({
 async (req, accessToken, refreshToken, profile, done) => {
   try {
     const userId = req.user._id;  // Extract the current user's _id from the session (assumes the user is already logged in)
-
+    console.log("userid ==="+userId);
+    console.log("profileid ==="+profile.id);
     let user = await Userdb.findById(userId);  // Find the user by their ID
     if (!user) {
+        console.log("User not found");
       return done(null, false, { message: 'User not found' });
     }
 
     // Update the existing user with the Facebook ID
     user.facebookID = profile.id;
-
+    console.log("updated id");
     // If there's no profile picture, update it
     if (user.profilePicture === "" || !user.profilePicture) {
+        console.log("updated profile picture ");
       user.profilePicture = profile.photos[0].value;
     }
 
     await user.save();
+    console.log("saved to db");
     return done(null, user);
   } catch (err) {
+    console.log("error catch");
     done(err, null);
   }
 }));
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+    done(null, user._id);
+   
 });
 
 passport.deserializeUser(async (id, done) => {
