@@ -27,10 +27,10 @@ async (accessToken, refreshToken, profile, done) => {
         profilePicture: profile.photos[0].value
       });
       await user.save();
-      return done(null, { user, isNewUser: true });
+      return done(null, { userId: user._id.toString(), isNewUser: true });
     }
     // Existing user logging in
-    return done(null, { user, isNewUser: false });
+    return done(null, { userId: user._id.toString(), isNewUser: false });
   } catch (err) {
     done(err, null);
   }
@@ -61,10 +61,11 @@ async (accessToken, refreshToken, profile, done) => {
         profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null
       });
       await user.save();
-      return done(null, { user, isNewUser: true });
+      
+      return done(null, { userId: user._id.toString(), isNewUser: true });
     }
 
-    return done(null, { user, isNewUser: false });
+    return done(null, { userId: user._id.toString(), isNewUser: false });
   } catch (err) {
     done(err, null);
   }
@@ -74,9 +75,8 @@ async (accessToken, refreshToken, profile, done) => {
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user._id.toString()); // Assuming the user object has a user property containing user data
+  done(null, user.userId); // Serialize only the userId
 });
-
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await Userdb.findById(id);
