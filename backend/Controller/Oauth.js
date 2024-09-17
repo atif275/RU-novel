@@ -38,7 +38,7 @@ async (accessToken, refreshToken, profile, done) => {
       return done(null, { userId: user._id.toString(), isNewUser: true });
     }
     // Existing user logging in
-    return done(null, { userId: user._id.toString(), isNewUser: false });
+    return done(null, { user, isNewUser: false });
   } catch (err) {
     done(err, null);
   }
@@ -70,10 +70,12 @@ async (accessToken, refreshToken, profile, done) => {
       });
       await user.save();
       
-      return done(null, { userId: user._id.toString(), isNewUser: true });
+      return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+
     }
 
-    return done(null, { userId: user._id.toString(), isNewUser: false });
+    return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+
   } catch (err) {
     done(err, null);
   }
