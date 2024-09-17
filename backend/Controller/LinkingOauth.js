@@ -36,6 +36,7 @@ passport.use('google-link', new GoogleStrategy({
       }
       await user.save();
       console.log("saved to db");
+      console.log("User in strategy:", user);
       return done(null, user);
     } catch (err) {
         console.log("error catch");
@@ -82,6 +83,7 @@ async (req, accessToken, refreshToken, profile, done) => {
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
+    console.log("User in serializeUser:", user);
     done(null, user._id);
    
 });
