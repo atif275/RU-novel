@@ -330,6 +330,13 @@ app.get('/auth/facebook/callback/link',
   }
 );
 
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ message: 'User not authenticated' });  // Or redirect to a login page
+}
+
 // Google linking route with userId in state
 app.get('/auth/google/link', ensureAuthenticated, (req, res, next) => {
   const userId = req.query.userId;  // Extract userId from query parameter
