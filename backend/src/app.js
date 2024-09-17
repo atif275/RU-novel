@@ -310,6 +310,28 @@ app.get('/auth/facebook/callback',
     }
   }
 );
+
+app.get('/auth/google/link', 
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get('/auth/google/callback/link', 
+  passport.authenticate('google', { failureRedirect: '/account/externallogins' }),
+  (req, res) => {
+    res.redirect('/account/externallogins?status=success&provider=google');
+  }
+);
+app.get('/auth/facebook/link', 
+  passport.authenticate('facebook', { scope: ['email'] })
+);
+
+app.get('/auth/facebook/callback/link',
+  passport.authenticate('facebook', { failureRedirect: '/account/externallogins' }),
+  (req, res) => {
+    res.redirect('/account/externallogins?status=success&provider=facebook');
+  }
+);
+
 const Comment = require('../model/chaptercomments'); // Assuming the model is in the 'models' directory
 
 app.get('/api/load/comment', async (req, res) => {

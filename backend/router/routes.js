@@ -29,7 +29,10 @@ router.post('/api/comments/followlist',control.followList)
 router.get('/api/top', control.sort); 
 router.post('/api/report',control.report)
 // router.post('//add', upload.single('image'), control.addSubmission);
-
+// Route to unlink Google account
+router.put('/api/unlink-google', control.unlinkGoogle);
+// Route to unlink Facebook account
+router.put('/api/unlink-facebook', control.unlinkFacebook);
 //router.post('/account/externalloginconfirmation', upload.single('image'), control.changingData);
 router.post('/api/forgot-password', control.forgotPassword);
 router.post('/api/reset-password', control.resetPassword);

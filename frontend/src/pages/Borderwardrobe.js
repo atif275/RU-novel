@@ -16,7 +16,7 @@ function Borderwardrobe() {
 
     const premier =0
     const currentUser = useSelector((state) => state.userData.user);
-     const fictionCounts = currentUser?.fictions?.length || 0;
+    const fictionCounts = currentUser?.fictions?.length || 0;
     //const fictionCounts = 5;
 
 
@@ -36,6 +36,7 @@ function Borderwardrobe() {
                         fictionCount: fictionCounts // Assuming the desired number of borders based on a specific condition
                     }
                 });
+                console.log("fictions:"+fictionCounts);
                 console.log(data);  
                 setBorders(data);
                 if (currentUser && currentUser.profilePictureBorder) {
@@ -319,12 +320,14 @@ function Borderwardrobe() {
                                     />
 
                                     {/* Overlay Image (Border) */}
+                                    {currentUser.profilePictureBorder && currentUser.profilePictureBorder !== "" && (
                                     <img
                                         src={currentUser.profilePictureBorder}
                                         alt="Border"
                                         className="absolute w-50 h-40"  // Adjust width and height to fit perfectly around the avatar
                                         style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
                                     />
+                                    )}
                                 </div>
 
                                 {/* Right side: Current Level Box */}
@@ -341,12 +344,14 @@ function Borderwardrobe() {
                                             />
 
                                             {/* Overlay Image (Border) */}
+                                            {currentUser.profilePictureBorder && currentUser.profilePictureBorder !== "" && (
                                             <img
                                                 src={currentUser.profilePictureBorder}
                                                 alt="Border"
                                                 className="absolute w-25 h-20"  // Adjust width and height to fit perfectly around the avatar
                                                 style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} // Center the border image
                                             />
+                                            )}
                                         </div>
                                     </div>
                                 </div>

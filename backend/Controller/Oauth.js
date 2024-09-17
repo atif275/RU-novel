@@ -17,22 +17,35 @@ passport.use(new GoogleStrategy({
 async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await Userdb.findOne({ googleId: profile.id });
+    // If no user is found with googleId, check by email or username
     if (!user) {
-      // New user signing up
-      user = new Userdb({
-        googleId: profile.id,
-        username: profile.displayName,
-        email: profile.emails[0].value,
-        profilePicture: profile.photos[0].value
-      });
-      await user.save();
-      return done(null, { user, isNewUser: true });
-    }
-    // Existing user logging in
-    return done(null, { user, isNewUser: false });
-  } catch (err) {
-    done(err, null);
+      user = await Userdb.findOne({ $or: [{ email: profile.emails[0].value }, { username: profile.displayName }] });
+
+      // If user exists by email or username, update the googleId and optionally profilePicture
+      if (user) {
+        user.googleId = profile.id;
+        if (!user.profilePicture && profile.photos[0].value) {
+          user.profilePicture = profile.photos[0].value;
+        }
+        await user.save();
+        return done(null, { user, isNewUser: false });
+      }
+     // If no user exists by email or username, create a new user
+     user = new Userdb({
+      googleId: profile.id,
+      username: profile.displayName,
+      email: profile.emails[0].value,
+      profilePicture: profile.photos[0].value
+    });
+    await user.save();
+    return done(null, { user, isNewUser: true });
   }
+
+  // If a user with googleId is found, return the user
+  return done(null, { user, isNewUser: false });
+} catch (err) {
+  done(err, null);
+}
 }));
 
 
@@ -51,10 +64,26 @@ async (accessToken, refreshToken, profile, done) => {
       return done(null, false, { message: 'Email is required to sign up' });
     }
 
-    let user = await Userdb.findOne({ email: email });
+    // First, check if the user exists with facebookId
+    let user = await Userdb.findOne({ facebookID: profile.id });
+
+    // If no user is found with facebookId, check by email or username
     if (!user) {
+      user = await Userdb.findOne({ $or: [{ email: email }, { username: profile.displayName }] });
+
+      // If user exists by email or username, update the facebookID and optionally profilePicture
+      if (user) {
+        user.facebookID = profile.id;
+        if (!user.profilePicture && profile.photos[0].value) {
+          user.profilePicture = profile.photos[0].value;
+        }
+        await user.save();
+        return done(null, { user, isNewUser: false });
+      }
+
+      // If no user exists by email or username, create a new user
       user = new Userdb({
-        facebookId: profile.id,
+        facebookID: profile.id,
         username: profile.displayName,
         email: email,
         profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null
@@ -63,6 +92,7 @@ async (accessToken, refreshToken, profile, done) => {
       return done(null, { user, isNewUser: true });
     }
 
+    // If a user with facebookID is found, return the user
     return done(null, { user, isNewUser: false });
   } catch (err) {
     done(err, null);

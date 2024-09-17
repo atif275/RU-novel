@@ -1456,3 +1456,39 @@ exports.token1=async(req,res)=>{
       return res.status(500).json({ success: false, message: 'Server error', error });
   }
 }
+
+// Unlink Google account
+exports.unlinkGoogle = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await Userdb.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // Unlink Google account by removing googleId
+    user.googleId = '';
+    await user.save();
+    res.json({ message: 'Google account unlinked successfully' });
+  } catch (error) {
+    console.error('Failed to unlink Google account:', error);
+    res.status(500).json({ message: 'Failed to unlink Google account' });
+  }
+};
+
+// Unlink Facebook account
+exports.unlinkFacebook = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await Userdb.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // Unlink Facebook account by removing facebookID
+    user.facebookID = '';
+    await user.save();
+    res.json({ message: 'Facebook account unlinked successfully' });
+  } catch (error) {
+    console.error('Failed to unlink Facebook account:', error);
+    res.status(500).json({ message: 'Failed to unlink Facebook account' });
+  }
+};
