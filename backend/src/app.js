@@ -277,7 +277,9 @@ app.get('/logout', (req, res) => {
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    const userEmail = req.user.user.email;
+    console.log('req.user:', req.user);
+    const userEmail = req.user.email;
+    console.log('userEmail at calback ===:',userEmail);
     if (req.user.isNewUser) {
       res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
     } else  {
@@ -297,7 +299,7 @@ app.get('/auth/facebook/callback',
     failureRedirect: 'https://ru-novel.ru/error' // Redirects if authentication fails
   }),
   (req, res) => {
-    const userEmail = req.user.user.email; // Extract the email from req.user
+    const userEmail = req.user.email; // Extract the email from req.user
 
     if (!userEmail) {
       // Redirect to an error page if the email is missing
