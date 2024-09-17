@@ -278,7 +278,7 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     console.log('req.user:', req.user);
-    const userEmail = req.user.user.email;
+    const userEmail = req.user.email;
     console.log('userEmail at calback ===:' +userEmail);
     if (req.user.isNewUser) {
       res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
