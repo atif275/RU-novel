@@ -299,8 +299,8 @@ app.get('/auth/facebook/callback',
     failureRedirect: 'https://ru-novel.ru/error' // Redirects if authentication fails
   }),
   (req, res) => {
-    const userEmail = req.user.email; // Extract the email from req.user
-
+    const userEmail = req.user.user.email; // Extract the email from req.user
+    console.log('facebook userEmail at calback ===:' +userEmail);
     if (!userEmail) {
       // Redirect to an error page if the email is missing
       return res.redirect('https://ru-novel.ru/error');

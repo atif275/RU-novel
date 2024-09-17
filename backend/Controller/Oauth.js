@@ -35,7 +35,8 @@ async (accessToken, refreshToken, profile, done) => {
       await user.save();
       console.log("save users in db = ");
       console.log(" users id  = "+user._id.toString());
-      return done(null, { userId: user._id.toString(), isNewUser: true });
+      // return done(null, { userId: user._id.toString(), isNewUser: true });
+      return done(null, { user, isNewUser: true });
     }
     // Existing user logging in
     return done(null, { user, isNewUser: false });
@@ -70,11 +71,13 @@ async (accessToken, refreshToken, profile, done) => {
       });
       await user.save();
       
-      return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+      // return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+      return done(null, { user, isNewUser: true });
 
     }
 
-    return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+    // return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });
+    return done(null, { user, isNewUser: false });
 
   } catch (err) {
     done(err, null);
@@ -85,7 +88,7 @@ async (accessToken, refreshToken, profile, done) => {
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user.userId); // Serialize only the userId
+  done(null, user.user._id); // Serialize only the userId
 });
 passport.deserializeUser(async (id, done) => {
   try {
