@@ -13,7 +13,7 @@ const PageHeader = () => {
   const [messagesVisible, setMessagesVisible] = useState(false);
   const [messages, setMessages] = useState([]); 
   const [noMessages, setNoMessages] = useState(false); 
-
+  const [unreadCount, setUnreadCount] = useState('0');
   const dropdownRef = useRef(null);
   const messagedownRef = useRef(null);
   const dispatch = useDispatch();
@@ -34,42 +34,116 @@ const PageHeader = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+  // const toggleMessages = async () => {
+  //   setMessagesVisible(!messagesVisible);
+
+  //   // Fetch messages when opening the messages div
+  //   if (!messagesVisible) {
+  //     try {
+  //       const response = await fetch("https://api.ru-novel.ru/api/header/messages", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           recipient: user.username,
+  //         }),
+  //       });
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         if (data.length === 0) {
+  //           setNoMessages(true);
+  //           setMessages([]);
+  //         } else {
+  //           setNoMessages(false);
+  //           setMessages(data);
+  //         }
+  //       } else {
+  //         console.error("Error fetching messages");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   }
+  // };
+  const fetchNotifications = async () => {
+       
+
+    try {
+      const response = await fetch("https://api.ru-novel.ru/api/header/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recipient: user.username,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('my_data',data)
+        if (data.length === 0) {
+          setNoMessages(true);
+          setMessages([]);
+          localStorage.setItem('unreadNotifications', '0');
+        } else {
+          setNoMessages(false);
+          setMessages(data);
+
+          const unreadMessages = data.length;
+          const previousUnreadCount = parseInt(localStorage.getItem('lastKnownUnreadCount'), 10) ;
+           console.log("hey",previousUnreadCount)
+           console.log("bey",unreadMessages)
+
+
+           if (!localStorage.getItem('lastKnownUnreadCount') || window.location.pathname === '/private/1') {
+            // Only set lastKnownUnreadCount if it hasn't been set, or user is on /private
+            localStorage.setItem('lastKnownUnreadCount', unreadMessages.toString());
+            //localStorage.setItem('unreadNotifications', '0');
+           
+          }
+  
+
+          if (unreadMessages > previousUnreadCount) {
+            
+            localStorage.setItem('unreadNotifications', (unreadMessages - previousUnreadCount).toString());
+            const storedUnreadCount = localStorage.getItem('unreadNotifications');
+            setUnreadCount(storedUnreadCount );
+          } else if (unreadMessages < previousUnreadCount) {
+            localStorage.setItem('unreadNotifications', (previousUnreadCount - unreadMessages).toString());
+            const storedUnreadCount = localStorage.getItem('unreadNotifications');
+            setUnreadCount(storedUnreadCount );
+          } else {
+            localStorage.setItem('unreadNotifications', '0');
+          }
+
+          // localStorage.setItem('lastKnownUnreadCount', unreadMessages.toString());
+        }
+      } else {
+        console.error("Error fetching notifications");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const toggleMessages = async () => {
     setMessagesVisible(!messagesVisible);
 
-    // Fetch messages when opening the messages div
     if (!messagesVisible) {
-      try {
-        const response = await fetch("https://api.ru-novel.ru/api/header/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            recipient: user.username,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data.length === 0) {
-            setNoMessages(true);
-            setMessages([]);
-          } else {
-            setNoMessages(false);
-            setMessages(data);
-          }
-        } else {
-          console.error("Error fetching messages");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      // Mark all notifications as read (not implemented)
     }
   };
 
   useEffect(() => {
+    if (user.username) {
+      // Fetch notifications only when user.username is defined
+      fetchNotifications();
+    }
     const handleClickOutside = (event) => {
+      
       // Close profile dropdown if clicked outside
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
@@ -128,7 +202,12 @@ const PageHeader = () => {
                   className="flex items-center text-gray-400 hover:text-[#23527C]"
                   aria-label="Notifications - 0 new"
                 >
-                  <FontAwesomeIcon icon={faBell} className="text-[18px] lg:text-[20px] mt-4 lg:mt-5" />
+                  {unreadCount > 0 && (
+                    <span className="notification-count absolute top-0 right-0 bottom-1 block h-4 w-4 text-xs font-bold text-white bg-red-500 rounded-full flex items-center justify-center ml-2">
+                      {unreadCount}
+                    </span>
+                  )}
+                  <FontAwesomeIcon icon={faBell} className="mr-2 text-[18px] lg:text-[20px] mt-4 lg:mt-5" />
                 </Link>
               </li>
               {isAuthenticated ? (
@@ -268,15 +347,15 @@ const PageHeader = () => {
             {isAuthenticated ? (
                <>
                <li className="relative block mt-5" ref={messagedownRef} >
-                  <button
+                  {/* <button
                     onClick={toggleMessages}
                     className="flex items-center text-gray-400 hover:text-[#23527C]"
                     aria-label="Messages"
                   >
                     <FontAwesomeIcon icon={faEnvelope} className="text-[18px] lg:text-[20px]" />
-                  </button>
+                  </button> */}
                   {/* Messages div */}
-                  {messagesVisible && (
+                  {/* {messagesVisible && (
                     <div
                       className={`absolute mt-2 p-4 text-[#bcc2cb] space-y-2 w-48 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
                       style={{ zIndex: 10 }}
@@ -294,7 +373,7 @@ const PageHeader = () => {
                           ))
                       )}
                     </div>
-                  )}
+                  )} */}
                 </li>
               <div className="relative">
                 <button

@@ -54,7 +54,7 @@ function Message({ messages, noMessages }) {
 
   return (
     <div
-      className={`absolute mt-2 p-4 lg:mr-0 text-[#bcc2cb] space-y-2 w-64 max-h-48 overflow-y-auto ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
+      className={`absolute mt-2 right-0 p-4 lg:mr-0 text-[#bcc2cb] space-y-2 w-64 max-h-48 overflow-y-auto ${theme === 'dark' ? 'bg-[#181818]' : 'bg-gray-600'}`}
       style={{ zIndex: 10 }}
     >
       {noMessages ? (
