@@ -74,7 +74,7 @@ async (accessToken, refreshToken, profile, done) => {
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user.user._id); // Assuming the user object has a user property containing user data
+  done(null, user._id); // Assuming the user object has a user property containing user data
 });
 
 passport.deserializeUser(async (id, done) => {
