@@ -10,39 +10,35 @@ const facebookID = process.env.facebookID;
 const facebookSecret = process.env.facebookSecret;
 
 passport.use('google-link', new GoogleStrategy({
-  clientID: clientID,
-  clientSecret: clientSecret,
-  callbackURL: '/auth/google/callback/link',
-  scope: ['profile', 'email'],
-  passReqToCallback: true,  // Allows passing req to the callback
-},
-async (req, accessToken, refreshToken, profile, done) => {
-  try {
-    if (!req.user) {
-        return done(new Error('User is not authenticated for linking Google account'), null);
+    clientID: clientID,
+    clientSecret: clientSecret,
+    callbackURL: '/auth/google/callback/link',
+    passReqToCallback: true  // This allows us to access the request object and get state
+  },
+  async (req, accessToken, refreshToken, profile, done) => {
+    try {
+      const state = JSON.parse(req.query.state);  // Extract the state
+      const userId = state.userId;  // Get the userId passed from frontend
+  
+      // Find the user by userId and update googleId
+      let user = await Userdb.findById(userId);
+      if (!user) {
+        return done(new Error('User not found'));
       }
-    const userId = req.user._id;  // Extract the current user's _id from the session (assumes the user is already logged in)
-    console.log("userid === "+userId);
-    let user = await Userdb.findById(userId); // Find the user by their ID
-    if (!user) {
-      return done(null, false, { message: 'User not found' });
+  
+      // Update the user's Google ID and other information if necessary
+      user.googleId = profile.id;
+      if (user.profilePicture === "" || !user.profilePicture) {
+        user.profilePicture = profile.photos[0].value;
+      }
+      await user.save();
+  
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
     }
-
-    // Update the existing user with the Google ID
-    user.googleId = profile.id;
-    
-    // If there's no profile picture, update it
-    if (user.profilePicture === "" || !user.profilePicture) {
-      user.profilePicture = profile.photos[0].value;
-    }
-    
-    await user.save();
-    return done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-}));
-
+  }));
+  
 passport.use('facebook-link', new FacebookStrategy({
   clientID: facebookID,
   clientSecret: facebookSecret,

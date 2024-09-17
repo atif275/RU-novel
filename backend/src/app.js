@@ -313,9 +313,7 @@ app.get('/auth/facebook/callback',
   }
 );
 
-app.get('/auth/google/link', 
-  LinkPassport.authenticate('google-link', { scope: ['profile', 'email'] })
-);
+
 
 app.get('/auth/google/callback/link', 
   LinkPassport.authenticate('google-link', { failureRedirect: '/account/externallogins' }),
@@ -324,9 +322,6 @@ app.get('/auth/google/callback/link',
   }
 );
 
-app.get('/auth/facebook/link', 
-  LinkPassport.authenticate('facebook-link', { scope: ['email'] })
-);
 
 app.get('/auth/facebook/callback/link',
   LinkPassport.authenticate('facebook-link', { failureRedirect: '/account/externallogins' }),
@@ -334,6 +329,31 @@ app.get('/auth/facebook/callback/link',
     res.redirect('/account/externallogins?status=success&provider=facebook');
   }
 );
+
+// Google linking route with userId in state
+app.get('/auth/google/link', ensureAuthenticated, (req, res, next) => {
+  const userId = req.query.userId;  // Extract userId from query parameter
+  req.session.userId = userId;      // Save it in the session
+  req.session.save(() => {
+    LinkPassport.authenticate('google-link', {
+      scope: ['profile', 'email'],
+      state: JSON.stringify({ userId })
+    })(req, res, next);
+  });
+});
+
+// Facebook linking route with userId in state
+app.get('/auth/facebook/link', ensureAuthenticated, (req, res, next) => {
+  const userId = req.query.userId;  // Extract userId from query parameter
+  req.session.userId = userId;      // Save it in the session
+  req.session.save(() => {
+    LinkPassport.authenticate('facebook-link', {
+      scope: ['email'],
+      state: JSON.stringify({ userId })
+    })(req, res, next);
+  });
+});
+
 
 
 const Comment = require('../model/chaptercomments'); // Assuming the model is in the 'models' directory

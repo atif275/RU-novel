@@ -32,13 +32,18 @@ function Externallogins() {
         }
     };
 
-    const handleGoogleSignIn = () => {
-        window.location.href = 'https://api.ru-novel.ru/auth/google/callback/link';
-      };
-    
-      const handleFaceBookSignIn = () => {
-        window.location.href = 'https://api.ru-novel.ru/auth/facebook/callback/link';
-      };
+    // When the user clicks the link button for Google
+const handleGoogleSignIn = () => {
+    const userId = currentUser._id;  // Get the _id from the user
+    window.location.href = `https://api.ru-novel.ru/auth/google/link?userId=${userId}`;
+};
+
+// When the user clicks the link button for Facebook
+const handleFacebookSignIn = () => {
+    const userId = currentUser._id;  // Get the _id from the user
+    window.location.href = `https://api.ru-novel.ru/auth/facebook/link?userId=${userId}`;
+};
+
 
     return (
         <div className="w-full bg-cover bg-center bg-fixed">
