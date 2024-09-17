@@ -19,7 +19,7 @@ passport.use('google-link', new GoogleStrategy({
     try {
       const state = JSON.parse(req.query.state);  // Extract the state
       const userId = state.userId;  // Get the userId passed from frontend
-  
+      console.log("userid ==="+userId);
       // Find the user by userId and update googleId
       let user = await Userdb.findById(userId);
       if (!user) {
