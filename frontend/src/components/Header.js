@@ -138,10 +138,9 @@ const PageHeader = () => {
   };
 
   useEffect(() => {
-    if (user.username) {
-      // Fetch notifications only when user.username is defined
+   
       fetchNotifications();
-    }
+    
     const handleClickOutside = (event) => {
       
       // Close profile dropdown if clicked outside
