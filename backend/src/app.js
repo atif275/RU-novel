@@ -125,7 +125,7 @@ app.post('/api/create-payment', async (req, res) => {
         },
         confirmation: {
           type: 'redirect',  // We want to redirect the user to YooMoney’s payment page
-          return_url: `http://localhost:3000/premium?success=true`,  // Accessing payment ID after the response is received
+          return_url: `https://ru-novel.ru/premium?success=true`,  // Accessing payment ID after the response is received
         },
         description: `${plan} Subscription`,  // Description of the payment
         receipt: {
