@@ -33,7 +33,7 @@ useEffect(() => {
   if (isPaymentSuccess) {
     
     // If payment success, fetch the subscription details
-    fetchSubscriptionDetails();
+    fetchSubscriptionDetailsAndUpdate();
   }
 }, [isPaymentSuccess]);
 
@@ -43,6 +43,29 @@ useEffect(() => {
 }, []);
 
 const fetchSubscriptionDetails = async () => {
+  try {
+    console.log("user id = "+user._id);
+    const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', {
+      username: username,
+    });
+
+    const { paymentId, subscriptionType, status } = response.data;
+    console.log("paymentId"+paymentId);
+
+    
+     if (status === 'active') {
+      // If the subscription is active, update the current plan
+      setCurrentPlan(subscriptionType);
+    }
+
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching subscription details:', error);
+    toast.error("Error fetching subscription details");
+  }
+};
+
+const fetchSubscriptionDetailsAndUpdate = async () => {
   try {
     console.log("user id = "+user._id);
     const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', {
@@ -67,6 +90,7 @@ const fetchSubscriptionDetails = async () => {
     toast.error("Error fetching subscription details");
   }
 };
+
 
 
 const handlePaymentSuccess = async (paymentId) => {
