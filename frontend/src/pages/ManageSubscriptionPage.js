@@ -20,7 +20,7 @@ const ManageSubscriptionPage = () => {
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.post('http://localhost:5001/api/subscriptionn', { username: user.username });
+        const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', { username: user.username });
         setSubscription(response.data);
         setLoading(false);
       } catch (err) {
@@ -53,7 +53,7 @@ const ManageSubscriptionPage = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:5001/api/manage-subscription', { action: 'cancel', paymentId: subscription.paymentId });
+      await axios.post('https://api.ru-novel.ru/api/manage-subscription', { action: 'cancel', paymentId: subscription.paymentId });
       Swal.fire('Cancelled!', 'Your subscription has been successfully cancelled.', 'success');
       navigate('/premium');
     } catch (err) {
@@ -86,7 +86,7 @@ const handleUpgrade = async () => {
     }
     try {
       // Proceed to payment gateway for upgrading to yearly
-      const response = await axios.post('http://localhost:5001/api/create-payment', {
+      const response = await axios.post('https://api.ru-novel.ru/api/create-payment', {
         amount: 34.99, // Yearly plan amount
         plan: 'Yearly',
         email: user.email,
@@ -136,7 +136,7 @@ const handleUpgrade = async () => {
 
     try {
       // Proceed to payment gateway with the current plan details
-      const response = await axios.post('http://localhost:5001/api/create-payment', {
+      const response = await axios.post('https://api.ru-novel.ru/api/create-payment', {
         amount: subscription.amount, // Use the current plan amount
         plan: subscription.subscriptionType, // Use the current plan type
         email: user.email,

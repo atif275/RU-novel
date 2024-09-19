@@ -45,7 +45,7 @@ useEffect(() => {
 const fetchSubscriptionDetails = async () => {
   try {
     console.log("user id = "+user._id);
-    const response = await axios.post('http://localhost:5001/api/subscriptionn', {
+    const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', {
       username: username,
     });
 
@@ -74,7 +74,7 @@ const handlePaymentSuccess = async (paymentId) => {
     setLoading(true);
     console.log("enetered handlePaymentSuccess");
     // Call backend to update the user's subscription
-    await axios.post('http://localhost:5001/api/payment-success', { paymentId });
+    await axios.post('https://api.ru-novel.ru/api/payment-success', { paymentId });
     toast.success("Payment successful! Subscription activated.");
     setCurrentPlan(null); // Clear the plan until it's fetched again
     fetchSubscriptionDetails(); // Fetch subscription details after successful payment
@@ -93,7 +93,7 @@ const handleSubscription = async (plan) => {
     const planType = plan === "monthly" ? 'Monthly' : 'Yearly';
 
     // Make API call to backend to create payment
-    const response = await axios.post('http://localhost:5001/api/create-payment', {
+    const response = await axios.post('https://api.ru-novel.ru/api/create-payment', {
       amount:amount,
       plan: planType,
       email:email,
