@@ -44,13 +44,13 @@ useEffect(() => {
 
 const fetchSubscriptionDetails = async () => {
   try {
-    console.log("user id = "+user._id);
+    //console.log("user id = "+user._id);
     const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', {
       username: username,
     });
 
     const { paymentId, subscriptionType, status } = response.data;
-    console.log("paymentId"+paymentId);
+    //console.log("paymentId"+paymentId);
 
     
      if (status === 'active') {
@@ -67,13 +67,13 @@ const fetchSubscriptionDetails = async () => {
 
 const fetchSubscriptionDetailsAndUpdate = async () => {
   try {
-    console.log("user id = "+user._id);
+    //console.log("user id = "+user._id);
     const response = await axios.post('https://api.ru-novel.ru/api/subscriptionn', {
       username: username,
     });
 
     const { paymentId, subscriptionType, status } = response.data;
-    console.log("paymentId"+paymentId);
+    //console.log("paymentId"+paymentId);
 
     if (paymentId && status==='pending') {
       // Handle payment success
@@ -96,7 +96,7 @@ const fetchSubscriptionDetailsAndUpdate = async () => {
 const handlePaymentSuccess = async (paymentId) => {
   try {
     setLoading(true);
-    console.log("enetered handlePaymentSuccess");
+    //console.log("enetered handlePaymentSuccess");
     // Call backend to update the user's subscription
     await axios.post('https://api.ru-novel.ru/api/payment-success', { paymentId });
     toast.success("Payment successful! Subscription activated.");
@@ -126,9 +126,9 @@ const handleSubscription = async (plan) => {
     });
 
     // Redirect to YooMoney payment page
-    console.log("response.data = "+response.data);
+    //console.log("response.data = "+response.data);
     const { paymentUrl } = response.data;  // Assuming backend returns this URL
-    console.log("paymentUrl = "+paymentUrl);
+    //console.log("paymentUrl = "+paymentUrl);
     window.location.href = paymentUrl;  // Redirect to payment page
   } catch (error) {
     console.error("Error creating payment:", error);
