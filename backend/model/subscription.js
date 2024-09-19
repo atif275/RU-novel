@@ -21,7 +21,7 @@ const SubscriptionSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    default: 'USD'
+    default: 'RUB'
   },
   paymentId: {
     type: String,
@@ -32,7 +32,7 @@ const SubscriptionSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'active', 'canceled', 'failed'],
+    enum: ['pending', 'active', 'canceled', 'expired', 'failed'],
     default: 'pending'
   },
   startDate: {
@@ -48,8 +48,7 @@ const SubscriptionSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['qiwi', 'paypal', 'credit_card'],
-    default: 'qiwi'
+    default: 'yoomoney'
   },
   createdAt: {
     type: Date,
@@ -61,6 +60,7 @@ const SubscriptionSchema = new mongoose.Schema({
   }
 });
 
+// Pre-save hook to update the timestamp
 SubscriptionSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();

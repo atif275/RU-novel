@@ -139,7 +139,7 @@ const PageHeader = () => {
 
   useEffect(() => {
    
-      fetchNotifications();
+     
     
     const handleClickOutside = (event) => {
       
@@ -159,6 +159,12 @@ const PageHeader = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [dropdownRef, messagedownRef]);
+
+  useEffect(() => {
+
+    fetchNotifications();
+
+  }, []);
   
 
   const handleLogout = () => {
@@ -201,11 +207,11 @@ const PageHeader = () => {
                   className="flex items-center text-gray-400 hover:text-[#23527C]"
                   aria-label="Notifications - 0 new"
                 >
-                  {unreadCount > 0 && (
-                    <span className="notification-count absolute top-0 right-0 bottom-1 block h-4 w-4 text-xs font-bold text-white bg-red-500 rounded-full flex items-center justify-center ml-2">
+                  
+                    <span className="notification-count absolute top-2 right-0 bottom-1 block h-4 w-4 text-xs font-bold text-white bg-red-500 rounded-full flex items-center justify-center ml-2">
                       {unreadCount}
                     </span>
-                  )}
+                
                   <FontAwesomeIcon icon={faBell} className="mr-2 text-[18px] lg:text-[20px] mt-4 lg:mt-5" />
                 </Link>
               </li>

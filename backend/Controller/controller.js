@@ -11,6 +11,7 @@ const addDB = require('../model/Advrtisment');
 const BookThread = require('../src/models/BookThread')
 const Submission = require('../src/models/Submission')
 const UtmTag = require('../model/UtmTag');
+// const Subscriptiondb = require('../model/subscription');
 const Message = require('../model/Message');
 const Border = require('../model/Border');
 const { v4: uuidv4 } = require('uuid');
@@ -1490,5 +1491,22 @@ exports.unlinkFacebook = async (req, res) => {
   } catch (error) {
     console.error('Failed to unlink Facebook account:', error);
     res.status(500).json({ message: 'Failed to unlink Facebook account' });
+  }
+};
+
+
+exports.fetchSubscriptionDetails = async (req, res) => {
+  try {
+    const { userId } = req.body; // Assume the user is authenticated
+    const subscription = await Subscriptiondb.findOne({ userId, status: 'active' });
+
+    if (!subscription) {
+      return res.status(404).json({ message: 'No active subscription found.' });
+    }
+
+    return res.json(subscription);
+  } catch (error) {
+    console.error('Error fetching subscription:', error);
+    res.status(500).json({ message: 'Server error.' });
   }
 };

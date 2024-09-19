@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@a2seven/yoo-checkout": "^1.1.4",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
@@ -20,6 +22,7 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.9.0",
     "mongoose": "^8.5.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
@@ -27,7 +30,9 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
-    "uuidv4": "^6.2.13"
+    "uuid": "^10.0.0",
+    "uuidv4": "^6.2.13",
+    "yoomoney-sdk": "^1.5.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

@@ -1,36 +1,121 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const PremiumSubscriptionPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  
   const monthlySubscription = 3.49;
   const yearlySubscription = 34.99;
-
+  
   // Fetch user details from Redux
- const  user = useSelector((state) => state.userData.user);
+const  user = useSelector((state) => state.userData.user);
+const premium = user.premium;
 const username = user.username;
 const email = user.email;
-  const handleSubscription = async (plan) => {
-    try {
-      // Replace with your backend API endpoint to create a payment request
-      const response = await axios.post("https://api.ru-novel.ru/api/qiwi/payment", {
-        username,
-        email,
-        plan,
-        amount: plan === "monthly" ? monthlySubscription : yearlySubscription,
-      });
+const  userID = useSelector((state) => state.userData.user._id);
+const [currentPlan, setCurrentPlan] = useState(null); // Tracks the current plan
+const [loading, setLoading] = useState(false); // Handles loading state for button
 
-      // Redirect user to QIWI payment page
-      window.location.href = response.data.paymentUrl;
-    } catch (error) {
-      console.error("Payment Error:", error);
-      toast.error("Failed to initiate payment. Please try again.");
+
+const getQueryParams = (param) => {
+  return new URLSearchParams(location.search).get(param);
+};
+
+// Check if payment was successful (from the query params)
+const isPaymentSuccess = getQueryParams("success");
+
+useEffect(() => {
+  if (isPaymentSuccess) {
+    
+    // If payment success, fetch the subscription details
+    fetchSubscriptionDetails();
+  }
+}, [isPaymentSuccess]);
+
+useEffect(() => {
+  
+  fetchSubscriptionDetails();
+}, []);
+
+const fetchSubscriptionDetails = async () => {
+  try {
+    console.log("user id = "+user._id);
+    const response = await axios.post('http://localhost:5001/api/subscriptionn', {
+      username: username,
+    });
+
+    const { paymentId, subscriptionType, status } = response.data;
+    console.log("paymentId"+paymentId);
+
+    if (paymentId && status==='pending') {
+      // Handle payment success
+      handlePaymentSuccess(paymentId);
     }
-  };
+    else if (status === 'active') {
+      // If the subscription is active, update the current plan
+      setCurrentPlan(subscriptionType);
+    }
+
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching subscription details:', error);
+    toast.error("Error fetching subscription details");
+  }
+};
+
+
+const handlePaymentSuccess = async (paymentId) => {
+  try {
+    setLoading(true);
+    console.log("enetered handlePaymentSuccess");
+    // Call backend to update the user's subscription
+    await axios.post('http://localhost:5001/api/payment-success', { paymentId });
+    toast.success("Payment successful! Subscription activated.");
+    setCurrentPlan(null); // Clear the plan until it's fetched again
+    fetchSubscriptionDetails(); // Fetch subscription details after successful payment
+    setLoading(false);
+  } catch (error) {
+    console.error("Error updating subscription:", error);
+    toast.error("Error updating subscription.");
+    setLoading(false);
+  }
+};
+
+const handleSubscription = async (plan) => {
+  try {
+    setLoading(true);
+    const amount = plan === "monthly" ? monthlySubscription : yearlySubscription;
+    const planType = plan === "monthly" ? 'Monthly' : 'Yearly';
+
+    // Make API call to backend to create payment
+    const response = await axios.post('http://localhost:5001/api/create-payment', {
+      amount:amount,
+      plan: planType,
+      email:email,
+      username:username,
+      userId:user._id,
+    });
+
+    // Redirect to YooMoney payment page
+    console.log("response.data = "+response.data);
+    const { paymentUrl } = response.data;  // Assuming backend returns this URL
+    console.log("paymentUrl = "+paymentUrl);
+    window.location.href = paymentUrl;  // Redirect to payment page
+  } catch (error) {
+    console.error("Error creating payment:", error);
+    toast.error("Payment initiation failed. Please try again.");
+  }
+};
+
+
+const handleManagePlan = () => {
+  navigate("/manage-subscription"); // Navigate to manage subscription page
+};
 
   return (
     <div
@@ -134,10 +219,11 @@ const email = user.email;
                       </li>
                     </ul>
                     <button
-                      onClick={() => handleSubscription("monthly")}
-                      className="mt-6 mb-4 bg-custom-blue hover:bg-custom-hover-blue text-white py-1 px-2 text-lg tracking-widest"
+                      onClick={() => currentPlan === "monthly" ? handleManagePlan() : handleSubscription("monthly")}
+                      className={`mt-6 mb-4 ${loading ? 'bg-gray-400' : 'bg-custom-blue hover:bg-custom-hover-blue'} text-white py-1 px-2 text-lg`}
+                      disabled={loading}
                     >
-                      Select Plan
+                      {currentPlan === "monthly" ? "Manage Plan" : "Select Plan"}
                     </button>
                   </div>
                 </div>
@@ -206,10 +292,11 @@ const email = user.email;
                       </li>
                     </ul>
                     <button
-                      onClick={() => handleSubscription("yearly")}
-                      className="mt-6 mb-4 bg-custom-blue hover:bg-custom-hover-blue text-white py-1 px-2 text-lg tracking-widest"
+                      onClick={() => currentPlan === "yearly" ? handleManagePlan() : handleSubscription("yearly")}
+                      className={`mt-6 mb-4 ${loading ? 'bg-gray-400' : 'bg-custom-blue hover:bg-custom-hover-blue'} text-white py-1 px-2 text-lg`}
+                      disabled={loading}
                     >
-                      Select Plan
+                      {currentPlan === "yearly" ? "Manage Plan" : "Select Plan"}
                     </button>
                   </div>
                 </div>

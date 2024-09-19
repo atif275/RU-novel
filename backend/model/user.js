@@ -40,7 +40,8 @@ var UserSchema = new mongoose.Schema({
     default: []
   },
   profilePictureBorder: {type:String ,  default: ''},
-  notes: { type: String, default: '' }
+  notes: { type: String, default: '' },
+  premium : {type: Boolean, default: false }
 });
 
 var Userdb = userDatabase.model('UserDB', UserSchema);

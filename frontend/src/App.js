@@ -37,6 +37,7 @@ import Notificationlist from "./pages/Notificationlist";
 import APage from "./pages/AouthPage";
 import Usercp from "./pages/Usercp";
 import Editsignature from "./pages/Editsignature";
+import ManageSubscriptionPage from "./pages/ManageSubscriptionPage";
 // ---------------------------------------------------------------------------SABHEEE import ends-----------------------------------------------------
 import Borderwardrobe from "./pages/Borderwardrobe";
 import HomePage from './pages/HomePage';
@@ -451,6 +452,22 @@ function App() {
               You need to be logged in to create a new ticket.
             </div>
           )
+           
+         
+         
+         } />
+         
+
+         <Route path="/manage-subscription" element={
+         
+            <>
+           <HomePage />
+           <ManageSubscriptionPage />
+           <Footer />
+           <PostFooter />
+          </> 
+         
+         
            
          
          

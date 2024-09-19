@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
   })
   
   const upload = multer({ storage: storage })
+// router.post('/api/fetch-subscription', control.fetchSubscriptionDetails);
 
 router.post('/api/createUser',control.create)
 router.post('/api/login',control.login)

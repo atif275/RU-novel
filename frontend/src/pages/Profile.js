@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { BiUserCircle } from 'react-icons/bi';
 import { MdRateReview, MdMessage, MdStarBorder } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { AuthorFictions } from "../components/AuthorFictions";
 function Profile() {
   const [activeTab, setActiveTab] = useState('overview');
   const user = useSelector((state) => state.userData.user);
@@ -29,6 +30,16 @@ function Profile() {
     navigate('/account');
   };
 
+  const handleFavoritesClick = () => {
+    console.log("Favorites clicked");
+    navigate('/my/favorites');
+  };
+  
+  const handleReviewsClick = () => {
+    console.log("Reviews clicked");
+    navigate('/my/review');
+  };
+  
 
    
 
@@ -74,12 +85,12 @@ function Profile() {
         <div className="bg-white p-4 shadow-md">
           <div className="flex justify-between items-center">
             <div className="flex">
-              <div className="mr-10"><strong>0</strong> Follows</div>
-              <div><strong>0</strong> Favorites</div>
+              <div className="mr-10" ><strong>0</strong> Follows</div>
+              <div onClick={handleFavoritesClick}><strong>0</strong> Favorites</div>
             </div>
             <div className="text-3xl font-bold">{user.username}</div>
             <div className="flex">
-              <div className="mr-10"><strong>0</strong> Reviews</div>
+              <div className="mr-10" onClick={handleReviewsClick}><strong>0</strong> Reviews</div>
               <div><strong>0</strong> Fictions</div>
             </div>
           </div>
@@ -181,6 +192,14 @@ function Profile() {
               </>
 
 
+            ) : activeTab === 'fictions' ? (
+              <div className='mb-4 bg-white shadow-lg rounded-lg p-4'>
+                {tabIcons[activeTab] || <FaBook className="inline mr-2 text-xl" />}
+                <h2 className="inline text-xl font-bold mb-2">Fictions</h2>
+                <div className="border-t mt-2 pt-2">
+                  <AuthorFictions />
+                </div>
+              </div>
             ) : (
               <div className='mb-4 bg-white shadow-lg rounded-lg p-4'>
                 {tabIcons[activeTab] || <MdMessage className="inline mr-2 text-xl" />}

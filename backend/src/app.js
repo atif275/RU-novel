@@ -6,7 +6,7 @@ const threadRoutes = require('./routes/ForumThreadRoutes');  // Adjust the path 
 const bookThreadRoutes = require('./routes/BookThreadRoutes');
 const Commentt = require('../model/chaptercomments')
 const session = require('express-session');
-
+const axios = require('axios');
 const path = require('path');
  const passport = require('../Controller/Oauth'); // Import the passport configuration
  const LinkPassport = require('../Controller/LinkingOauth');
@@ -15,12 +15,16 @@ const path = require('path');
 const Review = require('../model/reviews');
 const submissionRoutes = require('./routes/submissionRoutes');
 const User = require('../model/user');
+const Userdb = require('../model/user');
+const Subscriptiondb = require('../model/subscription');
 // const authRoute = require("../router/auth");
 const cookieSession = require("cookie-session");
 //const passportStrategy = require("../Controller/passport");
 const BookThread = require('./models/BookThread'); // Ensure the path is correct
 const Book = require('./models/books');
 const Submission = require('./models/Submission'); // Import the Submission model
+const { YooCheckout } = require('@a2seven/yoo-checkout');
+
 
 /////////
 
@@ -28,6 +32,7 @@ const Submission = require('./models/Submission'); // Import the Submission mode
 dotenv.config();
 
 const app = express();
+
 
 
 app.use(express.static(path.join(__dirname, "/frontend/build")));
@@ -70,6 +75,14 @@ app.use(passport.session());
 app.use(LinkPassport.initialize());
 app.use(LinkPassport.session());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+
+const checkout = new YooCheckout({
+  shopId: process.env.YOOMONEY_SHOP_ID,
+  secretKey: process.env.YOOMONEY_SECRET_KEY,
+});
+
+
  //app.use("/auth", authRoute);
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -93,7 +106,209 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 
 // Routes
+const { YOO_SHOP_ID, YOO_SECRET_KEY } = process.env;
+const { v4: uuidv4 } = require('uuid');
+app.post('/api/create-payment', async (req, res) => {
+  const { amount, plan, email, username, userId } = req.body;
+  const idempotenceKey = uuidv4();
 
+  try {
+    const base64Credentials = Buffer.from(`${YOO_SHOP_ID}:${YOO_SECRET_KEY}`).toString('base64');
+
+    // Make the payment request to YooMoney
+    const response = await axios.post(
+      'https://api.yookassa.ru/v3/payments',
+      {
+        amount: {
+          value: amount,  // The amount for the selected plan (e.g., 3.49 or 34.99)
+          currency: 'RUB',  // Currency code, e.g., RUB for rubles
+        },
+        confirmation: {
+          type: 'redirect',  // We want to redirect the user to YooMoney’s payment page
+          return_url: `http://localhost:3000/premium?success=true`,  // Accessing payment ID after the response is received
+        },
+        description: `${plan} Subscription`,  // Description of the payment
+        receipt: {
+          customer: {
+            email: email,  // User's email for the receipt
+          },
+          items: [
+            {
+              description: `${plan} Subscription`,
+              quantity: 1,
+              amount: {
+                value: amount,
+                currency: 'RUB',
+              },
+              vat_code: 1,
+            },
+          ],
+        },
+      },
+      {
+        headers: {
+          Authorization: `Basic ${base64Credentials}`,  // Authentication header
+          'Idempotence-Key': idempotenceKey,  // Unique idempotence key
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    // Access the response object after the API call
+    const { confirmation } = response.data;
+    const paymentId = response.data.id; // Extract the payment ID
+    let subscription = await Subscriptiondb.findOne({ username });
+
+    if (subscription) {
+      // If a subscription exists, update its details
+      subscription.amount = amount;
+      subscription.subscriptionType = plan.toLowerCase();
+      subscription.paymentId = paymentId,  // Save the payment ID from YooMoney
+      subscription.paymentUrl = confirmation.confirmation_url,
+      subscription.startDate = new Date();
+      subscription.status = 'pending';
+      console.log(`Subscription for user ${username} found and will be updated.`);
+    } else {
+   
+    // Save subscription with 'pending' status
+     subscription = new Subscriptiondb({
+      userId: userId,  
+      username: username,
+      subscriptionType: plan.toLowerCase(),
+      amount,
+      currency: 'RUB',
+      paymentId: paymentId,  // Save the payment ID from YooMoney
+      paymentUrl: confirmation.confirmation_url,
+      status: 'pending',
+      startDate: new Date(),
+    });
+    
+  }
+    await subscription.save();
+    // Return payment URL to frontend for redirection
+    res.json({ paymentUrl: confirmation.confirmation_url });
+
+  } catch (error) {
+    console.error('Error creating payment:', error.response ? error.response.data : error.message);
+    res.status(500).json({ message: 'Error creating payment' });
+  }
+});
+
+
+
+// After successful payment, update subscription status
+app.post('/api/payment-success', async (req, res) => {
+  const { paymentId } = req.body;
+
+  try {
+    const subscription = await Subscriptiondb.findOne({ paymentId });
+
+    if (subscription) {
+      subscription.status = 'active';
+      subscription.endDate = new Date(subscription.startDate.getFullYear() + (subscription.subscriptionType === 'yearly' ? 1 : 0), subscription.startDate.getMonth() + (subscription.subscriptionType === 'monthly' ? 1 : 0));
+      
+      console.log("userid in payment-success: "+subscription.userId)
+      const username = subscription.username;
+      // Update user's premium status
+      const user = await Userdb.findOne({username});
+      console.log("user email:"+user.email);
+      user.premium = true;
+      await subscription.save();
+      await user.save();
+
+      res.json({ message: 'Subscription activated successfully' });
+    } else {
+      res.status(404).json({ message: 'Subscription not found' });
+    }
+  } catch (error) {
+    console.error('Error activating subscription:', error.message);
+    res.status(500).json({ message: 'Error activating subscription' });
+  }
+});
+
+// Manage Subscription (cancel, upgrade, renew)
+app.post('/api/manage-subscription', async (req, res) => {
+  const { action, paymentId } = req.body;
+  console.log("---------");
+  console.log("action = "+action);
+  console.log("paymentId = "+paymentId);
+  console.log("---------");
+
+  try {
+    const subscription = await Subscriptiondb.findOne({ paymentId });
+
+    if (!subscription) {
+      console.log("sub not found in manage subs")
+      return res.status(404).json({ message: 'Subscription not found' });
+    }
+
+    if (action === 'cancel') {
+      subscription.status = 'canceled';
+      subscription.autoRenewal = false;
+      // const userId = mongoose.Types.ObjectId(subscription.userId);
+      console.log("userId"+subscription.userId);
+      const username = subscription.username;
+      // Update user premium status
+      const user = await Userdb.findOne({username});
+
+      //console.log("email == "+user);
+      console.log("email == "+user.email);
+      user.premium = false;
+      await subscription.save();
+      await user.save();
+      console.log("$$$$ plan canceled successfully %%%%%");
+      return res.json({ message: 'Subscription canceled' });
+    }
+
+    if (action === 'upgrade') {
+      if (subscription.subscriptionType === 'monthly') {
+        subscription.subscriptionType = 'yearly';
+        subscription.amount = 34.99; // Yearly plan amount
+        await subscription.save();
+        return res.json({ message: 'Subscription upgraded to yearly' });
+      }
+      return res.status(400).json({ message: 'Cannot upgrade, already on yearly plan' });
+    }
+
+    if (action === 'renew') {
+      const currentDate = new Date();
+      if (subscription.endDate < currentDate && currentDate <= new Date(subscription.endDate.getTime() + 7 * 24 * 60 * 60 * 1000)) {
+        subscription.status = 'active';
+        subscription.endDate = new Date(currentDate.getFullYear() + (subscription.subscriptionType === 'yearly' ? 1 : 0), currentDate.getMonth() + (subscription.subscriptionType === 'monthly' ? 1 : 0));
+        await subscription.save();
+        return res.json({ message: 'Subscription renewed' });
+      }
+      return res.status(400).json({ message: 'Subscription cannot be renewed' });
+    }
+    
+  } catch (error) {
+    console.error('Error managing subscription:', error.message);
+    res.status(500).json({ message: 'Error managing subscription' });
+  }
+});
+
+app.post('/api/subscriptionn', async (req, res) => {
+
+  try {
+    console.log("entered fetch subsss");
+    const { username } = req.body; // Assume the user is authenticated
+    console.log("username"+username);
+    const subscription = await Subscriptiondb.findOne({ username });
+    // console.log("payment id = "+subscription.paymentId);
+    if (!subscription) {
+      console.log("no subs found");
+      return res.status(404).json({ message: 'No active subscription found.' });
+    }
+    console.log("subs found and send from backend");
+    return res.json(subscription);
+  } catch (error) {
+    console.error('Error fetching subscription:', error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+
+
+
+});
 
 
 app.get('/api/hello', (req, res) => {
