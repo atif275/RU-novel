@@ -14,10 +14,12 @@ function Borderwardrobe() {
 
 
 
-    const premier =0
+    
     const currentUser = useSelector((state) => state.userData.user);
+    const premium = currentUser.premium;
     const fictionCounts = currentUser?.fictions?.length || 0;
     //const fictionCounts = 5;
+    const premier = premium ? 1 : 0;
 
 
 
