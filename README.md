@@ -1,7 +1,7 @@
 
 # RU-novel
 
-RU-Novel is a web application that allows users to post, write, and read books based on genres.
+RU-NoveL is a web application that allows users to post, write, and read books based on genres.
 
 ## Features
 
