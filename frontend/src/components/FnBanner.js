@@ -54,13 +54,13 @@ const FnBanner = ({ title, author, image, fictionId, chapterId, chapterTitle }) 
   return (
     <div className='relative w-full m-0 p-0 h-[170px] lg:h-[200px] bg-slate-950'>
       <img
-        src={image}
+        // src={image}
         alt='Banner'
         className="m-0 p-0 w-full h-full object-cover opacity-50"
       />
       <div className="absolute inset-0 flex flex-col md:flex-col items-center justify-center ml-28">
         <div className="w-full md:w-1/2 h-1/2 flex flex-col items-center text-center md:items-start md:text-left">
-          <h1 className="text-white text-[24px] md:text-[30px]">{title}</h1>
+          <h1 className="text-white text-[20px] md:text-[24px]">{title}</h1>
           <button className="text-white text-[16px] md:text-[18px]">By {author}</button>
         </div>
         <button

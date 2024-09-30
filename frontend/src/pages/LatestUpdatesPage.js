@@ -226,7 +226,7 @@ const LatestUpdatesPage = () => {
                               </div>
                             </div>
                             <button
-                              className={`self-start text-white px-2 text-bold hover:bg-custom-blue ${
+                              className={`self-start text-white px-2 text-bold hover:bg-custom-blue mt-10 ${
                                 expandedId === book._id
                                   ? "bg-custom-blue"
                                   : "bg-custom-tan-blue"
