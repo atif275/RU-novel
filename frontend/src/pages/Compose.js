@@ -5,8 +5,12 @@ import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
+
+
 function Compose() {
-    const [activeTab, setActiveTab] = useState("");
+
+    const [sidebarcollapse, setsidebarcollapse] = useState(false)
+    const [activeTab, setActiveTab] = useState("compose");
     const [input, setInput] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
@@ -18,7 +22,7 @@ function Compose() {
     // console.log(currentuser.username)
 
     useEffect(() => {
-        
+
         if (input.trim()) {
             const fetchUsernames = async () => {
                 try {
@@ -37,8 +41,8 @@ function Compose() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
-      
+    }, []);
+
 
     const handleSelectUsername = (username) => {
         setInput(username);  // Set the input field with the selected username
@@ -51,7 +55,7 @@ function Compose() {
                 recipient: input,
                 subject: subject,
                 message: message,
-                sender:currentuser.username,
+                sender: currentuser.username,
                 status: status, // "sent" or "draft"
             });
             alert(`Message ${status}`);
@@ -93,7 +97,7 @@ function Compose() {
         // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
         // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
     ];
-    
+
     const notificationOptions = [
         { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
         { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
@@ -103,7 +107,7 @@ function Compose() {
         { icon: 'fa-home', label: 'UserCP', link: '/my/usercp' },
         { icon: 'fa-list', label: 'Edit Signature', link: '/account/signature' }
     ];
-    
+
     const myOptions = [
         { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
@@ -114,6 +118,27 @@ function Compose() {
         { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
         // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
     ];
+    const handlecollpase = () => {
+        setsidebarcollapse(!sidebarcollapse);
+    };
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 500) {
+            // Collapse the sidebar on small screens
+        } else {
+            setsidebarcollapse(false); // Expand the sidebar on larger screens
+        }
+    };
+
+    // Run the check when the component mounts and when window is resized
+    useEffect(() => {
+        checkScreenSize(); // Initial check
+        window.addEventListener('resize', checkScreenSize); // Add resize event listener
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
 
 
     return (
@@ -135,163 +160,205 @@ function Compose() {
                     </div>
                 </div>
                 <div className="flex mt-4">
-                    <div className="w-48  shadow-lg rounded-lg h-auto">
+                    <div className={` bg-white   ${sidebarcollapse ? 'w-full absolute z-50' : 'static'} static  w-[50px] sm:w-auto shadow-lg rounded-lg h-auto`}>
 
+
+                        <div className="sm:hidden p-2 bg-white ml-[5px] max-w-[10px]">
+                            <i onClick={handlecollpase} className="fas fa-bars text-2xl cursor-pointer"></i>
+                        </div>
 
                         {/* Message List */}
 
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
+                        <div className={`mt-4 bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+                            <div className={`bg-gray-600 md text-white ${sidebarcollapse ? 'block' : 'hidden'} sm:block  text-md p-2 pl-4`}>
                                 Messages
                             </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {messageOptions.map((option, index) => (
                                     <li
                                         key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
 
                                     >
-                                        <i
-                                            className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
                                                 ? "bg-custom-blue text-white"
                                                 : ""
                                                 }`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">{option.label}</a>
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
                         {/* Settings List */}
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
+                        <div className={`mt-4  bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
                                 Settings
                             </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {settingsOptions.map((option, index) => (
                                     <li
                                         key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
 
                                     >
-                                        <i
-                                            className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
                                                 ? "bg-custom-blue text-white"
                                                 : ""
                                                 }`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">{option.label}</a>
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
                         {/* Security & Privacy List */}
 
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
                                 Security & Privacy
                             </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {securityOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
 
                         {/* Notification List */}
 
-                        {/* <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
+                        <div className="mt-4 bg-white">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
                                 Notifications
                             </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {notificationOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
-                        </div> */}
+
+                        </div>
 
                         {/* Forum List */}
 
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
                                 Forum
                             </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {forumOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
 
                         {/* My List */}
 
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">My</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`} >My</div>
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {myOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
                     </div>
-                    {/* mian div  */}
-                    <div className="flex-1 ml-4 mt-4">
 
-                        <div className="flex justify-between ">
-                            <button className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4  inline-flex items-center">
+
+
+                    {/* mian div  */}
+                    <div className="flex-1 h-[1100px] sm:h-[100%] ml-4 mt-4">
+                        <div className="flex justify-between">
+                            <button className="bg-gray-300 hover:bg-gray-400 text-black text-[10px] md:text-[14px] md:py-2 py-1 px-2 md:px-4 py-2 px-4 inline-flex items-center">
                                 <FaArrowLeft className="mr-2" /> Back to Inbox
                             </button>
-                            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4  inline-flex items-center">
+                            <button className="bg-blue-500 hover:bg-blue-600 text-white text-[10px] md:text-[14px] md:py-2 py-1 px-2 md:px-4 py-2 px-4 inline-flex items-center">
                                 <FaPaperPlane className="mr-2" /> Send Reply
                             </button>
                         </div>
                         <hr className="my-4 border-gray-300" />
-                        <div className='bg-white p-6'>
+                        <div className="bg-white  p-6">
                             <h2 className="text-xl font-bold mb-4">New Message</h2>
                             <hr className="my-4 border-gray-300" />
-                            {/* <form>
-                                <div className="mb-4 relative">
+
+                            {/* Form */}
+                            <form onSubmit={(e) => handleFormSubmit(e, 'sent')}>
+                                <div className="mb-4 ">
                                     <label htmlFor="recipients" className="block font-bold mb-2">Recipients</label>
                                     <input
                                         type="text"
@@ -301,11 +368,10 @@ function Compose() {
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onFocus={() => setShowDropdown(true)}
-                                        // Adjust onBlur to manage dropdown with a delay or additional conditions
                                         onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
                                     />
                                     {showDropdown && usernames.length > 0 && (
-                                        <ul className="absolute bg-white border border-gray-300 mt-1 w-full max-h-60 overflow-y-auto z-50">
+                                        <ul className=" bg-white border border-gray-300 mt-1 w-full max-h-60 overflow-y-auto z-50">
                                             {usernames.map((username, index) => (
                                                 <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer"
                                                     onMouseDown={() => handleSelectUsername(username)}>
@@ -317,13 +383,20 @@ function Compose() {
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="subject" className="block font-bold mb-2">Subject</label>
-                                    <input type="text" id="subject" className="w-full p-2 border border-gray-300 " />
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        className="w-full p-2 border border-gray-300"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                    />
                                 </div>
                                 <div className="mb-4">
-                                    <label className="block font-bold mb-2">Message</label>
+                                    <label className=" font-bold mb-2">Message</label>
                                     <Editor
                                         apiKey='cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3'
-                                        initialValue="<p>This is the initial content of the editor</p>"
+                                        value={message}
+                                        onEditorChange={(content) => setMessage(content)}
                                         init={{
                                             height: 300,
                                             menubar: false,
@@ -338,79 +411,15 @@ function Compose() {
                                                 'removeformat | help'
                                         }}
                                     />
-                                </div>
-                                <div className="flex justify-center items-center m-4 space-x-4">
-                                    <button type="submit" className="bg-gray-500 text-white py-2 px-4  hover:bg-blue-600">Send Message</button>
-                                    <button type="button" className="bg-gray-500 text-white py-2 px-4  hover:bg-gray-600 mr-2">Save as Draft</button>
-                                    <button type="button" className="bg-gray-500 text-white py-2 px-4  hover:bg-green-600">Preview</button>
-                                </div>
-                            </form> */}
-                            <div>
-                                <form onSubmit={(e) => handleFormSubmit(e, 'sent')}>
-                                    <div className="mb-4 relative">
-                                        <label htmlFor="recipients" className="block font-bold mb-2">Recipients</label>
-                                        <input
-                                            type="text"
-                                            id="recipients"
-                                            placeholder="Search for a user"
-                                            className="w-full p-2 border border-gray-300"
-                                            value={input}
-                                            onChange={(e) => setInput(e.target.value)}
-                                            onFocus={() => setShowDropdown(true)}
-                                            onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
-                                        />
-                                        {showDropdown && usernames.length > 0 && (
-                                            <ul className="absolute bg-white border border-gray-300 mt-1 w-full max-h-60 overflow-y-auto z-50">
-                                                {usernames.map((username, index) => (
-                                                    <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer"
-                                                        onMouseDown={() => handleSelectUsername(username)}>
-                                                        {username}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="subject" className="block font-bold mb-2">Subject</label>
-                                        <input
-                                            type="text"
-                                            id="subject"
-                                            className="w-full p-2 border border-gray-300"
-                                            value={subject}
-                                            onChange={(e) => setSubject(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block font-bold mb-2">Message</label>
-                                        <Editor
-                                            apiKey='cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3'
-                                           
-                                            value={message}
-                                            onEditorChange={(content) => setMessage(content)}
-                                            init={{
-                                                height: 300,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist autolink lists link image charmap print preview anchor',
-                                                    'searchreplace visualblocks code fullscreen',
-                                                    'insertdatetime media table paste code help wordcount'
-                                                ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                    'bold italic backcolor | alignleft aligncenter ' +
-                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                    'removeformat | help'
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center m-4 space-x-4">
-                                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4">Send Message</button>
-                                        <button type="button" className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 mr-2" onClick={(e) => handleFormSubmit(e, 'draft')}>Save as Draft</button>
-                                        <button type="button" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4">Preview</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
 
+                                </div>
+                                <div className="flex flex-wrap justify-center items-center m-4 space-x-4">
+                                    <button type="submit" className="bg-blue-500 md:text-[14px] mb-[10px] text-[10px] hover:bg-blue-600 text-white md:py-2 py-1 px-2 md:px-4">Send Message</button>
+                                    <button type="button" className="bg-gray-500 md:text-[14px] mb-[10px] text-[10px] hover:bg-gray-600 text-white md:py-2 py-1 px-2 md:px-4 mr-2" onClick={(e) => handleFormSubmit(e, 'draft')}>Save as Draft</button>
+                                    <button type="button" className="bg-green-500 md:text-[14px] mb-[10px] text-[10px] hover:bg-green-600 text-white md:py-2 py-1 px-2 md:px-4">Preview</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                 </div>

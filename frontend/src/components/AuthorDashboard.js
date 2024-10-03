@@ -190,47 +190,44 @@ export const AuthorDashboard= ({ onNewFiction }) =>  {
     };
 
     return (
-        <div className="flex-grow p-4  bg-gray-200">
-            <div className="grid grid-cols-5 gap-4">
-                {/* Dashboard Items updated to use state variables */}
-                {dashboardItems.map(item => (
-                    <div key={item.title} className="bg-white p-4 shadow rounded flex items-center space-x-3">
-                        <FontAwesomeIcon icon={item.icon} className="text-gray-500" />
-                        <span>{item.title}: {dashboardData[item.key]}</span>
-                    </div>
-                ))}
-            </div>
-            <div className="bg-white p-4 shadow rounded mt-4 flex justify-between items-center">
-                <span>Add New</span>
-                <button onClick={onNewFiction} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add
-                </button>
-            </div>
-            <div className="flex mt-4 space-x-4">
-                <div className="flex-1">
-                    <div className="bg-white shadow rounded h-full">
-                        {/* <h2 className="text-lg font-semibold">Recent Reviews</h2> */}
-                        <div className="">
-                            {/* Placeholder for dynamic content */}
-                            <ReviewSection reviews={reviews} onReviewDelete={handleReviewDelete} />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex-1">
-                    <div className="bg-white shadow rounded h-full">
-                        {/* <h2 className="text-lg font-semibold">Recent Comments</h2> */}
-                        <div className="">
-                            {/* Placeholder for dynamic content */}
-                            <ChCommentData
-                                comments={comments}
-                                onReply={(commentId, replyContent) => handlePostReply(commentId, replyContent)}
-                                onRep={(commentId) => handleAddRepToComment(commentId)}
-                                onReplyRep={(commentId, replyId) => handleAddRepToReply(commentId, replyId)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div className="flex-grow p-4  bg-gray-200 lg:text-[14px] md:text-[13px] sm:text-[12px]">
+      <div  className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Dashboard Items updated to use state variables */}
+          {dashboardItems.map(item => (
+              <div key={item.title} className="bg-white p-4 min-w-[200px]  shadow rounded flex items-center space-x-3">
+                  <FontAwesomeIcon icon={item.icon} className="text-gray-500" />
+                  <span>{item.title}: {dashboardData[item.key]}</span>
+              </div>
+          ))}
+      </div>
+      <div className="bg-white p-4 shadow rounded mt-4 flex justify-between items-center">
+          <span>Add New</span>
+          <button onClick={onNewFiction} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Add
+          </button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+<div className="bg-white shadow rounded h-full">
+  {/* <h2 className="text-lg font-semibold">Recent Reviews</h2> */}
+  <div>
+      {/* Placeholder for dynamic content */}
+      <ReviewSection reviews={reviews} onReviewDelete={handleReviewDelete} />
+  </div>
+</div>
+<div className="bg-white shadow rounded h-full">
+  {/* <h2 className="text-lg font-semibold">Recent Comments</h2> */}
+  <div>
+      {/* Placeholder for dynamic content */}
+      <ChCommentData
+          comments={comments}
+          onReply={(commentId, replyContent) => handlePostReply(commentId, replyContent)}
+          onRep={(commentId) => handleAddRepToComment(commentId)}
+          onReplyRep={(commentId, replyId) => handleAddRepToReply(commentId, replyId)}
+      />
+  </div>
+</div>
+</div>
+
+  </div>
     );
 };

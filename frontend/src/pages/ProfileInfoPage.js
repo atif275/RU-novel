@@ -9,12 +9,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase functions
 import app from '../firebase'; // Import your Firebase configuration
 
+import { Link } from 'react-router-dom';
+
+
 
 function ProfileInfoPage() {
   const [isEditable, setIsEditable] = useState(false);
   const handleEditClick = () => {
     setIsEditable(!isEditable);
   };
+  const [sidebarcollapse, setsidebarcollapse] = useState(false)
+
   const [formData, setFormData] = useState({
     username: "",
     title:"",
@@ -182,6 +187,27 @@ const myOptions = [
     { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
     // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
 ];
+const handlecollpase = () => {
+  setsidebarcollapse(!sidebarcollapse);
+};
+
+const checkScreenSize = () => {
+  if (window.innerWidth < 500) {
+      // Collapse the sidebar on small screens
+  } else {
+      setsidebarcollapse(false); // Expand the sidebar on larger screens
+  }
+};
+
+// Run the check when the component mounts and when window is resized
+useEffect(() => {
+  checkScreenSize(); // Initial check
+  window.addEventListener('resize', checkScreenSize); // Add resize event listener
+
+  // Cleanup the event listener on component unmount
+  return () => window.removeEventListener('resize', checkScreenSize);
+}, []);
+
 
   return (
     <div className="w-full bg-cover bg-center bg-fixed">
@@ -204,576 +230,618 @@ const myOptions = [
           </div>
         </div>
         <div className="flex mt-4">
-        <div className="w-48  shadow-lg rounded-lg h-auto">
+        <div className={` bg-white   ${sidebarcollapse ? 'w-full absolute z-50' : 'static'} static  w-[50px] sm:w-auto shadow-lg rounded-lg h-auto`}>
 
+
+<div className="sm:hidden p-2 bg-white ml-[5px] max-w-[10px]">
+    <i onClick={handlecollpase} className="fas fa-bars text-2xl cursor-pointer"></i>
+</div>
 
 {/* Message List */}
 
-<div className="mt-4 bg-white">
-    <div className="bg-gray-600 text-white text-md p-2 pl-4">
+<div className={`mt-4 bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+    <div className={`bg-gray-600 md text-white ${sidebarcollapse ? 'block' : 'hidden'} sm:block  text-md p-2 pl-4`}>
         Messages
     </div>
-    <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
         {messageOptions.map((option, index) => (
             <li
                 key={option.key}
-                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
 
             >
-                <i
-                    className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
-                        ? "bg-custom-blue"
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
                         : ""
                         }`}
-                ></i>
-                <a href={option.link} className="flex-grow">{option.label}</a>
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
             </li>
         ))}
     </ul>
+
 </div>
 {/* Settings List */}
-<div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Settings
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {settingsOptions.map((option, index) => (
-                                    <li
-                                        key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+<div className={`mt-4  bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+        Settings
+    </div>
 
-                                    >
-                                        <i
-                                            className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
-                                                ? ""
-                                                : ""
-                                                }`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">{option.label}</a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {settingsOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
 {/* Security & Privacy List */}
 
 <div className="mt-4 bg-white">
-    <div className="bg-gray-600 text-white text-md p-2 pl-4">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
         Security & Privacy
     </div>
-    <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
         {securityOptions.map((option, index) => (
             <li
-                key={index}
-                className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
             >
-                <i
-                    className={`fa fa-fw ${option.icon} text-black mr-2`}
-                ></i>
-                <a href={option.link} className="flex-grow">
-                    {option.label}
-                </a>
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
             </li>
         ))}
     </ul>
+
 </div>
 
 {/* Notification List */}
-{/* 
+
 <div className="mt-4 bg-white">
-    <div className="bg-gray-600 text-white text-md p-2 pl-4">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
         Notifications
     </div>
-    <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
         {notificationOptions.map((option, index) => (
             <li
-                key={index}
-                className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
             >
-                <i
-                    className={`fa fa-fw ${option.icon} text-black mr-2`}
-                ></i>
-                <a href={option.link} className="flex-grow">
-                    {option.label}
-                </a>
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
             </li>
         ))}
     </ul>
-</div> */}
+
+</div>
 
 {/* Forum List */}
 
 <div className="mt-4 bg-white">
-    <div className="bg-gray-600 text-white text-md p-2 pl-4">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
         Forum
     </div>
-    <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
         {forumOptions.map((option, index) => (
             <li
-                key={index}
-                className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
             >
-                <i
-                    className={`fa fa-fw ${option.icon} text-black mr-2`}
-                ></i>
-                <a href={option.link} className="flex-grow">
-                    {option.label}
-                </a>
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
             </li>
         ))}
     </ul>
+
 </div>
 
 {/* My List */}
 
 <div className="mt-4 bg-white">
-    <div className="bg-gray-600 text-white text-md p-2 pl-4">My</div>
-    <ul className="divide-y divide-gray-200 p-2 text-sm">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`} >My</div>
+
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
         {myOptions.map((option, index) => (
             <li
-                key={index}
-                className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
             >
-                <i
-                    className={`fa fa-fw ${option.icon} text-black mr-2`}
-                ></i>
-                <a href={option.link} className="flex-grow">
-                    {option.label}
-                </a>
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
             </li>
         ))}
     </ul>
+
 </div>
 </div>
+
+
+
 {/* mian div  */}
-          <div className="flex-1 ml-4 ">
+<div className="flex-1 md:ml-4 ml-1 ">
             
-              <>
-                <div className="bg-white p-6">
-                  <div className="profile-content">
-                    <div className="portlet light">
-                      <div className="portlet-title">
-                        <div className="caption pb-4">
-                          <span className="uppercase text-red-500 font-bold p-2">
-                            <i className="fa-fw  fa fa-id-card"></i> Profile
-                            Info
-                          </span>
-                        </div>
+            <>
+              <div className="bg-white md:p-6">
+                <div className="profile-content">
+                  <div className="portlet light">
+                    <div className="portlet-title">
+                      <div className="caption pb-4">
+                        <span className="uppercase text-red-500 font-bold p-2">
+                          <i className="fa-fw  fa fa-id-card"></i> Profile
+                          Info
+                        </span>
                       </div>
-                      <div className="form portlet-body">
-                        <form
-                         
-                          
-                        >
-                          <div className="">
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Avatar
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center">
-                                  <img
-                                    src={imageURL}
-                                    
-                                    className="w-24 h-24  mr-2"
-                                    alt="alttt"
-                                  ></img>
+                    </div>
+                    <div className="form portlet-body">
+                      <form
+                       
+                        
+                      >
+                        <div className="">
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Avatar
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center">
+                                <img
+                                  src={imageURL}
                                   
-                                  {/* <img
-                                    src={`data:image/jpeg;base64,${formData.profilePicture}`}
-                                    alt="Profile"
-                                  /> */}
-                                  {/* <button
-                                    className="ml-12 bg-custom-blue p-2 text-white "
-                                     onClick={() => document.getElementById('profilePictureInput').click()}
-                                  >
-                                    Change Avatar
-                                  </button> */}
-                                  <input
-                                    id="file-input"
-                                    className="hidden"
-                                    type="file"
-                                    accept=".png,.jpg,.jpeg,.bmp"
-                                    name="avatar"
-                                    onChange={handleImageChange} 
-                                  />
-                                  
-                                  <label htmlFor="file-input" className={`bg-custom-blue p-2 text-white cursor-pointer`}>
-                                    {uploading ? "Uploading Avatar..." : "Change Avatar"}
-                                  </label>
+                                  className="w-24 h-24  mr-2"
+                                  alt="alttt"
+                                ></img>
                                 
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Username
-                                </p>
-                              </div>
-                              <div className="flex-grow " style={{ flex: "3" }}>
-                                <div className="flex items-center w-full bg-gray-200 ">
-                                  <i className="fa fa-user text-gray-500 p-2"></i>
-                                  <input
-                                    className="w-full"
-                                    id="username"
-                                    name="username"
-                                    placeholder="Enter desired display name"
-                                    type="text"
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                    readOnly={!isEditable} // Make it read-only if not editable
-                                  />
-                                  <button
-                                    className="flex bg-custom-blue cursor-pointer"
-                                    type="button" 
-                                    onClick={handleEditClick}
-                                  >
-                                    <div className="flex items-center p-2 text-white">
-                                      <i className="fas fa-edit pr-2"></i>
-                                      <p>{isEditable ? 'Save' : 'Edit'}</p>
-                                    </div>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Primary User Group
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center">
-                                  <i className="fas fa-users text-gray-500 mr-2"></i>
-                                  <select
-                                    className=" border border-gray-100 p-2 bg-white w-full"
-                                    id="PrimaryUserGroup"
-                                    name="PrimaryUserGroup"
-                                    required
-                                  >
-                                    <option value="2" selected>
-                                      Penguin Guild
-                                    </option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Display Group
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center">
-                                  <i className="fas fa-users text-gray-500 mr-2"></i>
-                                  <select
-                                    className="border border-gray-100 rounded p-2 bg-white w-full"
-                                    id="DisplayGroup"
-                                    name="DisplayGroup"
-                                    required
-                                  >
-                                    <option value="0" selected>
-                                      Use Primary User Group
-                                    </option>
-                                    <option value="2">Penguin Guild</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  User Title
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center">
-                                  <i className="fas fa-user-tie text-gray-500 mr-3"></i>
-                                  <input
-                                    type="text"
-                                    className=" border border-gray-100 rounded p-2 flex-grow w-full"
-                                    id="title"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={handleChange}
-                                    placeholder="Enter desired title"
-                                    autoComplete="off"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Birthday
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                <i className="fa fa-calendar text-gray-500 "></i>
-                                <input
-                                  type="date" // Change type to 'date'
-                                  className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                  id="birthday"
-                                  name="birthday"
-                                  value={formData.birthday}
-                                  onChange={handleChange}
-                                  placeholder="Select a date"
-                                  autoComplete="off"
-                                  max={new Date().toISOString().split('T')[0]} // Restricts future dates
+                                {/* <img
+                                  src={`data:image/jpeg;base64,${formData.profilePicture}`}
+                                  alt="Profile"
+                                /> */}
+                                {/* <button
+                                  className="ml-12 bg-custom-blue p-2 text-white "
+                                   onClick={() => document.getElementById('profilePictureInput').click()}
+                                >
+                                  Change Avatar
+                                </button> */}
+                                <input 
+                                  id="file-input"
+                                  className="hidden"
+                                  type="file"
+                                  accept=".png,.jpg,.jpeg,.bmp"
+                                  name="avatar"
+                                  onChange={handleImageChange} 
+                                  
                                 />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Gender
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center">
-                                  <i className="fa fa-neuter text-gray-500 mr-3"></i>
-                                  <select
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="gender"
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                    defaultValue="Male" // Since 'Male' is pre-selected
-                                  >
-                                    <option disabled value="">
-                                      Select a gender
-                                    </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Location
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fa fa-map-marker text-gray-500 "></i>
-                                  <input
-                                    type="text"
-                                    className="form-control border border-gray-300 rounded p-2 flex-grow"
-                                    id="location"
-                                    name="location"
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    placeholder="Your location"
-                                    autoComplete="off"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Website
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fa fa-globe text-gray-500"></i>
-                                  <input
-                                    type="text"
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="website"
-                                    name="website"
-                                    value={formData.website}
-                                    onChange={handleChange}
-                                    placeholder="Website"
-                                    autoComplete="off"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Twitter
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fab fa-twitter text-gray-500"></i>
-                                  <input
-                                    type="text"
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="twitter"
-                                    name="twitter"
-                                    value={formData.twitter}
-                                    onChange={handleChange}
-                                    placeholder="Twitter username"
-                                    autoComplete="off"
-                                    maxLength={128}
-                                    pattern="(((https?://)?(www\.)?twitter\.com/)|@)?(.*/)?(.*)($|\?.*)"
-                                    title="Twitter handle must be a valid Twitter handle or Twitter URL."
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Facebook
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fab fa-facebook text-gray-500"></i>
-                                  <input
-                                    type="text"
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="facebook"
-                                    name="facebook"
-                                    placeholder="Facebook profile URL"
-                                    value={formData.facebook}
-                                    onChange={handleChange}
-                                    
-                                    maxLength={128}
-                                    pattern="(((https?://)?(www\.)?facebook\.com/))?(.*/)?([a-zA-Z0-9.]*)($|\?.*)"
-                                    title="Facebook handle must be a valid Facebook handle or Facebook URL."
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex border-y p-4">
-                              <div
-                                className="flex-grow  mr-2 relative "
-                                style={{ flex: "2" }}
-                              >
-                                <p className=" absolute right-0 text-black pr-6  py-2">
-                                  Biography
-                                </p>
-                              </div>
-                              <div
-                                className="flex-grow  "
-                                style={{ flex: "3" }}
-                              >
-                                <div className=" pl-2 w-full flex items-center space-x-3">
-                                  <i className="fa fa-history text-gray-500"></i>
-                                  <textarea
-                                    className="form-control border border-gray-100 rounded p-2 flex-grow"
-                                    id="bio"
-                                    name="bio"
-                                    placeholder="Tell us about you"
-                                    autoComplete="off"
-                                    maxLength={3000}
-                                    value={formData.bio}
-                                    onChange={handleChange}
-                                    title="The field Bio must be a string with a maximum length of 3000."
-                                  ></textarea>
-                                </div>
+                                
+                                <label htmlFor="file-input" className={`bg-custom-blue p-2 md:w-[120px] text-[11px] md:text-[13px] w-[100px] text-white cursor-pointer`}>
+                                  {uploading ? "Uploading Avatar..." : "Change Avatar"}
+                                </label>
+                              
                               </div>
                             </div>
                           </div>
 
-                          <div className="items-center text-center mt-6 text-white">
-                          <ToastContainer />
-                          <button
-                          className="bg-custom-light-blue py-1 px-2"
-                          type="submit"
-                          onClick={handleSubmit}
-                          disabled={uploading} // Disable button while uploading
-                        >
-                          {uploading ? "Updating..." : "Update profile"}
-                        </button>
+                          <div className="flex flex-col sm:flex-row border-y p-4 md:w-full ">
+                            <div         
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Username
+                              </p>
+                            </div>
+                            <div className="flex-grow " style={{ flex: "3" }}>
+                              <div className="flex items-center w-full ">
+                                <i className="fa fa-user text-gray-500 p-2"></i>
+                                <input 
+                                  className="    placeholder:text-[10px] placeholder:md:text-[14px] "
+                                  id="username"
+                                  name="username"
+                                  placeholder="Enter desired display name"
+                                  type="text"
+                                  value={formData.username}
+                                  onChange={handleChange}
+                                  readOnly={!isEditable} // Make it read-only if not editable
+                                />
+                                <button
+                                  className="flex bg-custom-blue cursor-pointer"
+                                  type="button" 
+                                  onClick={handleEditClick}
+                                >
+                                  <div className="flex items-center p-2 text-white">
+                                    <i className="fas fa-edit pr-2"></i>
+                                    <p>{isEditable ? 'Save' : 'Edit'}</p>
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        </form>
-                      </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Primary User Group
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center">
+                                <i className="fas fa-users text-gray-500 mr-2"></i>
+                                <select
+                                  className=" border border-gray-100 p-2 bg-white w-full md:w-full max-w-[260px] placeholder:text-[10px] placeholder:md:text-[14px]"
+                                  id="PrimaryUserGroup"
+                                  name="PrimaryUserGroup"
+                                  required
+                                >
+                                  <option value="2" selected>
+                                    Penguin Guild
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Display Group
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center">
+                                <i className="fas fa-users text-gray-500 mr-2"></i>
+                                <select
+                                  className="border placeholder:text-[10px] placeholder:md:text-[14px] border-gray-100 rounded p-2 bg-white w-full md:w-full max-w-[260px]"
+                                  id="DisplayGroup"
+                                  name="DisplayGroup"
+                                  required
+                                >
+                                  <option value="0" selected>
+                                    Use Primary User Group
+                                  </option>
+                                  <option value="2">Penguin Guild</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className=" hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                User Title
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center">
+                                <i className="fas fa-user-tie text-gray-500 mr-3"></i>
+                                <input 
+                                  type="text"
+                                  className=" border border-gray-100 rounded p-2 flex-grow w-full md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px]"
+                                  id="title"
+                                  name="title"
+                                  value={formData.title}
+                                  onChange={handleChange}
+                                  placeholder="Enter desired title"
+                                  autoComplete="off"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className=" hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Birthday
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                              <i className="fa fa-calendar text-gray-500 "></i>
+                              <input 
+                                type="date" // Change type to 'date'
+                                className="form-control border border-gray-100 rounded p-2 flex-grow md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px]"
+                                id="birthday"
+                                name="birthday"
+                                value={formData.birthday}
+                                onChange={handleChange}
+                                placeholder="Select a date"
+                                autoComplete="off"
+                                max={new Date().toISOString().split('T')[0]} // Restricts future dates
+                              />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className=" hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Gender
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center">
+                                <i className="fa fa-neuter text-gray-500 mr-3"></i>
+                                <select
+                                  className=" placeholder:text-[10px] placeholder:md:text-[14px] form-control border border-gray-100 rounded md:w-full max-w-[260px] p-2 flex-grow"
+                                  id="gender"
+                                  name="gender"
+                                  value={formData.gender}
+                                  onChange={handleChange}
+                                  defaultValue="Male" // Since 'Male' is pre-selected
+                                >
+                                  <option      disabled value="">
+                                    Select a gender
+                                  </option>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                                  <option value="Other">Other</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Location
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                                <i className="fa fa-map-marker text-gray-500 "></i>
+                                <input 
+                                  type="text"
+                                  className="form-control border border-gray-300 rounded p-2 flex-grow md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px]"
+                                  id="location"
+                                  name="location"
+                                  value={formData.location}
+                                  onChange={handleChange}
+                                  placeholder="Your location"
+                                  autoComplete="off"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Website
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                                <i className="fa fa-globe text-gray-500"></i>
+                                <input 
+                                  type="text"
+                                  className="form-control border border-gray-100 rounded p-2 flex-grow md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px]"
+                                  id="website"
+                                  name="website"
+                                  value={formData.website}
+                                  onChange={handleChange}
+                                  placeholder="Website"
+                                  autoComplete="off"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Twitter
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                                <i className="fab fa-twitter text-gray-500"></i>
+                                <input 
+                                  type="text"
+                                  className="form-control border border-gray-100 rounded p-2 flex-grow md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px]"
+                                  id="twitter"
+                                  name="twitter"
+                                  value={formData.twitter}
+                                  onChange={handleChange}
+                                  placeholder="Twitter username"
+                                  autoComplete="off"
+                                  maxLength={128}
+                                  pattern="(((https?://)?(www\.)?twitter\.com/)|@)?(.*/)?(.*)($|\?.*)"
+                                  title="Twitter handle must be a valid Twitter handle or Twitter URL."
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Facebook
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                                <i className="fab fa-facebook text-gray-500"></i>
+                                <input 
+                                  type="text"
+                                  className=" md:w-full max-w-[260px]  placeholder:text-[10px] placeholder:md:text-[14px] form-control border border-gray-100 rounded p-2 flex-grow "
+                                  id="facebook"
+                                  name="facebook"
+                                  placeholder="Facebook profile URL"
+                                  value={formData.facebook}
+                                  onChange={handleChange}
+                                  
+                                  maxLength={128}
+                                  pattern="(((https?://)?(www\.)?facebook\.com/))?(.*/)?([a-zA-Z0-9.]*)($|\?.*)"
+                                  title="Facebook handle must be a valid Facebook handle or Facebook URL."
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row border-y p-4">
+                            <div
+                              className="flex-grow  mr-2 relative "
+                              style={{ flex: "2" }}
+                            >
+                              <p className="hidden sm:block absolute right-0 text-black pr-6  py-2">
+                                Biography
+                              </p>
+                            </div>
+                            <div
+                              className="flex-grow  "
+                              style={{ flex: "3" }}
+                            >
+                              <div className=" pl-2 w-full flex items-center space-x-3">
+                                <i className="fa fa-history text-gray-500"></i>
+                                <textarea
+                                  className="form-control border border-gray-100 rounded p-2 flex-grow md:w-full max-w-[260px]"
+                                  id="bio"
+                                  name="bio"
+                                  placeholder="Tell us about you"
+                                  autoComplete="off"
+                                  maxLength={3000}
+                                  value={formData.bio}
+                                  onChange={handleChange}
+                                  title="The field Bio must be a string with a maximum length of 3000."
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="items-center text-center mt-6 text-white">
+                        <ToastContainer />
+                        <button
+                        className="bg-custom-light-blue py-1 px-2"
+                        type="submit"
+                        onClick={handleSubmit}
+                        disabled={uploading} // Disable button while uploading
+                      >
+                        {uploading ? "Updating..." : "Update profile"}
+                      </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-              </>
-            
-            
-          </div>
+              </div>
+            </>
+          
+          
+        </div>
         </div>
       </div>
     </div>

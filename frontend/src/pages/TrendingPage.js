@@ -66,15 +66,16 @@ const TrendingPage = () => {
   };
 
   return (
+    
     <div className="page-content bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
+     <div className="container mx-auto px-1 sm:px-4 py-8">
         <div className="page-content-inner flex">
           <div className="w-full lg:w-3/4">
           {bookThreads.length > 0 ? (
-            <div className="portlet light bg-white p-6 shadow-md rounded-lg">
+           <div className="portlet light bg-white sm:p-6 p-2 py-[30px] shadow-md rounded-lg">
               <div className="portlet-title mb-4 ">
                 <div className="flex justify-between items-center ">
-                  <h1 className="text-2xl font-bold text-red-600">
+                <h1 className="sm:text-[23px] text-[17px] font-bold text-red-600">
                   <FontAwesomeIcon icon={faChartBar} className="mr-2"/>
                     
                     TRENDING
@@ -83,9 +84,9 @@ const TrendingPage = () => {
                       className="flex items-center text-sm"
                       onSubmit={handleFilterSubmit}
                     >
-                      <label
+                        <label
                         htmlFor="genre"
-                        className="bg-custom-dark-blue text-white px-3 py-2 rounded-l whitespace-nowrap"
+                        className="bg-custom-dark-blue text-white sm:px-3 sm:py-2 ml-2 py-[5px] px-[10px] rounded-l whitespace-nowrap"
                       >
                         Filter Genre
                       </label>
@@ -94,7 +95,7 @@ const TrendingPage = () => {
                         id="genre"
                         value={selectedGenre}
                         onChange={handleGenreChange}
-                        className="form-select block w-full p-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 rounded-r focus:outline-none"
+                        className="form-select block w-[100px] h-[30px] sm:h-[36px] bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 rounded-r focus:outline-none"
                       >
                         <option value="">ALL</option>
 
@@ -114,7 +115,8 @@ const TrendingPage = () => {
                         <option value="one_shot">Short Story</option>
                         <option value="tragedy">Tragedy</option>
                       </select>
-                      <button className="btn bg-custom-dark-blue text-white px-3 py-2 ml-2 rounded hover:bg-custom-blue">
+                     
+ <button className="btn bg-custom-dark-blue text-white sm:px-3 sm:py-2 ml-2 py-[5px] px-[14px] rounded hover:bg-custom-blue">
                         Go
                       </button>
                     </form>
@@ -148,7 +150,7 @@ const TrendingPage = () => {
                               </Link>
                             </figure>
                             <div className="w-4/5 pl-6">
-                              <h2 className="fiction-title text-lg font-bold text-red-500">
+                              <h2 className="fiction-title  sm:text-lg text-[17px] font-bold text-red-500">
                                 <Link to={`/fiction/${book._id}/${book.title}`}>
                                   {book.title}
                                 </Link>
@@ -157,7 +159,7 @@ const TrendingPage = () => {
                                 {book.tags.slice(0, 4).map((tag, index) => (
                                   <span
                                     key={index}
-                                    className="bg-custom-tan-blue text-white px-2 py-1 ml-1"
+                                    className="bg-custom-tan-blue text-[13px] sm:text-[16px] text-white px-2 py-1 ml-1"
                                   >
                                     {tag}
                                   </span>

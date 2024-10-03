@@ -6,10 +6,13 @@ import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify'; // Importing toast
 
+
+
 function Favorites() {
     const [favoriteBooks, setFavoriteBooks] = useState([]);
     const [expandedIndex, setExpandedIndex] = useState(null);
-
+    const [sidebarcollapse, setsidebarcollapse] = useState(false)
+    const [activeTab, setActiveTab] = useState("compose");
     const email = useSelector((state) => state.userData.email); // Get the user's email from the state
 
     useEffect(() => {
@@ -109,6 +112,31 @@ function Favorites() {
         { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
         // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
     ];
+
+
+    const handlecollpase = () => {
+        setsidebarcollapse(!sidebarcollapse);
+    };
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 500) {
+            // Collapse the sidebar on small screens
+        } else {
+            setsidebarcollapse(false); // Expand the sidebar on larger screens
+        }
+    };
+
+    // Run the check when the component mounts and when window is resized
+    useEffect(() => {
+        checkScreenSize(); // Initial check
+        window.addEventListener('resize', checkScreenSize); // Add resize event listener
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+   
+
 
     return (
         <div className="w-full bg-cover bg-center bg-fixed">
@@ -246,7 +274,7 @@ function Favorites() {
 
                     {/* Main Content */}
                     <div className="flex-1 ml-4 mt-4">
-                        <div className="flex space-x-8 mb-6 ml-1">
+                        <div className="lg:flex  lg:space-x-8 lg:mb-6 md:ml-1   grid sm:grid-cols-5  md:grid-cols-7   grid-cols-4 gap-4 mb-6 ml-1">
                         <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
                             <Link to="/my/favorites" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Favorites</Link>
                             <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>

@@ -62,7 +62,7 @@ const handleNewFictionClick = () => {
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-900">
       <Sidebar setSelectedComponent={handleSidebarItemClick} />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow overflow-x-auto">
         <Header selectedComponent={selectedComponent} breadcrumb={breadcrumb} />
        
           {renderContent()}

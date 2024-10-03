@@ -189,7 +189,7 @@ function BookShelf() {
                         </div>
                     </div>
                     <div className="flex-1 ml-4 mt-4">
-                        <div className="flex space-x-8 mb-6 ml-1">
+                        <div className="lg:flex  lg:space-x-8 lg:mb-6 md:ml-1   grid sm:grid-cols-5  md:grid-cols-7   grid-cols-4 gap-4 mb-6 ml-1">
                         <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
                             <Link to="/my/favorites" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Favorites</Link>
                             <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>

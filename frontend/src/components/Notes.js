@@ -41,12 +41,12 @@ export const Notes = () => {
 
     return (
         
-        <div className="flex-grow p-4 bg-gray-200">
-            <ToastContainer position="top-right" autoClose={5000} />
-            <div className="bg-white p-4 shadow rounded flex flex-col mt-[5px]">
+        <div className=" p-4 bg-gray-200">
+     
+            <div className="bg-white p-4 shadow rounded  mt-[5px]">
                 <h2 className="text-lg font-semibold border-b border-gray-200 pb-4 mb-4">Notes</h2>
                 <textarea
-                    className="notes-textarea"
+                    className="notes-textarea max-h-[300px] h-[300px] w-[100%]"
                     placeholder="Type your notes here..."
                     value={note}
                     onChange={e => setNote(e.target.value)}

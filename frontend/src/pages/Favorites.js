@@ -7,10 +7,13 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+
 function Favorites() {
     const [favoriteBooks, setFavoriteBooks] = useState([]);
     const [expandedIndex, setExpandedIndex] = useState(null);
-
+    const [sidebarcollapse, setsidebarcollapse] = useState(false)
+    const [activeTab, setActiveTab] = useState("compose");
     const email = useSelector((state) => state.userData.email); // Get the user's email from the state
 
     useEffect(() => {
@@ -37,8 +40,8 @@ function Favorites() {
     }, [email]);
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
-      
+    }, []);
+
 
     const toggleShowMore = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
@@ -84,7 +87,7 @@ function Favorites() {
         // { icon: 'fa-download', label: 'Download Account', link: '/account/download' },
         // { icon: 'fa-user-slash', label: 'Delete Account', link: '/account/delete', specialClass: 'font-red-thunderbird bold' },
     ];
-    
+
     const notificationOptions = [
         { icon: 'fa-exclamation-circle', label: 'General Settings', link: '/account/notifications' },
         { icon: 'fa-list-alt', label: 'Threads', link: '/notifications/threads' },
@@ -94,7 +97,7 @@ function Favorites() {
         { icon: 'fa-home', label: 'UserCP', link: '/my/usercp' },
         { icon: 'fa-list', label: 'Edit Signature', link: '/account/signature' }
     ];
-    
+
     const myOptions = [
         { icon: 'fa-book', label: 'Fictions', link: '/fictions' },
         { icon: 'fa-bookmark', label: 'Follow List', link: '/my/follows' },
@@ -105,114 +108,223 @@ function Favorites() {
         { icon: 'fa-comments', label: 'Comments', link: '/my/comments' },
         // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
     ];
+    const handlecollpase = () => {
+        setsidebarcollapse(!sidebarcollapse);
+    };
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 500) {
+            // Collapse the sidebar on small screens
+        } else {
+            setsidebarcollapse(false); // Expand the sidebar on larger screens
+        }
+    };
+
+    // Run the check when the component mounts and when window is resized
+    useEffect(() => {
+        checkScreenSize(); // Initial check
+        window.addEventListener('resize', checkScreenSize); // Add resize event listener
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+   
+
+
+
     return (
         <div className="w-full bg-cover bg-center bg-fixed">
             <div className="container pt-2 mx-auto sm:px-6 sm:pr-4 bg-gray-100 w-full pb-8 shadow-lg">
                 <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 
                 <div className="flex mt-4">
-                    <div className="w-48 shadow-lg rounded-lg h-auto">
+                    <div className={` bg-white   ${sidebarcollapse ? 'w-full absolute z-50' : 'static'} static  w-[50px] sm:w-auto shadow-lg rounded-lg h-auto`}>
+
+
+                        <div className="sm:hidden p-2 bg-white ml-[5px] max-w-[10px]">
+                            <i onClick={handlecollpase} className="fas fa-bars text-2xl cursor-pointer"></i>
+                        </div>
+
                         {/* Message List */}
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Messages</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {messageOptions.map((option) => (
+
+                        <div className={`mt-4 bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+                            <div className={`bg-gray-600 md text-white ${sidebarcollapse ? 'block' : 'hidden'} sm:block  text-md p-2 pl-4`}>
+                                Messages
+                            </div>
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+                                {messageOptions.map((option, index) => (
                                     <li
                                         key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fas ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
-                        </div>
 
+                        </div>
                         {/* Settings List */}
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Settings</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {settingsOptions.map((option) => (
+                        <div className={`mt-4  bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+                                Settings
+                            </div>
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+                                {settingsOptions.map((option, index) => (
                                     <li
                                         key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fas ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
-                        </div>
 
+                        </div>
                         {/* Security & Privacy List */}
+
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Security & Privacy</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+                                Security & Privacy
+                            </div>
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {securityOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
 
                         {/* Notification List */}
-                        {/* <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Notifications</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+
+                        <div className="mt-4 bg-white">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+                                Notifications
+                            </div>
+
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {notificationOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
-                        </div> */}
+
+                        </div>
 
                         {/* Forum List */}
+
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">Forum</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+                                Forum
+                            </div>
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {forumOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
 
                         {/* My List */}
+
                         <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">My</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
+                            <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`} >My</div>
+
+
+
+                            <hr className="w-[50px] block sm:hidden"></hr>
+                            <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
                                 {myOptions.map((option, index) => (
                                     <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
+                                        key={option.key}
+                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
                                     >
-                                        <i className={`fa fa-fw ${option.icon} text-black mr-2`}></i>
-                                        <Link to={option.link} className="flex-grow">{option.label}</Link>
+
+                                        <Link to={option.link} className={`flex-grow `}> <i
+                                            className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                                                ? "bg-custom-blue text-white"
+                                                : ""
+                                                }`}
+                                        ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
                                     </li>
                                 ))}
                             </ul>
+
                         </div>
                     </div>
 
+
+
+
                     {/* Main Content */}
-                    <div className="flex-1 ml-4 mt-4">
-                        <div className="flex space-x-8 mb-6 ml-1">
-                        <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
+                    <div className="flex-1 ml-4 mt-4 h-[1400px] sm:h-auto">
+                        <div className="lg:flex  lg:space-x-8 lg:mb-6 md:ml-1   grid sm:grid-cols-5  md:grid-cols-7   grid-cols-4 gap-4 mb-6 ml-1">
+                            <Link to="/my/follows" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Follows</Link>
                             <Link to="/my/favorites" className="text-gray-900 font-bold border-b-4 border-blue-500">Favorites</Link>
                             <Link to="/my/readlater" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">Readlater</Link>
                             <Link to="/my/history" className="text-gray-600 hover:text-gray-800 hover:border-b-4 hover:border-blue-500">History</Link>
@@ -228,47 +340,47 @@ function Favorites() {
                             <hr className="my-4 border-gray-300" />
 
                             {favoriteBooks.map((item, index) => (
-    <div key={index} className="mb-6 border-b border-gray-300 pb-6">
-        <div className="flex justify-between">
-            <div className="flex items-start space-x-4">
-                <img src={item.image} alt={item.title} className="w-24 h-36 object-cover" />
-                <div className="flex flex-col">
-                    <div className="flex flex-col mb-2">
-                        <h3 className="text-2xl font-bold text-red-600">{item.title}</h3>
-                        <span className="text-sm font-semibold text-blue-600">{item.stats.pages} PAGES</span>
-                    </div>
-                    <div className="text-sm mt-2">
-                        <p className="font-semibold mb-2">Readers can expect:</p>
-                        <div
-                            className={`transition-all overflow-hidden ${expandedIndex === index ? 'max-h-none' : 'max-h-[100px]'}`}
-                            style={{ maxHeight: expandedIndex === index ? 'none' : '100px' }}
-                        >
-                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.synopsis) }} />
-                            {expandedIndex === index && (
-                                <p className="mt-2 text-gray-700">{item.description}</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div className="flex justify-between items-center mt-4">
-            <div className="flex-1 text-center">
-                <button
-                    onClick={() => toggleShowMore(index)}
-                    className="text-gray-600 font-semibold hover:text-gray-800"
-                >
-                    {expandedIndex === index ? "SHOW LESS" : "SHOW MORE"}
-                </button>
-            </div>
-            <button 
-                onClick={() => handleUnfavorite(item.title)}
-                className="bg-[#e26a6a] text-white px-4 py-2 hover:bg-red-600 whitespace-nowrap">
-                Unfavorite
-            </button>
-        </div>
-    </div>
-))}
+                                <div key={index} className="mb-6 border-b border-gray-300 pb-6">
+                                    <div className="flex justify-between">
+                                        <div className="flex items-start space-x-4">
+                                            <img src={item.image} alt={item.title} className="w-24 h-36 object-cover" />
+                                            <div className="flex flex-col">
+                                                <div className="flex flex-col mb-2">
+                                                    <h3 className="text-2xl font-bold text-red-600">{item.title}</h3>
+                                                    <span className="text-sm font-semibold text-blue-600">{item.stats.pages} PAGES</span>
+                                                </div>
+                                                <div className="text-sm mt-2">
+                                                    <p className="font-semibold mb-2">Readers can expect:</p>
+                                                    <div
+                                                        className={`transition-all overflow-hidden ${expandedIndex === index ? 'max-h-none' : 'max-h-[100px]'}`}
+                                                        style={{ maxHeight: expandedIndex === index ? 'none' : '100px' }}
+                                                    >
+                                                        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.synopsis) }} />
+                                                        {expandedIndex === index && (
+                                                            <p className="mt-2 text-gray-700">{item.description}</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <div className="flex-1 text-center">
+                                            <button
+                                                onClick={() => toggleShowMore(index)}
+                                                className="text-gray-600 font-semibold hover:text-gray-800"
+                                            >
+                                                {expandedIndex === index ? "SHOW LESS" : "SHOW MORE"}
+                                            </button>
+                                        </div>
+                                        <button
+                                            onClick={() => handleUnfavorite(item.title)}
+                                            className="bg-[#e26a6a] text-white px-4 py-2 hover:bg-red-600 whitespace-nowrap">
+                                            Unfavorite
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
 
                         </div>
                     </div>

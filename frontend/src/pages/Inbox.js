@@ -4,6 +4,8 @@ import { FaArrowLeft, FaHome, FaPaperPlane } from "react-icons/fa";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 
 function Inbox() {
     const [activeTab, setActiveTab] = useState("");
@@ -12,6 +14,8 @@ function Inbox() {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [messagesPerPage] = useState(10);
+    const [sidebarcollapse, setsidebarcollapse] = useState(false)
+ 
 
 
     const currentUser = useSelector((state) => state.userData.user);  // Assuming you have a Redux store setup
@@ -156,6 +160,30 @@ function Inbox() {
         // { icon: 'fa-ban', label: 'Blocked Users', link: '/my/blockedusers' }
     ];
 
+    const handlecollpase = () => {
+        setsidebarcollapse(!sidebarcollapse);
+    };
+
+    const checkScreenSize = () => {
+        if (window.innerWidth < 500) {
+            // Collapse the sidebar on small screens
+        } else {
+            setsidebarcollapse(false); // Expand the sidebar on larger screens
+        }
+    };
+
+    // Run the check when the component mounts and when window is resized
+    useEffect(() => {
+        checkScreenSize(); // Initial check
+        window.addEventListener('resize', checkScreenSize); // Add resize event listener
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+   
+
+
     return (
         <div className="w-full bg-cover bg-center bg-fixed">
             <div className="container pt-2 mx-auto sm:px-6 sm:pr-4 bg-gray-100 w-full pb-8 shadow-lg">
@@ -175,151 +203,192 @@ function Inbox() {
                     </div>
                 </div>
                 <div className="flex mt-4">
-                    <div className="w-48  shadow-lg rounded-lg h-auto">
+                <div className={` bg-white   ${sidebarcollapse ? 'w-full absolute z-50' : 'static'} static  w-[50px] sm:w-auto shadow-lg rounded-lg h-auto`}>
 
 
-                        {/* Message List */}
+<div className="sm:hidden p-2 bg-white ml-[5px] max-w-[10px]">
+    <i onClick={handlecollpase} className="fas fa-bars text-2xl cursor-pointer"></i>
+</div>
 
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Messages
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {messageOptions.map((option, index) => (
-                                    <li
-                                        key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+{/* Message List */}
 
-                                    >
-                                        <i
-                                            className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
-                                                ? "bg-custom-blue text-white"
-                                                : ""
-                                                }`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">{option.label}</a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/* Settings List */}
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Settings
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {settingsOptions.map((option, index) => (
-                                    <li
-                                        key={option.key}
-                                        className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center `}
+<div className={`mt-4 bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+    <div className={`bg-gray-600 md text-white ${sidebarcollapse ? 'block' : 'hidden'} sm:block  text-md p-2 pl-4`}>
+        Messages
+    </div>
 
-                                    >
-                                        <i
-                                            className={`fas ${option.icon} text-black mr-2 ${activeTab === option.key
-                                                ? "bg-custom-blue text-white"
-                                                : ""
-                                                }`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">{option.label}</a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/* Security & Privacy List */}
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {messageOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
 
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Security & Privacy
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {securityOptions.map((option, index) => (
-                                    <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
-                                    >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+            >
 
-                        {/* Notification List */}
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
 
-                        {/* <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Notifications
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {notificationOptions.map((option, index) => (
-                                    <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
-                                    >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div> */}
+</div>
+{/* Settings List */}
+<div className={`mt-4  bg-white sm:max-w-[100%] ${sidebarcollapse ? 'max-w-[100%]' : 'max-w-[20px]'}`}>
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+        Settings
+    </div>
 
-                        {/* Forum List */}
 
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">
-                                Forum
-                            </div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {forumOptions.map((option, index) => (
-                                    <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
-                                    >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
 
-                        {/* My List */}
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {settingsOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
 
-                        <div className="mt-4 bg-white">
-                            <div className="bg-gray-600 text-white text-md p-2 pl-4">My</div>
-                            <ul className="divide-y divide-gray-200 p-2 text-sm">
-                                {myOptions.map((option, index) => (
-                                    <li
-                                        key={index}
-                                        className="hover:bg-custom-blue hover:text-white cursor-pointer p-2 flex items-center"
-                                    >
-                                        <i
-                                            className={`fa fa-fw ${option.icon} text-black mr-2`}
-                                        ></i>
-                                        <a href={option.link} className="flex-grow">
-                                            {option.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
+{/* Security & Privacy List */}
+
+<div className="mt-4 bg-white">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+        Security & Privacy
+    </div>
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {securityOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
+
+{/* Notification List */}
+
+<div className="mt-4 bg-white">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+        Notifications
+    </div>
+
+
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {notificationOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
+
+{/* Forum List */}
+
+<div className="mt-4 bg-white">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`}>
+        Forum
+    </div>
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {forumOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
+
+{/* My List */}
+
+<div className="mt-4 bg-white">
+    <div className={`bg-gray-600 text-white text-md p-2 pl-4  ${sidebarcollapse ? 'block' : 'hidden'} sm:block`} >My</div>
+
+
+
+    <hr className="w-[50px] block sm:hidden"></hr>
+    <ul className={` ${sidebarcollapse ? 'divide-y' : ''} sm:block  text-md p-2 pl-4} sm:divide-y divide-gray-200   p-2 text-sm `}>
+        {myOptions.map((option, index) => (
+            <li
+                key={option.key}
+                className={`hover:bg-custom-blue hover:text-white cursor-pointer p-2 pr-[27px] flex items-center `}
+
+            >
+
+                <Link to={option.link} className={`flex-grow `}> <i
+                    className={`fas  ${option.icon} text-black mr-2 ${activeTab === option.key
+                        ? "bg-custom-blue text-white"
+                        : ""
+                        }`}
+                ></i>  <div className={`flex-grow  ${sidebarcollapse ? 'inline-block' : 'hidden'} sm:inline-block`}>{option.label}</div>   </Link>
+            </li>
+        ))}
+    </ul>
+
+</div>
+</div>
+
+
+
                     {/* mian div  */}
 
-                    <div className="flex-1 ml-4 mt-4">
+                    <div className="flex-1 ml-4 mt-4 h-[1200px] ">
 
-                        <div className="bg-white p-6">
+                        <div className="bg-white p-6 ">
                             <h2 className="text-xl font-bold mb-4">
                                 Inbox
                             </h2>
@@ -338,20 +407,20 @@ function Inbox() {
                                 </button>
                             </div>
 
-                            <div className="overflow-x-auto">
+                            <div className="w-full">
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-200">
                                         <tr>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Message Title
+                                            <th scope="col" className="md:px-[20px] px-[10px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                 Title
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th scope="col" className="md:px-[20px] px-[10px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Sender
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Date/Time Sent
+                                            <th scope="col" className="md:px-[20px] px-[10px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                               Time
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th scope="col" className="md:px-[20px] px-[10px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Actions
                                             </th>
                                         </tr>
@@ -360,16 +429,16 @@ function Inbox() {
                                         {currentFilteredMessages.map((message) => (
                                             <React.Fragment key={message._id}>
                                                 <tr className="hover:bg-gray-50" onClick={() => toggleMessageDetails(message.subject)}>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer">
+                                                    <td className="md:px-[20px] px-[10px] py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer">
                                                         {message.subject}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <td className="md:px-[20px] px-[10px] py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {renderSenderName(message.sender)}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <td className="md:px-[20px] px-[10px] py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {new Date(message.createdAt).toLocaleString()}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <td className="md:px-[20px] px-[10px] py-4 whitespace-nowrap text-sm text-gray-500">
                                                         <div className="flex items-center space-x-4">
                                                             <select
                                                                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -392,7 +461,7 @@ function Inbox() {
                                                 </tr>
                                                 {selectedSubject === message.subject && (
                                                     <tr className="bg-gray-50">
-                                                        <td colSpan="4" className="px-6 py-4 whitespace-wrap text-sm text-gray-800">
+                                                        <td colSpan="4" className="md:px-[20px] px-[10px] py-4 whitespace-wrap text-sm text-gray-800">
                                                             <div dangerouslySetInnerHTML={{ __html: message.message }} />
                                                         </td>
                                                     </tr>
@@ -419,6 +488,7 @@ function Inbox() {
 
 
                     </div>
+
 
 
                 </div>
