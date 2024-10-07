@@ -16,15 +16,15 @@ passport.use(new GoogleStrategy({
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
-    console.log("profileid = "+ profile.id);
+    //console.log("profileid = "+ profile.id);
     const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
-    console.log("email = "+ email);
+    //console.log("email = "+ email);
     if (!email) {
       return done(null, false, { message: 'Email is required to sign up' });
     }
     let user = await Userdb.findOne({ googleId: profile.id });
     if (!user) {
-      console.log("not users = ");
+      //console.log("not users = ");
       // New user signing up
       user = new Userdb({
         googleId: profile.id,
@@ -33,8 +33,8 @@ async (accessToken, refreshToken, profile, done) => {
         profilePicture: profile.photos[0].value
       });
       await user.save();
-      console.log("save users in db = ");
-      console.log(" users id  = "+user._id.toString());
+      //console.log("save users in db = ");
+      //console.log(" users id  = "+user._id.toString());
       // return done(null, { userId: user._id.toString(), isNewUser: true });
       // return done(null, { user, isNewUser: true });
       return done(null, { userId: user._id.toString(), email: user.email, isNewUser: true });

@@ -83,7 +83,7 @@ const PageHeader = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('my_data',data)
+        //console.log('my_data',data)
         if (data.length === 0) {
           setNoMessages(true);
           setMessages([]);
@@ -94,8 +94,8 @@ const PageHeader = () => {
 
           const unreadMessages = data.length;
           const previousUnreadCount = parseInt(localStorage.getItem('lastKnownUnreadCount'), 10) ;
-           console.log("hey",previousUnreadCount)
-           console.log("bey",unreadMessages)
+           //console.log("hey",previousUnreadCount)
+           //console.log("bey",unreadMessages)
 
 
            if (!localStorage.getItem('lastKnownUnreadCount') || window.location.pathname === '/private/1') {

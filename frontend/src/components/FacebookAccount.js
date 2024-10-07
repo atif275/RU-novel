@@ -40,8 +40,8 @@ const FacebookAccountForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log(data.user);
-        // console.log('g')
+        // //console.log(data.user);
+        // //console.log('g')
         dispatch(userActions.setUser(data.user));
         navigate('/'); // Redirect upon success
       } else {

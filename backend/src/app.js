@@ -87,11 +87,11 @@ const checkout = new YooCheckout({
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('MongoDB connected');
+    //console.log('MongoDB connected');
     
     // Start the server only after the database is connected
     app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      //console.log(`Server is running on http://localhost:${PORT}`);
     });
   })
   .catch(err => {
@@ -167,7 +167,7 @@ app.post('/api/create-payment', async (req, res) => {
       subscription.paymentUrl = confirmation.confirmation_url,
       subscription.startDate = new Date();
       subscription.status = 'pending';
-      console.log(`Subscription for user ${username} found and will be updated.`);
+      //console.log(`Subscription for user ${username} found and will be updated.`);
     } else {
    
     // Save subscription with 'pending' status
@@ -207,11 +207,11 @@ app.post('/api/payment-success', async (req, res) => {
       subscription.status = 'active';
       subscription.endDate = new Date(subscription.startDate.getFullYear() + (subscription.subscriptionType === 'yearly' ? 1 : 0), subscription.startDate.getMonth() + (subscription.subscriptionType === 'monthly' ? 1 : 0));
       
-      console.log("userid in payment-success: "+subscription.userId)
+      //console.log("userid in payment-success: "+subscription.userId)
       const username = subscription.username;
       // Update user's premium status
       const user = await Userdb.findOne({username});
-      console.log("user email:"+user.email);
+      //console.log("user email:"+user.email);
       user.premium = true;
       await subscription.save();
       await user.save();
@@ -229,16 +229,16 @@ app.post('/api/payment-success', async (req, res) => {
 // Manage Subscription (cancel, upgrade, renew)
 app.post('/api/manage-subscription', async (req, res) => {
   const { action, paymentId } = req.body;
-  console.log("---------");
-  console.log("action = "+action);
-  console.log("paymentId = "+paymentId);
-  console.log("---------");
+  //console.log("---------");
+  //console.log("action = "+action);
+  //console.log("paymentId = "+paymentId);
+  //console.log("---------");
 
   try {
     const subscription = await Subscriptiondb.findOne({ paymentId });
 
     if (!subscription) {
-      console.log("sub not found in manage subs")
+      //console.log("sub not found in manage subs")
       return res.status(404).json({ message: 'Subscription not found' });
     }
 
@@ -246,17 +246,17 @@ app.post('/api/manage-subscription', async (req, res) => {
       subscription.status = 'canceled';
       subscription.autoRenewal = false;
       // const userId = mongoose.Types.ObjectId(subscription.userId);
-      console.log("userId"+subscription.userId);
+      //console.log("userId"+subscription.userId);
       const username = subscription.username;
       // Update user premium status
       const user = await Userdb.findOne({username});
 
-      //console.log("email == "+user);
-      console.log("email == "+user.email);
+      ////console.log("email == "+user);
+      //console.log("email == "+user.email);
       user.premium = false;
       await subscription.save();
       await user.save();
-      console.log("$$$$ plan canceled successfully %%%%%");
+      //console.log("$$$$ plan canceled successfully %%%%%");
       return res.json({ message: 'Subscription canceled' });
     }
 
@@ -290,16 +290,16 @@ app.post('/api/manage-subscription', async (req, res) => {
 app.post('/api/subscriptionn', async (req, res) => {
 
   try {
-    console.log("entered fetch subsss");
+    //console.log("entered fetch subsss");
     const { username } = req.body; // Assume the user is authenticated
-    console.log("username"+username);
+    //console.log("username"+username);
     const subscription = await Subscriptiondb.findOne({ username });
-    // console.log("payment id = "+subscription.paymentId);
+    // //console.log("payment id = "+subscription.paymentId);
     if (!subscription) {
-      console.log("no subs found");
+      //console.log("no subs found");
       return res.status(404).json({ message: 'No active subscription found.' });
     }
-    console.log("subs found and send from backend");
+    //console.log("subs found and send from backend");
     return res.json(subscription);
   } catch (error) {
     console.error('Error fetching subscription:', error);
@@ -328,13 +328,13 @@ app.get('/api/books', async (req, res) => {
 
 app.get('/api/books/:id', async (req, res) => {
   try {
-    // console.log(`Fetching book with ID: ${req.params.id}`);
+    // //console.log(`Fetching book with ID: ${req.params.id}`);
     const book = await BookThread.findById(req.params.id);
     if (!book) {
-      console.log(`Book with ID ${req.params.id} not found.`);
+      //console.log(`Book with ID ${req.params.id} not found.`);
       return res.status(404).json({ message: 'Book not found' });
     }
-    // console.log("Book fetched successfully:", book);
+    // //console.log("Book fetched successfully:", book);
     res.json(book);
   } catch (err) {
     console.error('Error occurred while fetching book:', err);
@@ -344,13 +344,13 @@ app.get('/api/books/:id', async (req, res) => {
 
 app.get('/api/booksss/:id', async (req, res) => {
   try {
-    // console.log(`Fetching book with ID: ${req.params.id}`);
+    // //console.log(`Fetching book with ID: ${req.params.id}`);
     const book = await Submission.findById(req.params.id);
     if (!book) {
-      console.log(`Book with ID ${req.params.id} not found.`);
+      //console.log(`Book with ID ${req.params.id} not found.`);
       return res.status(404).json({ message: 'Book not found' });
     }
-    // console.log("Book fetched successfully:", book);
+    // //console.log("Book fetched successfully:", book);
     res.json(book);
   } catch (err) {
     console.error('Error occurred while fetching book:', err);
@@ -467,8 +467,8 @@ app.get('/api/booksss/:fictionId/chapters/:chapterId', async (req, res) => {
 
 
 app.get('/api/current-user', (req, res) => {
-  console.log('Session:', req.session); // Log session data
-  console.log('Authenticated user:', req.user); // Log the user data
+  //console.log('Session:', req.session); // Log session data
+  //console.log('Authenticated user:', req.user); // Log the user data
   
   if (req.isAuthenticated()) {
     const user = {
@@ -493,9 +493,9 @@ app.get('/logout', (req, res) => {
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('req.user:', req.user);
+    //console.log('req.user:', req.user);
     const userEmail = req.user.email;
-    console.log('userEmail at calback ===:' +userEmail);
+    //console.log('userEmail at calback ===:' +userEmail);
     if (req.user.isNewUser) {
       res.redirect(`https://ru-novel.ru/google/account?email=${encodeURIComponent(userEmail)}`);
     } else  {
@@ -516,7 +516,7 @@ app.get('/auth/facebook/callback',
   }),
   (req, res) => {
     const userEmail = req.user.email; // Extract the email from req.user
-    console.log('facebook userEmail at calback ===:' +userEmail);
+    //console.log('facebook userEmail at calback ===:' +userEmail);
     if (!userEmail) {
       // Redirect to an error page if the email is missing
       return res.redirect('https://ru-novel.ru/error');
@@ -608,13 +608,13 @@ app.get('/api/books', async (req, res) => {
 
 app.get('/api/books/:id', async (req, res) => {
   try {
-    // console.log(`Fetching book with ID: ${req.params.id}`);
+    // //console.log(`Fetching book with ID: ${req.params.id}`);
     const book = await BookThread.findById(req.params.id);
     if (!book) {
-      console.log(`Book with ID ${req.params.id} not found.`);
+      //console.log(`Book with ID ${req.params.id} not found.`);
       return res.status(404).json({ message: 'Book not found' });
     }
-    // console.log("Book fetched successfully:", book);
+    // //console.log("Book fetched successfully:", book);
     res.json(book);
   } catch (err) {
     console.error('Error occurred while fetching book:', err);
@@ -696,8 +696,8 @@ app.get('/api/books/:fictionId/chapters/:chapterId', async (req, res) => {
 });
 
 app.get('/api/current-user', (req, res) => {
-  console.log('Session:', req.session); // Log session data
-  console.log('Authenticated user:', req.user); // Log the user data
+  //console.log('Session:', req.session); // Log session data
+  //console.log('Authenticated user:', req.user); // Log the user data
   
   if (req.isAuthenticated()) {
     const user = {

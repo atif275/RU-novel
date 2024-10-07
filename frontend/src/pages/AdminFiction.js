@@ -27,7 +27,7 @@ function AdminFiction() {
         const response = await axios.get(`https://api.ru-novel.ru/api/booksss/${id}`);
         setBookData(response.data);
         const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
-        console.log('Author Data:', authorResponse.data);
+        //console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
       } catch (error) {
         console.error('Error fetching book data:', error);

@@ -50,7 +50,7 @@ const Reading = ({ chapters = [], bookTitle }) => {
   };
 
   const navigateToChapter = (chapter) => {
-    // console.log("Navigating to chapter:", chapter);
+    // //console.log("Navigating to chapter:", chapter);
     navigate(`/fiction/${fictionId}/${bookTitle}/chapter/${chapter._id}/${chapter.title}`);
   };
 

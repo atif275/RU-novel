@@ -16,9 +16,9 @@ function Deleteaccount() {
     const handleDelete = () => {
         if (isChecked) {
             // Handle delete logic here
-            // console.log("Account deletion confirmed.");
+            // //console.log("Account deletion confirmed.");
         } else {
-            // console.log("Please confirm that you understand the action is irreversible.");
+            // //console.log("Please confirm that you understand the action is irreversible.");
         }
     };
 

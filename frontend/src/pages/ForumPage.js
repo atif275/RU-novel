@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FiMessageCircle } from "react-icons/fi";
+import { useSelector } from 'react-redux'; // Import useSelector to get theme
 
 function ForumsPage() {
   const [popularThreads, setPopularThreads] = useState([]);
@@ -8,6 +9,7 @@ function ForumsPage() {
   const [discussionThreads, setDiscussionThreads] = useState([]);
   const [forumThreads, setForumThreads] = useState([]);
   const [recentThreads, setRecentThreads] = useState([]);
+  const theme = useSelector((state) => state.userData.theme); // Get the current theme
 
 
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
@@ -114,7 +116,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Popular Threads table is empty");
+          // //console.log("Popular Threads table is empty");
         } else {
           setPopularThreads(data);
         }
@@ -128,7 +130,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Community Threads table is empty");
+          // //console.log("Community Threads table is empty");
         } else {
           setCommunityThreads(data);
         }
@@ -141,7 +143,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Popular Threads table is empty");
+          // //console.log("Popular Threads table is empty");
         } else {
           setFictionThreads(data);
         }
@@ -154,7 +156,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Popular Threads table is empty");
+          // //console.log("Popular Threads table is empty");
         } else {
           setDiscussionThreads(data);
         }
@@ -167,7 +169,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Popular Threads table is empty");
+          // //console.log("Popular Threads table is empty");
         } else {
           setForumThreads(data);
         }
@@ -181,7 +183,7 @@ function ForumsPage() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length === 0) {
-          // console.log("Recent Threads table is empty");
+          // //console.log("Recent Threads table is empty");
         } else {
           setRecentThreads(data);
         }
@@ -194,9 +196,13 @@ function ForumsPage() {
     // The filtering will already happen via the useEffect based on searchQuery.
   };
 
+  const containerStyles = theme === 'dark'
+    ? 'bg-gray-800 text-white'  // Dark mode styles
+    : 'bg-white text-black';    // Light mode styles
+
   return (
     <div className="w-full mb-4">
-      <div className="container mx-auto sm:px-6 sm:pr-4 lg:px-16  bg-white pt-2">
+      <div className={`container mx-auto sm:px-6 sm:pr-4 lg:px-16  ${containerStyles} pt-2`} >
         <div className="w-full mx-4 m-4 bg-gray-500 relative overflow-hidden">
           {" "}
           {/* Set a specific height */}

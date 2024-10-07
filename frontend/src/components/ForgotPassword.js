@@ -40,7 +40,7 @@ const ForgotPassword = () => {
 
         if (response.ok) {
           dispatch(userActions.setEmail(values.email));
-          // console.log(mail); // Save email to Redux
+          // //console.log(mail); // Save email to Redux
           navigate("/reset-password");
         } else {
           formik.setErrors({ email: 'No user found with this email address.' });

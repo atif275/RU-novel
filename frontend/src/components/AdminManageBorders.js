@@ -47,7 +47,7 @@ export const AdminManageBorders = () => {
                 const downloadURL = await getDownloadURL(storageRef);
                 setNewBorder({ ...newBorder, imageUrl: downloadURL, link: downloadURL });
             } catch (error) {
-                // console.log(error);
+                // //console.log(error);
                 toast.error('Failed to upload image');
             } finally {
                 setImageUploading(false);

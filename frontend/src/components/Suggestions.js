@@ -78,7 +78,7 @@ const Suggestions = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("g bolo",data)
+        //console.log("g bolo",data)
         dispatch(userActions.setCommentsArray(data));
       } else {
         console.error("Error submitting idea");

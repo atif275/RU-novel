@@ -22,8 +22,8 @@ const ChComment = (props) => {
   const handleClick = () => {
     if (isAuth) {
       dispatch(userActions.setCommentsData(props.arr));
-      // console.log(props.arr);
-      // console.log(isAuth);
+      // //console.log(props.arr);
+      // //console.log(isAuth);
       navigate('/comments');
     } else {
       navigate('/login');

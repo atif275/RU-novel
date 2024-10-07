@@ -55,8 +55,8 @@ const SugContent = (props) => {
   const handleClick = () => {
     if (isAuth) {
       dispatch(userActions.setCommentsData(props.arr));
-      console.log(props.arr);
-      console.log(isAuth);
+      //console.log(props.arr);
+      //console.log(isAuth);
       dispatch(userActions.setUserEmail(props.arr.email));
       navigate("/comments");
     } else {
@@ -66,7 +66,7 @@ const SugContent = (props) => {
 
   const handleReport = (e) => {
     e.preventDefault();
-    console.log(props.arr.email);
+    //console.log(props.arr.email);
     dispatch(userActions.setUserEmail(props.arr.email));
     navigate("/report/comment");
   };

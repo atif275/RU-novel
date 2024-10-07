@@ -37,10 +37,10 @@ const Reply = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetcho data:", data);
+        //console.log("Fetcho data:", data);
         if (data) {
           dispatch(userActions.setReply(data));
-          console.log("reply", reply);
+          //console.log("reply", reply);
         }
       } else {
         console.error("Error fetching user data:", response.statusText);
@@ -75,7 +75,7 @@ const Reply = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          console.log("data", data);
+          //console.log("data", data);
           navigate('/comments');
         }
       } else {

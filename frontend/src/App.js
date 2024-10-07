@@ -156,7 +156,7 @@ function App() {
   };
   
   window.addEventListener('error', resizeObserverErrHandler);
-  // console.log("App component rendered");
+  // //console.log("App component rendered");
   const theme = useSelector(state => state.userData.theme);
   const isAdmin=localStorage.getItem('adminLogin');
   const user = localStorage.getItem('userEmail');
@@ -168,7 +168,7 @@ function App() {
 
     const fetchData = async () => {
       const email = localStorage.getItem('userEmail');
-      // console.log('Fetching with email:', email);
+      // //console.log('Fetching with email:', email);
     
       try {
         const response = await fetch('https://api.ru-novel.ru/api/token', {
@@ -179,15 +179,15 @@ function App() {
           }),
         });
     
-        // console.log('Response:', response);
+        // //console.log('Response:', response);
     
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
     
         const data = await response.json();
-        // console.log('Data:', data);
-        // console.log(data.user)
+        // //console.log('Data:', data);
+        // //console.log(data.user)
         dispatch(userActions.setEmail(data.user.email));
         dispatch(userActions.setUser(data.user));
        

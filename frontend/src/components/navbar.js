@@ -37,7 +37,7 @@ const Navbar = () => {
 
   };
 
-  console.log(checkClick)
+  //console.log(checkClick)
   const handleClickReview = () => {
     setReviewClick(!ReviwClick);
   };

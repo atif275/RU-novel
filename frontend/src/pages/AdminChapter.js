@@ -32,7 +32,7 @@ function AdminChapter() {
          }
 
          const authorResponse = await axios.get(`https://api.ru-novel.ru/api/userssssss/${response.data.author}`);
-        console.log('Author Data:', authorResponse.data);
+        //console.log('Author Data:', authorResponse.data);
         setAuthorData(authorResponse.data);
 
         

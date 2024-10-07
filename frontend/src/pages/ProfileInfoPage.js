@@ -86,7 +86,7 @@ function ProfileInfoPage() {
       });
 
       if (response.ok) {
-        // console.log("Profile updated successfully");
+        // //console.log("Profile updated successfully");
         toast.success("Profile updated successfully");
       } else {
         console.error("Failed to update profile");
@@ -99,7 +99,7 @@ function ProfileInfoPage() {
   };
   // Function to handle image upload
   async function handleImageChange(e) {
-    // console.log("xxxxxx"+e.target.files[0]);
+    // //console.log("xxxxxx"+e.target.files[0]);
     const image = e.target.files[0];
     if(image){
       try {
@@ -108,12 +108,12 @@ function ProfileInfoPage() {
         const storageRef = ref(storage, "user-profile-images/" +image.name);
         await uploadBytes(storageRef,image);
         const downloadURL = await getDownloadURL(storageRef);
-        console.log(downloadURL);
+        //console.log(downloadURL);
         setImageURL(downloadURL);
         
         
       } catch (error) {
-        // console.log(error);
+        // //console.log(error);
         
       }finally{
         setUploading(false);

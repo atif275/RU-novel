@@ -37,7 +37,7 @@ function Search() {
         }
 
         const data = await response.json();
-        // console.log(data)
+        // //console.log(data)
         dispatch(userActions.setSearchResults(data)); // Store results in Redux
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -60,7 +60,7 @@ function Search() {
         }
 
         const data = await response.json();
-        // console.log(data)
+        // //console.log(data)
         dispatch(userActions.setSearchResults(data)); // Store results in Redux
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -70,8 +70,8 @@ function Search() {
 
   useEffect(() => {
  
-    // console.log(searchQuery);
-    // console.log(fiction)
+    // //console.log(searchQuery);
+    // //console.log(fiction)
     fetchSearchResults();
   }, [searchQuery, dispatch,fiction]);
 

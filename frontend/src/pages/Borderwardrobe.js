@@ -41,8 +41,8 @@ function Borderwardrobe() {
                         fictionCount: fictionCounts // Assuming the desired number of borders based on a specific condition
                     }
                 });
-                console.log("fictions:" + fictionCounts);
-                console.log(data);
+                //console.log("fictions:" + fictionCounts);
+                //console.log(data);
                 setBorders(data);
                 if (currentUser && currentUser.profilePictureBorder) {
                     setCurrentBorder(currentUser.profilePictureBorder);
@@ -61,7 +61,7 @@ function Borderwardrobe() {
                     tag: 'premium' // Fetch only premium borders
                 }
             });
-            // console.log(data);  
+            // //console.log(data);  
             setBordersP(data); // Assuming you have a state variable 'setBorders' for storing the borders
             if (currentUser && currentUser.profilePictureBorder) {
                 setCurrentBorder(currentUser.profilePictureBorder); // Update current border if needed

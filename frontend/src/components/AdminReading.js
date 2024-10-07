@@ -22,13 +22,13 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
   useEffect(() => {
     const fetchChapterData = async () => {
       try {
-        // console.log("Fetching chapter data for chapter ID:", chapterId);
+        // //console.log("Fetching chapter data for chapter ID:", chapterId);
         const response = await axios.get(
           `https://api.ru-novel.ru/api/booksss/${fictionId}/chapters/${chapterId}`
         );
         const fetchedChapterData = response.data;
 
-        // console.log("Fetched Chapter Data:", fetchedChapterData);
+        // //console.log("Fetched Chapter Data:", fetchedChapterData);
 
         setChapterData(fetchedChapterData);
 
@@ -41,9 +41,9 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
           (chapter) => chapter._id === chapterId
         );
 
-        // console.log("Current Chapter Index:", currentChapterIndex);
-        // console.log("Chapters Array:", chapters);
-        // console.log("Chapter ID from URL:", chapterId);
+        // //console.log("Current Chapter Index:", currentChapterIndex);
+        // //console.log("Chapters Array:", chapters);
+        // //console.log("Chapter ID from URL:", chapterId);
 
         if (currentChapterIndex !== -1) {
           setPrevChapter(
@@ -71,7 +71,7 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
 
   const handleNextChapter = () => {
     if (nextChapter) {
-      // console.log("Navigating to the next chapter:", nextChapter);
+      // //console.log("Navigating to the next chapter:", nextChapter);
       navigate(
         `/fiction/${fictionId}/${bookTitle}/chapter/${nextChapter._id}/${nextChapter.title}`
       );
@@ -80,7 +80,7 @@ const AdminReading = ({ chapters = [], bookTitle }) => {
 
   const handlePreviousChapter = () => {
     if (prevChapter) {
-      // console.log("Navigating to the previous chapter:", prevChapter);
+      // //console.log("Navigating to the previous chapter:", prevChapter);
       navigate(
         `/fiction/${fictionId}/${bookTitle}/chapter/${prevChapter._id}/${prevChapter.title}`
       );

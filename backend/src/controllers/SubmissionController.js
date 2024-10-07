@@ -25,13 +25,13 @@ exports.getAllSubmissions = async (req, res) => {
 
 exports.findBooks=async(req,res)=>{
     try {
-        // console.log(`Fetching book with ID: ${req.params.id}`);
+        // //console.log(`Fetching book with ID: ${req.params.id}`);
         const book = await Submission.findById(req.params.id);
         if (!book) {
-          console.log(`Book with ID ${req.params.id} not found.`);
+          //console.log(`Book with ID ${req.params.id} not found.`);
           return res.status(404).json({ message: 'Book not found' });
         }
-        // console.log("Book fetched successfully:", book);
+        // //console.log("Book fetched successfully:", book);
         res.json(book);
       } catch (err) {
         console.error('Error occurred while fetching book:', err);
@@ -116,14 +116,14 @@ exports.addSubmission = async (req, res) => {
 exports.getSubmissionsByAuthor = async (req, res) => {
     try {
         const { username } = req.params;
-        console.log(username);
+        //console.log(username);
         const submissions = await Submission.find({ author: username });
         if (submissions.length === 0) {
-            console.log("no submission for this user");
+            //console.log("no submission for this user");
             return res.status(201).json({ message: 'No submissions found for this author.' });
         }
-        console.log("sub");
-        console.log(submissions);
+        //console.log("sub");
+        //console.log(submissions);
         res.json(submissions);
     } catch (error) {
         console.error('Failed to fetch submissions:', error);

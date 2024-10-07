@@ -38,7 +38,7 @@ const LoginForm = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          //console.log(data);
           localStorage.setItem('authtoken', data.authToken);
           localStorage.setItem('userEmail', data.email);
 
@@ -252,7 +252,7 @@ export default LoginForm;
 
 //         if (response.ok) {
 //           const data = await response.json();
-//           //// console.log(data)
+//           //// //console.log(data)
 //           localStorage.setItem('authtoken',data.authToken);
 //           localStorage.setItem("userEmail",data.email);
        

@@ -33,7 +33,7 @@ const HomePage = () => {
     // useEffect(() => {
 
     //   const { userEmail } = getQueryParams();
-    //   // console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
+    //   // //console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
     
     //   if (userEmail) {
     //     const fetchUserData = async () => {
@@ -41,7 +41,7 @@ const HomePage = () => {
     //         const response = await fetch(`https://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
     //         if (response.ok) {
     //           const data = await response.json();
-    //           // console.log('Fetched data:', data); // Check the fetched data
+    //           // //console.log('Fetched data:', data); // Check the fetched data
     //           if (data) {
     //             dispatch(userActions.setEmail(data.email))
     //             dispatch(userActions.setUser(data));
@@ -60,7 +60,7 @@ const HomePage = () => {
     useEffect(() => {
 
       const { userEmail } = getQueryParams();
-      // console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
+      // //console.log('Fetched userEmail:', userEmail); // Check if userEmail is correctly fetched
 
       if (userEmail) {
         localStorage.setItem('userEmail',userEmail)
@@ -69,7 +69,7 @@ const HomePage = () => {
             const response = await fetch(`https://api.ru-novel.ru/api/users/${encodeURIComponent(userEmail)}`);
             if (response.ok) {
               const data = await response.json();
-              // console.log('Fetched data:', data); // Check the fetched data
+              // //console.log('Fetched data:', data); // Check the fetched data
               if (data) {
                 dispatch(userActions.setEmail(data.email))
                 dispatch(userActions.setUser(data));

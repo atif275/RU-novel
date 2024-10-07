@@ -19,28 +19,28 @@ passport.use('google-link', new GoogleStrategy({
     try {
       const state = JSON.parse(req.query.state);  // Extract the state
       const userId = state.userId;  // Get the userId passed from frontend
-      console.log("userid ==="+userId);
-      console.log("profileid ==="+profile.id);
+      //console.log("userid ==="+userId);
+      //console.log("profileid ==="+profile.id);
       // Find the user by userId and update googleId
       let user = await Userdb.findById(userId);
       if (!user) {
-        console.log("User not found");
+        //console.log("User not found");
         return done(new Error('User not found'));
       }
   
       // Update the user's Google ID and other information if necessary
       user.googleId = profile.id;
       if (user.profilePicture === "" || !user.profilePicture) {
-        console.log("updated profile picture ");
+        //console.log("updated profile picture ");
         user.profilePicture = profile.photos[0].value;
       }
       await user.save();
-      console.log("saved to db");
-      console.log("User in strategy:", user._id.toString());
+      //console.log("saved to db");
+      //console.log("User in strategy:", user._id.toString());
       return done(null, user._id.toString());
 
     } catch (err) {
-        console.log("error catch");
+        //console.log("error catch");
       return done(err, null);
     }
   }));
@@ -57,35 +57,35 @@ async (req, accessToken, refreshToken, profile, done) => {
   try {
     const state = JSON.parse(req.query.state);  // Extract the state
       const userId = state.userId;  // Get the userId passed from frontend
-    console.log("userid facebook ==="+userId);
-    console.log("profileid facebook==="+profile.id);
+    //console.log("userid facebook ==="+userId);
+    //console.log("profileid facebook==="+profile.id);
     let user = await Userdb.findById(userId);  // Find the user by their ID
     if (!user) {
-        console.log("User not found facebook");
+        //console.log("User not found facebook");
       return done(null, false, { message: 'User not found' });
     }
 
     // Update the existing user with the Facebook ID
     user.facebookID = profile.id;
-    console.log("updated id facebook");
+    //console.log("updated id facebook");
     // If there's no profile picture, update it
     if (user.profilePicture === "" || !user.profilePicture) {
-        console.log("updated profile picture facebook ");
+        //console.log("updated profile picture facebook ");
       user.profilePicture = profile.photos[0].value;
     }
 
     await user.save();
-    console.log("saved to db facebook");
+    //console.log("saved to db facebook");
     return done(null, user._id.toString());
   } catch (err) {
-    console.log("error catch");
+    //console.log("error catch");
     done(err, null);
   }
 }));
 
 // Serialize and deserialize user
 passport.serializeUser((userId, done) => {
-    console.log("enetered into serilize with id ==="+userId);
+    //console.log("enetered into serilize with id ==="+userId);
     done(null, userId);  // This will already receive a string if you changed the strategy
   });
   

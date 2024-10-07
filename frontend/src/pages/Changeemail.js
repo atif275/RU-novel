@@ -12,7 +12,7 @@ function Changeemail() {
     const currentUser = useSelector((state) => state.userData.user);  // Assuming you have a Redux store setup
 
 
-   // console.log(currentUser.email)
+   // //console.log(currentUser.email)
 
    const messageOptions = [
     { key: 'compose', icon: 'fa-envelope', label: 'Compose', link: '/private/send', isActive: true },
@@ -85,7 +85,7 @@ const myOptions = [
                     newEmail: newEmail
                 });
                 alert('Email updated successfully!');
-                // console.log(response.data);
+                // //console.log(response.data);
             } catch (error) {
                 console.error('Error updating email:', error.response.data.message);
                 alert(error.response.data.message);

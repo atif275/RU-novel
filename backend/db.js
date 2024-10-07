@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
     try {
     
         const con = await mongoose.connect(process.env.MONGODB_URI)
-        console.log('MongoDB connected');
+        //console.log('MongoDB connected');
         return con;
         
        } 

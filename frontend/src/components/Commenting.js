@@ -45,9 +45,9 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data:", data);
+        //console.log("Fetched data:", data);
         if (data) {
-            console.log('c',data)
+            //console.log('c',data)
              dispatch(userActions.setComData(data));
              dispatch(userActions.setLength(data.length))
         }
@@ -70,7 +70,7 @@ const Commenting = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetcho data:", data);
+        //console.log("Fetcho data:", data);
         if (data) {
           
           dispatch(userActions.setCommentBox(data));
@@ -90,7 +90,7 @@ const Commenting = () => {
   useEffect(() => {
     
       fetchUserData();
-      console.log(comData)
+      //console.log(comData)
 
       if(email){
         fetchData()
@@ -120,7 +120,7 @@ const Commenting = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          console.log('data',data)
+          //console.log('data',data)
           inputRef.current.value = ''; 
         }
       } else {

@@ -111,9 +111,9 @@ exports.getAuthorDashboard = async (req, res) => {
   const { username } = req.params;
   try {
       const books = await BookThread.find({ author: username });
-      console.log("dsdffd");
+      //console.log("dsdffd");
       if (!books.length) {
-        console.log("no book found");
+        //console.log("no book found");
           return res.status(404).json({ success: false, message: 'No books found for this author' });
       }
 

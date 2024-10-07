@@ -21,11 +21,11 @@ function Profile() {
 
   const navigate = useNavigate();
   const NavigateToMessages = () => {
-    // console.log("messg press");
+    // //console.log("messg press");
     navigate('/private/1');
   };
   const NavigateToProfile = () => {
-    // console.log("profile press");
+    // //console.log("profile press");
     navigate('/account');
   };
 

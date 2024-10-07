@@ -100,7 +100,7 @@ exports.create = async (req, res) => {
     const savedUser = await user.save();
     res.json({ success: true, message: 'User registered successfully' });
 
-    console.log("Data saved:", savedUser);
+    //console.log("Data saved:", savedUser);
   } catch (error) {
     console.error("Error saving data:", error);
     res.status(500).send(error);
@@ -135,7 +135,7 @@ exports.create = async (req, res) => {
         const fetched_data = await mongoose.connection.db.collection("gofood");
         const dataArray = await fetched_data.find({}).toArray();
         res.json({success:true ,dataArray: dataArray})
-        console.log(dataArray)
+        //console.log(dataArray)
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -157,7 +157,7 @@ exports.order1 = async (req, res) => {
       );
       
       res.json({ success: true });
-      console.log("Order saved/updated successfully.");
+      //console.log("Order saved/updated successfully.");
   } catch (err) {
       console.error("Error in order function:", err);
       res.status(500).json({ error: err.message });

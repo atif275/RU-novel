@@ -9,7 +9,7 @@ const connectDB = require('./db');
 
 connectDB()
   .then(() => {
-    console.log('Database connected');
+    //console.log('Database connected');
   })
   .catch(err => {
     console.error('Database connection error:', err);
@@ -40,5 +40,5 @@ app.use((err, req, res, next) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is listening on port 5001`);
+  //console.log(`Server is listening on port 5001`);
 });

@@ -43,7 +43,7 @@ export const Advertising = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log(data);
+        // //console.log(data);
         fetchAds(); // Refresh the advertisements list
       } else {
         const errorData = await response.json();
@@ -65,7 +65,7 @@ export const Advertising = () => {
         const downloadURL = await getDownloadURL(storageRef);
         setImageURL(downloadURL);
       } catch (error) {
-        // console.log(error);
+        // //console.log(error);
       } finally {
         setUploading(false);
       }

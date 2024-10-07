@@ -21,7 +21,7 @@ const FictionListItem = (props) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         dispatch(userActions.setBooksTouched());
         dispatch(userActions.setBooksDes(data.description));
       }
