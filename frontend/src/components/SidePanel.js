@@ -7,22 +7,32 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const SidePanel = ({ authorName, bookName }) => {
   const email = useSelector((state) => state.userData.email); // Get the email of the currently logged-in user
+  const theme = useSelector((state) => state.userData.theme); // Get current theme for dark mode
+
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-
-  // States to track whether the book is in each array
+  const [toggle, setToggle] = useState(false); // Ensure state is defined if used
   const [isFavorite, setIsFavorite] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isReadLater, setIsReadLater] = useState(false);
   const [isNotInterested, setIsNotInterested] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track whether a rating is being submitted
 
-  const notifySuccess = (message) => toast.success(message);
-  const notifyError = (message) => toast.error(message);
+  const notifySuccess = (message, toastId) => {
+    toast.success(message, { toastId });
+  };
+
+  const notifyError = (message, toastId) => {
+    toast.error(message, { toastId });
+  };
+
   const notifyInfo = (message) => toast.info(message);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setRating(0); // Reset the rating when switching books
+
         const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
         const { favorites, follows, readLater, notInterested } = response.data;
 
@@ -30,6 +40,13 @@ const SidePanel = ({ authorName, bookName }) => {
         setIsFollowing(follows.includes(authorName));
         setIsReadLater(readLater.includes(bookName));
         setIsNotInterested(notInterested.includes(bookName));
+
+        const ratingResponse = await axios.get(`https://api.ru-novel.ru/api/book/${bookName}/getrate`, {
+          params: { email },
+        });
+        if (ratingResponse.data.rating !== null) {
+          setRating(ratingResponse.data.rating);
+        }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -45,15 +62,28 @@ const SidePanel = ({ authorName, bookName }) => {
       notifyInfo('Please log in to submit a rating.');
       return;
     }
+
+    if (isSubmitting) return;
+
+    setIsSubmitting(true); // Disable further submissions
+
+    const toastId = 'ratingToast'; // Unique toast ID for rating
+
     try {
+      toast.dismiss(toastId); // Dismiss previous toasts with the same ID
+
       const response = await axios.post(`https://api.ru-novel.ru/api/book/${bookName}/rate`, {
         rating: newRating,
+        email,
       });
-      setRating(newRating);
-      notifySuccess('Rating submitted successfully!');
+
+      setRating(newRating); // Update the rating state
+      notifySuccess('Rating updated successfully!', toastId);
     } catch (error) {
-      notifyError('Error submitting rating.');
+      notifyError('Error submitting rating.', toastId);
       console.error('Error submitting rating:', error);
+    } finally {
+      setIsSubmitting(false); // Re-enable submission after the operation
     }
   };
 
@@ -63,12 +93,8 @@ const SidePanel = ({ authorName, bookName }) => {
       return;
     }
     try {
-      const response = await axios.post(
-        `https://api.ru-novel.ru/api/user/favorite`,
-        { bookName, email },
-        { withCredentials: true }
-      );
-  
+      const response = await axios.post(`https://api.ru-novel.ru/api/user/favorite`, { bookName, email }, { withCredentials: true });
+
       if (response.status === 200) {
         setIsFavorite(!isFavorite);
         notifySuccess(`Book ${isFavorite ? 'removed from' : 'added to'} favorites successfully!`);
@@ -80,7 +106,6 @@ const SidePanel = ({ authorName, bookName }) => {
       console.error('Error updating favorites:', error);
     }
   };
-  
 
   const handleFollow = async () => {
     if (!email) {
@@ -89,11 +114,7 @@ const SidePanel = ({ authorName, bookName }) => {
     }
     try {
       const apiEndpoint = isFollowing ? 'unfollow' : 'follow';
-      const response = await axios.post(
-        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
-        { authorName, email },
-        { withCredentials: true }
-      );
+      const response = await axios.post(`https://api.ru-novel.ru/api/user/${apiEndpoint}`, { authorName, email }, { withCredentials: true });
 
       if (response.status === 200) {
         setIsFollowing(!isFollowing);
@@ -114,11 +135,7 @@ const SidePanel = ({ authorName, bookName }) => {
     }
     try {
       const apiEndpoint = isReadLater ? 'removereader' : 'readlater';
-      const response = await axios.post(
-        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
-        { bookName, email },
-        { withCredentials: true }
-      );
+      const response = await axios.post(`https://api.ru-novel.ru/api/user/${apiEndpoint}`, { bookName, email }, { withCredentials: true });
 
       if (response.status === 200) {
         setIsReadLater(!isReadLater);
@@ -139,11 +156,7 @@ const SidePanel = ({ authorName, bookName }) => {
     }
     try {
       const apiEndpoint = isNotInterested ? 'removeNotInterested' : 'notinterested';
-      const response = await axios.post(
-        `https://api.ru-novel.ru/api/user/${apiEndpoint}`,
-        { bookName, email },
-        { withCredentials: true }
-      );
+      const response = await axios.post(`https://api.ru-novel.ru/api/user/${apiEndpoint}`, { bookName, email }, { withCredentials: true });
 
       if (response.status === 200) {
         setIsNotInterested(!isNotInterested);
@@ -157,25 +170,31 @@ const SidePanel = ({ authorName, bookName }) => {
     }
   };
 
+  // Conditional styling for light and dark modes
+  const containerStyles = theme === 'dark' ? 'bg-[#000000] text-white' : 'bg-gray-200 text-black';
+  const cardStyles = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black';
+  const buttonActiveStyles = theme === 'dark' ? 'bg-[#334499]' : 'bg-blue-300';
+  const iconColor = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
+
   return (
-    <div className="w-full bg-gray-200 pt-4 space-y-4 mb-4">
+    <div className={`w-full pt-4 space-y-4 mb-4 ${containerStyles}`}>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 
       {/* Mark as Not Interested */}
       <div
-        className={`flex items-center gap-4 p-3 shadow-md cursor-pointer ${isNotInterested ? 'bg-blue-300' : 'bg-white'}`}
+        className={`flex items-center gap-4 p-3 shadow-md cursor-pointer ${isNotInterested ? buttonActiveStyles : cardStyles}`}
         onClick={handleNotInterested}
       >
-        <FaEyeSlash className="text-gray-600" />
+        <FaEyeSlash className={iconColor} />
         <div className="flex flex-col text-[14px]">
-          <div className="text-gray-700">Mark as</div>
-          <div className="font-bold text-gray-700">NOT INTERESTED</div>
+          <div>Mark as</div>
+          <div className="font-bold">NOT INTERESTED</div>
         </div>
       </div>
 
       {/* Rate it */}
-      <div className="bg-white p-3 shadow-md flex flex-col items-center space-y-2">
-        <span className="font-semibold text-gray-600 text-sm">Rate it</span>
+      <div className={`${cardStyles} p-3 shadow-md flex flex-col items-center space-y-2`}>
+        <span className="font-semibold text-sm">Rate it</span>
         <div className="flex space-x-1">
           {[...Array(5)].map((_, index) => (
             <FaStar
@@ -195,25 +214,25 @@ const SidePanel = ({ authorName, bookName }) => {
       {/* Follow, Favorite, Read Later */}
       <div className="flex justify-between text-[11px]">
         <div
-          className={`p-2 shadow-md items-center cursor-pointer flex flex-col w-[32%] ${isFollowing ? 'bg-blue-300' : 'bg-white'}`}
+          className={`p-2 shadow-md items-center cursor-pointer flex flex-col w-[32%] ${isFollowing ? buttonActiveStyles : cardStyles}`}
           onClick={handleFollow}
         >
-          <FaBookmark className="text-gray-600" />
-          <span className="text-gray-700">Follow</span>
+          <FaBookmark className={iconColor} />
+          <span>Follow</span>
         </div>
         <div
-          className={`p-2 shadow-md items-center cursor-pointer flex flex-col w-[32%] ${isFavorite ? 'bg-blue-300' : 'bg-white'}`}
+          className={`p-2 shadow-md items-center cursor-pointer flex flex-col w-[32%] ${isFavorite ? buttonActiveStyles : cardStyles}`}
           onClick={handleFavorite}
         >
-          <FaHeart className="text-gray-600" />
-          <span className="text-gray-700">Favorite</span>
+          <FaHeart className={iconColor} />
+          <span>Favorite</span>
         </div>
         <div
-          className={`p-2 shadow-md flex flex-col items-center cursor-pointer w-[32%] ${isReadLater ? 'bg-blue-300' : 'bg-white'}`}
+          className={`p-2 shadow-md flex flex-col items-center cursor-pointer w-[32%] ${isReadLater ? buttonActiveStyles : cardStyles}`}
           onClick={handleReadLater}
         >
-          <FaClock className="text-gray-600" />
-          <span className="text-gray-700">Read Later</span>
+          <FaClock className={iconColor} />
+          <span>Read Later</span>
         </div>
       </div>
     </div>

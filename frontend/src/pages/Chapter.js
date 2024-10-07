@@ -6,6 +6,7 @@ import InnerContainer from '../components/InnerContainer';
 import Reading from '../components/Reading';
 import AuthorProfile from '../components/AuthorProfile';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import ChCommentData from '../components/ChCommentData';
 
 function Chapter() {
@@ -13,6 +14,7 @@ function Chapter() {
   const [chapterData, setChapterData] = useState(null);
   const [bookData, setBookData] = useState(null);
   const [authorData, setAuthorData] = useState(null);
+  const theme = useSelector((state) => state.userData.theme);
 
   useEffect(() => {
     const fetchChapterData = async () => {
@@ -58,7 +60,7 @@ function Chapter() {
           chapterId={chapterId}
         />
         <InnerContainer>
-          <div className='m-0 p-4 bg-white'>
+          <div className={`m-0 mt-4 p-4 ${theme === "dark" ? "bg-[#1e1e1e]" : "bg-white"}`}>
             <Reading
               content={chapterData.content}
               currentChapterId={chapterId}
@@ -67,7 +69,7 @@ function Chapter() {
               bookTitle={bookData.title}
             />
           </div>
-          <div className='m-0 mt-4 p-4 bg-white'>
+          <div className={`m-0 mt-4 p-4 ${theme === "dark" ? "bg-[#1e1e1e]" : "bg-white"}`}>
             <AuthorProfile authorData={authorData} authorName={authorData.username} />
           </div>
           <div>

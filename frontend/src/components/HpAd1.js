@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const HpAd1 = () => {
   const [adData, setAdData] = useState({});
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState('Ad_1');
+
+  const theme = useSelector((state) => state.userData.theme); // Get the current theme
 
   const fetchAdData = async () => {
     try {
@@ -32,19 +35,26 @@ const HpAd1 = () => {
     fetchAdData();
   }, []);
 
+  // Conditional styling based on theme
+  const adContainerStyles = theme === 'dark'
+    ? 'bg-[#333333] text-white' // Dark mode styles
+    : 'bg-white text-black'; // Light mode styles (default)
+
   return (
-    <div className='w-full p-4'>
-      <div className="flex justify-center items-center w-full h-[200px] bg-white">
+    <div className={`w-full p-4 ${adContainerStyles}`}>
+      <div className={`flex justify-center items-center w-full h-[200px] ${adContainerStyles}`}>
         {loading ? (
           <div>Loading...</div>
         ) : adData && adData.image ? (
-          <a href={adData.link} className=" w-full h-full bg-white" target="_blank"> <img
-            src={adData.image}
-            alt="Advertisement"
-            className=" w-full h-full bg-white "
-          /> </a>
+          <a href={adData.link} className="w-full h-full" target="_blank" rel="noopener noreferrer">
+            <img
+              src={adData.image}
+              alt="Advertisement"
+              className="w-full h-full"
+            />
+          </a>
         ) : (
-          <p className='font-bold'>ADVERTISEMENT</p>
+          <p className="font-bold">ADVERTISEMENT</p>
         )}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux'; // Import useSelector to get theme
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import FnContainer from '../components/FnContainer';
@@ -16,6 +17,7 @@ import ChaptersPagination from '../components/ChaptersPagination';
 import ReviewForm from '../components/ReviewForm';
 
 function Fiction() {
+  const theme = useSelector((state) => state.userData.theme);
   const { id } = useParams();
   const [bookData, setBookData] = useState(null);
   const [authorData, setAuthorData] = useState(null);
@@ -52,6 +54,7 @@ function Fiction() {
   // Assuming you want to navigate to the first chapter
   const firstChapter = bookData.chapters[0];
 
+
   return (
     <div className="block m-0 p-0">
       <FnContainer>
@@ -65,18 +68,18 @@ function Fiction() {
         />
         <InnerContainer>
           <div className='w-full flex flex-col lg:flex-row m-0 p-0 h-auto'>
-            <div className='w-full lg:w-[70%] m-0 p-0 flex flex-col bg-gray-200'>
+            <div className={`w-full lg:w-[70%] m-0 p-0 flex flex-col ${theme === 'dark' ? 'bg-black' : 'bg-gray-200'}`}>
               <Info bookData={bookData} />
               <Statistics stats={bookData.stats} />
               <FnAd1 />
-              <div className='w-full m-0 p-0 h-auto flex flex-col bg-gray-200'>
+              <div className={`w-full m-0 p-0 h-auto flex flex-col ${theme === 'dark' ? 'bg-black' : 'bg-gray-200'}`}>
                 <OthersAlsoLiked bookId={id} />
                 <ChaptersPagination bookId={id} />
                 <ReviewForm bookName={bookData.title} onReviewAdded={handleReviewAdded} />
                 <ReviewCard bookName={bookData.title} reviews={reviews} />
               </div>
             </div>
-            <div className='w-full lg:w-[30%] m-0 p-0 flex flex-col lg:ml-4 bg-gray-200 h-auto'>
+            <div className={`w-full lg:w-[30%] m-0 p-0 flex flex-col lg:ml-4 ${theme === 'dark' ? 'bg-black' : 'bg-gray-200'} h-auto`}>
               <SidePanel authorName={bookData.author} bookName={bookData.title} />
               <FnAd2 />
               <AuthorInfo authorData={authorData} authorName={bookData.author} />

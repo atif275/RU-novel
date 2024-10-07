@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { FaStar } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const ReviewForm = ({ bookName, onReviewAdded }) => {
@@ -16,6 +17,9 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
 
+  const email = useSelector((state) => state.userData.email);
+  const theme = useSelector((state) => state.userData.theme); // Get the theme
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -27,6 +31,21 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
     };
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    if (email) {
+      fetchUserData();
+    }
+  }, [email]);
 
   const renderStars = (score, setScore) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -41,7 +60,7 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userData) {
+    if (!email) {
       setLoginMessage('You need to log in to submit a review.');
       setTimeout(() => setLoginMessage(''), 3000);
       return;
@@ -66,11 +85,9 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
     };
 
     try {
-      // First, save the review
       const response = await axios.post('https://api.ru-novel.ru/api/reviews', reviewData);
       setSuccessMessage('Review successfully saved!');
 
-      // Now, update the book's ratings
       const ratingUpdateUrl = `https://api.ru-novel.ru/api/book/${encodeURIComponent(bookName)}/update-ratings`;
       const ratingParams = {
         overall: overallScore,
@@ -82,7 +99,6 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
 
       await axios.get(ratingUpdateUrl, { params: ratingParams });
 
-      // Clear form fields after successful submission
       setReviewTitle('');
       setContent('');
       setOverallScore(0);
@@ -92,7 +108,6 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
       setCharacterScore(0);
       setAdvancedReview(false);
 
-      // Trigger rerender by calling the parent function
       onReviewAdded(response.data);
 
       setTimeout(() => setSuccessMessage(''), 3000);
@@ -101,10 +116,16 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
     }
   };
 
+  // Define dark mode and light mode styles
+  const containerStyles = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black';
+  const inputStyles = theme === 'dark' ? 'bg-gray-700 border-[#5c5c5c] text-white' : 'bg-[#f7f9fc] text-[#586a84]';
+  const labelStyles = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-[#586a84]';
+  const borderStyles = theme === 'dark' ? 'border-[#5c5c5c]' : 'border-gray-200';
+
   return (
-    <div className="p-4 bg-white mb-6">
+    <div className={`p-4 mb-6 ${containerStyles}`}>
       <h2 className="text-[#e26a6a] text-[18px] font-bold mb-6 pb-4 border-b border-gray-200">LEAVE A REVIEW</h2>
-      
+
       {successMessage && (
         <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
           {successMessage}
@@ -117,28 +138,28 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="border border-gray-200 text-[14px]">
-        <div className="flex items-center mb-0 border-b border-gray-200">
-          <label className="w-1/4 font-bold p-3 bg-gray-50 text-[#586a84]">REVIEW TITLE</label>
-          <div className="w-px h-full bg-gray-200"></div>
+      <form onSubmit={handleSubmit} className={`border ${borderStyles} text-[14px]`}>
+        <div className={`flex items-center mb-0 ${borderStyles}`}>
+          <label className={`w-1/4 font-bold p-3 ${labelStyles}`}>REVIEW TITLE</label>
+          <div className={`w-px h-full ${borderStyles}`}></div>
           <input
             type="text"
             value={reviewTitle}
             onChange={(e) => setReviewTitle(e.target.value)}
-            className="w-3/4 p-3 text-sm border-0 bg-[#f7f9fc] text-[#586a84]"
+            className={`w-3/4 p-3 text-sm border-0 ${inputStyles}`}
           />
         </div>
 
-        <div className="flex items-center mb-0 border-b border-gray-200">
+        <div className={`flex items-center mb-0 ${borderStyles}`}>
           <div className="flex w-1/4">
-            <label className="font-bold p-3 bg-gray-50 text-[#586a84] w-full">OVERALL SCORE</label>
-            <div className="w-px h-full bg-gray-200"></div>
+            <label className={`font-bold p-3 ${labelStyles} w-full`}>OVERALL SCORE</label>
+            <div className={`w-px h-full ${borderStyles}`}></div>
           </div>
           <div className="w-1/4 flex justify-center p-3">
             {renderStars(overallScore, setOverallScore)}
           </div>
-          <div className="w-px h-full bg-gray-200"></div>
-          <div className="flex w-1/2 items-center p-3 bg-[#f7f9fc]">
+          <div className={`w-px h-full ${borderStyles}`}></div>
+          <div className={`flex w-1/2 items-center p-3 ${inputStyles}`}>
             <label className="font-bold text-[#586a84] mr-2">ADVANCED REVIEW</label>
             <input
               type="checkbox"
@@ -151,28 +172,28 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
 
         {advancedReview && (
           <>
-            <div className="flex items-center mb-0 border-b border-gray-200">
-              <label className="w-1/3 font-bold p-3 bg-gray-50 text-[#586a84]">STYLE SCORE</label>
-              <div className="w-px h-full bg-gray-200"></div>
+            <div className={`flex items-center mb-0 ${borderStyles}`}>
+              <label className={`w-1/3 font-bold p-3 ${labelStyles}`}>STYLE SCORE</label>
+              <div className={`w-px h-full ${borderStyles}`}></div>
               <div className="w-1/3 flex justify-center p-3">
                 {renderStars(styleScore, setStyleScore)}
               </div>
-              <div className="w-px h-full bg-gray-200"></div>
-              <label className="w-1/3 font-bold p-3 bg-[#f7f9fc] text-[#586a84]">STORY SCORE</label>
-              <div className="w-px h-full bg-gray-200"></div>
+              <div className={`w-px h-full ${borderStyles}`}></div>
+              <label className={`w-1/3 font-bold p-3 ${inputStyles}`}>STORY SCORE</label>
+              <div className={`w-px h-full ${borderStyles}`}></div>
               <div className="w-1/3 flex justify-center p-3">
                 {renderStars(storyScore, setStoryScore)}
               </div>
             </div>
-            <div className="flex items-center mb-0 border-b border-gray-200">
-              <label className="w-1/3 font-bold p-3 bg-gray-50 text-[#586a84]">GRAMMAR SCORE</label>
-              <div className="w-px h-full bg-gray-200"></div>
+            <div className={`flex items-center mb-0 ${borderStyles}`}>
+              <label className={`w-1/3 font-bold p-3 ${labelStyles}`}>GRAMMAR SCORE</label>
+              <div className={`w-px h-full ${borderStyles}`}></div>
               <div className="w-1/3 flex justify-center p-3">
                 {renderStars(grammarScore, setGrammarScore)}
               </div>
-              <div className="w-px h-full bg-gray-200"></div>
-              <label className="w-1/3 font-bold p-3 bg-[#f7f9fc] text-[#586a84]">CHARACTER SCORE</label>
-              <div className="w-px h-full bg-gray-200"></div>
+              <div className={`w-px h-full ${borderStyles}`}></div>
+              <label className={`w-1/3 font-bold p-3 ${inputStyles}`}>CHARACTER SCORE</label>
+              <div className={`w-px h-full ${borderStyles}`}></div>
               <div className="w-1/3 flex justify-center p-3">
                 {renderStars(characterScore, setCharacterScore)}
               </div>
@@ -180,16 +201,19 @@ const ReviewForm = ({ bookName, onReviewAdded }) => {
           </>
         )}
 
-        <div className="flex items-start mb-0 border-b border-gray-200">
-          <label className="w-1/4 font-bold p-3 bg-gray-50 text-[#586a84]">REVIEW CONTENT</label>
-          <div className="w-px h-full bg-gray-200"></div>
+        <div className={`flex items-start mb-0 ${borderStyles}`}>
+          <label className={`w-1/4 font-bold p-3 ${labelStyles}`}>REVIEW CONTENT</label>
+          <div className={`w-px h-full ${borderStyles}`}></div>
           <div className="w-3/4 p-3">
             <Editor
-              apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
+              key={theme} // Add key prop to force re-render when theme changes
+              apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
               value={content}
               init={{
                 height: 200,
                 menubar: false,
+                skin: theme === 'dark' ? 'oxide-dark' : 'oxide', // Dark mode for TinyMCE
+                content_css: theme === 'dark' ? 'dark' : '', // Content style for TinyMCE
                 plugins: [
                   'advlist autolink lists link image charmap print preview anchor',
                   'searchreplace visualblocks code fullscreen',

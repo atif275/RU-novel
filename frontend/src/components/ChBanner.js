@@ -57,21 +57,23 @@ const ChBanner = (bookTitle) => {
         />    
       </div>
       <div className='relative w-full md:w-1/2 flex flex-col p-6 gap-2 z-10'>
-        <div className='w-full flex flex-col md:flex-row gap-2 text-white justify-center items-center md:justify-start font-light text-[18px] lg:text-[24px]'>
+        <div className='w-full flex flex-col gap-2 text-white justify-center items-center md:justify-start font-light text-[18px] lg:text-[20px]'>
           <a href={`/fiction/${chapterData.fictionId}/${chapterData.fictionTitle}`}>
             {chapterData.fictionTitle || '[Fiction Title]'}
           </a>
-          <div className='m-0 p-0 flex gap-1'>
-            <p>By</p>
-            <a href={`/profile/${chapterData.authorId}`}>{chapterData.authorName || 'Author'}</a>
+          <div className='flex gap-2'>
+            <div className='m-0 p-0 flex gap-1'>
+              <p>By</p>
+              <a href={`/profile/${chapterData.authorId}`}>{chapterData.authorName || 'Author'}</a>
+            </div>
+            <p className='text-[20px] flex items-center text-red-500'>
+              {[...Array(5)].map((_, i) => (
+                <FaStar key={i} />
+              ))}
+            </p>
           </div>
-          <p className='text-[20px] flex items-center text-red-500'>
-            {[...Array(5)].map((_, i) => (
-              <FaStar key={i} />
-            ))}
-          </p>
         </div>
-        <div className='w-full flex text-[30px] lg:text-[36px] text-white justify-center md:justify-start'>
+        <div className='w-full flex text-[30px] lg:text-[36px] text-white justify-center'>
           {chapterData.title || 'Chapter Title'}
         </div>
       </div>

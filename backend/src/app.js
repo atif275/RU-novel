@@ -465,6 +465,7 @@ app.get('/api/booksss/:fictionId/chapters/:chapterId', async (req, res) => {
 });
 
 
+
 app.get('/api/current-user', (req, res) => {
   console.log('Session:', req.session); // Log session data
   console.log('Authenticated user:', req.user); // Log the user data
@@ -768,33 +769,59 @@ app.get('/api/book/:bookName/update-ratings', async (req, res) => {
 
 app.post('/api/book/:bookName/rate', async (req, res) => {
   const { bookName } = req.params;
-  const { rating } = req.body;
+  const { rating, email } = req.body;
 
   try {
-    // Find the book by name
+    const user = await User.findOne({ email });
     const book = await BookThread.findOne({ title: bookName });
 
-    if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+    if (!user || !book) {
+      return res.status(404).json({ message: 'Book or user not found' });
     }
 
-    // Update the overall rating
-    const totalRatings = book.stats.ratingCount || 0;
-    const currentOverallRating = book.stats.rating.overall || 0;
+    // Check if the user has already rated the book
+    const existingRating = book.ratings.find((r) => r.user.equals(user._id));
 
-    const newOverallRating = ((currentOverallRating * totalRatings) + rating) / (totalRatings + 1);
-
-    book.stats.rating.overall = newOverallRating;
-    book.stats.ratingCount = totalRatings + 1;
+    if (existingRating) {
+      // Update the existing rating
+      existingRating.rating = rating;
+    } else {
+      // Add a new rating
+      book.ratings.push({ user: user._id, rating });
+    }
 
     await book.save();
-
-    res.json({ message: 'Rating updated successfully', book });
+    res.status(200).json({ message: 'Rating updated successfully' });
   } catch (error) {
-    console.error('Error updating rating:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error rating the book:', error);
+    res.status(500).json({ message: 'Error rating the book' });
   }
 });
+
+app.get('/api/book/:bookName/getrate', async (req, res) => {
+  const { bookName } = req.params;
+  const { email } = req.query;
+
+  try {
+    const user = await User.findOne({ email });
+    const book = await BookThread.findOne({ title: bookName });
+
+    if (!user || !book) {
+      return res.status(404).json({ message: 'Book or user not found' });
+    }
+
+    const userRating = book.ratings.find((r) => r.user.equals(user._id));
+    if (userRating) {
+      return res.status(200).json({ rating: userRating.rating });
+    } else {
+      return res.status(200).json({ rating: null });
+    }
+  } catch (error) {
+    console.error('Error fetching user rating:', error);
+    res.status(500).json({ message: 'Error fetching user rating' });
+  }
+});
+
 
 app.post('/api/reviews/:reviewId/upvotes', async (req, res) => {
   try {
@@ -952,6 +979,7 @@ app.post('/api/user/reading', async (req, res) => {
     res.status(500).send({ message: 'Server error' });
   }
 });
+
 
 // Assuming you're using Express.js
 app.get('/api/userssss/:email', async (req, res) => {
@@ -1152,7 +1180,6 @@ app.post('/api/user/removeNotInterested', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 
 app.get('/api/reviews/usersss/:username', async (req, res) => {
   try {

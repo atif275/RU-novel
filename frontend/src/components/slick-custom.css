@@ -1,0 +1,63 @@
+/* Default Light Theme Dots */
+.slick-dots li button:before {
+    color: #ccc; /* Lighter color for dots in light mode */
+    opacity: 0.75;
+  }
+  
+  .slick-dots li.slick-active button:before {
+    color: #333; /* Darker color for the active dot in light mode */
+    opacity: 1;
+  }
+  
+  /* Dark Theme Dots */
+  body[data-theme='dark'] .slick-dots li button:before {
+    color: #777; /* Lighter color for dots in dark mode */
+    opacity: 0.75;
+  }
+  
+  body[data-theme='dark'] .slick-dots li.slick-active button:before {
+    color: #fff; /* White color for the active dot in dark mode */
+    opacity: 1;
+  }
+  
+  /* Dots Container */
+  .slick-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    bottom: -10px; /* Adjust the position to stay within the container */
+    width: 100%; /* Center dots within the slider */
+    margin: 0 auto;
+    overflow: hidden; /* Prevent any overflow */
+    padding: 0; /* Remove extra padding */
+  }
+  
+  /* Responsive Adjustments for Smaller Screens */
+  @media (max-width: 768px) {
+    .slick-dots {
+      bottom: -5px; /* Bring the dots closer to the slider on smaller screens */
+    }
+  
+    .slick-dots li button:before {
+      font-size: 10px; /* Reduce dot size for smaller screens */
+    }
+  
+    .slick-dots li {
+      margin: 0 3px; /* Reduce spacing between dots on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .slick-dots {
+      bottom: -3px; /* Adjust dot position further for very small screens */
+    }
+  
+    .slick-dots li button:before {
+      font-size: 8px; /* Further reduce the dot size on very small screens */
+    }
+  
+    .slick-dots li {
+      margin: 0 2px; /* Minimal spacing between dots on small screens */
+    }
+  }

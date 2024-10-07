@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaEnvelope, FaUser, FaTrophy } from 'react-icons/fa';
+import { FaUser, FaTrophy } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const AuthorInfo = ({ authorData, authorName }) => {
   const email = useSelector((state) => state.userData.email);
+  const theme = useSelector((state) => state.userData.theme);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const notifySuccess = (message) => toast.success(message);
@@ -20,7 +21,7 @@ const AuthorInfo = ({ authorData, authorName }) => {
           const response = await axios.get(`https://api.ru-novel.ru/api/userssss/${email}`);
           setIsFollowing(response.data.follows.includes(authorName));
         } catch (error) {
-          // console.error('Error fetching follow status:', error);
+          console.error('Error fetching follow status:', error);
         }
       }
     };
@@ -49,48 +50,44 @@ const AuthorInfo = ({ authorData, authorName }) => {
       }
     } catch (error) {
       notifyError('Error updating follow status.');
-      // console.error('Error updating follow status:', error);
+      console.error('Error updating follow status:', error);
     }
   };
 
   if (!authorData) return null;
 
+  // Conditional styles based on theme
+  const containerStyles = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black';
+  const borderStyles = theme === 'dark' ? 'border-gray-600' : 'border-gray-300';
+  const buttonStyles = theme === 'dark' ? 'border-gray-600 hover:bg-gray-700' : 'border-gray-400 hover:bg-gray-200';
+  const textColor = theme === 'dark' ? 'text-[#c2a970]' : 'text-gray-700';
+
   return (
-    <div className="w-full bg-white p-4 shadow-md mb-4">
+    <div className={`w-full p-4 shadow-md mb-4 ${containerStyles}`}>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 
       {/* Author Section */}
-      <div className="text-gray-700 text-sm font-bold flex items-center space-x-2">
+      <div className={`${textColor} text-sm font-bold flex items-center space-x-2`}>
         <FaUser />
         <span>AUTHOR</span>
       </div>
 
-      <hr className="border-gray-300 mt-4" />
+      <hr className={`mt-4 ${borderStyles}`} />
 
       <div className="flex flex-col items-center space-y-4 mt-4">
         {/* Author Avatar */}
-        <div className="relative w-64 h-64">
-            <img
-              src={authorData.profilePicture || "https://www.royalroadcdn.com/public/avatars/avatar-460434-AACAmlsHkBU.png?time=1722049568"}
-              alt="Author Badge"
-              className="absolute w-32 h-32 object-cover left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-            />
-            { authorData.profilePictureBorder && authorData.profilePictureBorder !== '' && (
-              <img
-                src={authorData.profilePictureBorder}
-                alt="Border Frame"
-                className="absolute w-full h-full object-cover"
-              />
-            )}
-           </div>
-        
+        <img
+          src={authorData.profilePicture || "https://www.royalroadcdn.com/public/avatars/avatar-460434-AACAmlsHkBU.png?time=1722049568"}
+          alt="Author Avatar"
+          className="w-32 h-32 object-cover rounded-full"
+        />
 
         {/* Author Name */}
         <span className="text-red-500 font-bold text-lg">{authorData.username}</span>
 
         {/* Follow Button */}
         <button
-          className={`px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-200`}
+          className={`px-4 py-2 border rounded-lg font-semibold ${buttonStyles}`}
           onClick={handleFollow}
         >
           {isFollowing ? 'Unfollow Author' : 'Follow Author'}
@@ -98,12 +95,12 @@ const AuthorInfo = ({ authorData, authorName }) => {
       </div>
 
       {/* Achievements Section */}
-      <div className="text-gray-700 text-sm font-bold flex items-center space-x-2 mt-8">
+      <div className={`${textColor} text-sm font-bold flex items-center space-x-2 mt-8`}>
         <FaTrophy />
         <span>ACHIEVEMENTS</span>
       </div>
 
-      <hr className="border-gray-300 mt-4" />
+      <hr className={`mt-4 ${borderStyles}`} />
 
       {/* Achievements Icons */}
       <div className="flex flex-wrap justify-center gap-6 mt-4">

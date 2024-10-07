@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Slider from 'react-slick';
 import { TbHexagonPlus } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Add icons for arrows
+import { useSelector } from 'react-redux';
+import './slick-custom.css';  // Custom styles for dots
 
 const RecommendedSection = () => {
   const [books, setBooks] = useState([]);
-  const sliderRef = useRef(null); // Create a ref for the slider
+  const theme = useSelector((state) => state.userData.theme); // Get the current theme
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -22,7 +23,6 @@ const RecommendedSection = () => {
     fetchBooks();
   }, []);
 
-  // Responsive carousel settings
   const settings = {
     dots: true,
     infinite: true,
@@ -31,7 +31,7 @@ const RecommendedSection = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    cssEase: "linear",
+    cssEase: 'linear',
     responsive: [
       { breakpoint: 1280, settings: { slidesToShow: 5, slidesToScroll: 1 } },
       { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 1 } },
@@ -41,45 +41,34 @@ const RecommendedSection = () => {
     ],
   };
 
+  // Conditional styles based on theme, similar to advertisement background
+  const sectionStyles = theme === 'dark'
+    ? 'bg-[#333333] text-white' // Dark mode styles
+    : 'bg-[#ffffff] text-black'; // Light mode styles
+
+  const headingStyles = theme === 'dark'
+    ? 'text-[#ffcc00]' // Yellow text for dark mode
+    : 'text-[#e26a6a]'; // Red text for light mode
+
   return (
-    <div className="mt-6 mb-6 bg-white p-[12px] pl-[20px] pb-[25px] relative"> {/* Add relative to position the buttons */}
+    <div className={`mt-6 mb-6 p-[12px] pl-[20px] pb-[25px] ${sectionStyles}`}>
       <div className="flex items-center mb-4 h-12 border-b border-gray-300">
-        <TbHexagonPlus className="text-[#e26a6a] mr-2" size={20} />
+        <TbHexagonPlus className={`${headingStyles} mr-2`} size={20} />
         <h2
-          className="recommended-heading text-[#e26a6a]"
+          className={`recommended-heading font-bold text-[16px] uppercase ${headingStyles}`}
           style={{
             fontFamily: 'Open Sans, sans-serif',
             boxSizing: 'border-box',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            color: '#e26a6a',
-            fontSize: '16px',
           }}
         >
           Recommended for you
         </h2>
       </div>
 
-      {/* Left Arrow */}
-      <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
-        onClick={() => sliderRef.current.slickPrev()}
-      >
-        <FaArrowLeft size={20} />
-      </button>
-
-      {/* Right Arrow */}
-      <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-lg hover:bg-gray-300 z-10"
-        onClick={() => sliderRef.current.slickNext()}
-      >
-        <FaArrowRight size={20} />
-      </button>
-
-      <Slider {...settings} className="ml-3 mr-4" ref={sliderRef}>
+      <Slider {...settings} className="ml-3 mr-5">
         {books.map((book) => (
-          <div key={book._id} className="">
-            <div className="bg-white rounded-lg overflow-hidden h-[220px]">
+          <div key={book._id}>
+            <div className={`rounded-lg overflow-hidden h-[220px] ${sectionStyles}`}>
               <img
                 src={book.image}
                 alt={book.title}
@@ -87,7 +76,11 @@ const RecommendedSection = () => {
                 style={{ width: '100px', height: '150px' }}
               />
               <div className="p-2 text-center">
-                <Link to={`/fiction/${book._id}/${book.title}`} className="text-sm font-semibold text-blue-700 hover:underline">
+                <Link 
+                  to={`/fiction/${book._id}/${book.title}`} 
+                  className="text-sm font-semibold hover:underline"
+                  style={{ color: theme === 'dark' ? '#ffcc00' : '#007BFF' }} // Yellow for dark mode, blue for light mode
+                >
                   {book.title}
                 </Link>
               </div>

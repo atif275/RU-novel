@@ -1,17 +1,13 @@
-// src/components/LatestUpdates.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MdOutlineAccessTime } from "react-icons/md";
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa'; // Import star icons
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // Import useSelector for theme
+
 const LatestUpdates = () => {
   const [books, setBooks] = useState([]);
-  const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate('/fictions/latest-updates');
-  };
+  const theme = useSelector((state) => state.userData.theme); // Get the current theme
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -66,16 +62,34 @@ const LatestUpdates = () => {
   
     return stars;
   };
-  const handleImageError = (imagePath,e) => {
+
+  const handleImageError = (imagePath, e) => {
     if (!e.target.src.startsWith("../../../backend")) {
       e.target.src = `../../../backend${imagePath}`;
     }
   };
 
+  // Conditional styles based on theme
+  const sectionStyles = theme === 'dark'
+    ? 'bg-[#333333] text-white' // Dark mode styles
+    : 'bg-white text-black'; // Light mode styles (default)
+
+    const hoverStyles = theme === 'dark'
+    ? 'hover:bg-[#222222] text-white' // Dark mode styles
+    : 'hover:bg-gray-100 text-black'; // Light mode styles (default)
+
+  const headingStyles = theme === 'dark'
+    ? 'text-[#ffcc00]' // Yellow text for dark mode
+    : 'text-[#e26a6a]'; // Original red text for light mode
+
+  const buttonStyles = theme === 'dark'
+    ? 'bg-[#ffcc00] text-black hover:bg-[#ffd700]' // Button for dark mode
+    : 'bg-[#e26a6a] text-white hover:bg-[#ff5c5c]'; // Button for light mode
+
   return (
     <div className="w-full md:w-1/2 mb-4 md:mb-0">
       <div
-        className="bg-white w-full"
+        className={`w-full ${sectionStyles}`}
         style={{
           margin: '0 0 25px',
           padding: '12px 20px 15px',
@@ -83,31 +97,26 @@ const LatestUpdates = () => {
       >
         <div className="w-full" style={{ margin: '0 0 10px' }}>
           <div className="flex items-center mb-4 h-12 border-b border-gray-300">
-            <MdOutlineAccessTime className="text-[#e26a6a] mr-2" size={20} />
+            <MdOutlineAccessTime className={`${headingStyles} mr-2`} size={20} />
             <h2
-              className="recommended-heading text-[#e26a6a]"
+              className={`recommended-heading font-bold text-[16px] uppercase ${headingStyles}`}
               style={{
                 fontFamily: 'Open Sans, sans-serif',
                 boxSizing: 'border-box',
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                color: '#e26a6a',
-                fontSize: '16px',
               }}
             >
               Latest Updates
             </h2>
           </div>
           <div className="w-full" style={{ padding: '8px 0 0' }}>
-          {Array.isArray(books) ? books.slice(0, 10).map((book, index) => (
+            {Array.isArray(books) ? books.slice(0, 10).map((book) => (
               <div
                 key={book._id}
-                className="flex items-center bg-white p-4 w-full border-b border-gray-300 hover:bg-gray-100"
+                className={`flex items-center p-4 w-full border-b border-gray-300 ${hoverStyles} ${sectionStyles}`}
               >
                 <div className="flex w-20 h-20 justify-center flex-shrink-0">
                   <div className="w-14 h-20 flex-shrink-0">
                     <img
-
                       src={book.image}
                       alt={book.title}
                       className="w-full h-full object-cover"
@@ -116,10 +125,11 @@ const LatestUpdates = () => {
                   </div> 
                 </div>
                 <div className="ml-4 flex-grow">
-                  <h3 className="text-[14px] font-bold text-[#e7505a] hover:underline" style={{fontFamily: 'Open Sans, sans-serif'}}>
-                  <Link to={`/fiction/${book._id}/${book.title}`} className="text-sm font-semibold text-blue-700 hover:underline">
-                    {book.title}
-                  </Link>
+                  <h3 className="text-[14px] font-bold hover:underline" style={{fontFamily: 'Open Sans, sans-serif'}}>
+                    <Link to={`/fiction/${book._id}/${book.title}`} className="text-sm font-semibold hover:underline"
+                      style={{ color: theme === 'dark' ? '#ffcc00' : '#007BFF' }}>
+                      {book.title}
+                    </Link>
                   </h3>
                   <div className="flex items-center">
                     {renderStars(book)}
@@ -129,24 +139,25 @@ const LatestUpdates = () => {
                   </p>
                 </div>
               </div>
-            )): (
+            )) : (
               <p>Data is not available or is not in the expected format.</p>
             )}
           </div>
           <div className="w-full" style={{ padding: '15px 0' }}>
             <div className="flex justify-center">
-              <button
-                className="bg-[#e26a6a] text-white text-[14px] hover:bg-[#ff5c5c]"
-                style={{
-                  padding: '6px 12px',
-                  width: '140px',
-                  height: '36px',
-                  fontFamily: 'Open Sans, sans-serif'
-                }}
-                onClick={handleNavigate}
-              >
-                More Updates
-              </button>
+              <Link to="/fictions/latest-updates">
+                <button
+                  className={`${buttonStyles} text-[14px]`}
+                  style={{
+                    padding: '6px 12px',
+                    width: '140px',
+                    height: '36px',
+                    fontFamily: 'Open Sans, sans-serif'
+                  }}
+                >
+                  More Updates
+                </button>
+              </Link>
             </div>
           </div>
         </div>

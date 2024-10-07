@@ -3,14 +3,16 @@ import { FaStar, FaThumbsUp, FaThumbsDown, FaQuoteLeft } from 'react-icons/fa';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
 
 const ReviewSection = ({ bookName }) => {
   const [reviews, setReviews] = useState([]);
   const [sortBy, setSortBy] = useState('Top');
   const [voteStatus, setVoteStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10; // Fixed number of reviews per page
+  const itemsPerPage = 10;
   const [pageCount, setPageCount] = useState(0);
+  const theme = useSelector((state) => state.userData.theme); // Get current theme
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -25,7 +27,6 @@ const ReviewSection = ({ bookName }) => {
           return acc;
         }, {});
         setVoteStatus(initialVoteStatus);
-
       } catch (err) {
         console.error('Error fetching reviews:', err);
       }
@@ -84,20 +85,26 @@ const ReviewSection = ({ bookName }) => {
     currentPage * itemsPerPage + itemsPerPage
   );
 
+  // Conditional styles based on theme
+  const containerStyles = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black';
+  const borderStyles = theme === 'dark' ? 'border-[#5c5c5c]' : 'border-gray-200';
+  const buttonStyles = (isActive, activeColor, inactiveColor) =>
+    isActive ? `bg-${activeColor} text-white` : `bg-transparent text-${inactiveColor}`;
+
   return (
-    <div className="bg-white p-6">
+    <div className={`p-6 ${containerStyles}`}>
       {/* Heading and Sort By */}
-      <div className="flex flex-col md:flex-row gap-2 items-center justify-between mb-8 border-b border-gray-200 py-4">
+      <div className={`flex flex-col md:flex-row gap-2 items-center justify-between mb-8 py-4 ${borderStyles}`}>
         <h3 className="text-[16px] font-bold text-red-600 flex items-center">
           <FaQuoteLeft className='mr-2 text-gray-500 text-[16px]' />
           REVIEWS
         </h3>
         <div className="flex items-center">
-          <span className="text-sm text-gray-700 mr-2">Sort by:</span>
+          <span className="text-sm mr-2">Sort by:</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="border border-gray-300 rounded-full px-2 py-1 text-sm"
+            className={`border rounded-full px-2 py-1 text-sm ${theme === 'dark' ? 'bg-gray-700 border-[#5c5c5c] text-white' : 'border-gray-300'}`}
           >
             <option value="Top">Top</option>
             <option value="Newest">Newest</option>
@@ -109,10 +116,10 @@ const ReviewSection = ({ bookName }) => {
 
       {/* Review Cards */}
       {displayedReviews.map((review) => (
-        <div key={review._id} className="flex flex-col md:flex-row items-center md:items-start mb-6 border-b border-gray-200 pb-6">
+        <div key={review._id} className={`flex flex-col md:flex-row items-center md:items-start mb-6 pb-6 ${borderStyles}`}>
           {/* Avatar and Rating */}
           <div className="flex-shrink-0 flex flex-col items-center md:items-start mb-4 md:mb-0 md:mr-4">
-            <div className="mb-2 w-16 h-16 overflow-hidden border-2 border-gray-300 rounded-full">
+            <div className={`mb-2 w-16 h-16 overflow-hidden border-2 rounded-full ${theme === 'dark' ? 'border-[#5c5c5c]' : 'border-gray-300'}`}>
               <img
                 src={review.profilepic}
                 alt="Avatar"
@@ -130,10 +137,10 @@ const ReviewSection = ({ bookName }) => {
           <div className="flex-grow">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-[18px] font-bold text-gray-700">{review.title}</h2>
+                <h2 className={`text-[18px] font-bold ${theme === 'dark' ? 'text-[#c2a970]' : 'text-gray-700'}`}>{review.title}</h2>
                 <div className='flex gap-1 items-end'>
                   <p className="text-[14px] font-bold text-red-600">BY </p>
-                  <button  className="text-[12px] font-bold text-blue-600 hover:underline">{review.user || 'Anonymous'}</button>
+                  <button href='#' className="text-[12px] font-bold text-blue-600 hover:underline">{review.user || 'Anonymous'}</button>
                 </div>
               </div>
               {/* Date */}
@@ -143,7 +150,7 @@ const ReviewSection = ({ bookName }) => {
             </div>
 
             {/* Review Text */}
-            <div className="text-gray-800 text-sm mt-4">
+            <div className={`mt-4 ${theme === 'dark' ? 'text-[#cfcfcf]' : 'text-gray-800'} text-sm`}>
               <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(review.text) }} />
             </div>
 
@@ -151,16 +158,14 @@ const ReviewSection = ({ bookName }) => {
             <div className="flex items-center justify-end mt-4">
               <div className="flex items-center space-x-2">
                 <button
-                  className={`flex items-center p-2 border border-blue-600 ${voteStatus[review._id] === 'upvotes' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600'
-                    }`}
+                  className={`flex items-center p-2 border ${buttonStyles(voteStatus[review._id] === 'upvotes', 'blue-600', 'blue-600')}`}
                   onClick={() => handleVote(review._id, 'upvotes')}
                   disabled={voteStatus[review._id] === 'downvotes'}
                 >
                   <FaThumbsUp />
                 </button>
                 <button
-                  className={`flex items-center p-2 border border-red-600 ${voteStatus[review._id] === 'downvotes' ? 'bg-red-600 text-white' : 'bg-white text-red-600'
-                    }`}
+                  className={`flex items-center p-2 border ${buttonStyles(voteStatus[review._id] === 'downvotes', 'red-600', 'red-600')}`}
                   onClick={() => handleVote(review._id, 'downvotes')}
                   disabled={voteStatus[review._id] === 'upvotes'}
                 >
