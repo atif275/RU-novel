@@ -84,7 +84,7 @@ const ChCommentData = ({ comments, onReply, onRep, onReplyRep }) => {
               {showReplyEditor && selectedCommentId === comment._id && (
                 <div className="mt-4 ml-8">
                   <Editor
-                    apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+                    apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
                     value={replyContent}
                     init={{
                       height: 150,

@@ -150,7 +150,7 @@ const ChCommentData = ({ bookName, chapterName }) => {
       <div className="mx-6 mt-4">
         <Editor
           key={theme} // Force re-render when the theme changes
-          apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+          apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
           value={editorContent}
           init={{
             height: 150,
@@ -223,7 +223,7 @@ const ChCommentData = ({ bookName, chapterName }) => {
                 <div className="mt-4 ml-8">
                   <Editor
                     key={theme} // Force re-render when the theme changes
-                    apiKey="u4cqm7247tzr7b5afm5ue23wx3r8t5p5kvat0uw01v0ntr3h"
+                    apiKey="cezgao67zddrqy0u741tep7k5b5az37uqjv1zvg3uslu7xj3"
                     value={replyContent}
                     init={{
                       height: 150,
