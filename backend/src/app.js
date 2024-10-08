@@ -44,21 +44,21 @@ app.use(express.json());
 
 const corsOptions = {
   origin: function (origin, callback) {
-
+    console.log("Request Origin:", origin);  // Log origin for debugging
     const allowedOrigins = ['https://ru-novel.ru', 'https://www.ru-novel.ru', 'http://localhost:3000'];
-    if (allowedOrigins.includes(origin) || !origin) {  // Allow requests with no origin (like Postman or server-to-server requests)
-
-      callback(null, true);  // Allow the request if the origin is in the allowedOrigins array
+    if (allowedOrigins.includes(origin) || !origin) {  // Allow no-origin requests for server-to-server or Postman
+      callback(null, true);  // Allow the request
     } else {
-      callback(new Error('Not allowed by CORS'));  // Reject the request if the origin is not allowed
+      callback(new Error('Not allowed by CORS'));  // Reject if not in allowedOrigins
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // Enable this if your front-end needs to send credentials (cookies, HTTP authentication)
+  credentials: true,  // Enable if you need cookies/authentication to be sent
 };
 
 app.use(cors(corsOptions));
+
 app.set('trust proxy', 1);
 
 
