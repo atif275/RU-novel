@@ -87,11 +87,11 @@ const checkout = new YooCheckout({
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    //console.log('MongoDB connected');
+    console.log('MongoDB connected');
     
     // Start the server only after the database is connected
     app.listen(PORT, () => {
-      //console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on http://localhost:${PORT}`);
     });
   })
   .catch(err => {
