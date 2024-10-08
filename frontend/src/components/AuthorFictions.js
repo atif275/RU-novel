@@ -82,7 +82,7 @@ export const AuthorFictions = () => {
                                     <div className="grid grid-cols-2 text-sm font-bold text-custom-dark-tan-blue gap-2">
                                         <div>
                                             <i className="fa fa-users mr-2"></i>
-                                            {book.stats && book.stats.followers ? `${book.stats.followers} followers` : 0} Followers
+                                            {book.stats && book.stats.followers ? `${book.stats.followers} ` : 0} Followers
                                         </div>
                                         <div>
                                             {/* Ensure you have imported or defined StarRating */}
