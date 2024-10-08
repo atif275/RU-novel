@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Sidebar } from '../components/Sidebar';
-import { Header } from '../components/Headers';
+import {Header}  from '../components/Headers';
 import { Footer } from '../components/Footers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthorDashboard } from '../components/AuthorDashboard';
