@@ -37,7 +37,7 @@ const Navbar = () => {
 
   };
 
-  //console.log(checkClick)
+  console.log(checkClick)
   const handleClickReview = () => {
     setReviewClick(!ReviwClick);
   };
@@ -146,9 +146,9 @@ const Navbar = () => {
         {/* Navbar Items */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start w-full lg:w-auto lg:space-x-4 space-y-4 lg:space-y-0">
           <ul className="flex flex-col lg:ml-20 lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 w-full lg:w-auto">
-            <li ref={dropdownRef} className="relative group">
+            <li   onMouseLeave={() => isDesktop && setClick(false)} ref={dropdownRef} className="relative group">
               <button className="flex items-center px-2 py-3 hover:bg-[#55616f] hover:text-white text-sm" style={{ height: '100%' }} onClick={handleClickRead} onMouseEnter={() =>isDesktop &&  setClick(true)}
-      onMouseLeave={() => isDesktop && setClick(false)}>
+      >
                 <FontAwesomeIcon icon={faBook} className="mr-2" />
                 Read
                 <FontAwesomeIcon icon={faChevronDown} className="ml-2" />
@@ -244,9 +244,9 @@ const Navbar = () => {
                 Member List
               </Link>
             </li>
-            <li ref={dropdownRefReview} className="relative group">
+            <li onMouseLeave={() => isDesktop && setReviewClick(false)} ref={dropdownRefReview} className="relative group">
               <button className={`flex items-center px-2 py-3 hover:bg-[#55616f] hover:text-white text-sm ${theme === 'dark'}`} style={{ height: '100%' }} onClick={handleClickReview} onMouseEnter={() =>isDesktop &&  setReviewClick(true)}
-      onMouseLeave={() => isDesktop && setReviewClick(false)}>
+      >
                 <FontAwesomeIcon icon={faLifeRing} className="mr-2" />
                 Support
                 <FontAwesomeIcon icon={faChevronDown} className="ml-2" />
